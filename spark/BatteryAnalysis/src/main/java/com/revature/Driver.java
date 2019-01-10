@@ -21,8 +21,12 @@ public class Driver {
 	private static List<AnalyticResult> results = new ArrayList();
 	private static BufferedWriter writer;
 	private static Dataset<Row> csv;
-	private static int max = 0;
+	private static int count = 0;
 	
+	/**
+	 * Creates the output file, filters the data to just the relevant values,
+	 * then runs the tests on each unique id.
+	 */
 	public static void main(String args[]) {
 		
 		final String SPARK_MASTER = args[0];
@@ -37,9 +41,8 @@ public class Driver {
 		}
 		
 		/*
-		 * Set Spark configuration for Context
+		 * Set Spark configuration for Context.
 		 */
-		
 		SparkConf conf = new SparkConf().setAppName("ChanceToFail").setMaster(SPARK_MASTER);
 		JavaSparkContext context = new JavaSparkContext(conf);
 		context.setLogLevel("ERROR");
@@ -59,28 +62,25 @@ public class Driver {
 		 * _c9 = battery status
 		 */
 		
-		
+		// Read the input file in as a spark Dataset<Row> with no header, therefore the
+		// resulting table column names are in the format _c#.
 		csv = session.read().format("csv").option("header","false").load(INPUT_PATH);
-		csv = csv.filter("(_c9 = 1 OR _c9 = 2) AND (_c3 = 1 OR _c3 = 2 OR _c3 = 3)");
 		
+		// Filter the dataset to include only the tests taken within the first 3 weeks.
+		csv = csv.filter("_c3 = 1 OR _c3 = 2 OR _c3 = 3");
+		
+		// Create a list containing each row with battery id as a primary key.
 		Dataset<Row> uniqueBatteries = csv.groupBy("_c8").count();
 		
 		List<Row> rowList = uniqueBatteries.toJavaRDD().collect();
 		
+		
+		// Run the tests for each battery id.
 		for (Row row : rowList) {
 			performTestingOnRow(Integer.parseInt(row.get(0).toString()));
 		}
 		
-//		System.out.println(csv.first());
-//		uniqueBatteries.foreach((ForeachFunction<Row>) row ->  {
-//				System.out.println(csv.toString());
-//				csv.show();
-//				//performTestingOnRow(Integer.parseInt(row.get(0).toString()));
-//			}
-//		);
-		//Write the final results to a file in csv format. This takes the form of a table
-		//with 2 columns: the battery id and the % chance they will fail.
-		
+		// Close all the resources.
 		try {
 			writer.close();
 		} catch (IOException e) {
@@ -90,21 +90,27 @@ public class Driver {
 		context.close();
 	}
 	
+	/**
+	 * Call the various indicator tests and add the results to our result list.
+	 * At the moment these consist of looking at just the first 3 tests in the first 3
+	 * periods.
+	 */
 	public static void performTestingOnRow(int input_battery_id) {
 		int totalSampleSize;
 		double finalPercentage;
-		if (max<5) {
-			/*
-			 * Call the various indicator tests and add the results to our result list.
-			 */
+		AnalyticResult newResult;
 			
-			for (int i = 0;i<4;i++)
-				for (int j = 0;j<3; j++) {
-					results.add(new TestIndicator().execute(csv.select("*"),input_battery_id,i,j));
+		System.out.println(count + ". Beggining Analysis on battery id: " + input_battery_id);
+		
+			for (int i = 1;i<4;i++)
+				for (int j = 1;j<4; j++) {
+					newResult = new TestIndicator().execute(csv.select("*"),input_battery_id,i,j);
+					results.add(newResult);
+					if (newResult!=null)
+						System.out.println(newResult);
 				}
 			
-			//Sum up the total of the sample sizes for each result
-			
+			// Sum up the total of the sample sizes for each result.
 			totalSampleSize = 0;
 			for (AnalyticResult result:results) {
 				if (result!=null) {
@@ -112,7 +118,7 @@ public class Driver {
 				}
 			}
 			
-			//Use the sample size sum and calculate the final percentage by weighing each result by their sample size
+			// Use the sample size sum and calculate the final percentage by weighing each result by their sample size.
 			finalPercentage = 0;
 			for (AnalyticResult result:results) {
 				if (result!=null) {
@@ -120,13 +126,18 @@ public class Driver {
 				}
 			}
 			
+			System.out.println("Aggregated Result: Battery_id: " + input_battery_id + ", % Chance to fail: " + finalPercentage + ", Total Sample Size: " + totalSampleSize);
+			
+			// Append the results to the output file.
 			try {
-				writer.append(input_battery_id + "," + finalPercentage + "," + totalSampleSize+"\n");
+				writer.append(input_battery_id + "," + finalPercentage + "," + totalSampleSize);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 			
-			max++;
-		}
+			count++;
+			
+			// Clear the results of these tests to make way for the next battery id.
+			results.clear();
 	}
 }
