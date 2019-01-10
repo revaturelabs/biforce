@@ -1,0 +1,4 @@
+#Rhyan's specific gitignore files. For some reason, relative paths are not recognized by gitignore for me.
+~/Revature/Project 3/SparkBatteryAnalysis/Data./Data/*
+~/Revature/Project 3/SparkBatteryAnalysis/.settings
+~/Revature/Project 3/SparkBatteryAnalysis/.vscode
