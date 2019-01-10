@@ -19,6 +19,7 @@ Above are the general instructions, make sure the mysql JDBC driver is placed in
 ```
 oozie job -oozie http://sandbox-hdp.hortonworks.com:11000/oozie -D oozie.wf.application.path /user/root/HData/workflow.xml  -config job.properties -run
 ```
+
 #Spark WordCount
 This oozie workflow was ran on Hortonworks.                                                                                                                             
 In order to view the hadoop jobhistory logs, you may want to login as root.                                                                                            
