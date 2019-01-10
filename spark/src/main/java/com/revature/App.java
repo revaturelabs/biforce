@@ -1,6 +1,6 @@
 package com.revature;
 
-import com.revature.sql.BatteryTestRegression;
+import com.revature.ml.BatteryTestRegression;
 import org.apache.spark.sql.SparkSession;
 
 /**
