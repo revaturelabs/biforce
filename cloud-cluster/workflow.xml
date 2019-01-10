@@ -1,0 +1,22 @@
+<workflow-app name="oozie-lab" xmlns="uri:oozie:workflow:0.4">
+<!-- Start job control node -->
+   <start to="oozie-ssh" />
+
+   <action name="oozie-ssh">
+    <ssh xmlns="uri:oozie:ssh-action:0.1">
+       <host>${emr_hostname}</host>
+       <command>/home/hadoop/sparkCommand.sh 2> /home/hadoop/SparkCommand.log</command>
+ 	   <capture-output/>
+    </ssh>
+    <ok to="end"/>
+    <error to="kill"/>
+   </action>
+
+       <!-- Kill job control node -->
+   <kill name="kill">
+       <message>Oozie job terminated with errors.</message>
+   </kill>
+
+   <!-- End job control node -->
+   <end name="end" />
+</workflow-app>
