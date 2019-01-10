@@ -1,5 +1,6 @@
 target/tmp
 output
+.csv
 
 # Created by https://www.gitignore.io/api/java,maven,idea
 # Edit at https://www.gitignore.io/?templates=java,maven,idea
