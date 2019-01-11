@@ -1,12 +1,16 @@
 package com.revature.ml;
 
 import com.revature.util.DataFrameFactory;
+import java.util.ArrayList;
+import java.util.List;
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.log4j.Logger;
 import org.apache.spark.SparkContext;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.mllib.classification.LogisticRegressionModel;
 import org.apache.spark.mllib.classification.LogisticRegressionWithLBFGS;
 import org.apache.spark.mllib.linalg.DenseVector;
+import org.apache.spark.mllib.linalg.Vector;
 import org.apache.spark.mllib.regression.LabeledPoint;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
@@ -14,7 +18,20 @@ import org.apache.spark.sql.SparkSession;
 
 public class BatteryTestRegression {
 
+  private static final int FIRST_TEST_SCORE = 2;
+  private static final int LAST_TEST_SCORE = 7;
+
   private static final Logger LOGGER = Logger.getLogger(BatteryTestRegression.class);
+
+  private static Vector extractFeatures(Row batteryRow) {
+    List<Double> dimensions = new ArrayList<>();
+    for (int i = FIRST_TEST_SCORE; i <= LAST_TEST_SCORE; i++) {
+      dimensions.add(batteryRow.getDouble(i));
+    }
+    Double[] features = new Double[dimensions.size()];
+    features = dimensions.toArray(features);
+    return new DenseVector(ArrayUtils.toPrimitive(features));
+  }
 
   public void execute(SparkSession spark, String inputPath, String outputPath) {
     SparkContext context = spark.sparkContext();
@@ -45,14 +62,8 @@ public class BatteryTestRegression {
     JavaRDD<LabeledPoint> features = earlyTestDataset.toJavaRDD().map(
         row -> {
           double batteryStatus = row.getDouble(1);
-          double[] values = new double[]{
-              row.getDouble(2)
-              , row.getDouble(3)
-              , row.getDouble(4)
-              , row.getDouble(5)
-              , row.getDouble(6)
-              , row.getDouble(7)};
-          return new LabeledPoint(batteryStatus, new DenseVector(values));
+          Vector feature = extractFeatures(row);
+          return new LabeledPoint(batteryStatus, feature);
         });
     JavaRDD<LabeledPoint>[] splitData = features.randomSplit(new double[]{.6, .4});
     JavaRDD<LabeledPoint> trainingData = splitData[0].cache();
