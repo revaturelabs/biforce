@@ -1,26 +1,25 @@
 package com.revature.spark;
 
+import java.io.Serializable;
 import java.util.NoSuchElementException;
 
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 
-public class VerbalTestIndicator {
+public class TestIndicator implements Serializable {
 	
-	public AnalyticResult execute(Dataset<Row> csv, int input_battery_id, int period) {
+	public AnalyticResult execute(Dataset<Row> csv, int input_battery_id, int period, int testType) {
 		double score, scoreLowerBound, scoreUpperBound, outputPercentage = 0;
 		long totalAmount, failedAmount;
 		
-		csv = csv.filter("_c0 = " + period + " AND _c3 = 1 AND (_c9 = 1 OR _c9 = 2)");
+		csv = csv.filter("_c0 = " + testType + " AND _c3 = " + period);
 		
 		try {
-		score = Double.parseDouble(csv.filter("_c8 = " + input_battery_id).first().getString(2));
+			score = Double.parseDouble(csv.filter("_c8 = " + input_battery_id).first().get(2).toString());
 		}
-		catch(NoSuchElementException e) {
+		catch(Exception e) {
 			return null;
 		}
-		
-		System.out.println(score);
 		
 		scoreLowerBound = score-10;
 		scoreUpperBound = score+10;
@@ -32,6 +31,6 @@ public class VerbalTestIndicator {
 			outputPercentage = (double)failedAmount/(double)totalAmount*100;
 		
 		return new AnalyticResult(outputPercentage, (int)totalAmount, "Result is based on those who scored "
-				+ "similarly (" + score + "+/-10) on verbal tests taken in period " + period);
+				+ "similarly (" + score + "+/-10) on test type " + testType + " taken in period " + period);
 	}
 }
