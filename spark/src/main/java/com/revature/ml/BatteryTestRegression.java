@@ -14,7 +14,11 @@ import org.apache.spark.mllib.linalg.Vector;
 import org.apache.spark.mllib.regression.LabeledPoint;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
+import org.apache.spark.sql.RowFactory;
 import org.apache.spark.sql.SparkSession;
+import org.apache.spark.sql.types.DataTypes;
+import org.apache.spark.sql.types.StructField;
+import org.apache.spark.sql.types.StructType;
 
 public class BatteryTestRegression {
 
@@ -57,7 +61,8 @@ public class BatteryTestRegression {
         .join(period3Type1Dataset.select("BATTERY_ID", "TEST_SCORE"), "BATTERY_ID")
         .join(period1Type2Dataset.select("BATTERY_ID", "TEST_SCORE"), "BATTERY_ID")
         .join(period2Type2Dataset.select("BATTERY_ID", "TEST_SCORE"), "BATTERY_ID")
-        .join(period3Type2Dataset.select("BATTERY_ID", "TEST_SCORE"), "BATTERY_ID");
+        .join(period3Type2Dataset.select("BATTERY_ID", "TEST_SCORE"), "BATTERY_ID")
+        .distinct();
     earlyTestDataset.show();
     JavaRDD<LabeledPoint> features = earlyTestDataset.toJavaRDD().map(
         row -> {
@@ -78,5 +83,31 @@ public class BatteryTestRegression {
     LOGGER.info("Test error: " + trainingError);
     LOGGER.debug(testData.count());
     System.out.println(trainingError);
+
+    List<StructField> outputFields = new ArrayList<>();
+    outputFields.add(
+        DataTypes.createStructField("BATTERY_ID", DataTypes.IntegerType, false)
+    );
+    outputFields.add(
+        DataTypes.createStructField("BATTERY_PREDICTION", DataTypes.DoubleType, false)
+    );
+
+    StructType outputSchema = DataTypes.createStructType(outputFields);
+
+    JavaRDD<Row> output = earlyTestDataset
+        .toJavaRDD()
+        .map(row -> {
+          int id = (int) row.getDouble(0);
+          double probability = model.predict(extractFeatures(row));
+          return RowFactory.create((Object[]) new Number[]{id, probability});
+        })
+        .coalesce(1, true);
+
+    spark.createDataFrame(output, outputSchema)
+        .coalesce(1)
+        .distinct()
+        .write()
+        .format("csv")
+        .save(outputPath);
   }
 }
