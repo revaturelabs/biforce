@@ -1,0 +1,28 @@
+package com.revature;
+
+import com.revature.ml.BatteryTestRegression;
+import org.apache.spark.sql.SparkSession;
+
+/**
+ * Hello world!
+ */
+public class Driver {
+
+  public static void main(String[] args) {
+    if (args.length != 2) {
+      System.err.println("Usage: <input file> <output dir>");
+      System.exit(1);
+    }
+
+    final String inputPath = args[0];
+    final String outputPath = args[1];
+
+    SparkSession spark = SparkSession
+        .builder()
+        .appName("Battery Analyzer")
+        .master("yarn")
+        .getOrCreate();
+
+    new BatteryTestRegression().execute(spark, inputPath, outputPath);
+  }
+}
