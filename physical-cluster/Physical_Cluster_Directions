@@ -1,4 +1,4 @@
-1)  Find IP address of machine:                            
+1)  Find IP address of machine:                          
              ‘ifconfig’
 
 2)  Disable firewall restrictions:
@@ -108,7 +108,7 @@ To set these commands to the current terminal:
                            </property>
                            <property>
                           <name>dfs.datanode.data.dir</name>
-                          <value>/home/edureka/hadoop-2.6.0/datanode</value>
+                          <value>/home/developer/hadoop-2.6.0/datanode</value>
                            </property>
 
 16)  Copy the template file mapred-site.xml.template (within /home/developer/hadoop-2.6.0/etc/hadoop/ directory) to same directory, named as ‘mapred-site.xml:
@@ -139,9 +139,12 @@ To set these commands to the current terminal:
 19)  From the directory /home/developer/hadoop-2.6.0, Start all daemons (only on master machine):
                            ‘./sbin/start-all.sh’
 
- 
-
 20)  ‘jps’ and make sure all daemons are running.
+
+20)  If datanode is not running, possible error is it has a different cluster ID than the namenode:
+             ‘./stop-all.sh’
+             ‘sudo vim ~/hadoop-2.6.0/datanode/current/VERSION’
+             ‘sudo vim ~/hadoop-2.6.0/namenode/current/VERSION’
 
 20)  Go to master:50070/dfshealth.html.  This page should pull up and give some info about HDFS.
 
@@ -151,7 +154,7 @@ To set these commands to the current terminal:
 
 23)  Install MySQL Server:
              ‘sudo apt-get install mysql-server’
-             You will be prompted to set a password for root.                           
+             You will be prompted to set a password for root.                          
 
 24)  Log into MySQL:
              ‘mysql -u root -p’
@@ -219,12 +222,18 @@ To set these commands to the current terminal:
 
  
 
+ 
+
+37)  Create folder structure in HDFS:
+             ‘hdfs dfs -mkdir /user/’
+             ‘hdfs dfs -mkdir /user/developer/’
+             ‘hdfs dfs -mkdir /user/developer/Data/’
+
 38)  Download Oozie:
              ‘wget https://www-us.apache.org/dist/oozie/5.1.0/oozie-5.1.0.tar.gz’
 
-39)  Download Hive:
-             ‘wget https://www-us.apache.org/dist/hive-3.1.1/apache-hive-3.1.1-bin.tar.gz’
+39)   Download HBase:
+             ‘wget https://www.apache.org/dyn/closer.lua/hbase/2.1.2/hbase-2.1.2-bin.tar.gz’
 
-40)  Download Pig:
-             ‘wget https://archive.apache.org/dist/pig/latest/pig-0.17.0-src.tar.gz’
-             ‘wget https://archive.apache.org/dist/pig/latest/pig-0.17.0.tar.gz’
+40)   Download Zookeeper:
+             ‘wget https://archive.apache.org/dist/zookeeper/zookeeper-3.4.6/zookeeper-3.4.6.tar.gz’
