@@ -1,0 +1,217 @@
+<workflow-app xmlns="uri:oozie:workflow:0.4" name="project3">
+	<!-- Start job control node -->
+	<start to="sqoop-trun-battery" />
+	
+	<!-- TRUNCATE ALL TABLES in MySQL -->
+	<action name="sqoop-trun-battery" retry-max="2" retry-interval="1">
+		<sqoop xmlns="uri:oozie:sqoop-action:0.4">
+			<job-tracker>${resourceManager}</job-tracker>
+			<name-node>${nameNode}</name-node>
+			<arg>eval</arg>
+			<arg>--connect</arg>
+			<arg>jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING</arg>
+			<arg>--username</arg>
+			<arg>root</arg>
+			<arg>--password</arg>
+			<arg>${hortonPass}</arg>
+			<arg>--query</arg>
+			<arg>TRUNCATE TABLE BATTERY</arg>
+		</sqoop>
+		<ok to="sqoop-trun-battery-group"/>
+		<error to="kill"/>
+	</action>
+	
+	<action name="sqoop-trun-battery-group" retry-max="2" retry-interval="1">
+		<sqoop xmlns="uri:oozie:sqoop-action:0.4">
+			<job-tracker>${resourceManager}</job-tracker>
+			<name-node>${nameNode}</name-node>
+			<arg>eval</arg>
+			<arg>--connect</arg>
+			<arg>jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING</arg>
+			<arg>--username</arg>
+			<arg>root</arg>
+			<arg>--password</arg>
+			<arg>${hortonPass}</arg>
+			<arg>--query</arg>
+			<arg>TRUNCATE TABLE BATTERY_GROUP</arg>
+		</sqoop>
+		<ok to="sqoop-trun-battery-qualitative"/>
+		<error to="kill"/>
+	</action>
+	
+	<action name="sqoop-trun-battery-qualitative" retry-max="2" retry-interval="1">
+		<sqoop xmlns="uri:oozie:sqoop-action:0.4">
+			<job-tracker>${resourceManager}</job-tracker>
+			<name-node>${nameNode}</name-node>
+			<arg>eval</arg>
+			<arg>--connect</arg>
+			<arg>jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING</arg>
+			<arg>--username</arg>
+			<arg>root</arg>
+			<arg>--password</arg>
+			<arg>${hortonPass}</arg>
+			<arg>--query</arg>
+			<arg>TRUNCATE TABLE BATTERY_QUALITATIVE</arg>
+		</sqoop>
+		<ok to="sqoop-trun-battery-quantitative"/>
+		<error to="kill"/>
+	</action>
+	
+	<action name="sqoop-trun-battery-quantitative" retry-max="2" retry-interval="1">
+		<sqoop xmlns="uri:oozie:sqoop-action:0.4">
+			<job-tracker>${resourceManager}</job-tracker>
+			<name-node>${nameNode}</name-node>
+			<arg>eval</arg>
+			<arg>--connect</arg>
+			<arg>jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING</arg>
+			<arg>--username</arg>
+			<arg>root</arg>
+			<arg>--password</arg>
+			<arg>${hortonPass}</arg>
+			<arg>--query</arg>
+			<arg>TRUNCATE TABLE BATTERY_QUANTITATIVE</arg>
+		</sqoop>
+		<ok to="sqoop-trun-battery-assessment"/>
+		<error to="kill"/>
+	</action>
+	
+	<action name="sqoop-trun-battery-assessment" retry-max="2" retry-interval="1">
+		<sqoop xmlns="uri:oozie:sqoop-action:0.4">
+			<job-tracker>${resourceManager}</job-tracker>
+			<name-node>${nameNode}</name-node>
+			<arg>eval</arg>
+			<arg>--connect</arg>
+			<arg>jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING</arg>
+			<arg>--username</arg>
+			<arg>root</arg>
+			<arg>--password</arg>
+			<arg>${hortonPass}</arg>
+			<arg>--query</arg>
+			<arg>TRUNCATE TABLE BATTERY_ASSESSMENT</arg>
+		</sqoop>
+		<ok to="sqoop-trun-battery-test"/>
+		<error to="kill"/>
+	</action>
+	
+	<action name="sqoop-trun-battery-test" retry-max="2" retry-interval="1">
+		<sqoop xmlns="uri:oozie:sqoop-action:0.4">
+			<job-tracker>${resourceManager}</job-tracker>
+			<name-node>${nameNode}</name-node>
+			<arg>eval</arg>
+			<arg>--connect</arg>
+			<arg>jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING</arg>
+			<arg>--username</arg>
+			<arg>root</arg>
+			<arg>--password</arg>
+			<arg>${hortonPass}</arg>
+			<arg>--query</arg>
+			<arg>TRUNCATE TABLE BATTERY_TEST</arg>
+		</sqoop>
+		<ok to="sqoop-battery-export"/>
+		<error to="kill"/>
+	</action>
+		
+	<!-- EXPORT FIVE TABLES into MySQL -->
+	<action name="sqoop-battery-export">
+        <sqoop xmlns="uri:oozie:sqoop-action:0.4">
+            <job-tracker>${resourceManager}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <command>export --connect jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING --username root --password ${hortonPass} --table BATTERY --fields-terminated-by , --export-dir battery-pre-csv/battery/part-m-00000 -m 1</command>
+        </sqoop>
+        <ok to="sqoop-battery-group-export"/>
+        <error to="kill"/>
+    </action>
+	
+	<action name="sqoop-battery-group-export">
+        <sqoop xmlns="uri:oozie:sqoop-action:0.4">
+            <job-tracker>${resourceManager}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <command>export --connect jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING --username root --password ${hortonPass} --table BATTERY_GROUP --fields-terminated-by , --export-dir battery-pre-csv/battery-group/part-m-00000 -m 1</command>
+        </sqoop>
+        <ok to="sqoop-battery-qualitative-export"/>
+        <error to="kill"/>
+    </action>
+	
+	<action name="sqoop-battery-qualitative-export">
+        <sqoop xmlns="uri:oozie:sqoop-action:0.4">
+            <job-tracker>${resourceManager}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <command>export --connect jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING --username root --password ${hortonPass} --table BATTERY_QUALITATIVE --fields-terminated-by , --export-dir battery-pre-csv/battery-qualitative/part-m-00000 -m 1</command>
+        </sqoop>
+        <ok to="sqoop-battery-quantitative-export"/>
+        <error to="kill"/>
+    </action>
+	
+	<action name="sqoop-battery-quantitative-export">
+        <sqoop xmlns="uri:oozie:sqoop-action:0.4">
+            <job-tracker>${resourceManager}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <command>export --connect jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING --username root --password ${hortonPass} --table BATTERY_QUANTITATIVE --fields-terminated-by , --export-dir battery-pre-csv/battery-quantitative/part-m-00000 -m 1</command>
+        </sqoop>
+        <ok to="sqoop-battery-assessment-export"/>
+        <error to="kill"/>
+    </action>
+	
+	<action name="sqoop-battery-assessment-export">
+        <sqoop xmlns="uri:oozie:sqoop-action:0.4">
+            <job-tracker>${resourceManager}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <command>export --connect jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING --username root --password ${hortonPass} --table BATTERY_ASSESSMENT --fields-terminated-by , --export-dir battery-pre-csv/battery-assessment/part-m-00000 -m 1</command>
+        </sqoop>
+        <ok to="sqoop-battery-test-join"/>
+        <error to="kill"/>
+    </action>
+	
+	
+	<action name="sqoop-battery-test-join" retry-max="2" retry-interval="1">  
+		<sqoop xmlns="uri:oozie:sqoop-action:0.4">
+  			<job-tracker>${resourceManager}</job-tracker>
+    			<name-node>${nameNode}</name-node>
+     			<arg>job</arg>
+      			<arg>--exec</arg>
+   			<arg>battery_test_join</arg>
+		</sqoop>       
+		<ok to="sqoop-battery-test-import"/>
+		<error to="kill"/>
+	</action>
+	
+	<!-- IMPORT CLEANSED DATA -->
+	<action name="sqoop-battery-test-import">
+		<sqoop xmlns="uri:oozie:sqoop-action:0.4">
+			<job-tracker>${resourceManager}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <prepare>
+                <delete path="battery-pre-csv/battery-test"/>
+            </prepare>
+            <arg>import</arg>
+			<arg>--connect</arg>
+			<arg>jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING</arg>
+			<arg>--username</arg>
+			<arg>root</arg>
+			<arg>--password</arg>
+			<arg>${hortonPass}</arg>
+			<arg>--table</arg>
+			<arg>BATTERY_TEST</arg>
+			<arg>--fields-terminated-by</arg>
+			<arg>,</arg>
+			<arg>--target-dir</arg>
+			<arg>battery-pre-csv/battery-test</arg>
+			<arg>-m</arg>
+			<arg>1</arg>
+		</sqoop>
+		<ok to="end"/>
+		<error to="kill"/>
+	</action>
+	
+	<!-- Kill job control node -->
+	<kill name="kill">
+        <message>message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+	
+    <!-- End job control node -->
+    <end name="end" />
+</workflow-app>
+		
+			
+	
+	
