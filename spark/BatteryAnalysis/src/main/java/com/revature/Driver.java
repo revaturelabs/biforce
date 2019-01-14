@@ -37,16 +37,15 @@ public class Driver {
 		}
 		
 		/*
-		 * Set Spark configuration for Context
-		 */
-		
+		 * Set Spark configuration for Context.
+		 */		
 		SparkConf conf = new SparkConf().setAppName("ChanceToFail").setMaster(SPARK_MASTER);
 		JavaSparkContext context = new JavaSparkContext(conf);
 		context.setLogLevel("ERROR");
 		SparkSession session = new SparkSession(context.sc());
 		
 		/*
-		 * Read in the data from the input file
+		 * Read in the data from the input file:
 		 * _c0 = test type
 		 * _c1 = raw score
 		 * _c2 = score
@@ -58,8 +57,6 @@ public class Driver {
 		 * _c8 = battery id
 		 * _c9 = battery status
 		 */
-		
-		
 		csv = session.read().format("csv").option("header","false").load(INPUT_PATH);
 		csv = csv.filter("(_c9 = 1 OR _c9 = 2) AND (_c3 = 1 OR _c3 = 2 OR _c3 = 3)");
 		
@@ -71,16 +68,8 @@ public class Driver {
 			performTestingOnRow(Integer.parseInt(row.get(0).toString()));
 		}
 		
-//		System.out.println(csv.first());
-//		uniqueBatteries.foreach((ForeachFunction<Row>) row ->  {
-//				System.out.println(csv.toString());
-//				csv.show();
-//				//performTestingOnRow(Integer.parseInt(row.get(0).toString()));
-//			}
-//		);
-		//Write the final results to a file in csv format. This takes the form of a table
-		//with 2 columns: the battery id and the % chance they will fail.
-		
+		// Write the final results to a file in csv format. This takes the form of a table
+		// with 2 columns: the battery id and the % chance they will fail.	
 		try {
 			writer.close();
 		} catch (IOException e) {
@@ -96,15 +85,13 @@ public class Driver {
 		if (max<5) {
 			/*
 			 * Call the various indicator tests and add the results to our result list.
-			 */
-			
+			 */	
 			for (int i = 0;i<4;i++)
 				for (int j = 0;j<3; j++) {
 					results.add(new TestIndicator().execute(csv.select("*"),input_battery_id,i,j));
 				}
 			
-			//Sum up the total of the sample sizes for each result
-			
+			// Sum up the total of the sample sizes for each result.
 			totalSampleSize = 0;
 			for (AnalyticResult result:results) {
 				if (result!=null) {
@@ -112,7 +99,7 @@ public class Driver {
 				}
 			}
 			
-			//Use the sample size sum and calculate the final percentage by weighing each result by their sample size
+			// Use the sample size sum and calculate the final percentage by weighing each result by their sample size.
 			finalPercentage = 0;
 			for (AnalyticResult result:results) {
 				if (result!=null) {
