@@ -19,10 +19,12 @@ import com.revature.spark.TestIndicator;
 
 public class Driver {
 	
-	private static List<AnalyticResult> results = new ArrayList();
+	private static List<AnalyticResult> results;
 	private static BufferedWriter writer;
 	private static Dataset<Row> csv,filtered_csv;
 	private static int count = 0;
+	private static TestIndicator testIndicator;
+	private static JavaSparkContext context;
 	
 	/**
 	 * Creates the output file, filters the data to just the relevant values,
@@ -45,12 +47,14 @@ public class Driver {
 		 * Set Spark configuration for Context.
 		 */
 		SparkConf conf = new SparkConf().setAppName("ChanceToFail").setMaster(SPARK_MASTER);
-		JavaSparkContext context = new JavaSparkContext(conf);
+		context = new JavaSparkContext(conf);
 		context.setLogLevel("ERROR");
 		SparkSession session = new SparkSession(context.sc());
+		testIndicator = new TestIndicator();
+		results = new ArrayList<AnalyticResult>();
 		
 		/*
-		 * Read in the data from the input file
+		 * Read in the data from the input file.
 		 * _c0 = test type
 		 * _c1 = raw score
 		 * _c2 = score
@@ -67,15 +71,12 @@ public class Driver {
 		// resulting table column names are in the format _c#.
 		csv = session.read().format("csv").option("header","false").load(INPUT_PATH);
 		
-
-		//Create a list containing each row with battery id as a primary key
-		
-
+		// Create a list containing each row with battery id as a primary key.
 		Dataset<Row> uniqueBatteries = csv.groupBy("_c8").count();
 		
 		List<Row> rowList = uniqueBatteries.toJavaRDD().collect();
 		
-		//Filter the indicator data to include only the valid data for our samples.
+		// Filter the indicator data to include only the valid data for our samples.
 		filtered_csv = PassFailSampleFilter.execute(csv);
 		
 		// Run the tests for each battery id.
@@ -95,26 +96,26 @@ public class Driver {
 	
 	/**
 	 * Call the various indicator tests and add the results to our result list.
-	 * At the moment these consist of looking at just the first 3 tests in the first 3
-	 * periods.
+	 * This consists of looking at the first 3 tests in the first 3 periods.
 	 */
-
-	
 	public static void performTestingOnRows(Dataset<Row> battery_id_tests) {
-
 		int totalSampleSize;
 		double finalPercentage;
 		AnalyticResult newResult;
 		int input_battery_id = Integer.parseInt(battery_id_tests.first().getString(8).toString());
 			
 		System.out.println(count + ". Beginning Analysis on battery id: " + input_battery_id);
+		context.sc().log().info(count + ". Beginning Analysis on battery id: " + input_battery_id);
 		
 			for (int i = 1;i<4;i++)
 				for (int j = 1;j<4; j++) {
-					newResult = new TestIndicator().execute(filtered_csv,battery_id_tests,i,j);
+					newResult = testIndicator.execute(filtered_csv,battery_id_tests,i,j);
+					System.gc();
 					results.add(newResult);
-					if (newResult!=null)
+					if (newResult!=null) {
+						context.sc().log().info(newResult.toString());
 						System.out.println(newResult);
+					}
 				}
 			
 			// Sum up the total of the sample sizes for each result.
@@ -133,6 +134,8 @@ public class Driver {
 				}
 			}
 			
+			// Log the results.
+			context.sc().log().info("Aggregated Result: Battery_id: " + input_battery_id + ", % Chance to fail: " + finalPercentage + ", Total Sample Size: " + totalSampleSize);
 			System.out.println("Aggregated Result: Battery_id: " + input_battery_id + ", % Chance to fail: " + finalPercentage + ", Total Sample Size: " + totalSampleSize);
 			
 			// Append the results to the output file.
