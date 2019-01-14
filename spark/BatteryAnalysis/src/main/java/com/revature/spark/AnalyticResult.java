@@ -1,5 +1,10 @@
 package com.revature.spark;
 
+/**
+ * This is a wrapper class for the 3 values returned by an indicator.
+ * Percentage chance to fail, the sample size, and an explanation string.
+ */
+
 public class AnalyticResult {
 	private double percentage;
 	private int sampleSize;
@@ -11,6 +16,10 @@ public class AnalyticResult {
 		this.sampleSize = sampleSize;
 		this.explanation = explanation;
 	}
+	
+	/*
+	 * Boiler plate
+	 */
 
 	public double getPercentage() {
 		return percentage;
