@@ -8,6 +8,8 @@ import org.apache.spark.sql.Row;
 
 public class TestIndicator implements Serializable {
 	
+	private static final long serialVersionUID = -5452697183700073588L;
+
 	public AnalyticResult execute(Dataset<Row> csv, Dataset<Row> battery_id_tests, int period, int testType) {
 		double score, scoreLowerBound, scoreUpperBound, outputPercentage = 0;
 		long totalAmount, failedAmount;
@@ -17,7 +19,7 @@ public class TestIndicator implements Serializable {
 		battery_id_tests = battery_id_tests.filter("_c0 = " + testType + " AND _c3 = " + period);
 
 		try {
-			//Find the score the input battery id got on the given test.
+			// Find the score the input battery id got on the given test.
 			score = Double.parseDouble(battery_id_tests.first().get(2).toString());
 		}
 		catch(Exception e) {
@@ -31,10 +33,9 @@ public class TestIndicator implements Serializable {
 		scoreLowerBound = score-10;
 		scoreUpperBound = score+10;
 		
-
-		//Filter the data set to find just those who scored similarly and passed or failed
+		// Filter the data set to find just those who scored similarly and passed or failed.
 		Dataset<Row> csvTotal = csv.filter("(_c9 = 1 OR _c9 = 2 OR _c9 = 3) AND _c2 >= " + scoreLowerBound + " AND _c2 <= " + scoreUpperBound);
-		//Count the unique battery_ids of those who scored similarly
+		// Count the unique battery_ids of those who scored similarly.
 		totalAmount = csvTotal.groupBy("_c8").count().distinct().count();
 		// Count the unique battery_ids of those who score similarly and just failed.
 		failedAmount = csvTotal.filter("_c9 = 1").groupBy("_c8").count().distinct().count();
