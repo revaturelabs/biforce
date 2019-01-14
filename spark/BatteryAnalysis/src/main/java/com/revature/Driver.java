@@ -14,13 +14,14 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 
 import com.revature.spark.AnalyticResult;
+import com.revature.spark.PassFailSampleFilter;
 import com.revature.spark.TestIndicator;
 
 public class Driver {
 	
 	private static List<AnalyticResult> results = new ArrayList();
 	private static BufferedWriter writer;
-	private static Dataset<Row> csv;
+	private static Dataset<Row> csv,filtered_csv;
 	private static int count = 0;
 	
 	/**
@@ -68,20 +69,18 @@ public class Driver {
 		//resulting table column names are in the format _c#
 		csv = session.read().format("csv").option("header","false").load(INPUT_PATH);
 		
-		//filter the dataset to include only the tests taken within the first 3 weeks
-		
-		csv = csv.filter("_c3 = 1 OR _c3 = 2 OR _c3 = 3");
-		
 		//Create a list containing each row with battery id as a primary key
 		
 		Dataset<Row> uniqueBatteries = csv.groupBy("_c8").count();
 		
 		List<Row> rowList = uniqueBatteries.toJavaRDD().collect();
 		
+		//Filter the indicator data to include only the valid data for our samples.
+		filtered_csv = PassFailSampleFilter.execute(csv);
 		
 		//Run the tests for each battery id
 		for (Row row : rowList) {
-			performTestingOnRow(Integer.parseInt(row.get(0).toString()));
+			performTestingOnRows(csv.filter("_c8 = " + row.get(0).toString()));
 		}
 		
 		//close all the resources
@@ -101,16 +100,17 @@ public class Driver {
 	 * periods.
 	 */
 	
-	public static void performTestingOnRow(int input_battery_id) {
+	public static void performTestingOnRows(Dataset<Row> battery_id_tests) {
 		int totalSampleSize;
 		double finalPercentage;
 		AnalyticResult newResult;
+		int input_battery_id = Integer.parseInt(battery_id_tests.first().getString(8).toString());
 			
-		System.out.println(count + ". Beggining Analysis on battery id: " + input_battery_id);
+		System.out.println(count + ". Beginning Analysis on battery id: " + input_battery_id);
 		
 			for (int i = 1;i<4;i++)
 				for (int j = 1;j<4; j++) {
-					newResult = new TestIndicator().execute(csv.select("*"),input_battery_id,i,j);
+					newResult = new TestIndicator().execute(filtered_csv,battery_id_tests,i,j);
 					results.add(newResult);
 					if (newResult!=null)
 						System.out.println(newResult);
