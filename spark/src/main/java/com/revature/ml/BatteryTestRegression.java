@@ -30,7 +30,12 @@ public class BatteryTestRegression {
   private static Vector extractFeatures(Row batteryRow) {
     List<Double> dimensions = new ArrayList<>();
     for (int i = FIRST_TEST_SCORE; i <= LAST_TEST_SCORE; i++) {
-      dimensions.add(batteryRow.getDouble(i));
+      if (batteryRow.isNullAt(i)) {
+        dimensions.add(0.0);
+      }
+      else {
+        dimensions.add(batteryRow.getDouble(i));
+      }
     }
     Double[] features = new Double[dimensions.size()];
     features = dimensions.toArray(features);
