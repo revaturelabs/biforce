@@ -2,6 +2,7 @@
 
 1. Create Database and Tables in MySQL database using below commands: 
 
+	```SQL
 	CREATE DATABASE BATTERY_STAGING;
 
 	use BATTERY_STAGING;
@@ -17,9 +18,11 @@
 	CREATE TABLE BATTERY_QUANTITATIVE (GRADE_ID INT, SCORE DECIMAL(5, 2), ASSESSMENT_ID INT, TRAINEE_ID INT, INDEX(ASSESSMENT_ID, TRAINEE_ID));
 
 	CREATE TABLE BATTERY_ASSESSMENT (ASSESSMENT_ID INT, RAW_SCORE INT, ASSESSMENT_TYPE VARCHAR(20), WEEK_NUMBER INT, BATCH_ID INT, ASSESSMENT_CATEGORY INT, INDEX(ASSESSMENT_ID, BATCH_ID));
+	```
 	
 2. Create Sqoop job on machine that will performing Oozie. Connect, username, and password will vary:
 	
+	```SQL
 	sqoop job \ 
 	--create test \
 	-- eval \
