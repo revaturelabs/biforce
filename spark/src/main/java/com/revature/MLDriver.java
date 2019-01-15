@@ -4,7 +4,8 @@ import com.revature.ml.BatterySuccessPredictor;
 import org.apache.spark.sql.SparkSession;
 
 /**
- * Hello world!
+ * Provides analyzing data using machine learning.
+ * Invoke using the arguments @input_file @output_file
  */
 public class MLDriver {
 

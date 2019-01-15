@@ -20,6 +20,9 @@ import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.sql.types.StructField;
 import org.apache.spark.sql.types.StructType;
 
+/**
+ * Provides models for predicting the success of a battery.
+ */
 public class BatterySuccessPredictor {
 
   private static final int FIRST_TEST_SCORE = 2;
@@ -27,6 +30,11 @@ public class BatterySuccessPredictor {
 
   private static final Logger LOGGER = Logger.getLogger(BatterySuccessPredictor.class);
 
+  /**
+   * Convert a row of battery data into a feature vector.
+   * @param batteryRow The row to convert.
+   * @return A vector containing the test data for a battery.
+   */
   private static Vector extractFeatures(Row batteryRow) {
     List<Double> dimensions = new ArrayList<>();
     for (int i = FIRST_TEST_SCORE; i <= LAST_TEST_SCORE; i++) {
@@ -42,6 +50,12 @@ public class BatterySuccessPredictor {
     return new DenseVector(ArrayUtils.toPrimitive(features));
   }
 
+  /**
+   * Analyze data from inputPath and Write results to outputPath.
+   * @param spark the spark context.
+   * @param inputPath the inputPath for the csv file.
+   * @param outputPath the path for the output csv file.
+   */
   public void execute(SparkSession spark, String inputPath, String outputPath) {
     SparkContext context = spark.sparkContext();
     JavaRDD<String> batteryRDD = context.textFile(inputPath, 1).toJavaRDD();
