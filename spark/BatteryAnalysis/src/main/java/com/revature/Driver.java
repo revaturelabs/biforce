@@ -26,7 +26,7 @@ public class Driver {
 	private static TestIndicator testIndicator;
 	private static JavaSparkContext context;
 	
-	/**
+	/*
 	 * Creates the output file, filters the data to just the relevant values,
 	 * then runs the tests on each unique id.
 	 */
@@ -35,6 +35,15 @@ public class Driver {
 		final String SPARK_MASTER = args[0];
 		final String INPUT_PATH = args[1];
 		final String OUTPUT_PATH = args[2];
+		int TARGET_BATCH = 0;
+		try {
+			if (args.length==4)
+				TARGET_BATCH = Integer.parseInt(args[3]);
+		}
+		catch (NumberFormatException e) {
+			System.out.println("4th argument must be an integer");
+			System.exit(1);
+		}
 		
 		try {
 			writer = new BufferedWriter(new FileWriter(OUTPUT_PATH, true));
@@ -43,9 +52,7 @@ public class Driver {
 			e.printStackTrace();
 		}
 		
-		/*
-		 * Set Spark configuration for Context.
-		 */
+		// Set Spark configuration for Context.
 		SparkConf conf = new SparkConf().setAppName("ChanceToFail").setMaster(SPARK_MASTER);
 		context = new JavaSparkContext(conf);
 		context.setLogLevel("ERROR");
@@ -54,7 +61,7 @@ public class Driver {
 		results = new ArrayList<AnalyticResult>();
 		
 		/*
-		 * Read in the data from the input file.
+		 * Read in the data from the input file
 		 * _c0 = test type
 		 * _c1 = raw score
 		 * _c2 = score
@@ -72,7 +79,12 @@ public class Driver {
 		csv = session.read().format("csv").option("header","false").load(INPUT_PATH);
 		
 		// Create a list containing each row with battery id as a primary key.
-		Dataset<Row> uniqueBatteries = csv.groupBy("_c8").count();
+		Dataset<Row> uniqueBatteries;
+		if (args.length==4)
+			uniqueBatteries = csv.filter("_c6 = " + TARGET_BATCH).groupBy("_c8").count();
+		else
+			uniqueBatteries = csv.groupBy("_c8").count();
+			
 		
 		List<Row> rowList = uniqueBatteries.toJavaRDD().collect();
 		
@@ -96,7 +108,7 @@ public class Driver {
 	
 	/**
 	 * Call the various indicator tests and add the results to our result list.
-	 * This consists of looking at the first 3 tests in the first 3 periods.
+	 * Consists of looking at the first 3 tests in the first 3 periods.
 	 */
 	public static void performTestingOnRows(Dataset<Row> battery_id_tests) {
 		int totalSampleSize;

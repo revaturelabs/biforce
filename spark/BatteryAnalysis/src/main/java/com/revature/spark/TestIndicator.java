@@ -23,8 +23,8 @@ public class TestIndicator implements Serializable {
 			score = Double.parseDouble(battery_id_tests.first().get(2).toString());
 		}
 		catch(Exception e) {
-			// If no score is found for the given test, return null, 
-			// this indicator doesn't apply for this battery id.
+			// If no score is found for the given test, return null.
+			// This indicator doesn't apply for this battery id.
 			return null;
 		}
 		
@@ -34,11 +34,11 @@ public class TestIndicator implements Serializable {
 		scoreUpperBound = score+10;
 		
 		// Filter the data set to find just those who scored similarly and passed or failed.
-		Dataset<Row> csvTotal = csv.filter("(_c9 = 1 OR _c9 = 2 OR _c9 = 3) AND _c2 >= " + scoreLowerBound + " AND _c2 <= " + scoreUpperBound);
+		Dataset<Row> csvTotal = csv.filter("(_c9 = 0 OR _c9 = 1 OR _c9 = 2) AND _c2 >= " + scoreLowerBound + " AND _c2 <= " + scoreUpperBound);
 		// Count the unique battery_ids of those who scored similarly.
 		totalAmount = csvTotal.groupBy("_c8").count().distinct().count();
 		// Count the unique battery_ids of those who score similarly and just failed.
-		failedAmount = csvTotal.filter("_c9 = 1").groupBy("_c8").count().distinct().count();
+		failedAmount = csvTotal.filter("_c9 = 0").groupBy("_c8").count().distinct().count();
 		// Calculate the percentage of those who failed.
 		if (totalAmount!=0)
 			outputPercentage = (double)failedAmount/(double)totalAmount*100;

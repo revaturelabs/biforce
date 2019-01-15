@@ -20,22 +20,25 @@ import org.apache.spark.sql.Row;
  * Note that entire rows are outputted, not just specific columns.
  */
 
-//for each row:
-//	test type, raw score, score, test period, test catagory, builder id, group id, group type, battery id, battery status
-//battery_status: dropped = 1, employed = 2, training = 3 (ignore others)
+/*
+ * for each row:
+ *	test type, raw score, score, test period, test catagory, builder id, group id, group type, battery id, battery status
+ *
+ * battery_status: dropped = 1, employed = 2, training = 3 (ignore others)
+ */
 
-//"_c#" refer to the column names- the default names provided by spark
+// "_c#" refers to the column names - the default names provided by spark.
 public class PassFailSampleFilter {
 	
-	//input:  the full table of data given to us (battery_test.csv), output file path
+	// input: the full table of data given to us (battery_test.csv), output file path.
 	public static Dataset<Row> execute(Dataset<Row> csv) {
 		
 		
-		//Get a list of battery_ids that match the criteria, and drop all columns except that which lists the battery IDs
-		Dataset<Row> filteredCSV = csv.filter("_c9 = 1 OR _c9 = 2 OR (_c9 = 3 AND (_c3 = 9 OR _c3 = 10))")
+		// Get a list of battery_ids that match the criteria, and drop all columns except that which lists the battery IDs.
+		Dataset<Row> filteredCSV = csv.filter("_c9 = 0 OR _c9 = 1 OR (_c9 = 3 AND (_c3 = 9 OR _c3 = 10))")
 				.drop("_c0", "_c1","_c2","_c3","_c4","_c5","_c6","_c7","_c9","_c10").dropDuplicates();
 		
-		//Convert the column of battery IDs to a list, and then convert that list to a string
+		// Convert the column of battery IDs to a list and convert that list to a string.
 		List<Row> battery_IDs = filteredCSV.collectAsList();
 		StringBuilder listOfIDs = new StringBuilder("");
 		for(Row r:battery_IDs) {
@@ -43,8 +46,8 @@ public class PassFailSampleFilter {
 		}
 		String batteryList = listOfIDs.toString();
 		
-		//Then filter out all records of batteries whose ID isn't present within the string of approved battery IDs.
-		//Also only keep records covering the first three test periods of the approved battery IDs.
+		// Then filter out all records of batteries whose ID isn't present within the string of approved battery IDs.
+		// Also only keep records covering the first three test periods of the approved battery IDs.
 		csv = csv.filter((FilterFunction<Row>)row -> {
 			return (batteryList.contains(row.get(8).toString()) && (
 					Integer.parseInt(row.get(3).toString())==3 ||
