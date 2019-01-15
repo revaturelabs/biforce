@@ -15,7 +15,7 @@ import org.apache.spark.sql.types.StructType;
 
 public class DataFrameFactory {
 
-  private static final String schemaString = "TEST_TYPE TEST_RAW_SCORE TEST_SCORE TEST_PERIOD TEST_CATEGORY BUILDER_ID GROUP_ID GROUP_TYPE_ID BATTERY_ID BATTERY_STATUS";
+  private static final String schemaString = "TEST_ID TEST_TYPE TEST_RAW_SCORE TEST_SCORE TEST_PERIOD TEST_CATEGORY BUILDER_ID GROUP_ID GROUP_TYPE_ID BATTERY_ID BATTERY_STATUS";
 
   public static Dataset<Row> getBatteryDataFrame(SparkSession spark, JavaRDD<String> batteryRDD) {
     List<StructField> fields = new ArrayList<>();
