@@ -6,7 +6,7 @@ import org.apache.spark.sql.SparkSession;
 /**
  * Hello world!
  */
-public class Driver {
+public class MLDriver {
 
   public static void main(String[] args) {
     if (args.length != 3) {
