@@ -1,5 +1,29 @@
 ## ETL Team
 
+## Responsibilities
+
+Our Responsibilities consisted of initial cleansing of the data through Sqoop importing tables from Caliber Database into HDFS filtering only specific columns, Sqoop exporting the data into MySQL, performing complex queries on the tables to join the results into one usuable result, then Sqoop importing the final table back in HDFS. This entire process also needed to be automated in Oozie.
+
+## Goals
+
+1. Because we didn't have access to Caliber, we needed immediate access to test tables which was provided to us through our team leads.
+
+2. Create Tables in MySQL defining a workable schema to work with each data type.
+
+3. Create Sqoop commands for all export and import commands.
+
+4. Create MySQL query to join all tables into one workable table.
+
+5. Test all Sqoop commands on local machine.
+
+6. Cordinate with Oozie team to switch Sqoop jobs over into Oozie actions.
+
+7. Figure out how to encrypt passwords to implement Sqoop commands to import from Caliber.
+
+8. Add Caliber Sqoop imports into Oozie.
+
+## Procedures
+
 1. Create Database and Tables in MySQL database using below commands: 
 
 	```SQL
@@ -20,11 +44,11 @@
 	CREATE TABLE BATTERY_ASSESSMENT (ASSESSMENT_ID INT, RAW_SCORE INT, ASSESSMENT_TYPE VARCHAR(20), WEEK_NUMBER INT, BATCH_ID INT, ASSESSMENT_CATEGORY INT, INDEX(ASSESSMENT_ID, BATCH_ID));
 	```
 	
-2. Create Sqoop job on machine that will performing Oozie. Connect, username, and password will vary:
+2. Create Sqoop job on the machine that will perform Oozie. Connect, username, and password will vary:
 	
 	```SQL
 	sqoop job \ 
-	--create test \
+	--create battery_test_join \
 	-- eval \
 	--connect jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING \
 	--username root \
@@ -115,5 +139,15 @@
 	WHERE Q.TRAINEE_ID = B.TRAINEE_ID
 	AND G.BATCH_ID = B.BATCH_ID
 	AND Q.QC_STATUS IS NOT NULL;"
+
+3. Create encrypted password to connect to Caliber. You will be prompted to enter the password when you run the below command: 
+
+```
+	hadoop credential create mydb.password.alias -provider jceks://hdfs/user/root/mysql.password.jceks
+```
 	
-3. Refer to Oozie workflow for automated Sqoop commands. Remember the above commands must be commpleted before the oozie workflow will work!
+4. Refer to Oozie workflow for automated Sqoop commands. Remember the above commands must be completed before the Oozie workflow will work!
+
+## Results
+
+We were able to successfully run all the Sqoop tasks through Oozie using Hortonworks. One of the major drawbacks was processing the initial complex query on MySQL but this issue was resolved by adding INDEXs on the columns that were used in the WHERE clause. 
