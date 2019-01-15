@@ -30,11 +30,21 @@ public class Driver {
 	 * Creates the output file, filters the data to just the relevant values,
 	 * then runs the tests on each unique id.
 	 */
+	
 	public static void main(String args[]) {
 		
 		final String SPARK_MASTER = args[0];
 		final String INPUT_PATH = args[1];
 		final String OUTPUT_PATH = args[2];
+		int TARGET_BATCH = 0;
+		try {
+			if (args.length==4)
+				TARGET_BATCH = Integer.parseInt(args[3]);
+		}
+		catch (NumberFormatException e) {
+			System.out.println("4th argument must be an integer");
+			System.exit(1);
+		}
 		
 		try {
 			writer = new BufferedWriter(new FileWriter(OUTPUT_PATH, true));
@@ -44,8 +54,9 @@ public class Driver {
 		}
 		
 		/*
-		 * Set Spark configuration for Context.
+		 * Set Spark configuration for Context
 		 */
+		
 		SparkConf conf = new SparkConf().setAppName("ChanceToFail").setMaster(SPARK_MASTER);
 		context = new JavaSparkContext(conf);
 		context.setLogLevel("ERROR");
@@ -54,7 +65,7 @@ public class Driver {
 		results = new ArrayList<AnalyticResult>();
 		
 		/*
-		 * Read in the data from the input file.
+		 * Read in the data from the input file
 		 * _c0 = test type
 		 * _c1 = raw score
 		 * _c2 = score
@@ -67,24 +78,31 @@ public class Driver {
 		 * _c9 = battery status
 		 */
 		
-		// Read the input file in as a spark Dataset<Row> with no header, therefore the
-		// resulting table column names are in the format _c#.
+		//Read the input file in as a spark Dataset<Row> with no header, therefor the
+		//resulting table column names are in the format _c#
 		csv = session.read().format("csv").option("header","false").load(INPUT_PATH);
 		
-		// Create a list containing each row with battery id as a primary key.
-		Dataset<Row> uniqueBatteries = csv.groupBy("_c8").count();
+		//Create a list containing each row with battery id as a primary key
+		
+		Dataset<Row> uniqueBatteries;
+		if (args.length==4)
+			uniqueBatteries = csv.filter("_c6 = " + TARGET_BATCH).groupBy("_c8").count();
+		else
+			uniqueBatteries = csv.groupBy("_c8").count();
+			
 		
 		List<Row> rowList = uniqueBatteries.toJavaRDD().collect();
 		
-		// Filter the indicator data to include only the valid data for our samples.
+		//Filter the indicator data to include only the valid data for our samples.
 		filtered_csv = PassFailSampleFilter.execute(csv);
 		
-		// Run the tests for each battery id.
+		//Run the tests for each battery id
 		for (Row row : rowList) {
 			performTestingOnRows(csv.filter("_c8 = " + row.get(0).toString()));
 		}
 		
-		// Close all the resources.
+		//close all the resources
+		
 		try {
 			writer.close();
 		} catch (IOException e) {
@@ -96,8 +114,10 @@ public class Driver {
 	
 	/**
 	 * Call the various indicator tests and add the results to our result list.
-	 * This consists of looking at the first 3 tests in the first 3 periods.
+	 * At the moment these consist of looking at just the first 3 tests in the first 3
+	 * periods.
 	 */
+	
 	public static void performTestingOnRows(Dataset<Row> battery_id_tests) {
 		int totalSampleSize;
 		double finalPercentage;
@@ -118,7 +138,8 @@ public class Driver {
 					}
 				}
 			
-			// Sum up the total of the sample sizes for each result.
+			//Sum up the total of the sample sizes for each result
+			
 			totalSampleSize = 0;
 			for (AnalyticResult result:results) {
 				if (result!=null) {
@@ -126,7 +147,7 @@ public class Driver {
 				}
 			}
 			
-			// Use the sample size sum and calculate the final percentage by weighing each result by their sample size.
+			//Use the sample size sum and calculate the final percentage by weighing each result by their sample size
 			finalPercentage = 0;
 			for (AnalyticResult result:results) {
 				if (result!=null) {
@@ -134,11 +155,13 @@ public class Driver {
 				}
 			}
 			
-			// Log the results.
+			//Log the results
+			
 			context.sc().log().info("Aggregated Result: Battery_id: " + input_battery_id + ", % Chance to fail: " + finalPercentage + ", Total Sample Size: " + totalSampleSize);
 			System.out.println("Aggregated Result: Battery_id: " + input_battery_id + ", % Chance to fail: " + finalPercentage + ", Total Sample Size: " + totalSampleSize);
 			
-			// Append the results to the output file.
+			//Append the results to the output file.
+			
 			try {
 				writer.append(input_battery_id + "," + finalPercentage + "," + totalSampleSize+'\n');
 			} catch (IOException e) {
@@ -147,7 +170,7 @@ public class Driver {
 			
 			count++;
 			
-			// Clear the results of these tests to make way for the next battery id.
+			//Clear the results of these tests to make way for the next battery id
 			results.clear();
 	}
 }
