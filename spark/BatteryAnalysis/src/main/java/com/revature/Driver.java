@@ -140,7 +140,7 @@ public class Driver {
 			
 			// Append the results to the output file.
 			try {
-				writer.append(input_battery_id + "," + finalPercentage + "," + totalSampleSize);
+				writer.append(input_battery_id + "," + finalPercentage + "," + totalSampleSize+'\n');
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
