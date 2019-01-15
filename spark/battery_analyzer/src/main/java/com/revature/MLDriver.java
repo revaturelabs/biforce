@@ -21,7 +21,6 @@ public class MLDriver {
         SparkSession spark = SparkSession
                 .builder()
                 .appName("Battery Analyzer")
-                .master("local[*]")
                 .getOrCreate();
 
         new BatterySuccessPredictor().execute(spark, inputPath, outputPath);
