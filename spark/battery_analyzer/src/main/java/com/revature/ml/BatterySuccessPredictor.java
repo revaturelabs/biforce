@@ -62,9 +62,7 @@ public class BatterySuccessPredictor {
     public void execute(SparkSession spark, String inputPath, String outputPath) {
         SparkContext context = spark.sparkContext();
         JavaRDD<String> batteryRDD = context.textFile(inputPath, 1).toJavaRDD();
-        Dataset<Row> batteryDataFrame = DataFrameFactory.getBatteryDataFrame(spark, batteryRDD);
-        Dataset<Row> testDataset = batteryDataFrame
-                .filter("BATTERY_STATUS = 1 OR BATTERY_STATUS = 0");
+        Dataset<Row> testDataset = DataFrameFactory.getBatteryDataFrame(spark, batteryRDD);
         Dataset<Row> period1Type1Dataset = testDataset
                 .filter("TEST_TYPE = 1 AND TEST_PERIOD = 1");
         Dataset<Row> period2Type1Dataset = testDataset
@@ -86,8 +84,10 @@ public class BatterySuccessPredictor {
                 .join(period3Type2Dataset.select("BATTERY_ID", "TEST_SCORE"), "BATTERY_ID")
                 .distinct();
         earlyTestDataset.show();
-        JavaRDD<LabeledPoint> features = earlyTestDataset.toJavaRDD().map(
-                row -> {
+        JavaRDD<LabeledPoint> features = earlyTestDataset
+                .where("BATTERY_STATUS = 1 OR BATTERY_STATUS = 0")
+                .toJavaRDD()
+                .map(row -> {
                     double batteryStatus = row.getDouble(1);
                     Vector feature = extractFeatures(row);
                     return new LabeledPoint(batteryStatus, feature);
@@ -117,6 +117,7 @@ public class BatterySuccessPredictor {
         StructType outputSchema = DataTypes.createStructType(outputFields);
 
         JavaRDD<Row> output = earlyTestDataset
+                .where("BATTERY_STATUS = 2")
                 .toJavaRDD()
                 .map(row -> {
                     int id = (int) row.getDouble(0);
