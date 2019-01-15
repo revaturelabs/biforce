@@ -1,6 +1,6 @@
 package com.revature;
 
-import com.revature.ml.BatteryTestRegression;
+import com.revature.ml.BatterySuccessPredictor;
 import org.apache.spark.sql.SparkSession;
 
 /**
@@ -23,6 +23,6 @@ public class Driver {
         .master(master)
         .getOrCreate();
 
-    new BatteryTestRegression().execute(spark, inputPath, outputPath);
+    new BatterySuccessPredictor().execute(spark, inputPath, outputPath);
   }
 }
