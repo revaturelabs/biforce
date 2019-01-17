@@ -42,7 +42,7 @@
 		<error to="kill"/>
 	</action>
 
-    <action name="sqoop-battery-quantitative-import">
+	<action name="sqoop-battery-quantitative-import">
 		<sqoop xmlns="uri:oozie:sqoop-action:0.4">
 			<job-tracker>${resourceManager}</job-tracker>
 			<name-node>${nameNode}</name-node>
@@ -53,9 +53,9 @@
 		</sqoop>
 		<ok to="sqoop-battery-assessment-import"/>
 		<error to="kill"/>
-    </action>
+	</action>
 
-    <action name="sqoop-battery-assessment-import">
+	<action name="sqoop-battery-assessment-import">
 		<sqoop xmlns="uri:oozie:sqoop-action:0.4">
 			<job-tracker>${resourceManager}</job-tracker>
 			<name-node>${nameNode}</name-node>
@@ -66,7 +66,7 @@
 		</sqoop>
 		<ok to="sqoop-trun-battery"/>
 		<error to="kill"/>
-    </action>
+	</action>
 
 	<!-- TRUNCATE ALL TABLES in MySQL -->
 	<action name="sqoop-trun-battery" retry-max="2" retry-interval="1">
