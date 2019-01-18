@@ -111,6 +111,8 @@ SELECT
     'No Missing Test in first three weeks' MESSAGE
 FROM BATTERIES_FILTERED_DISTINCT
 WHERE BATTERY_ID NOT IN
+   -- Should rework to use a left join on battery_id, where 
+    -- condition is equall to null.
 (SELECT BATTERY_ID FROM M1_RESULTS)),
 
 --look for battiers with atleast one project in the first three weeks
