@@ -1,7 +1,73 @@
 <workflow-app xmlns="uri:oozie:workflow:0.4" name="project3">
 	<!-- Start job control node -->
-	<start to="sqoop-trun-battery" />
-	
+	<start to="sqoop-battery-import" />
+
+	<!-- Import from Caliber -->
+	<action name="sqoop-battery-import">
+		<sqoop xmlns="uri:oozie:sqoop-action:0.4">
+			<job-tracker>${resourceManager}</job-tracker>
+			<name-node>${nameNode}</name-node>
+			<prepare>
+				<delete path="battery-pre-csv/battery"/>
+			</prepare>
+			<command>import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias mydb.password.alias --table CALIBER_TRAINEE --columns TRAINEE_ID,TRAINING_STATUS,BATCH_ID --fields-terminated-by , --target-dir battery-pre-csv/battery -m 1</command>
+		</sqoop>
+		<ok to="sqoop-battery-group-import"/>
+		<error to="kill"/>
+	</action>
+
+	<action name="sqoop-battery-group-import">
+		<sqoop xmlns="uri:oozie:sqoop-action:0.4">
+			<job-tracker>${resourceManager}</job-tracker>
+			<name-node>${nameNode}</name-node>
+			<prepare>
+				<delete path="battery-pre-csv/battery-group"/>
+			</prepare>
+			<command>import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias mydb.password.alias --table CALIBER_BATCH --columns BATCH_ID,SKILL_TYPE,TRAINER_ID --fields-terminated-by , --target-dir battery-pre-csv/battery-group -m 1</command>
+		</sqoop>
+		<ok to="sqoop-battery-qualitative-import"/>
+		<error to="kill"/>
+	</action>
+
+	<action name="sqoop-battery-qualitative-import">
+		<sqoop xmlns="uri:oozie:sqoop-action:0.4">
+			<job-tracker>${resourceManager}</job-tracker>
+			<name-node>${nameNode}</name-node>
+			<prepare>
+				<delete path="battery-pre-csv/battery-qualitative"/>
+			</prepare>		
+			<command>import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias mydb.password.alias --table CALIBER_NOTE --columns NOTE_ID,QC_STATUS,NOTE_TYPE,WEEK_NUMBER,BATCH_ID,TRAINEE_ID --fields-terminated-by , --target-dir battery-pre-csv/battery-qualitative -m 1</command>
+		</sqoop>
+		<ok to="sqoop-battery-quantitative-import"/>
+		<error to="kill"/>
+	</action>
+
+	<action name="sqoop-battery-quantitative-import">
+		<sqoop xmlns="uri:oozie:sqoop-action:0.4">
+			<job-tracker>${resourceManager}</job-tracker>
+			<name-node>${nameNode}</name-node>
+			<prepare>
+				<delete path="battery-pre-csv/battery-quantitative"/>
+			</prepare>	
+			<command>import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias mydb.password.alias --table CALIBER_GRADE --columns GRADE_ID,SCORE,ASSESSMENT_ID,TRAINEE_ID --fields-terminated-by , --target-dir battery-pre-csv/battery-quantitative -m 1</command>
+		</sqoop>
+		<ok to="sqoop-battery-assessment-import"/>
+		<error to="kill"/>
+	</action>
+
+	<action name="sqoop-battery-assessment-import">
+		<sqoop xmlns="uri:oozie:sqoop-action:0.4">
+			<job-tracker>${resourceManager}</job-tracker>
+			<name-node>${nameNode}</name-node>
+			<prepare>
+				<delete path="battery-pre-csv/battery-assessment"/>
+			</prepare>
+			<command>import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias mydb.password.alias --table CALIBER_ASSESSMENT --columns ASSESSMENT_ID,RAW_SCORE,ASSESSMENT_TYPE,WEEK_NUMBER,BATCH_ID,ASSESSMENT_CATEGORY --fields-terminated-by , --target-dir battery-pre-csv/battery-assessment -m 1</command> 
+		</sqoop>
+		<ok to="sqoop-trun-battery"/>
+		<error to="kill"/>
+	</action>
+
 	<!-- TRUNCATE ALL TABLES in MySQL -->
 	<action name="sqoop-trun-battery" retry-max="2" retry-interval="1">
 		<sqoop xmlns="uri:oozie:sqoop-action:0.4">
@@ -20,7 +86,7 @@
 		<ok to="sqoop-trun-battery-group"/>
 		<error to="kill"/>
 	</action>
-	
+
 	<action name="sqoop-trun-battery-group" retry-max="2" retry-interval="1">
 		<sqoop xmlns="uri:oozie:sqoop-action:0.4">
 			<job-tracker>${resourceManager}</job-tracker>
@@ -38,7 +104,7 @@
 		<ok to="sqoop-trun-battery-qualitative"/>
 		<error to="kill"/>
 	</action>
-	
+
 	<action name="sqoop-trun-battery-qualitative" retry-max="2" retry-interval="1">
 		<sqoop xmlns="uri:oozie:sqoop-action:0.4">
 			<job-tracker>${resourceManager}</job-tracker>
@@ -56,7 +122,7 @@
 		<ok to="sqoop-trun-battery-quantitative"/>
 		<error to="kill"/>
 	</action>
-	
+
 	<action name="sqoop-trun-battery-quantitative" retry-max="2" retry-interval="1">
 		<sqoop xmlns="uri:oozie:sqoop-action:0.4">
 			<job-tracker>${resourceManager}</job-tracker>
@@ -74,7 +140,7 @@
 		<ok to="sqoop-trun-battery-assessment"/>
 		<error to="kill"/>
 	</action>
-	
+
 	<action name="sqoop-trun-battery-assessment" retry-max="2" retry-interval="1">
 		<sqoop xmlns="uri:oozie:sqoop-action:0.4">
 			<job-tracker>${resourceManager}</job-tracker>
@@ -92,7 +158,7 @@
 		<ok to="sqoop-trun-battery-test"/>
 		<error to="kill"/>
 	</action>
-	
+
 	<action name="sqoop-trun-battery-test" retry-max="2" retry-interval="1">
 		<sqoop xmlns="uri:oozie:sqoop-action:0.4">
 			<job-tracker>${resourceManager}</job-tracker>
@@ -110,80 +176,170 @@
 		<ok to="sqoop-battery-export"/>
 		<error to="kill"/>
 	</action>
-		
-	<!-- EXPORT FIVE TABLES into MySQL -->
+
+		<!-- EXPORT FIVE TABLES into MySQL -->
 	<action name="sqoop-battery-export">
-        <sqoop xmlns="uri:oozie:sqoop-action:0.4">
-            <job-tracker>${resourceManager}</job-tracker>
-            <name-node>${nameNode}</name-node>
-            <command>export --connect jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING --username root --password ${hortonPass} --table BATTERY --fields-terminated-by , --export-dir battery-pre-csv/battery/part-m-00000 -m 1</command>
-        </sqoop>
-        <ok to="sqoop-battery-group-export"/>
-        <error to="kill"/>
-    </action>
-	
-	<action name="sqoop-battery-group-export">
-        <sqoop xmlns="uri:oozie:sqoop-action:0.4">
-            <job-tracker>${resourceManager}</job-tracker>
-            <name-node>${nameNode}</name-node>
-            <command>export --connect jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING --username root --password ${hortonPass} --table BATTERY_GROUP --fields-terminated-by , --export-dir battery-pre-csv/battery-group/part-m-00000 -m 1</command>
-        </sqoop>
-        <ok to="sqoop-battery-qualitative-export"/>
-        <error to="kill"/>
-    </action>
-	
-	<action name="sqoop-battery-qualitative-export">
-        <sqoop xmlns="uri:oozie:sqoop-action:0.4">
-            <job-tracker>${resourceManager}</job-tracker>
-            <name-node>${nameNode}</name-node>
-            <command>export --connect jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING --username root --password ${hortonPass} --table BATTERY_QUALITATIVE --fields-terminated-by , --export-dir battery-pre-csv/battery-qualitative/part-m-00000 -m 1</command>
-        </sqoop>
-        <ok to="sqoop-battery-quantitative-export"/>
-        <error to="kill"/>
-    </action>
-	
-	<action name="sqoop-battery-quantitative-export">
-        <sqoop xmlns="uri:oozie:sqoop-action:0.4">
-            <job-tracker>${resourceManager}</job-tracker>
-            <name-node>${nameNode}</name-node>
-            <command>export --connect jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING --username root --password ${hortonPass} --table BATTERY_QUANTITATIVE --fields-terminated-by , --export-dir battery-pre-csv/battery-quantitative/part-m-00000 -m 1</command>
-        </sqoop>
-        <ok to="sqoop-battery-assessment-export"/>
-        <error to="kill"/>
-    </action>
-	
-	<action name="sqoop-battery-assessment-export">
-        <sqoop xmlns="uri:oozie:sqoop-action:0.4">
-            <job-tracker>${resourceManager}</job-tracker>
-            <name-node>${nameNode}</name-node>
-            <command>export --connect jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING --username root --password ${hortonPass} --table BATTERY_ASSESSMENT --fields-terminated-by , --export-dir battery-pre-csv/battery-assessment/part-m-00000 -m 1</command>
-        </sqoop>
-        <ok to="sqoop-battery-test-join"/>
-        <error to="kill"/>
-    </action>
-	
-	
-	<action name="sqoop-battery-test-join" retry-max="2" retry-interval="1">  
 		<sqoop xmlns="uri:oozie:sqoop-action:0.4">
-  			<job-tracker>${resourceManager}</job-tracker>
-    			<name-node>${nameNode}</name-node>
-     			<arg>job</arg>
-      			<arg>--exec</arg>
-   			<arg>battery_test_join</arg>
-		</sqoop>       
+			<job-tracker>${resourceManager}</job-tracker>
+			<name-node>${nameNode}</name-node>
+			<command>export --connect jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING --username root --password ${hortonPass} --table BATTERY --fields-terminated-by , --export-dir battery-pre-csv/battery/part-m-00000 -m 1</command>
+		</sqoop>
+		<ok to="sqoop-battery-group-export"/>
+		<error to="kill"/>
+	</action>
+
+	<action name="sqoop-battery-group-export">
+		<sqoop xmlns="uri:oozie:sqoop-action:0.4">
+			<job-tracker>${resourceManager}</job-tracker>
+			<name-node>${nameNode}</name-node>
+			<command>export --connect jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING --username root --password ${hortonPass} --table BATTERY_GROUP --fields-terminated-by , --export-dir battery-pre-csv/battery-group/part-m-00000 -m 1</command>
+		</sqoop>
+		<ok to="sqoop-battery-qualitative-export"/>
+		<error to="kill"/>
+	</action>
+
+	<action name="sqoop-battery-qualitative-export">
+		<sqoop xmlns="uri:oozie:sqoop-action:0.4">
+			<job-tracker>${resourceManager}</job-tracker>
+			<name-node>${nameNode}</name-node>
+			<command>export --connect jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING --username root --password ${hortonPass} --table BATTERY_QUALITATIVE --fields-terminated-by , --export-dir battery-pre-csv/battery-qualitative/part-m-00000 -m 1</command>
+		</sqoop>
+		<ok to="sqoop-battery-quantitative-export"/>
+		<error to="kill"/>
+	</action>
+
+	<action name="sqoop-battery-quantitative-export">
+		<sqoop xmlns="uri:oozie:sqoop-action:0.4">
+			<job-tracker>${resourceManager}</job-tracker>
+			<name-node>${nameNode}</name-node>
+			<command>export --connect jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING --username root --password ${hortonPass} --table BATTERY_QUANTITATIVE --fields-terminated-by , --export-dir battery-pre-csv/battery-quantitative/part-m-00000 -m 1</command>
+		</sqoop>
+		<ok to="sqoop-battery-assessment-export"/>
+		<error to="kill"/>
+	</action>
+
+	<action name="sqoop-battery-assessment-export">
+		<sqoop xmlns="uri:oozie:sqoop-action:0.4">
+			<job-tracker>${resourceManager}</job-tracker>
+			<name-node>${nameNode}</name-node>
+			<command>export --connect jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING --username root --password ${hortonPass} --table BATTERY_ASSESSMENT --fields-terminated-by , --export-dir battery-pre-csv/battery-assessment/part-m-00000 -m 1</command>
+		</sqoop>
+		<ok to="sqoop-battery-test-join"/>
+		<error to="kill"/>
+	</action>
+
+	<action name="sqoop-battery-test-join" retry-max="2" retry-interval="1">
+		<sqoop xmlns="uri:oozie:sqoop-action:0.4">
+			<job-tracker>${resourceManager}</job-tracker>
+			<name-node>${nameNode}</name-node>
+			<arg>eval</arg>
+			<arg>--connect</arg>
+			<arg>jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING</arg>
+			<arg>--username</arg>
+			<arg>root</arg>
+			<arg>--password</arg>
+			<arg>${hortonPass}</arg>
+			<arg>--query</arg>
+			<arg>INSERT INTO BATTERY_TEST (TEST_TYPE, RAW_SCORE, SCORE, TEST_PERIOD, TEST_CATEGORY, BUILDER_ID, GROUP_ID, GROUP_TYPE, BATTERY_ID, BATTERY_STATUS)
+			SELECT
+				CASE 
+					WHEN UPPER(A.ASSESSMENT_TYPE) = 'VERBAL' THEN 1 
+					WHEN UPPER(A.ASSESSMENT_TYPE) = 'EXAM' THEN 2
+					WHEN UPPER(A.ASSESSMENT_TYPE) = 'PROJECT' THEN 3
+					WHEN UPPER(A.ASSESSMENT_TYPE) = 'OTHER' THEN 4
+					ELSE 0
+				END,
+				A.RAW_SCORE, 
+				Q.SCORE,
+				A.WEEK_NUMBER,
+				A.ASSESSMENT_CATEGORY,
+				G.TRAINER_ID,
+				G.BATCH_ID,
+				CASE 
+					WHEN UPPER(G.SKILL_TYPE) = 'SDET' THEN 1 
+					WHEN UPPER(G.SKILL_TYPE) = 'J2EE' THEN 2
+					WHEN UPPER(G.SKILL_TYPE) = 'OTHER' THEN 3
+					WHEN UPPER(G.SKILL_TYPE) = 'BPM' THEN 4
+					WHEN UPPER(G.SKILL_TYPE) = 'NET' THEN 5
+					WHEN UPPER(G.SKILL_TYPE) = 'BPM' THEN 6
+					WHEN UPPER(G.SKILL_TYPE) = 'MICROSERVICES' THEN 7
+					ELSE 0
+				END,
+				Q.TRAINEE_ID,
+				CASE
+					WHEN UPPER(B.TRAINING_STATUS) = 'DROPPED' THEN 0
+					WHEN UPPER(B.TRAINING_STATUS) = 'EMPLOYED' THEN 1
+					WHEN UPPER(B.TRAINING_STATUS) = 'TRAINING' THEN 2
+					WHEN UPPER(B.TRAINING_STATUS) = 'SIGNED' THEN 3
+					WHEN UPPER(B.TRAINING_STATUS) = 'CONFIRMED' THEN 4
+					WHEN UPPER(B.TRAINING_STATUS) = 'MARKETING' THEN 5
+					ELSE 6
+				END
+			FROM BATTERY_ASSESSMENT A, BATTERY_GROUP G, BATTERY_QUANTITATIVE Q, BATTERY B
+			WHERE A.ASSESSMENT_ID = Q.ASSESSMENT_ID
+			AND A.BATCH_ID = G.BATCH_ID
+			AND Q.TRAINEE_ID = B.TRAINEE_ID
+
+			UNION ALL
+
+			SELECT 
+				CASE 
+					WHEN UPPER(Q.NOTE_TYPE) = 'TRAINEE' THEN 5 
+					WHEN UPPER(Q.NOTE_TYPE) = 'QC_TRAINEE' THEN 6
+					WHEN UPPER(Q.NOTE_TYPE) = 'BATCH' THEN 7
+					WHEN UPPER(Q.NOTE_TYPE) = 'QC_BATCH' THEN 8
+					ELSE 0
+				END,
+				100, 
+				CASE 
+					WHEN UPPER(Q.QC_STATUS) = 'POOR' THEN 65 
+					WHEN UPPER(Q.QC_STATUS) = 'AVERAGE' THEN 75
+					WHEN UPPER(Q.QC_STATUS) = 'GOOD' THEN 85
+					WHEN UPPER(Q.QC_STATUS) = 'SUPERSTAR' THEN 95
+					ELSE 0
+				END,
+				Q.WEEK_NUMBER,
+				0,
+				G.TRAINER_ID,
+				G.BATCH_ID,
+				CASE 
+					WHEN UPPER(G.SKILL_TYPE) = 'SDET' THEN 1 
+					WHEN UPPER(G.SKILL_TYPE) = 'J2EE' THEN 2
+					WHEN UPPER(G.SKILL_TYPE) = 'OTHER' THEN 3
+					WHEN UPPER(G.SKILL_TYPE) = 'BPM' THEN 4
+					WHEN UPPER(G.SKILL_TYPE) = 'NET' THEN 5
+					WHEN UPPER(G.SKILL_TYPE) = 'BPM' THEN 6
+					WHEN UPPER(G.SKILL_TYPE) = 'MICROSERVICES' THEN 7
+					ELSE 0
+				END,
+				B.TRAINEE_ID,
+				CASE
+					WHEN UPPER(B.TRAINING_STATUS) = 'DROPPED' THEN 0
+					WHEN UPPER(B.TRAINING_STATUS) = 'EMPLOYED' THEN 1
+					WHEN UPPER(B.TRAINING_STATUS) = 'TRAINING' THEN 2
+					WHEN UPPER(B.TRAINING_STATUS) = 'SIGNED' THEN 3
+					WHEN UPPER(B.TRAINING_STATUS) = 'CONFIRMED' THEN 4
+					WHEN UPPER(B.TRAINING_STATUS) = 'MARKETING' THEN 5
+					ELSE 6
+				END
+			FROM BATTERY B, BATTERY_QUALITATIVE Q, BATTERY_GROUP G
+			WHERE Q.TRAINEE_ID = B.TRAINEE_ID
+			AND G.BATCH_ID = B.BATCH_ID
+			AND Q.QC_STATUS IS NOT NULL</arg>
+		</sqoop> 
 		<ok to="sqoop-battery-test-import"/>
 		<error to="kill"/>
 	</action>
-	
+
 	<!-- IMPORT CLEANSED DATA -->
 	<action name="sqoop-battery-test-import">
 		<sqoop xmlns="uri:oozie:sqoop-action:0.4">
 			<job-tracker>${resourceManager}</job-tracker>
-            <name-node>${nameNode}</name-node>
-            <prepare>
-                <delete path="battery-pre-csv/battery-test"/>
-            </prepare>
-            <arg>import</arg>
+			<name-node>${nameNode}</name-node>
+			<prepare>
+				<delete path="battery-pre-csv/battery-test"/>
+			</prepare>
+			<arg>import</arg>
 			<arg>--connect</arg>
 			<arg>jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING</arg>
 			<arg>--username</arg>
@@ -202,14 +358,14 @@
 		<ok to="end"/>
 		<error to="kill"/>
 	</action>
-	
+
 	<!-- Kill job control node -->
 	<kill name="kill">
-        <message>message[${wf:errorMessage(wf:lastErrorNode())}]</message>
-    </kill>
-	
-    <!-- End job control node -->
-    <end name="end" />
+		<message>message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+	</kill>
+		
+	<!-- End job control node -->
+	<end name="end" />
 </workflow-app>
 		
 			
