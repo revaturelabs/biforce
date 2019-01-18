@@ -6,7 +6,7 @@ Biforce is a project conducted by Revature to improve its business decisions via
 ## Objectives
 
 ## Current State
-Trainee evaluations are gathered from ![Caliber](https://github.com/revaturelabs/caliber) and transformed through the use of Sqoop commands. The transformation is automated with an Oozie workflow. The resulting output is used by traditional and machine learning algorithms written using Apache Spark, which are run inside both a physical and cloud cluster. Output from Spark is stored in an Amazon S3 bucket and then is imported by Amazon Redshift. Microsoft Power BI will then visualize the data stored in Redshift using dashboards and reports, which can distributed to various clients and stakeholders.
+Trainee evaluations are gathered from [Caliber](https://github.com/revaturelabs/caliber) and transformed through the use of Sqoop commands. The transformation is automated with an Oozie workflow. The resulting output is used by traditional and machine learning algorithms written using Apache Spark, which are run inside both a physical and cloud cluster. Output from Spark is stored in an Amazon S3 bucket and then is imported by Amazon Redshift. Microsoft Power BI will then visualize the data stored in Redshift using dashboards and reports, which can distributed to various clients and stakeholders.
 
 ## Scope
 
