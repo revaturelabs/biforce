@@ -22,6 +22,10 @@ move id_rsa to .ssh directory
 hdfs dfs -mkdir /user/oozie/.ssh
 hdfs dfs -put ~/.ssh/id_rsa /user/oozie/.ssh
 ```
+Add correct permissions to the key
+```
+hdfs dfs -chmod 400 /user/oozie/.ssh/id_rsa
+```
 Create an ssh-action within an Oozie workflow. 
 
 ``` xml
