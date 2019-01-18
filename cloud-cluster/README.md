@@ -16,6 +16,12 @@ Move id_rsa to .ssh directory
 ```
 mv id_rsa ~/.ssh/id_rsa 
 ```
+Create a .ssh folder with the oozie user in HDFS and
+move id_rsa to .ssh directory 
+```
+hdfs dfs -mkdir /user/oozie/.ssh
+hdfs dfs -put ~/.ssh/id_rsa /user/oozie/.ssh
+```
 Create an ssh-action within an Oozie workflow. 
 
 ``` xml
