@@ -1,11 +1,11 @@
 ## Spark Team
 * The current code in SparkAnalysis takes 4 arguments:
-* the spark master, the input file, the output file, and an optional
-* batch number. If the batch number isn't provided it will analayze all batteries.
+  the spark master, the input file, the output file, and an optional
+  batch number. If the batch number isn't provided it will analayze all batteries.
 * The input file should point to battery_test.csv and the output will be in csv
-* format. The csv file contains 3 columns: the battery_id, the %
-* chance they will fail, and the sample size. The higher the sample
-* size, the more accurate the prediction.
+  format. The csv file contains 3 columns: the battery_id, the %
+  chance they will fail, and the sample size. The higher the sample
+  size, the more accurate the prediction.
 
 Future iteration considerations:
 - Speed up the code using caching. At the moment it takes 6 hours to process 852 unique 
