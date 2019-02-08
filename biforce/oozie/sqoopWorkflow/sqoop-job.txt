@@ -1,9 +1,9 @@
 sqoop job \
 --create battery_test_join \
 -- eval \
---connect jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING \
+--connect jdbc:mysql://quickstart.cloudera/BATTERY_STAGING \
 --username root \
---password mySQLPW \
+--password cloudera \
 -e "INSERT INTO BATTERY_TEST (TEST_TYPE, RAW_SCORE, SCORE, TEST_PERIOD, TEST_CATEGORY, BUILDER_ID, GROUP_ID, GROUP_TYPE, BATTERY_ID, BATTERY_STATUS)
 SELECT
 	CASE 
@@ -72,8 +72,7 @@ SELECT
         WHEN UPPER(G.SKILL_TYPE) = 'OTHER' THEN 3
         WHEN UPPER(G.SKILL_TYPE) = 'BPM' THEN 4
         WHEN UPPER(G.SKILL_TYPE) = 'NET' THEN 5
-        WHEN UPPER(G.SKILL_TYPE) = 'BPM' THEN 6
-        WHEN UPPER(G.SKILL_TYPE) = 'MICROSERVICES' THEN 7
+        WHEN UPPER(G.SKILL_TYPE) = 'MICROSERVICES' THEN 6
         ELSE 0
     END,
     B.TRAINEE_ID,

@@ -75,7 +75,7 @@
 			<name-node>${nameNode}</name-node>
 			<arg>eval</arg>
 			<arg>--connect</arg>
-			<arg>jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING</arg>
+			<arg>jdbc:mysql://quickstart.cloudera/BATTERY_STAGING</arg>
 			<arg>--username</arg>
 			<arg>root</arg>
 			<arg>--password</arg>
@@ -93,7 +93,7 @@
 			<name-node>${nameNode}</name-node>
 			<arg>eval</arg>
 			<arg>--connect</arg>
-			<arg>jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING</arg>
+			<arg>jdbc:mysql://quickstart.cloudera/BATTERY_STAGING</arg>
 			<arg>--username</arg>
 			<arg>root</arg>
 			<arg>--password</arg>
@@ -111,7 +111,7 @@
 			<name-node>${nameNode}</name-node>
 			<arg>eval</arg>
 			<arg>--connect</arg>
-			<arg>jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING</arg>
+			<arg>jdbc:mysql://quickstart.cloudera/BATTERY_STAGING</arg>
 			<arg>--username</arg>
 			<arg>root</arg>
 			<arg>--password</arg>
@@ -129,7 +129,7 @@
 			<name-node>${nameNode}</name-node>
 			<arg>eval</arg>
 			<arg>--connect</arg>
-			<arg>jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING</arg>
+			<arg>jdbc:mysql://quickstart.cloudera/BATTERY_STAGING</arg>
 			<arg>--username</arg>
 			<arg>root</arg>
 			<arg>--password</arg>
@@ -147,7 +147,7 @@
 			<name-node>${nameNode}</name-node>
 			<arg>eval</arg>
 			<arg>--connect</arg>
-			<arg>jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING</arg>
+			<arg>jdbc:mysql://quickstart.cloudera/BATTERY_STAGING</arg>
 			<arg>--username</arg>
 			<arg>root</arg>
 			<arg>--password</arg>
@@ -165,7 +165,7 @@
 			<name-node>${nameNode}</name-node>
 			<arg>eval</arg>
 			<arg>--connect</arg>
-			<arg>jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING</arg>
+			<arg>jdbc:mysql://quickstart.cloudera/BATTERY_STAGING</arg>
 			<arg>--username</arg>
 			<arg>root</arg>
 			<arg>--password</arg>
@@ -182,7 +182,7 @@
 		<sqoop xmlns="uri:oozie:sqoop-action:0.4">
 			<job-tracker>${resourceManager}</job-tracker>
 			<name-node>${nameNode}</name-node>
-			<command>export --connect jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING --username root --password ${hortonPass} --table BATTERY --fields-terminated-by , --export-dir battery-pre-csv/battery/part-m-00000 -m 1</command>
+			<command>export --connect jdbc:mysql://quickstart.cloudera/BATTERY_STAGING --username root --password ${hortonPass} --table BATTERY --fields-terminated-by , --export-dir battery-pre-csv/battery/part-m-00000 -m 1</command>
 		</sqoop>
 		<ok to="sqoop-battery-group-export"/>
 		<error to="kill"/>
@@ -192,7 +192,7 @@
 		<sqoop xmlns="uri:oozie:sqoop-action:0.4">
 			<job-tracker>${resourceManager}</job-tracker>
 			<name-node>${nameNode}</name-node>
-			<command>export --connect jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING --username root --password ${hortonPass} --table BATTERY_GROUP --fields-terminated-by , --export-dir battery-pre-csv/battery-group/part-m-00000 -m 1</command>
+			<command>export --connect jdbc:mysql://quickstart.cloudera/BATTERY_STAGING --username root --password ${hortonPass} --table BATTERY_GROUP --fields-terminated-by , --export-dir battery-pre-csv/battery-group/part-m-00000 -m 1</command>
 		</sqoop>
 		<ok to="sqoop-battery-qualitative-export"/>
 		<error to="kill"/>
@@ -202,7 +202,7 @@
 		<sqoop xmlns="uri:oozie:sqoop-action:0.4">
 			<job-tracker>${resourceManager}</job-tracker>
 			<name-node>${nameNode}</name-node>
-			<command>export --connect jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING --username root --password ${hortonPass} --table BATTERY_QUALITATIVE --fields-terminated-by , --export-dir battery-pre-csv/battery-qualitative/part-m-00000 -m 1</command>
+			<command>export --connect jdbc:mysql://quickstart.cloudera/BATTERY_STAGING --username root --password ${hortonPass} --table BATTERY_QUALITATIVE --fields-terminated-by , --export-dir battery-pre-csv/battery-qualitative/part-m-00000 -m 1</command>
 		</sqoop>
 		<ok to="sqoop-battery-quantitative-export"/>
 		<error to="kill"/>
@@ -212,7 +212,7 @@
 		<sqoop xmlns="uri:oozie:sqoop-action:0.4">
 			<job-tracker>${resourceManager}</job-tracker>
 			<name-node>${nameNode}</name-node>
-			<command>export --connect jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING --username root --password ${hortonPass} --table BATTERY_QUANTITATIVE --fields-terminated-by , --export-dir battery-pre-csv/battery-quantitative/part-m-00000 -m 1</command>
+			<command>export --connect jdbc:mysql://quickstart.cloudera/BATTERY_STAGING --username root --password ${hortonPass} --table BATTERY_QUANTITATIVE --fields-terminated-by , --export-dir battery-pre-csv/battery-quantitative/part-m-00000 -m 1</command>
 		</sqoop>
 		<ok to="sqoop-battery-assessment-export"/>
 		<error to="kill"/>
@@ -222,7 +222,7 @@
 		<sqoop xmlns="uri:oozie:sqoop-action:0.4">
 			<job-tracker>${resourceManager}</job-tracker>
 			<name-node>${nameNode}</name-node>
-			<command>export --connect jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING --username root --password ${hortonPass} --table BATTERY_ASSESSMENT --fields-terminated-by , --export-dir battery-pre-csv/battery-assessment/part-m-00000 -m 1</command>
+			<command>export --connect jdbc:mysql://quickstart.cloudera/BATTERY_STAGING --username root --password ${hortonPass} --table BATTERY_ASSESSMENT --fields-terminated-by , --export-dir battery-pre-csv/battery-assessment/part-m-00000 -m 1</command>
 		</sqoop>
 		<ok to="sqoop-battery-test-join"/>
 		<error to="kill"/>
@@ -234,7 +234,7 @@
 			<name-node>${nameNode}</name-node>
 			<arg>eval</arg>
 			<arg>--connect</arg>
-			<arg>jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING</arg>
+			<arg>jdbc:mysql://quickstart.cloudera/BATTERY_STAGING</arg>
 			<arg>--username</arg>
 			<arg>root</arg>
 			<arg>--password</arg>
@@ -261,8 +261,7 @@
 					WHEN UPPER(G.SKILL_TYPE) = 'OTHER' THEN 3
 					WHEN UPPER(G.SKILL_TYPE) = 'BPM' THEN 4
 					WHEN UPPER(G.SKILL_TYPE) = 'NET' THEN 5
-					WHEN UPPER(G.SKILL_TYPE) = 'BPM' THEN 6
-					WHEN UPPER(G.SKILL_TYPE) = 'MICROSERVICES' THEN 7
+					WHEN UPPER(G.SKILL_TYPE) = 'MICROSERVICES' THEN 6
 					ELSE 0
 				END,
 				Q.TRAINEE_ID,
@@ -308,8 +307,7 @@
 					WHEN UPPER(G.SKILL_TYPE) = 'OTHER' THEN 3
 					WHEN UPPER(G.SKILL_TYPE) = 'BPM' THEN 4
 					WHEN UPPER(G.SKILL_TYPE) = 'NET' THEN 5
-					WHEN UPPER(G.SKILL_TYPE) = 'BPM' THEN 6
-					WHEN UPPER(G.SKILL_TYPE) = 'MICROSERVICES' THEN 7
+					WHEN UPPER(G.SKILL_TYPE) = 'MICROSERVICES' THEN 6
 					ELSE 0
 				END,
 				B.TRAINEE_ID,
@@ -341,7 +339,7 @@
 			</prepare>
 			<arg>import</arg>
 			<arg>--connect</arg>
-			<arg>jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING</arg>
+			<arg>jdbc:mysql://quickstart.cloudera/BATTERY_STAGING</arg>
 			<arg>--username</arg>
 			<arg>root</arg>
 			<arg>--password</arg>

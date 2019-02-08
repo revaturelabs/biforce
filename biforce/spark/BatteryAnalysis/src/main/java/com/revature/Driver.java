@@ -94,6 +94,7 @@ public class Driver {
 		// Run the tests for each battery id.
 		for (Row row : rowList) {
 			performTestingOnRows(csv.filter("_c8 = " + row.get(0).toString()));
+			break;
 		}
 		
 		// Close all the resources.
