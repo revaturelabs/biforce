@@ -1,8 +1,16 @@
 <workflow-app xmlns="uri:oozie:workflow:0.4" name="project3">
 	<!-- Start job control node -->
-	<start to="sqoop-battery-import" />
+	<start to="fork_node" />
 
-	<!-- Import from Caliber -->
+    <!-- Import from Caliber -->
+    <fork name = "fork_node">
+        <path start = "sqoop-battery-import"/>
+        <path start = "sqoop-battery-group-import"/>
+        <path start = "sqoop-battery-qualitative-import"/>
+        <path start = "sqoop-battery-quantitative-import"/>
+        <path start = "sqoop-battery-assessment-import"/>
+    </fork>
+
 	<action name="sqoop-battery-import">
 		<sqoop xmlns="uri:oozie:sqoop-action:0.4">
 			<job-tracker>${resourceManager}</job-tracker>
@@ -12,8 +20,9 @@
 			</prepare>
 			<command>import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias mydb.password.alias --table CALIBER_TRAINEE --columns TRAINEE_ID,TRAINING_STATUS,BATCH_ID --fields-terminated-by , --target-dir battery-pre-csv/battery -m 1</command>
 		</sqoop>
-		<ok to="sqoop-battery-group-import"/>
-		<error to="kill"/>
+
+        <ok to = "join_node" />
+        <error to = "kill_job" />
 	</action>
 
 	<action name="sqoop-battery-group-import">
@@ -25,8 +34,9 @@
 			</prepare>
 			<command>import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias mydb.password.alias --table CALIBER_BATCH --columns BATCH_ID,SKILL_TYPE,TRAINER_ID --fields-terminated-by , --target-dir battery-pre-csv/battery-group -m 1</command>
 		</sqoop>
-		<ok to="sqoop-battery-qualitative-import"/>
-		<error to="kill"/>
+
+        <ok to = "join_node" />
+        <error to = "kill_job" />
 	</action>
 
 	<action name="sqoop-battery-qualitative-import">
@@ -38,8 +48,9 @@
 			</prepare>		
 			<command>import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias mydb.password.alias --table CALIBER_NOTE --columns NOTE_ID,QC_STATUS,NOTE_TYPE,WEEK_NUMBER,BATCH_ID,TRAINEE_ID --fields-terminated-by , --target-dir battery-pre-csv/battery-qualitative -m 1</command>
 		</sqoop>
-		<ok to="sqoop-battery-quantitative-import"/>
-		<error to="kill"/>
+
+        <ok to = "join_node" />
+        <error to = "kill_job" />
 	</action>
 
 	<action name="sqoop-battery-quantitative-import">
@@ -51,8 +62,9 @@
 			</prepare>	
 			<command>import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias mydb.password.alias --table CALIBER_GRADE --columns GRADE_ID,SCORE,ASSESSMENT_ID,TRAINEE_ID --fields-terminated-by , --target-dir battery-pre-csv/battery-quantitative -m 1</command>
 		</sqoop>
-		<ok to="sqoop-battery-assessment-import"/>
-		<error to="kill"/>
+
+        <ok to = "join_node" />
+        <error to = "kill_job" />
 	</action>
 
 	<action name="sqoop-battery-assessment-import">
@@ -64,26 +76,39 @@
 			</prepare>
 			<command>import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias mydb.password.alias --table CALIBER_ASSESSMENT --columns ASSESSMENT_ID,RAW_SCORE,ASSESSMENT_TYPE,WEEK_NUMBER,BATCH_ID,ASSESSMENT_CATEGORY --fields-terminated-by , --target-dir battery-pre-csv/battery-assessment -m 1</command> 
 		</sqoop>
-		<ok to="sqoop-trun-battery"/>
-		<error to="kill"/>
+
+        <ok to = "join_node" />
+        <error to = "kill_job" />
 	</action>
 
-	<!-- TRUNCATE ALL TABLES in MySQL -->
+    <join name = "join_node" to = "fork_node2"/>
+
+    <!-- TRUNCATE ALL TABLES in MySQL -->
+    <fork name = "fork_node2">
+        <path start = "sqoop-trun-battery"/>
+        <path start = "sqoop-trun-battery-group"/>
+        <path start = "sqoop-trun-battery-qualitative"/>
+        <path start = "sqoop-trun-battery-quantitative"/>
+        <path start = "sqoop-trun-battery-assessment"/>
+        <path start = "sqoop-trun-battery-test"/>
+    </fork>
+
 	<action name="sqoop-trun-battery" retry-max="2" retry-interval="1">
 		<sqoop xmlns="uri:oozie:sqoop-action:0.4">
 			<job-tracker>${resourceManager}</job-tracker>
 			<name-node>${nameNode}</name-node>
 			<arg>eval</arg>
 			<arg>--connect</arg>
-			<arg>jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING</arg>
+			<arg>${connection}</arg>
 			<arg>--username</arg>
-			<arg>root</arg>
+			<arg>${clouderaUser}</arg>
 			<arg>--password</arg>
-			<arg>${hortonPass}</arg>
+			<arg>${clouderaPass}</arg>
 			<arg>--query</arg>
 			<arg>TRUNCATE TABLE BATTERY</arg>
 		</sqoop>
-		<ok to="sqoop-trun-battery-group"/>
+
+		<ok to="join_node2"/>
 		<error to="kill"/>
 	</action>
 
@@ -93,15 +118,16 @@
 			<name-node>${nameNode}</name-node>
 			<arg>eval</arg>
 			<arg>--connect</arg>
-			<arg>jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING</arg>
+			<arg>${connection}</arg>
 			<arg>--username</arg>
-			<arg>root</arg>
+			<arg>${clouderaUser}</arg>
 			<arg>--password</arg>
-			<arg>${hortonPass}</arg>
+			<arg>${clouderaPass}</arg>
 			<arg>--query</arg>
 			<arg>TRUNCATE TABLE BATTERY_GROUP</arg>
 		</sqoop>
-		<ok to="sqoop-trun-battery-qualitative"/>
+
+		<ok to="join_node2"/>
 		<error to="kill"/>
 	</action>
 
@@ -111,15 +137,16 @@
 			<name-node>${nameNode}</name-node>
 			<arg>eval</arg>
 			<arg>--connect</arg>
-			<arg>jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING</arg>
+			<arg>${connection}</arg>
 			<arg>--username</arg>
-			<arg>root</arg>
+			<arg>${clouderaUser}</arg>
 			<arg>--password</arg>
-			<arg>${hortonPass}</arg>
+			<arg>${clouderaPass}</arg>
 			<arg>--query</arg>
 			<arg>TRUNCATE TABLE BATTERY_QUALITATIVE</arg>
 		</sqoop>
-		<ok to="sqoop-trun-battery-quantitative"/>
+
+		<ok to="join_node2"/>
 		<error to="kill"/>
 	</action>
 
@@ -129,15 +156,16 @@
 			<name-node>${nameNode}</name-node>
 			<arg>eval</arg>
 			<arg>--connect</arg>
-			<arg>jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING</arg>
+			<arg>${connection}</arg>
 			<arg>--username</arg>
-			<arg>root</arg>
+			<arg>${clouderaUser}</arg>
 			<arg>--password</arg>
-			<arg>${hortonPass}</arg>
+			<arg>${clouderaPass}</arg>
 			<arg>--query</arg>
 			<arg>TRUNCATE TABLE BATTERY_QUANTITATIVE</arg>
 		</sqoop>
-		<ok to="sqoop-trun-battery-assessment"/>
+
+		<ok to="join_node2"/>
 		<error to="kill"/>
 	</action>
 
@@ -147,15 +175,16 @@
 			<name-node>${nameNode}</name-node>
 			<arg>eval</arg>
 			<arg>--connect</arg>
-			<arg>jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING</arg>
+			<arg>${connection}</arg>
 			<arg>--username</arg>
-			<arg>root</arg>
+			<arg>${clouderaUser}</arg>
 			<arg>--password</arg>
-			<arg>${hortonPass}</arg>
+			<arg>${clouderaPass}</arg>
 			<arg>--query</arg>
 			<arg>TRUNCATE TABLE BATTERY_ASSESSMENT</arg>
 		</sqoop>
-		<ok to="sqoop-trun-battery-test"/>
+
+		<ok to="join_node2"/>
 		<error to="kill"/>
 	</action>
 
@@ -165,26 +194,38 @@
 			<name-node>${nameNode}</name-node>
 			<arg>eval</arg>
 			<arg>--connect</arg>
-			<arg>jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING</arg>
+			<arg>${connection}</arg>
 			<arg>--username</arg>
-			<arg>root</arg>
+			<arg>${clouderaUser}</arg>
 			<arg>--password</arg>
-			<arg>${hortonPass}</arg>
+			<arg>${clouderaPass}</arg>
 			<arg>--query</arg>
 			<arg>TRUNCATE TABLE BATTERY_TEST</arg>
 		</sqoop>
-		<ok to="sqoop-battery-export"/>
+
+		<ok to="join_node2"/>
 		<error to="kill"/>
 	</action>
 
-		<!-- EXPORT FIVE TABLES into MySQL -->
+    <join name = "join_node2" to = "fork_node3"/>
+
+	<!-- EXPORT FIVE TABLES into MySQL -->
+    <fork name = "fork_node3">
+        <path start = "sqoop-battery-export"/>
+        <path start = "sqoop-battery-group-export"/>
+        <path start = "sqoop-battery-qualitative-export"/>
+        <path start = "sqoop-battery-quantitative-export"/>
+        <path start = "sqoop-battery-assessment-export"/>
+    </fork>
+
 	<action name="sqoop-battery-export">
 		<sqoop xmlns="uri:oozie:sqoop-action:0.4">
 			<job-tracker>${resourceManager}</job-tracker>
 			<name-node>${nameNode}</name-node>
-			<command>export --connect jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING --username root --password ${hortonPass} --table BATTERY --fields-terminated-by , --export-dir battery-pre-csv/battery/part-m-00000 -m 1</command>
+			<command>export --connect ${connection} --username ${clouderaUser} --password ${clouderaPass} --table BATTERY --fields-terminated-by , --export-dir battery-pre-csv/battery/part-m-00000 -m 1</command>
 		</sqoop>
-		<ok to="sqoop-battery-group-export"/>
+
+		<ok to="join_node3"/>
 		<error to="kill"/>
 	</action>
 
@@ -192,9 +233,10 @@
 		<sqoop xmlns="uri:oozie:sqoop-action:0.4">
 			<job-tracker>${resourceManager}</job-tracker>
 			<name-node>${nameNode}</name-node>
-			<command>export --connect jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING --username root --password ${hortonPass} --table BATTERY_GROUP --fields-terminated-by , --export-dir battery-pre-csv/battery-group/part-m-00000 -m 1</command>
+			<command>export --connect ${connection} --username ${clouderaUser} --password ${clouderaPass} --table BATTERY_GROUP --fields-terminated-by , --export-dir battery-pre-csv/battery-group/part-m-00000 -m 1</command>
 		</sqoop>
-		<ok to="sqoop-battery-qualitative-export"/>
+
+		<ok to="join_node3"/>
 		<error to="kill"/>
 	</action>
 
@@ -202,9 +244,10 @@
 		<sqoop xmlns="uri:oozie:sqoop-action:0.4">
 			<job-tracker>${resourceManager}</job-tracker>
 			<name-node>${nameNode}</name-node>
-			<command>export --connect jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING --username root --password ${hortonPass} --table BATTERY_QUALITATIVE --fields-terminated-by , --export-dir battery-pre-csv/battery-qualitative/part-m-00000 -m 1</command>
+			<command>export --connect ${connection} --username ${clouderaUser} --password ${clouderaPass} --table BATTERY_QUALITATIVE --fields-terminated-by , --export-dir battery-pre-csv/battery-qualitative/part-m-00000 -m 1</command>
 		</sqoop>
-		<ok to="sqoop-battery-quantitative-export"/>
+
+		<ok to="join_node3"/>
 		<error to="kill"/>
 	</action>
 
@@ -212,9 +255,10 @@
 		<sqoop xmlns="uri:oozie:sqoop-action:0.4">
 			<job-tracker>${resourceManager}</job-tracker>
 			<name-node>${nameNode}</name-node>
-			<command>export --connect jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING --username root --password ${hortonPass} --table BATTERY_QUANTITATIVE --fields-terminated-by , --export-dir battery-pre-csv/battery-quantitative/part-m-00000 -m 1</command>
+			<command>export --connect ${connection} --username ${clouderaUser} --password ${clouderaPass} --table BATTERY_QUANTITATIVE --fields-terminated-by , --export-dir battery-pre-csv/battery-quantitative/part-m-00000 -m 1</command>
 		</sqoop>
-		<ok to="sqoop-battery-assessment-export"/>
+
+		<ok to="join_node3"/>
 		<error to="kill"/>
 	</action>
 
@@ -222,11 +266,14 @@
 		<sqoop xmlns="uri:oozie:sqoop-action:0.4">
 			<job-tracker>${resourceManager}</job-tracker>
 			<name-node>${nameNode}</name-node>
-			<command>export --connect jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING --username root --password ${hortonPass} --table BATTERY_ASSESSMENT --fields-terminated-by , --export-dir battery-pre-csv/battery-assessment/part-m-00000 -m 1</command>
+			<command>export --connect ${connection} --username ${clouderaUser} --password ${clouderaPass} --table BATTERY_ASSESSMENT --fields-terminated-by , --export-dir battery-pre-csv/battery-assessment/part-m-00000 -m 1</command>
 		</sqoop>
-		<ok to="sqoop-battery-test-join"/>
+
+		<ok to="join_node3"/>
 		<error to="kill"/>
 	</action>
+
+    <join name = "join_node3" to "sqoop-battery-test-join"/>
 
 	<action name="sqoop-battery-test-join" retry-max="2" retry-interval="1">
 		<sqoop xmlns="uri:oozie:sqoop-action:0.4">
@@ -234,11 +281,11 @@
 			<name-node>${nameNode}</name-node>
 			<arg>eval</arg>
 			<arg>--connect</arg>
-			<arg>jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING</arg>
+			<arg>${connection}</arg>
 			<arg>--username</arg>
-			<arg>root</arg>
+			<arg>${clouderaUser}</arg>
 			<arg>--password</arg>
-			<arg>${hortonPass}</arg>
+			<arg>${clouderaPass}</arg>
 			<arg>--query</arg>
 			<arg>INSERT INTO BATTERY_TEST (TEST_TYPE, RAW_SCORE, SCORE, TEST_PERIOD, TEST_CATEGORY, BUILDER_ID, GROUP_ID, GROUP_TYPE, BATTERY_ID, BATTERY_STATUS)
 			SELECT
@@ -261,8 +308,7 @@
 					WHEN UPPER(G.SKILL_TYPE) = 'OTHER' THEN 3
 					WHEN UPPER(G.SKILL_TYPE) = 'BPM' THEN 4
 					WHEN UPPER(G.SKILL_TYPE) = 'NET' THEN 5
-					WHEN UPPER(G.SKILL_TYPE) = 'BPM' THEN 6
-					WHEN UPPER(G.SKILL_TYPE) = 'MICROSERVICES' THEN 7
+					WHEN UPPER(G.SKILL_TYPE) = 'MICROSERVICES' THEN 6
 					ELSE 0
 				END,
 				Q.TRAINEE_ID,
@@ -308,8 +354,7 @@
 					WHEN UPPER(G.SKILL_TYPE) = 'OTHER' THEN 3
 					WHEN UPPER(G.SKILL_TYPE) = 'BPM' THEN 4
 					WHEN UPPER(G.SKILL_TYPE) = 'NET' THEN 5
-					WHEN UPPER(G.SKILL_TYPE) = 'BPM' THEN 6
-					WHEN UPPER(G.SKILL_TYPE) = 'MICROSERVICES' THEN 7
+					WHEN UPPER(G.SKILL_TYPE) = 'MICROSERVICES' THEN 6
 					ELSE 0
 				END,
 				B.TRAINEE_ID,
@@ -327,6 +372,7 @@
 			AND G.BATCH_ID = B.BATCH_ID
 			AND Q.QC_STATUS IS NOT NULL</arg>
 		</sqoop> 
+
 		<ok to="sqoop-battery-test-import"/>
 		<error to="kill"/>
 	</action>
@@ -341,11 +387,11 @@
 			</prepare>
 			<arg>import</arg>
 			<arg>--connect</arg>
-			<arg>jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING</arg>
+			<arg>${connection}</arg>
 			<arg>--username</arg>
-			<arg>root</arg>
+			<arg>${clouderaUser}</arg>
 			<arg>--password</arg>
-			<arg>${hortonPass}</arg>
+			<arg>${clouderaPass}</arg>
 			<arg>--table</arg>
 			<arg>BATTERY_TEST</arg>
 			<arg>--fields-terminated-by</arg>
@@ -367,7 +413,3 @@
 	<!-- End job control node -->
 	<end name="end" />
 </workflow-app>
-		
-			
-	
-	
