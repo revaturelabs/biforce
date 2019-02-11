@@ -1,22 +1,24 @@
-ADDRESS 7 Records
+Note: These sqoop commands are used for testing and have been integrated into the final ETL_Workflow.xml
+
+ADDRESS
 sqoop import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias mydb.password.alias --table CALIBER_ADDRESS --columns ADDRESS_ID,ADDRESS_CITY --mysql-delimiters --target-dir project3/new/address --delete-target-dir -m 1
 
-ASSESSMENT 519 Records
+ASSESSMENT
 sqoop import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias mydb.password.alias --table CALIBER_ASSESSMENT --columns ASSESSMENT_ID,RAW_SCORE,ASSESSMENT_TYPE,WEEK_NUMBER,BATCH_ID,ASSESSMENT_CATEGORY --mysql-delimiters --target-dir project3/new/assessment --delete-target-dir -m 1
 
-BATCH 48 Records
+BATCH
 sqoop import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias mydb.password.alias --table CALIBER_BATCH --columns BATCH_ID,SKILL_TYPE,TRAINER_ID,ADDRESS_ID --mysql-delimiters --target-dir project3/new/batch --delete-target-dir -m 1
 
-GRADE 8278 Records
+GRADE
 sqoop import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias mydb.password.alias --table CALIBER_GRADE --columns GRADE_ID,SCORE,ASSESSMENT_ID,TRAINEE_ID --mysql-delimiters --target-dir project3/new/grade --delete-target-dir -m 1
 
-NOTE 7855 Records
+NOTE
 sqoop import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias mydb.password.alias --table CALIBER_NOTE --columns NOTE_ID,QC_STATUS,NOTE_TYPE,WEEK_NUMBER,BATCH_ID,TRAINEE_ID --mysql-delimiters --target-dir project3/new/note --delete-target-dir -m 1
 
-TRAINEE 857 Records
+TRAINEE
 sqoop import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias mydb.password.alias --table CALIBER_TRAINEE --columns TRAINEE_ID,TRAINEE_NAME,TRAINING_STATUS,BATCH_ID --mysql-delimiters --target-dir project3/new/trainee --delete-target-dir -m 1
 
-TRAINER 50 Records
+TRAINER
 sqoop import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias mydb.password.alias --table CALIBER_TRAINER --columns TRAINER_ID,NAME --mysql-delimiters --target-dir project3/new/trainer --delete-target-dir -m 1
 
 oozie job --oozie http://localhost:11000/oozie -D oozie.wf.application.path=hdfs://namenodepath/media/sf_vm/ETL_Workflow.xml -run
