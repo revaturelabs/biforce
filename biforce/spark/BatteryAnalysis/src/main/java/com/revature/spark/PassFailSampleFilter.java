@@ -35,8 +35,8 @@ public class PassFailSampleFilter {
 		
 		
 		// Get a list of battery_ids that match the criteria, and drop all columns except that which lists the battery IDs.
-		Dataset<Row> filteredCSV = csv.filter("_c9 = 0 OR _c9 = 1 OR (_c9 = 2 AND (_c3 = 9 OR _c3 = 10))")
-				.drop("_c0", "_c1","_c2","_c3","_c4","_c5","_c6","_c7","_c9","_c10").dropDuplicates();
+		Dataset<Row> filteredCSV = csv.filter("_c10 = 0 OR _c10 = 1 OR (_c10 = 2 AND (_c4 = 9 OR _c4 = 10))")
+				.drop("_c0", "_c1","_c2","_c3","_c4","_c5","_c6","_c7","_c8","_c10").dropDuplicates();
 		
 		// Convert the column of battery IDs to a list and convert that list to a string.
 		List<Row> battery_IDs = filteredCSV.collectAsList();
@@ -49,10 +49,10 @@ public class PassFailSampleFilter {
 		// Then filter out all records of batteries whose ID isn't present within the string of approved battery IDs.
 		// Also only keep records covering the first three test periods of the approved battery IDs.
 		csv = csv.filter((FilterFunction<Row>)row -> {
-			return (batteryList.contains(row.get(8).toString()) && (
-					Integer.parseInt(row.get(3).toString())==3 ||
-					Integer.parseInt(row.get(3).toString())==2 ||
-					Integer.parseInt(row.get(3).toString())==1
+			return (batteryList.contains(row.get(9).toString()) && (
+					Integer.parseInt(row.get(4).toString())==3 ||
+					Integer.parseInt(row.get(4).toString())==2 ||
+					Integer.parseInt(row.get(4).toString())==1
 					));
 		});
 		

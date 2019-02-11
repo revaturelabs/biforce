@@ -1,7 +1,6 @@
 package com.revature.spark;
 
 import java.io.Serializable;
-import java.util.NoSuchElementException;
 
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
@@ -15,12 +14,12 @@ public class TestIndicator implements Serializable {
 		long totalAmount, failedAmount;
 		
 		// Filter the input to include only those of the given test types and test periods.
-		csv = csv.filter("_c0 = " + testType + " AND _c3 = " + period);
-		battery_id_tests = battery_id_tests.filter("_c0 = " + testType + " AND _c3 = " + period);
+		csv = csv.filter("_c1 = " + testType + " AND _c4 = " + period);
+		battery_id_tests = battery_id_tests.filter("_c1 = " + testType + " AND _c4 = " + period);
 
 		try {
 			// Find the score the input battery id got on the given test.
-			score = Double.parseDouble(battery_id_tests.first().get(2).toString());
+			score = Double.parseDouble(battery_id_tests.first().get(3).toString());
 		}
 		catch(Exception e) {
 			// If no score is found for the given test, return null.
@@ -34,11 +33,11 @@ public class TestIndicator implements Serializable {
 		scoreUpperBound = score+10;
 		
 		// Filter the data set to find just those who scored similarly and passed or failed.
-		Dataset<Row> csvTotal = csv.filter("(_c9 = 0 OR _c9 = 1 OR _c9 = 2) AND _c2 >= " + scoreLowerBound + " AND _c2 <= " + scoreUpperBound);
+		Dataset<Row> csvTotal = csv.filter("(_c10 = 0 OR _c10 = 1 OR _c10 = 2) AND _c3 >= " + scoreLowerBound + " AND _c3 <= " + scoreUpperBound);
 		// Count the unique battery_ids of those who scored similarly.
-		totalAmount = csvTotal.groupBy("_c8").count().distinct().count();
+		totalAmount = csvTotal.groupBy("_c9").count().distinct().count();
 		// Count the unique battery_ids of those who score similarly and just failed.
-		failedAmount = csvTotal.filter("_c9 = 0").groupBy("_c8").count().distinct().count();
+		failedAmount = csvTotal.filter("_c10 = 0").groupBy("_c9").count().distinct().count();
 		// Calculate the percentage of those who failed.
 		if (totalAmount!=0)
 			outputPercentage = (double)failedAmount/(double)totalAmount*100;

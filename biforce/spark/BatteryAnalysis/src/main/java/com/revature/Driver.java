@@ -8,7 +8,6 @@ import java.util.List;
 
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaSparkContext;
-import org.apache.spark.api.java.function.ForeachFunction;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
@@ -32,9 +31,9 @@ public class Driver {
 	 */
 	public static void main(String args[]) {
 		
-		final String SPARK_MASTER = args[0];
-		final String INPUT_PATH = args[1];
-		final String OUTPUT_PATH = args[2];
+		//final String SPARK_MASTER = args[0];
+		final String INPUT_PATH = args[0];
+		final String OUTPUT_PATH = args[1];
 		int TARGET_BATCH = 0;
 		try {
 			if (args.length==4)
@@ -51,9 +50,10 @@ public class Driver {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+	
 		// Set Spark configuration for Context.
-		SparkConf conf = new SparkConf().setAppName("ChanceToFail").setMaster(SPARK_MASTER);
+		//SparkConf conf = new SparkConf().setAppName("ChanceToFail").setMaster(SPARK_MASTER);
+		SparkConf conf = new SparkConf().setAppName("ChanceToFail");
 		context = new JavaSparkContext(conf);
 		context.setLogLevel("ERROR");
 		SparkSession session = new SparkSession(context.sc());
@@ -62,16 +62,16 @@ public class Driver {
 		
 		/*
 		 * Read in the data from the input file
-		 * _c0 = test type
-		 * _c1 = raw score
-		 * _c2 = score
-		 * _c3 = test period
-		 * _c4 = test category
-		 * _c5 = builder id
-		 * _c6 = group id
-		 * _c7 = group type
-		 * _c8 = battery id
-		 * _c9 = battery status
+		 * _c1 = test type
+		 * _c2 = raw score
+		 * _c3 = score
+		 * _c4 = test period
+		 * _c5 = test category
+		 * _c6 = builder id
+		 * _c7 = group id
+		 * _c8 = group type
+		 * _c9 = battery id
+		 * _c10 = battery status
 		 */
 		
 		// Read the input file in as a spark Dataset<Row> with no header, therefore the
@@ -81,9 +81,9 @@ public class Driver {
 		// Create a list containing each row with battery id as a primary key.
 		Dataset<Row> uniqueBatteries;
 		if (args.length==4)
-			uniqueBatteries = csv.filter("_c6 = " + TARGET_BATCH).groupBy("_c8").count();
+			uniqueBatteries = csv.filter("_c7 = " + TARGET_BATCH).groupBy("_c9").count();
 		else
-			uniqueBatteries = csv.groupBy("_c8").count();
+			uniqueBatteries = csv.groupBy("_c9").count();
 			
 		
 		List<Row> rowList = uniqueBatteries.toJavaRDD().collect();
@@ -92,9 +92,11 @@ public class Driver {
 		filtered_csv = PassFailSampleFilter.execute(csv);
 		
 		// Run the tests for each battery id.
+		int counter = 0;
 		for (Row row : rowList) {
-			performTestingOnRows(csv.filter("_c8 = " + row.get(0).toString()));
-			break;
+			performTestingOnRows(csv.filter("_c9 = " + row.get(0).toString()));
+			if(counter>10) break;
+			counter++;
 		}
 		
 		// Close all the resources.
