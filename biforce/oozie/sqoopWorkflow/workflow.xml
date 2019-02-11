@@ -22,7 +22,7 @@
 		</sqoop>
 
         <ok to = "join_node" />
-        <error to = "kill_job" />
+        <error to = "kill" />
 	</action>
 
 	<action name="sqoop-battery-group-import">
@@ -36,7 +36,7 @@
 		</sqoop>
 
         <ok to = "join_node" />
-        <error to = "kill_job" />
+        <error to = "kill" />
 	</action>
 
 	<action name="sqoop-battery-qualitative-import">
@@ -50,7 +50,7 @@
 		</sqoop>
 
         <ok to = "join_node" />
-        <error to = "kill_job" />
+        <error to = "kill" />
 	</action>
 
 	<action name="sqoop-battery-quantitative-import">
@@ -64,7 +64,7 @@
 		</sqoop>
 
         <ok to = "join_node" />
-        <error to = "kill_job" />
+        <error to = "kill" />
 	</action>
 
 	<action name="sqoop-battery-assessment-import">
@@ -78,7 +78,7 @@
 		</sqoop>
 
         <ok to = "join_node" />
-        <error to = "kill_job" />
+        <error to = "kill" />
 	</action>
 
     <join name = "join_node" to = "fork_node2"/>
