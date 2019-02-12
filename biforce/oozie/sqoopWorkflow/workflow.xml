@@ -18,11 +18,25 @@
 			<prepare>
 				<delete path="battery-pre-csv/battery"/>
 			</prepare>
-			<command>import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias mydb.password.alias --table CALIBER_TRAINEE --columns TRAINEE_ID,TRAINING_STATUS,BATCH_ID --fields-terminated-by , --target-dir battery-pre-csv/battery -m 1</command>
+<configuration>
+				<property>
+					<name>oozie.sqoop.options.1</name>
+					<value>-Doozie.launcher.mapreduce.job.queuename=sqoop</value>
+			 	</property>
+				<property>
+					<name>oozie.sqoop.options.0</name>
+					<value>-Dmapreduce.job.queuename=sqoop</value>
+				 </property>    
+				 <property>
+					  <name>oozie.sqoop.options.size</name>
+					  <value>2</value>
+				 </property>
+			</configuration>
+			<command>import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks -Doozie.launcher.mapreduce.job.queuename=sqoop -Dmapreduce.job.queuename=sqoop --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias mydb.password.alias --table CALIBER_TRAINEE --columns TRAINEE_ID,TRAINING_STATUS,BATCH_ID --fields-terminated-by , --target-dir battery-pre-csv/battery -m 1</command>
 		</sqoop>
 
-        <ok to = "join_node" />
-        <error to = "kill_job" />
+        <ok to="join_node" />
+        <error to="kill" />
 	</action>
 
 	<action name="sqoop-battery-group-import">
@@ -32,11 +46,25 @@
 			<prepare>
 				<delete path="battery-pre-csv/battery-group"/>
 			</prepare>
-			<command>import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias mydb.password.alias --table CALIBER_BATCH --columns BATCH_ID,SKILL_TYPE,TRAINER_ID --fields-terminated-by , --target-dir battery-pre-csv/battery-group -m 1</command>
+<configuration>
+				<property>
+					<name>oozie.sqoop.options.1</name>
+					<value>-Doozie.launcher.mapreduce.job.queuename=sqoop</value>
+			 	</property>
+				<property>
+					<name>oozie.sqoop.options.0</name>
+					<value>-Dmapreduce.job.queuename=sqoop</value>
+				 </property>    
+				 <property>
+					  <name>oozie.sqoop.options.size</name>
+					  <value>2</value>
+				 </property>
+			</configuration>
+			<command>import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks -Doozie.launcher.mapreduce.job.queuename=sqoop -Dmapreduce.job.queuename=sqoop --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias mydb.password.alias --table CALIBER_BATCH --columns BATCH_ID,SKILL_TYPE,TRAINER_ID --fields-terminated-by , --target-dir battery-pre-csv/battery-group -m 1</command>
 		</sqoop>
 
-        <ok to = "join_node" />
-        <error to = "kill_job" />
+        <ok to="join_node" />
+        <error to="kill" />
 	</action>
 
 	<action name="sqoop-battery-qualitative-import">
@@ -45,12 +73,26 @@
 			<name-node>${nameNode}</name-node>
 			<prepare>
 				<delete path="battery-pre-csv/battery-qualitative"/>
-			</prepare>		
-			<command>import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias mydb.password.alias --table CALIBER_NOTE --columns NOTE_ID,QC_STATUS,NOTE_TYPE,WEEK_NUMBER,BATCH_ID,TRAINEE_ID --fields-terminated-by , --target-dir battery-pre-csv/battery-qualitative -m 1</command>
+			</prepare>
+<configuration>
+				<property>
+					<name>oozie.sqoop.options.1</name>
+					<value>-Doozie.launcher.mapreduce.job.queuename=sqoop</value>
+			 	</property>
+				<property>
+					<name>oozie.sqoop.options.0</name>
+					<value>-Dmapreduce.job.queuename=sqoop</value>
+				 </property>    
+				 <property>
+					  <name>oozie.sqoop.options.size</name>
+					  <value>2</value>
+				 </property>
+			</configuration>		
+			<command>import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks -Doozie.launcher.mapreduce.job.queuename=sqoop -Dmapreduce.job.queuename=sqoop --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias mydb.password.alias --table CALIBER_NOTE --columns NOTE_ID,QC_STATUS,NOTE_TYPE,WEEK_NUMBER,BATCH_ID,TRAINEE_ID --fields-terminated-by , --target-dir battery-pre-csv/battery-qualitative -m 1</command>
 		</sqoop>
 
-        <ok to = "join_node" />
-        <error to = "kill_job" />
+        <ok to="join_node" />
+        <error to="kill" />
 	</action>
 
 	<action name="sqoop-battery-quantitative-import">
@@ -59,12 +101,26 @@
 			<name-node>${nameNode}</name-node>
 			<prepare>
 				<delete path="battery-pre-csv/battery-quantitative"/>
-			</prepare>	
-			<command>import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias mydb.password.alias --table CALIBER_GRADE --columns GRADE_ID,SCORE,ASSESSMENT_ID,TRAINEE_ID --fields-terminated-by , --target-dir battery-pre-csv/battery-quantitative -m 1</command>
+			</prepare>
+<configuration>
+				<property>
+					<name>oozie.sqoop.options.1</name>
+					<value>-Doozie.launcher.mapreduce.job.queuename=sqoop</value>
+			 	</property>
+				<property>
+					<name>oozie.sqoop.options.0</name>
+					<value>-Dmapreduce.job.queuename=sqoop</value>
+				 </property>    
+				 <property>
+					  <name>oozie.sqoop.options.size</name>
+					  <value>2</value>
+				 </property>
+			</configuration>	
+			<command>import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks -Doozie.launcher.mapreduce.job.queuename=sqoop -Dmapreduce.job.queuename=sqoop --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias mydb.password.alias --table CALIBER_GRADE --columns GRADE_ID,SCORE,ASSESSMENT_ID,TRAINEE_ID --fields-terminated-by , --target-dir battery-pre-csv/battery-quantitative -m 1</command>
 		</sqoop>
 
-        <ok to = "join_node" />
-        <error to = "kill_job" />
+        <ok to="join_node" />
+        <error to="kill" />
 	</action>
 
 	<action name="sqoop-battery-assessment-import">
@@ -74,14 +130,28 @@
 			<prepare>
 				<delete path="battery-pre-csv/battery-assessment"/>
 			</prepare>
-			<command>import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias mydb.password.alias --table CALIBER_ASSESSMENT --columns ASSESSMENT_ID,RAW_SCORE,ASSESSMENT_TYPE,WEEK_NUMBER,BATCH_ID,ASSESSMENT_CATEGORY --fields-terminated-by , --target-dir battery-pre-csv/battery-assessment -m 1</command> 
+<configuration>
+				<property>
+					<name>oozie.sqoop.options.1</name>
+					<value>-Doozie.launcher.mapreduce.job.queuename=sqoop</value>
+			 	</property>
+				<property>
+					<name>oozie.sqoop.options.0</name>
+					<value>-Dmapreduce.job.queuename=sqoop</value>
+				 </property>    
+				 <property>
+					  <name>oozie.sqoop.options.size</name>
+					  <value>2</value>
+				 </property>
+			</configuration>
+			<command>import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks -Doozie.launcher.mapreduce.job.queuename=sqoop -Dmapreduce.job.queuename=sqoop --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias mydb.password.alias --table CALIBER_ASSESSMENT --columns ASSESSMENT_ID,RAW_SCORE,ASSESSMENT_TYPE,WEEK_NUMBER,BATCH_ID,ASSESSMENT_CATEGORY --fields-terminated-by , --target-dir battery-pre-csv/battery-assessment -m 1</command> 
 		</sqoop>
 
-        <ok to = "join_node" />
-        <error to = "kill_job" />
+        <ok to="join_node" />
+        <error to="kill" />
 	</action>
 
-    <join name = "join_node" to = "fork_node2"/>
+    <join name = "join_node" to="fork_node2"/>
 
     <!-- TRUNCATE ALL TABLES in MySQL -->
     <fork name = "fork_node2">
@@ -207,7 +277,7 @@
 		<error to="kill"/>
 	</action>
 
-    <join name = "join_node2" to = "fork_node3"/>
+    <join name = "join_node2" to="fork_node3"/>
 
 	<!-- EXPORT FIVE TABLES into MySQL -->
     <fork name = "fork_node3">
@@ -222,7 +292,7 @@
 		<sqoop xmlns="uri:oozie:sqoop-action:0.4">
 			<job-tracker>${resourceManager}</job-tracker>
 			<name-node>${nameNode}</name-node>
-			<command>export --connect ${connection} --username ${clouderaUser} --password ${clouderaPass} --table BATTERY --fields-terminated-by , --export-dir battery-pre-csv/battery/part-m-00000 -m 1</command>
+			<command>export -Doozie.launcher.mapreduce.job.queuename=sqoop -Dmapreduce.job.queuename=sqoop --connect ${connection} --username ${clouderaUser} --password ${clouderaPass} --table BATTERY --fields-terminated-by , --export-dir battery-pre-csv/battery/part-m-00000 -m 1</command>
 		</sqoop>
 
 		<ok to="join_node3"/>
@@ -233,7 +303,7 @@
 		<sqoop xmlns="uri:oozie:sqoop-action:0.4">
 			<job-tracker>${resourceManager}</job-tracker>
 			<name-node>${nameNode}</name-node>
-			<command>export --connect ${connection} --username ${clouderaUser} --password ${clouderaPass} --table BATTERY_GROUP --fields-terminated-by , --export-dir battery-pre-csv/battery-group/part-m-00000 -m 1</command>
+			<command>export -Doozie.launcher.mapreduce.job.queuename=sqoop -Dmapreduce.job.queuename=sqoop --connect ${connection} --username ${clouderaUser} --password ${clouderaPass} --table BATTERY_GROUP --fields-terminated-by , --export-dir battery-pre-csv/battery-group/part-m-00000 -m 1</command>
 		</sqoop>
 
 		<ok to="join_node3"/>
@@ -244,7 +314,7 @@
 		<sqoop xmlns="uri:oozie:sqoop-action:0.4">
 			<job-tracker>${resourceManager}</job-tracker>
 			<name-node>${nameNode}</name-node>
-			<command>export --connect ${connection} --username ${clouderaUser} --password ${clouderaPass} --table BATTERY_QUALITATIVE --fields-terminated-by , --export-dir battery-pre-csv/battery-qualitative/part-m-00000 -m 1</command>
+			<command>export -Doozie.launcher.mapreduce.job.queuename=sqoop -Dmapreduce.job.queuename=sqoop --connect ${connection} --username ${clouderaUser} --password ${clouderaPass} --table BATTERY_QUALITATIVE --fields-terminated-by , --export-dir battery-pre-csv/battery-qualitative/part-m-00000 -m 1</command>
 		</sqoop>
 
 		<ok to="join_node3"/>
@@ -255,7 +325,7 @@
 		<sqoop xmlns="uri:oozie:sqoop-action:0.4">
 			<job-tracker>${resourceManager}</job-tracker>
 			<name-node>${nameNode}</name-node>
-			<command>export --connect ${connection} --username ${clouderaUser} --password ${clouderaPass} --table BATTERY_QUANTITATIVE --fields-terminated-by , --export-dir battery-pre-csv/battery-quantitative/part-m-00000 -m 1</command>
+			<command>export -Doozie.launcher.mapreduce.job.queuename=sqoop -Dmapreduce.job.queuename=sqoop --connect ${connection} --username ${clouderaUser} --password ${clouderaPass} --table BATTERY_QUANTITATIVE --fields-terminated-by , --export-dir battery-pre-csv/battery-quantitative/part-m-00000 -m 1</command>
 		</sqoop>
 
 		<ok to="join_node3"/>
@@ -266,20 +336,21 @@
 		<sqoop xmlns="uri:oozie:sqoop-action:0.4">
 			<job-tracker>${resourceManager}</job-tracker>
 			<name-node>${nameNode}</name-node>
-			<command>export --connect ${connection} --username ${clouderaUser} --password ${clouderaPass} --table BATTERY_ASSESSMENT --fields-terminated-by , --export-dir battery-pre-csv/battery-assessment/part-m-00000 -m 1</command>
+			<command>export -Doozie.launcher.mapreduce.job.queuename=sqoop -Dmapreduce.job.queuename=sqoop --connect ${connection} --username ${clouderaUser} --password ${clouderaPass} --table BATTERY_ASSESSMENT --fields-terminated-by , --export-dir battery-pre-csv/battery-assessment/part-m-00000 -m 1</command>
 		</sqoop>
 
 		<ok to="join_node3"/>
 		<error to="kill"/>
 	</action>
 
-    <join name = "join_node3" to "sqoop-battery-test-join"/>
+    <join name = "join_node3" to  = "sqoop-battery-test-join"/>
 
 	<action name="sqoop-battery-test-join" retry-max="2" retry-interval="1">
 		<sqoop xmlns="uri:oozie:sqoop-action:0.4">
 			<job-tracker>${resourceManager}</job-tracker>
 			<name-node>${nameNode}</name-node>
 			<arg>eval</arg>
+			<arg>-Doozie.launcher.mapreduce.job.queuename=sqoop -Dmapreduce.job.queuename=sqoop</arg>
 			<arg>--connect</arg>
 			<arg>${connection}</arg>
 			<arg>--username</arg>
@@ -386,6 +457,7 @@
 				<delete path="battery-pre-csv/battery-test"/>
 			</prepare>
 			<arg>import</arg>
+			<arg>-Doozie.launcher.mapreduce.job.queuename=sqoop -Dmapreduce.job.queuename=sqoop</arg>
 			<arg>--connect</arg>
 			<arg>${connection}</arg>
 			<arg>--username</arg>
