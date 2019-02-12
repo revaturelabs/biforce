@@ -22,7 +22,7 @@ import org.apache.spark.sql.Row;
 
 /*
  * for each row:
- *	test type, raw score, score, test period, test catagory, builder id, group id, group type, battery id, battery status
+ *	test type, raw score, score, test period, test category, builder id, group id, group type, battery id, battery status
  *
  * battery_status: dropped = 1, employed = 2, training = 3 (ignore others)
  */

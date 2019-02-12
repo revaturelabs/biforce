@@ -9,7 +9,7 @@ public class TestIndicator implements Serializable {
 	
 	private static final long serialVersionUID = -5452697183700073588L;
 
-	public AnalyticResult execute(Dataset<Row> csv, Dataset<Row> battery_id_tests, int period, int testType) {
+	public static AnalyticResult execute(Dataset<Row> csv, Dataset<Row> battery_id_tests, int period, int testType) {
 		double score, scoreLowerBound, scoreUpperBound, outputPercentage = 0;
 		long totalAmount, failedAmount;
 		

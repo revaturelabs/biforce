@@ -14,15 +14,14 @@ import org.apache.spark.sql.SparkSession;
 
 import com.revature.spark.AnalyticResult;
 import com.revature.spark.PassFailSampleFilter;
-import com.revature.spark.TestIndicator;
+import static com.revature.spark.TestIndicator.execute;;
 
-public class Driver {
+public class Driver_old {
 	
 	private static List<AnalyticResult> results;
 	private static BufferedWriter writer;
 	private static Dataset<Row> csv,filtered_csv;
 	private static int count = 0;
-	private static TestIndicator testIndicator;
 	private static JavaSparkContext context;
 	
 	/*
@@ -57,7 +56,6 @@ public class Driver {
 		context = new JavaSparkContext(conf);
 		context.setLogLevel("ERROR");
 		SparkSession session = new SparkSession(context.sc());
-		testIndicator = new TestIndicator();
 		results = new ArrayList<AnalyticResult>();
 		
 		/*
@@ -95,7 +93,7 @@ public class Driver {
 		int counter = 0;
 		for (Row row : rowList) {
 			performTestingOnRows(csv.filter("_c9 = " + row.get(0).toString()));
-			if(counter>10) break;
+			if(counter>2) break;
 			counter++;
 		}
 		
@@ -124,7 +122,7 @@ public class Driver {
 		
 			for (int i = 1;i<4;i++)
 				for (int j = 1;j<4; j++) {
-					newResult = testIndicator.execute(filtered_csv,battery_id_tests,i,j);
+					newResult = execute(filtered_csv,battery_id_tests,i,j);
 					System.gc();
 					results.add(newResult);
 					if (newResult!=null) {
