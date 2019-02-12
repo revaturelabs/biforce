@@ -21,4 +21,4 @@ sqoop import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/m
 TRAINER
 sqoop import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias mydb.password.alias --table CALIBER_TRAINER --columns TRAINER_ID,NAME --mysql-delimiters --target-dir project3/new/trainer --delete-target-dir -m 1
 
-oozie job --oozie http://localhost:11000/oozie -D oozie.wf.application.path=hdfs://namenodepath/media/sf_vm/ETL_Workflow.xml -run
+oozie job -oozie http://quickstart.cloudera:11000/oozie -D oozie.wf.application.path /user/cloudera/project3/workflows -config ETL_Job.properties -run
