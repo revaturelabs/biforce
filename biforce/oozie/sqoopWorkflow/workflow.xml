@@ -35,8 +35,13 @@
 			<command>import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks -Doozie.launcher.mapreduce.job.queuename=sqoop -Dmapreduce.job.queuename=sqoop --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias mydb.password.alias --table CALIBER_TRAINEE --columns TRAINEE_ID,TRAINING_STATUS,BATCH_ID --fields-terminated-by , --target-dir battery-pre-csv/battery -m 1</command>
 		</sqoop>
 
+<<<<<<< HEAD
         <ok to="join_node" />
         <error to="kill" />
+=======
+        <ok to = "join_node" />
+        <error to = "kill" />
+>>>>>>> 893f252b9f546e5774831a6d9fb9de9493c29cba
 	</action>
 
 	<action name="sqoop-battery-group-import">
@@ -63,8 +68,13 @@
 			<command>import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks -Doozie.launcher.mapreduce.job.queuename=sqoop -Dmapreduce.job.queuename=sqoop --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias mydb.password.alias --table CALIBER_BATCH --columns BATCH_ID,SKILL_TYPE,TRAINER_ID --fields-terminated-by , --target-dir battery-pre-csv/battery-group -m 1</command>
 		</sqoop>
 
+<<<<<<< HEAD
         <ok to="join_node" />
         <error to="kill" />
+=======
+        <ok to = "join_node" />
+        <error to = "kill" />
+>>>>>>> 893f252b9f546e5774831a6d9fb9de9493c29cba
 	</action>
 
 	<action name="sqoop-battery-qualitative-import">
@@ -91,8 +101,13 @@
 			<command>import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks -Doozie.launcher.mapreduce.job.queuename=sqoop -Dmapreduce.job.queuename=sqoop --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias mydb.password.alias --table CALIBER_NOTE --columns NOTE_ID,QC_STATUS,NOTE_TYPE,WEEK_NUMBER,BATCH_ID,TRAINEE_ID --fields-terminated-by , --target-dir battery-pre-csv/battery-qualitative -m 1</command>
 		</sqoop>
 
+<<<<<<< HEAD
         <ok to="join_node" />
         <error to="kill" />
+=======
+        <ok to = "join_node" />
+        <error to = "kill" />
+>>>>>>> 893f252b9f546e5774831a6d9fb9de9493c29cba
 	</action>
 
 	<action name="sqoop-battery-quantitative-import">
@@ -119,8 +134,13 @@
 			<command>import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks -Doozie.launcher.mapreduce.job.queuename=sqoop -Dmapreduce.job.queuename=sqoop --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias mydb.password.alias --table CALIBER_GRADE --columns GRADE_ID,SCORE,ASSESSMENT_ID,TRAINEE_ID --fields-terminated-by , --target-dir battery-pre-csv/battery-quantitative -m 1</command>
 		</sqoop>
 
+<<<<<<< HEAD
         <ok to="join_node" />
         <error to="kill" />
+=======
+        <ok to = "join_node" />
+        <error to = "kill" />
+>>>>>>> 893f252b9f546e5774831a6d9fb9de9493c29cba
 	</action>
 
 	<action name="sqoop-battery-assessment-import">
@@ -147,8 +167,13 @@
 			<command>import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks -Doozie.launcher.mapreduce.job.queuename=sqoop -Dmapreduce.job.queuename=sqoop --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias mydb.password.alias --table CALIBER_ASSESSMENT --columns ASSESSMENT_ID,RAW_SCORE,ASSESSMENT_TYPE,WEEK_NUMBER,BATCH_ID,ASSESSMENT_CATEGORY --fields-terminated-by , --target-dir battery-pre-csv/battery-assessment -m 1</command> 
 		</sqoop>
 
+<<<<<<< HEAD
         <ok to="join_node" />
         <error to="kill" />
+=======
+        <ok to = "join_node" />
+        <error to = "kill" />
+>>>>>>> 893f252b9f546e5774831a6d9fb9de9493c29cba
 	</action>
 
     <join name = "join_node" to="fork_node2"/>
