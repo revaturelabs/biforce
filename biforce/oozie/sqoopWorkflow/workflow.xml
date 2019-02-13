@@ -35,8 +35,13 @@
 			<command>import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks -Doozie.launcher.mapreduce.job.queuename=sqoop -Dmapreduce.job.queuename=sqoop --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias mydb.password.alias --table CALIBER_TRAINEE --columns TRAINEE_ID,TRAINING_STATUS,BATCH_ID --fields-terminated-by , --target-dir battery-pre-csv/battery -m 1</command>
 		</sqoop>
 
+<<<<<<< HEAD
         <ok to="join_node" />
         <error to="kill" />
+=======
+        <ok to = "join_node" />
+        <error to = "kill" />
+>>>>>>> 893f252b9f546e5774831a6d9fb9de9493c29cba
 	</action>
 
 	<action name="sqoop-battery-group-import">
@@ -63,8 +68,13 @@
 			<command>import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks -Doozie.launcher.mapreduce.job.queuename=sqoop -Dmapreduce.job.queuename=sqoop --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias mydb.password.alias --table CALIBER_BATCH --columns BATCH_ID,SKILL_TYPE,TRAINER_ID --fields-terminated-by , --target-dir battery-pre-csv/battery-group -m 1</command>
 		</sqoop>
 
+<<<<<<< HEAD
         <ok to="join_node" />
         <error to="kill" />
+=======
+        <ok to = "join_node" />
+        <error to = "kill" />
+>>>>>>> 893f252b9f546e5774831a6d9fb9de9493c29cba
 	</action>
 
 	<action name="sqoop-battery-qualitative-import">
@@ -91,8 +101,13 @@
 			<command>import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks -Doozie.launcher.mapreduce.job.queuename=sqoop -Dmapreduce.job.queuename=sqoop --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias mydb.password.alias --table CALIBER_NOTE --columns NOTE_ID,QC_STATUS,NOTE_TYPE,WEEK_NUMBER,BATCH_ID,TRAINEE_ID --fields-terminated-by , --target-dir battery-pre-csv/battery-qualitative -m 1</command>
 		</sqoop>
 
+<<<<<<< HEAD
         <ok to="join_node" />
         <error to="kill" />
+=======
+        <ok to = "join_node" />
+        <error to = "kill" />
+>>>>>>> 893f252b9f546e5774831a6d9fb9de9493c29cba
 	</action>
 
 	<action name="sqoop-battery-quantitative-import">
@@ -119,8 +134,13 @@
 			<command>import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks -Doozie.launcher.mapreduce.job.queuename=sqoop -Dmapreduce.job.queuename=sqoop --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias mydb.password.alias --table CALIBER_GRADE --columns GRADE_ID,SCORE,ASSESSMENT_ID,TRAINEE_ID --fields-terminated-by , --target-dir battery-pre-csv/battery-quantitative -m 1</command>
 		</sqoop>
 
+<<<<<<< HEAD
         <ok to="join_node" />
         <error to="kill" />
+=======
+        <ok to = "join_node" />
+        <error to = "kill" />
+>>>>>>> 893f252b9f546e5774831a6d9fb9de9493c29cba
 	</action>
 
 	<action name="sqoop-battery-assessment-import">
@@ -147,8 +167,13 @@
 			<command>import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks -Doozie.launcher.mapreduce.job.queuename=sqoop -Dmapreduce.job.queuename=sqoop --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias mydb.password.alias --table CALIBER_ASSESSMENT --columns ASSESSMENT_ID,RAW_SCORE,ASSESSMENT_TYPE,WEEK_NUMBER,BATCH_ID,ASSESSMENT_CATEGORY --fields-terminated-by , --target-dir battery-pre-csv/battery-assessment -m 1</command> 
 		</sqoop>
 
+<<<<<<< HEAD
         <ok to="join_node" />
         <error to="kill" />
+=======
+        <ok to = "join_node" />
+        <error to = "kill" />
+>>>>>>> 893f252b9f546e5774831a6d9fb9de9493c29cba
 	</action>
 
     <join name = "join_node" to="fork_node2"/>
@@ -358,90 +383,88 @@
 			<arg>--password</arg>
 			<arg>${clouderaPass}</arg>
 			<arg>--query</arg>
-			<arg>INSERT INTO BATTERY_TEST (TEST_TYPE, RAW_SCORE, SCORE, TEST_PERIOD, TEST_CATEGORY, BUILDER_ID, GROUP_ID, GROUP_TYPE, BATTERY_ID, BATTERY_STATUS)
-			SELECT
-				CASE 
-					WHEN UPPER(A.ASSESSMENT_TYPE) = 'VERBAL' THEN 1 
-					WHEN UPPER(A.ASSESSMENT_TYPE) = 'EXAM' THEN 2
-					WHEN UPPER(A.ASSESSMENT_TYPE) = 'PROJECT' THEN 3
-					WHEN UPPER(A.ASSESSMENT_TYPE) = 'OTHER' THEN 4
-					ELSE 0
-				END,
-				A.RAW_SCORE, 
-				Q.SCORE,
-				A.WEEK_NUMBER,
-				A.ASSESSMENT_CATEGORY,
-				G.TRAINER_ID,
-				G.BATCH_ID,
-				CASE 
-					WHEN UPPER(G.SKILL_TYPE) = 'SDET' THEN 1 
-					WHEN UPPER(G.SKILL_TYPE) = 'J2EE' THEN 2
-					WHEN UPPER(G.SKILL_TYPE) = 'OTHER' THEN 3
-					WHEN UPPER(G.SKILL_TYPE) = 'BPM' THEN 4
-					WHEN UPPER(G.SKILL_TYPE) = 'NET' THEN 5
-					WHEN UPPER(G.SKILL_TYPE) = 'MICROSERVICES' THEN 6
-					ELSE 0
-				END,
-				Q.TRAINEE_ID,
-				CASE
-					WHEN UPPER(B.TRAINING_STATUS) = 'DROPPED' THEN 0
-					WHEN UPPER(B.TRAINING_STATUS) = 'EMPLOYED' THEN 1
-					WHEN UPPER(B.TRAINING_STATUS) = 'TRAINING' THEN 2
-					WHEN UPPER(B.TRAINING_STATUS) = 'SIGNED' THEN 3
-					WHEN UPPER(B.TRAINING_STATUS) = 'CONFIRMED' THEN 4
-					WHEN UPPER(B.TRAINING_STATUS) = 'MARKETING' THEN 5
-					ELSE 6
-				END
-			FROM BATTERY_ASSESSMENT A, BATTERY_GROUP G, BATTERY_QUANTITATIVE Q, BATTERY B
-			WHERE A.ASSESSMENT_ID = Q.ASSESSMENT_ID
-			AND A.BATCH_ID = G.BATCH_ID
-			AND Q.TRAINEE_ID = B.TRAINEE_ID
+			<arg>INSERT INTO BATTERY_TEST (TEST_TYPE, SCORE, TEST_PERIOD, BUILDER_ID, GROUP_ID, GROUP_TYPE, BATTERY_ID, BATTERY_STATUS)
+				SELECT
+					CASE 
+						WHEN UPPER(A.ASSESSMENT_TYPE) = 'VERBAL' THEN 1 
+						WHEN UPPER(A.ASSESSMENT_TYPE) = 'EXAM' THEN 2
+						WHEN UPPER(A.ASSESSMENT_TYPE) = 'PROJECT' THEN 3
+						WHEN UPPER(A.ASSESSMENT_TYPE) = 'OTHER' THEN 4
+						ELSE 0
+					END,
+						Q.SCORE,
+					A.WEEK_NUMBER,
+					G.TRAINER_ID,
+					G.BATCH_ID,
+					CASE 
+						WHEN UPPER(G.SKILL_TYPE) = 'SDET' THEN 1 
+						WHEN UPPER(G.SKILL_TYPE) = 'J2EE' THEN 2
+						WHEN UPPER(G.SKILL_TYPE) = 'OTHER' THEN 3
+						WHEN UPPER(G.SKILL_TYPE) = 'BPM' THEN 4
+						WHEN UPPER(G.SKILL_TYPE) = 'NET' THEN 5
+						WHEN UPPER(G.SKILL_TYPE) = 'BPM' THEN 6
+						WHEN UPPER(G.SKILL_TYPE) = 'MICROSERVICES' THEN 7
+						ELSE 0
+					END,
+					Q.TRAINEE_ID,
+					CASE
+						WHEN UPPER(B.TRAINING_STATUS) = 'DROPPED' THEN 0
+						WHEN UPPER(B.TRAINING_STATUS) = 'EMPLOYED' THEN 1
+						WHEN UPPER(B.TRAINING_STATUS) = 'TRAINING' THEN 2
+						WHEN UPPER(B.TRAINING_STATUS) = 'SIGNED' THEN 3
+						WHEN UPPER(B.TRAINING_STATUS) = 'CONFIRMED' THEN 4
+						WHEN UPPER(B.TRAINING_STATUS) = 'MARKETING' THEN 5
+						ELSE 6
+					END
+				FROM BATTERY_ASSESSMENT A, BATTERY_GROUP G, BATTERY_QUANTITATIVE Q, BATTERY B
+				WHERE A.ASSESSMENT_ID = Q.ASSESSMENT_ID
+				AND A.BATCH_ID = G.BATCH_ID
+				AND Q.TRAINEE_ID = B.TRAINEE_ID
 
-			UNION ALL
+				UNION ALL
 
-			SELECT 
-				CASE 
-					WHEN UPPER(Q.NOTE_TYPE) = 'TRAINEE' THEN 5 
-					WHEN UPPER(Q.NOTE_TYPE) = 'QC_TRAINEE' THEN 6
-					WHEN UPPER(Q.NOTE_TYPE) = 'BATCH' THEN 7
-					WHEN UPPER(Q.NOTE_TYPE) = 'QC_BATCH' THEN 8
-					ELSE 0
-				END,
-				100, 
-				CASE 
-					WHEN UPPER(Q.QC_STATUS) = 'POOR' THEN 65 
-					WHEN UPPER(Q.QC_STATUS) = 'AVERAGE' THEN 75
-					WHEN UPPER(Q.QC_STATUS) = 'GOOD' THEN 85
-					WHEN UPPER(Q.QC_STATUS) = 'SUPERSTAR' THEN 95
-					ELSE 0
-				END,
-				Q.WEEK_NUMBER,
-				0,
-				G.TRAINER_ID,
-				G.BATCH_ID,
-				CASE 
-					WHEN UPPER(G.SKILL_TYPE) = 'SDET' THEN 1 
-					WHEN UPPER(G.SKILL_TYPE) = 'J2EE' THEN 2
-					WHEN UPPER(G.SKILL_TYPE) = 'OTHER' THEN 3
-					WHEN UPPER(G.SKILL_TYPE) = 'BPM' THEN 4
-					WHEN UPPER(G.SKILL_TYPE) = 'NET' THEN 5
-					WHEN UPPER(G.SKILL_TYPE) = 'MICROSERVICES' THEN 6
-					ELSE 0
-				END,
-				B.TRAINEE_ID,
-				CASE
-					WHEN UPPER(B.TRAINING_STATUS) = 'DROPPED' THEN 0
-					WHEN UPPER(B.TRAINING_STATUS) = 'EMPLOYED' THEN 1
-					WHEN UPPER(B.TRAINING_STATUS) = 'TRAINING' THEN 2
-					WHEN UPPER(B.TRAINING_STATUS) = 'SIGNED' THEN 3
-					WHEN UPPER(B.TRAINING_STATUS) = 'CONFIRMED' THEN 4
-					WHEN UPPER(B.TRAINING_STATUS) = 'MARKETING' THEN 5
-					ELSE 6
-				END
-			FROM BATTERY B, BATTERY_QUALITATIVE Q, BATTERY_GROUP G
-			WHERE Q.TRAINEE_ID = B.TRAINEE_ID
-			AND G.BATCH_ID = B.BATCH_ID
-			AND Q.QC_STATUS IS NOT NULL</arg>
+				SELECT 
+					CASE 
+						WHEN UPPER(Q.NOTE_TYPE) = 'TRAINEE' THEN 5 
+						WHEN UPPER(Q.NOTE_TYPE) = 'QC_TRAINEE' THEN 6
+						WHEN UPPER(Q.NOTE_TYPE) = 'BATCH' THEN 7
+						WHEN UPPER(Q.NOTE_TYPE) = 'QC_BATCH' THEN 8
+						ELSE 0
+					END,
+					CASE 
+						WHEN UPPER(Q.QC_STATUS) = 'POOR' THEN 65 
+						WHEN UPPER(Q.QC_STATUS) = 'AVERAGE' THEN 75
+						WHEN UPPER(Q.QC_STATUS) = 'GOOD' THEN 85
+						WHEN UPPER(Q.QC_STATUS) = 'SUPERSTAR' THEN 95
+						ELSE 0
+					END,
+					Q.WEEK_NUMBER,
+					G.TRAINER_ID,
+					G.BATCH_ID,
+					CASE 
+						WHEN UPPER(G.SKILL_TYPE) = 'SDET' THEN 1 
+						WHEN UPPER(G.SKILL_TYPE) = 'J2EE' THEN 2
+						WHEN UPPER(G.SKILL_TYPE) = 'OTHER' THEN 3
+						WHEN UPPER(G.SKILL_TYPE) = 'BPM' THEN 4
+						WHEN UPPER(G.SKILL_TYPE) = 'NET' THEN 5
+						WHEN UPPER(G.SKILL_TYPE) = 'BPM' THEN 6
+						WHEN UPPER(G.SKILL_TYPE) = 'MICROSERVICES' THEN 7
+						ELSE 0
+					END,
+					B.TRAINEE_ID,
+					CASE
+						WHEN UPPER(B.TRAINING_STATUS) = 'DROPPED' THEN 0
+						WHEN UPPER(B.TRAINING_STATUS) = 'EMPLOYED' THEN 1
+						WHEN UPPER(B.TRAINING_STATUS) = 'TRAINING' THEN 2
+						WHEN UPPER(B.TRAINING_STATUS) = 'SIGNED' THEN 3
+						WHEN UPPER(B.TRAINING_STATUS) = 'CONFIRMED' THEN 4
+						WHEN UPPER(B.TRAINING_STATUS) = 'MARKETING' THEN 5
+						ELSE 6
+					END
+				FROM BATTERY B, BATTERY_QUALITATIVE Q, BATTERY_GROUP G
+				WHERE Q.TRAINEE_ID = B.TRAINEE_ID
+				AND G.BATCH_ID = B.BATCH_ID
+				AND Q.QC_STATUS IS NOT NULL</arg>
 		</sqoop> 
 
 		<ok to="sqoop-battery-test-import"/>
