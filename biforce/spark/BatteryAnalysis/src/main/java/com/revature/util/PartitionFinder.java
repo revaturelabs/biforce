@@ -1,14 +1,10 @@
 package com.revature.util;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-import org.apache.spark.api.java.function.FilterFunction;
-import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Row;
-import org.apache.spark.sql.functions.*; 
+import org.apache.spark.sql.Row; 
 
 //#1,2,25,74.00,7,20,14,112511,2,281214,2
 //#_c0 = 1 : row number

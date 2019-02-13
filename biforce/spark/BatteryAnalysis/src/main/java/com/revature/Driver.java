@@ -12,6 +12,8 @@ import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 
+import com.revature.util.PartitionFinder;
+
 /*
  * _c0 = PK
  * _c1 = test type
@@ -58,6 +60,8 @@ public class Driver {
 		modelData = splits[0];
 		controlData = splits[1];
 
+		List<List<Double>> partitions = PartitionFinder.read(filtered_csv);
+		
 		// Build a logarithmic model with modeldata each test
 		/* xyz */
 		// model built
