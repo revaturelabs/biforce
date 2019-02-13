@@ -46,7 +46,7 @@ public class Driver {
 		context = new JavaSparkContext(conf);
 		context.setLogLevel("ERROR");
 		session = new SparkSession(context.sc());
-		csv = session.read().format("csv").option("header","false").load(args[0]);
+		csv = session.read().format("csv").option("header","false").option("inferSchema", "true").load(args[0]);
 		
 		csv.cache();
 		
@@ -66,7 +66,8 @@ public class Driver {
 		/* xyz */
 		// model built
 		//apply model to each row
-		performTestingOnRows();
+		
+		//performTestingOnRows();
 
 		// use controlData to test accuracy
 
