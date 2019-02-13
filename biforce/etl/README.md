@@ -47,13 +47,13 @@ Our Responsibilities consisted of initial cleansing of the data through Sqoop im
 2. Create Sqoop job on the machine that will perform Oozie. Connect, username, and password will vary:
 	
 	```SQL
-	sqoop job \
---create battery_test_join \
--- eval \
---connect jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING \
---username root \
---password mySQLPW \
--e "INSERT INTO BATTERY_TEST (TEST_TYPE, SCORE, TEST_PERIOD, BUILDER_ID, GROUP_ID, GROUP_TYPE, BATTERY_ID, BATTERY_STATUS)
+	sqoop job \ 
+	--create battery_test_join \
+	-- eval \
+	--connect jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING \
+	--username root \
+	--password ? \
+	-e "INSERT INTO BATTERY_TEST (TEST_TYPE, SCORE, TEST_PERIOD, BUILDER_ID, GROUP_ID, GROUP_TYPE, BATTERY_ID, BATTERY_STATUS)
 	SELECT
 		CASE 
 			WHEN UPPER(A.ASSESSMENT_TYPE) = 'VERBAL' THEN 1 
@@ -62,7 +62,7 @@ Our Responsibilities consisted of initial cleansing of the data through Sqoop im
 			WHEN UPPER(A.ASSESSMENT_TYPE) = 'OTHER' THEN 4
 			ELSE 0
 		END,
-			Q.SCORE,
+		Q.SCORE,
 		A.WEEK_NUMBER,
 		G.TRAINER_ID,
 		G.BATCH_ID,
