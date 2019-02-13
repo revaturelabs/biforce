@@ -47,7 +47,7 @@ public class Driver {
 		context.setLogLevel("ERROR");
 		session = new SparkSession(context.sc());
 		csv = session.read().format("csv").option("header","false").option("inferSchema", "true").load(args[0]);
-		
+
 		csv.cache();
 		
 		// Filter the indicator data to include only the valid data for our samples.
