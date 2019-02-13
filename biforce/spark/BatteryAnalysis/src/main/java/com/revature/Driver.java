@@ -60,14 +60,14 @@ public class Driver {
 		modelData = splits[0];
 		controlData = splits[1];
 
-		List<List<Double>> partitions = PartitionFinder.read(filtered_csv);
+		//List<List<Double>> partitions = PartitionFinder.read(filtered_csv);
 		
 		// Build a logarithmic model with modeldata each test
 		/* xyz */
 		// model built
 		//apply model to each row
 		
-		//performTestingOnRows();
+		performTestingOnRows();
 
 		// use controlData to test accuracy
 
@@ -88,7 +88,7 @@ public class Driver {
 
 		for (Row r:IDs) {
 			Double finalPercentage = 0.0;
-			long associateID = Long.parseLong(r.getString(0));
+			int associateID = r.getInt(0);
 
 			System.out.println("Beginning Analysis on battery id: " + associateID);
 			context.sc().log().info("Beginning Analysis on battery id: " + associateID);
@@ -104,7 +104,7 @@ public class Driver {
 				//test score: row.getDouble(3)
 				row.get(1);
 
-				finalPercentage += Double.parseDouble(row.getString(3))*0.7;
+				finalPercentage += row.getDouble(3)*0.7;
 				total_r += 0.7;
 			}
 			finalPercentage /= total_r;
