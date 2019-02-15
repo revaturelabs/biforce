@@ -61,12 +61,18 @@ public class Driver {
 		// Filter the indicator data to include only the valid data for our samples.
 		filtered_csv = csv.filter("_c10 = 0 OR _c10 = 1 OR (_c10 = 2 AND (_c4 = 9 OR _c4 = 10))");
 
-		Dataset<Row>[] splits = filtered_csv.randomSplit(splitRatios);
-		modelData = splits[0];
-		controlData = splits[1];
+		Dataset<Row>[] splits = filtered_csv.select("_c9").distinct().randomSplit(splitRatios);
+        modelData = filtered_csv.join(splits[0], filtered_csv.col("_c9").equalTo(splits[0].col("_c9")), "leftsemi");
+        controlData = filtered_csv.join(splits[1], filtered_csv.col("_c9").equalTo(splits[1].col("_c9")), "leftsemi");
 
 		List<List<Double>> partitions = PartitionFinder.read(modelData);
-		System.out.println("\nPARTITIONS CREATED\n");
+//		List<List<Double>> partitions = new ArrayList<>();
+//		System.out.println("\nPARTITIONS CREATED\n");
+//		List<Double> values = new ArrayList<>();
+//		values.add(10.0);values.add(20.0);values.add(30.0);values.add(40.0);values.add(50.0);values.add(60.0);values.add(70.0);values.add(80.0);values.add(90.0);
+//		partitions.add(values);
+//		partitions.add(values);
+//		partitions.add(values);
 		
 		double[][] bin1 = ModelFunction.execute(modelData, partitions);
 
@@ -84,7 +90,7 @@ public class Driver {
 					double failPercent = 0;
 					double rValue = 0;
 					for (int i=1;i<=3;++i) {
-						if (row.getInt(1) == i) { // Assessment type 1-4
+						if (row.getInt(1) == i) { // Assessment type 1-3
 							
 							failPercent = Math.exp(row.getDouble(3) * bin1[i-1][1] + bin1[i-1][2])/
 									(1 +Math.exp(row.getDouble(3) * bin1[i-1][1] + bin1[i-1][2])) *
@@ -97,7 +103,7 @@ public class Driver {
 					Row outputRow = RowFactory.create(row.getInt(9), failPercent, rValue);
 					return outputRow;
 				});
-
+		
 		JavaPairRDD<Integer,Row> applicationRDD = csvRDD.mapToPair(row -> new Tuple2<Integer,Row>(row.getInt(0),row));
 		JavaPairRDD<Integer, Row> sums = applicationRDD.reduceByKey((Row row1,Row row2)->{
 			return RowFactory.create(row1.getInt(0), row1.getDouble(1) + row2.getDouble(1), row1.getDouble(2) + row2.getDouble(2));});
