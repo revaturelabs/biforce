@@ -160,7 +160,7 @@
                 <arg>--check-column</arg>
                 <arg>ADDRESS_ID</arg>
                 <arg>--target-dir</arg>
-                <arg>caliber/address</arg>
+                <arg>biforce/address</arg>
                 <arg>-m</arg>
                 <arg>1</arg>
             </sqoop>
@@ -197,7 +197,7 @@
                 <arg>--check-column</arg>
                 <arg>ASSESSMENT_ID</arg>
                 <arg>--target-dir</arg>
-                <arg>caliber/assessment</arg>
+                <arg>biforce/assessment</arg>
                 <arg>-m</arg>
                 <arg>1</arg>
             </sqoop>
@@ -233,7 +233,7 @@
                 <arg>--check-column</arg>
                 <arg>BATCH_ID</arg>
                 <arg>--target-dir</arg>
-                <arg>caliber/batch</arg>
+                <arg>biforce/batch</arg>
                 <arg>-m</arg>
                 <arg>1</arg>
             </sqoop>
@@ -270,7 +270,7 @@
                 <arg>--check-column</arg>
                 <arg>GRADE_ID</arg>
                 <arg>--target-dir</arg>
-                <arg>caliber/grade</arg>
+                <arg>biforce/grade</arg>
                 <arg>-m</arg>
                 <arg>1</arg>
             </sqoop>
@@ -307,7 +307,7 @@
                 <arg>--check-column</arg>
                 <arg>NOTE_ID</arg>
                 <arg>--target-dir</arg>
-                <arg>caliber/note</arg>
+                <arg>biforce/note</arg>
                 <arg>-m</arg>
                 <arg>1</arg>
             </sqoop>
@@ -344,7 +344,7 @@
                 <arg>--check-column</arg>
                 <arg>TRAINEE_ID</arg>
                 <arg>--target-dir</arg>
-                <arg>caliber/trainee</arg>
+                <arg>biforce/trainee</arg>
                 <arg>-m</arg>
                 <arg>1</arg>
             </sqoop>
@@ -381,7 +381,7 @@
                 <arg>--check-column</arg>
                 <arg>TRAINER_ID</arg>
                 <arg>--target-dir</arg>
-                <arg>caliber/trainer</arg>
+                <arg>biforce/trainer</arg>
                 <arg>-m</arg>
                 <arg>1</arg>
             </sqoop>
