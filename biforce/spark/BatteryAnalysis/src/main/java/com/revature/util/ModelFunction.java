@@ -10,14 +10,16 @@ public class ModelFunction{
 
 	public static double[][] execute(Dataset<Row> csv, List<List<Double>> partitions){
 		double[][] model = new double[7][4];
-
+		
+		
 		model[0] = logReg(statsDS(binDS(modelDS(csv, "_c1", 1), partitions.get(0))), 1);
 		System.out.println("MODEL 1 DONE");
 		model[1] = logReg(statsDS(binDS(modelDS(csv, "_c1", 2), partitions.get(1))), 2);
 		System.out.println("MODEL 2 DONE");
 		model[2] = logReg(statsDS(binDS(modelDS(csv, "_c1", 3), partitions.get(2))), 3);
 		System.out.println("MODEL 3 DONE");
-		//		model[3] = logReg(statsDS(binDS(modelDS(csv, "_c1", 4))), 4); // bad correlation
+		model[3] = logReg(statsDS(binDS(modelDS(csv, "_c1", 4), partitions.get(3))), 4);
+		System.out.println("MODEL 4 DONE");
 		//		model[4] = logReg(statsDS(binDS(modelDS(csv, "_c4", 1))), 5);
 		//		model[5] = logReg(statsDS(binDS(modelDS(csv, "_c4", 2))), 6);
 		//		model[6] = logReg(statsDS(binDS(modelDS(csv, "_c4", 3))), 7);
