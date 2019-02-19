@@ -68,31 +68,13 @@ public class Driver {
 		modelData = filtered_csv.join(splits[0], filtered_csv.col("_c9").equalTo(splits[0].col("_c9")), "leftsemi");
 		controlData = filtered_csv.join(splits[1], filtered_csv.col("_c9").equalTo(splits[1].col("_c9")), "leftsemi");
 
-//		modelData.persist(); // holds modeldata in memory so it doesn't have to repeat the above filters/joins
-//
-//		List<List<Double>> partitions = PartitionFinder.read(modelData);
-//
-//		double[][] bin1 = ModelFunction.execute(modelData, partitions);
-//		
-//		modelData.unpersist();
-		double[][] bin1 = new double[4][4];
-		bin1[0][0] = 1.0;
-		bin1[1][0] = 2.0;
-		bin1[2][0] = 3.0;
-		bin1[3][0] = 4.0;
-		bin1[0][1] = -0.07378938896351178;
-		bin1[1][1] = -0.11094627913463939;
-		bin1[2][1] = -0.05932924706050152;
-		bin1[3][1] = -0.017487144707690996;
-		bin1[0][2] = 5.629783101381262;
-		bin1[1][2] = 8.20653998389569;
-		bin1[2][2] = 4.574615396517751;
-		bin1[3][2] = 0.8891341343062747;
-		bin1[0][3] = 0.5953324069167315;
-		bin1[1][3] = 0.7209645285370248;
-		bin1[2][3] = 0.7017632087421138;
-		bin1[3][3] = 0.18873783916790474;
+		modelData.persist(); // holds modeldata in memory so it doesn't have to repeat the above filters/joins
 
+		List<List<Double>> partitions = PartitionFinder.read(modelData);
+
+		double[][] bin1 = ModelFunction.execute(modelData, partitions);
+		
+		modelData.unpersist();
 
 		for(int i = 0; i < 4; i++) {
 			System.out.println(bin1[i][0] + " " + bin1[i][1]+ " " + bin1[i][2]+ " " + bin1[i][3]);
@@ -116,10 +98,9 @@ public class Driver {
 			double d = percentList.get(i);
 
 			// Filter out those who passed, and those who failed but we guessed wrong
-			long accurateFailedCount = controlRDD.filter(row -> row.getInt(2) != 0 || row.getDouble(1) < d).count();
+			long accurateFailedCount = controlRDD.filter(row -> row.getInt(2) == 0 && row.getDouble(1) >= d).count();
 			// Filter out those who failed, and those who passed but we guessed wrong
-			long accuratePassedCount = controlRDD.filter(row -> row.getInt(2) == 0 || row.getDouble(1) >= d).count();
-			System.out.println("d: " + d + ", fail: " + accurateFailedCount + ", pass: " + accuratePassedCount);
+			long accuratePassedCount = controlRDD.filter(row -> row.getInt(2) != 0 && row.getDouble(1) < d).count();
 			long accurateCount = accurateFailedCount + accuratePassedCount;
 
 			if (accurateCount > optimalAccurateCount) {
@@ -128,11 +109,12 @@ public class Driver {
 			}
 		}
 		
-		System.out.println(optimalPercent);
-		System.out.println(optimalAccurateCount);
 
+		System.out.println("Fail percent: " + Math.round(optimalPercent*10000)/10000.0 + "\nCorrect estimates: " + optimalAccurateCount +
+					"\nTotal Count: " + controlRDD.count() + "\nAccuracy: " + optimalAccurateCount/controlRDD.count() + "\n");
+		
 		try {
-			accuracyWriter.append("Fail percent: " + optimalPercent + "\nCorrect estimates: " + optimalAccurateCount +
+			accuracyWriter.append("Fail percent: " + Math.round(optimalPercent*10000)/10000.0 + "\nCorrect estimates: " + optimalAccurateCount +
 					"\nTotal Count: " + controlRDD.count() + "\n");
 		} catch (IOException e) {
 			e.printStackTrace();
