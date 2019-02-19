@@ -15,6 +15,7 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.RowFactory;
 import org.apache.spark.sql.SparkSession;
 
+import com.revature.util.EvaluationMetrics;
 import com.revature.util.ModelFunction;
 import com.revature.util.PartitionFinder;
 
@@ -122,6 +123,12 @@ public class Driver {
 		final double dropPercent = optimalPercent;
 		
 		writeControlOutput(controlRDD, dropPercent);
+		
+		// TODO
+		// calculate/print evaluation metrics
+		// Assumed controlRDD is testing test data with model already applied to third column
+		System.out.println("Mean Absolute Error: " + EvaluationMetrics.testMAE(controlRDD));
+		System.out.println("Root Mean Squared Error: " + EvaluationMetrics.testRMSE(controlRDD));
 		
 		applyModel(csv, bin1, dropPercent);
 		
