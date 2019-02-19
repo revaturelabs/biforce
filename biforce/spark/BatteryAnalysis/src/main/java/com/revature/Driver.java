@@ -104,7 +104,7 @@ public class Driver {
 		long optimalAccurateCount = 0;
 		List<Double> percentList = new ArrayList<>();
 
-		for (Double d = 0.0;d <= 100; d+= controlPrecision) {
+		for (Double d = 0.0;d <= 1; d+= controlPrecision/100) {
 			percentList.add(d);
 		}
 
