@@ -79,7 +79,6 @@ public class Driver {
 		for(int i = 0; i < 3; i++) {
 			System.out.println(bin1[i][0] + " " + bin1[i][1]+ " " + bin1[i][2]+ " " + bin1[i][3]);
 		}
-		
 
 		double optimalPercent = 0;
 		long optimalAccurateCount = 0;

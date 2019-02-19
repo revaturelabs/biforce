@@ -10,8 +10,8 @@ public class ModelFunction{
 
 	public static double[][] execute(Dataset<Row> csv, List<List<Double>> partitions){
 		double[][] model = new double[3][4];
-		
-		
+
+
 		model[0] = logReg(statsDS(binDS(modelDS(csv, "_c1", 1), partitions.get(0))), 1);
 		System.out.println("MODEL 1 DONE");
 		model[1] = logReg(statsDS(binDS(modelDS(csv, "_c1", 2), partitions.get(1))), 2);
@@ -42,19 +42,10 @@ public class ModelFunction{
 		int binNum = 2;
 		for(int i = 1; i <= 9; i++){
 			Dataset<Row> bin;
-			
-			if (Math.abs(partitions.get(i-1) - partitions.get(i)) < 0.0001) {
-				double n = 0;
-				for (double d:partitions) {
-					if (Math.abs(d - partitions.get(i)) < 0.0001) ++n;
-				}
-				bin = input.filter("abs(avg_score - " + partitions.get(i-1) + ") < 0.0001").
-						randomSplit(new double[]{1.0/n,(n-1.0)/n})[0].
-						withColumn("bin", functions.lit(binNum));
-			}else {
-				bin = input.filter("avg_score >= " + partitions.get(i-1) + " and avg_score < "+ partitions.get(i)).
-						withColumn("bin", functions.lit(binNum));
-			}
+
+
+			bin = input.filter("avg_score >= " + partitions.get(i-1) + " and avg_score < "+ partitions.get(i)).
+					withColumn("bin", functions.lit(binNum));
 
 			bins = bins.union(bin); // union all
 			binNum++;
@@ -87,10 +78,11 @@ public class ModelFunction{
 			if((binTotal - binDropped) < 1 || binDropped == 0 || binTotal == 0){
 				prob = (double) -1;
 				logOdds = (double) -1;
-			}else{
-				prob = (((double) binDropped)/binTotal)*100;
+			} else{
+				prob = (((double) binDropped)/binTotal*100);
 				logOdds = Math.log((double) binDropped / (binTotal - binDropped));
 			}
+
 			probs[i] = new double[] {i+1, prob, logOdds};
 		}
 
