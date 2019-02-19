@@ -1,6 +1,7 @@
 package com.revature.util;
 
 import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,10 +12,28 @@ import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.RowFactory;
 
+import scala.Serializable;
 import scala.Tuple2;
 
-public class ModelApplier {
-	public static void writeControlOutput(JavaRDD<Row> controlRDD, double dropPercent, BufferedWriter accuracyWriter) {
+public class ModelApplier implements Serializable{
+	private BufferedWriter writer;
+	private BufferedWriter accuracyWriter;
+	
+	public ModelApplier(String mainFile, String controlFile) {
+		try {
+			writer = new BufferedWriter(new FileWriter(mainFile, false));
+			accuracyWriter = new BufferedWriter(new FileWriter(controlFile, false));
+
+			writer.append("battery_id,% Chance to Fail,Prediction\n");
+			accuracyWriter.append("Control data statistics\n");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private static final long serialVersionUID = -6089935981963552584L;
+
+	public void writeControlOutput(JavaRDD<Row> controlRDD, double dropPercent) {
 		controlRDD.foreach(row -> {
 			try {
 				String outString;
@@ -33,7 +52,7 @@ public class ModelApplier {
 		});
 	}
 
-	public static void applyModel(Dataset<Row> csv, double[][] bin1, double dropPercent, BufferedWriter writer) {
+	public void applyModel(Dataset<Row> csv, double[][] bin1, double dropPercent) {
 		JavaRDD<Row> csvRDD = 
 				csv
 				.javaRDD()
@@ -67,7 +86,7 @@ public class ModelApplier {
 		});
 	}
 
-	public static JavaRDD<Row> applyControlModel(Dataset<Row> csv, double[][] bin1) {
+	public JavaRDD<Row> applyControlModel(Dataset<Row> csv, double[][] bin1) {
 		JavaRDD<Row> csvRDD = 
 				csv
 				.javaRDD()
@@ -104,7 +123,7 @@ public class ModelApplier {
 		});
 	}
 
-	public static double findOptimalPercent(JavaRDD<Row> controlRDD, double[][] bin1, double controlPrecision, BufferedWriter accuracyWriter) {
+	public double findOptimalPercent(JavaRDD<Row> controlRDD, double[][] bin1, double controlPrecision) {
 		double optimalPercent = 0;
 		long optimalAccurateCount = 0;
 		List<Double> percentList = new ArrayList<>();
@@ -144,5 +163,14 @@ public class ModelApplier {
 		
 		controlRDD.unpersist();
 		return optimalPercent;
+	}
+
+	public void close() {
+		try {
+			writer.close();
+			accuracyWriter.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

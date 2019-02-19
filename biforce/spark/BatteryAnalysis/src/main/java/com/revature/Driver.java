@@ -31,8 +31,6 @@ import com.revature.util.PartitionFinder;
 
 public class Driver {
 
-	private static BufferedWriter writer;
-	private static BufferedWriter accuracyWriter;
 	private static JavaSparkContext context;
 	public static Dataset<Row> csv,filtered_csv,controlData,modelData;
 	private static SparkSession session;
@@ -48,15 +46,7 @@ public class Driver {
 		double controlPrecision = 1.0;
 		double[] splitRatios = {0.7,0.3};
 
-		try {
-			writer = new BufferedWriter(new FileWriter(args[1], false));
-			accuracyWriter = new BufferedWriter(new FileWriter(args[2], false));
-			accuracyWriter.append("Control data statistics\n");
-			writer.append("battery_id,% Chance to Fail,Prediction\n");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
+		ModelApplier modelApplier = new ModelApplier(args[1], args[2]);
 
 		// Filter the indicator data to include only the valid data for our samples.
 		filtered_csv = csv.filter("_c10 = 0 OR _c10 = 1 OR (_c10 = 2 AND (_c4 = 9 OR _c4 = 10))");
@@ -77,11 +67,11 @@ public class Driver {
 			System.out.println(bin1[i][0] + " " + bin1[i][1]+ " " + bin1[i][2]+ " " + bin1[i][3]);
 		}
 
-		JavaRDD<Row> controlRDD = ModelApplier.applyControlModel(controlData, bin1);
+		JavaRDD<Row> controlRDD = modelApplier.applyControlModel(controlData, bin1);
 		
-		final double dropPercent = ModelApplier.findOptimalPercent(controlRDD, bin1, controlPrecision, accuracyWriter);
+		final double dropPercent = modelApplier.findOptimalPercent(controlRDD, bin1, controlPrecision);
 		
-		ModelApplier.writeControlOutput(controlRDD, dropPercent, accuracyWriter);
+		modelApplier.writeControlOutput(controlRDD, dropPercent);
 		
 		// TODO
 		// calculate/print evaluation metrics
@@ -89,16 +79,11 @@ public class Driver {
 		System.out.println("Mean Absolute Error: " + EvaluationMetrics.testMAE(controlRDD));
 		System.out.println("Root Mean Squared Error: " + EvaluationMetrics.testRMSE(controlRDD));
 		
-		ModelApplier.applyModel(csv, bin1, dropPercent, writer);
+		modelApplier.applyModel(csv, bin1, dropPercent);
 		
 		// Close all the resources.
-		try {
-			csv.unpersist();
-			writer.close();
-			accuracyWriter.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		csv.unpersist();
+		modelApplier.close();
 		session.close();
 		context.close();
 	}
