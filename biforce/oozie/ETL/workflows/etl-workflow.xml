@@ -1,23 +1,17 @@
-<!--
-This file is intEnded to be the final ETL Workflow for the main Oozie Bundle.
-
-WARNING: Currently under development
-
--->
-
-<workflow-app xmlns = "uri:oozie:workflow:0.4" name = "etl-workflow">
+<workflow-app xmlns="uri:oozie:workflow:0.4" name="etl-workflow">
 
     <!--Start Workflow-->
-    <start to = "import-fork"/>
+    <start to="import-fork"/>
 
     <!--Start Caliber Imports-->
-    <fork name = "import-fork">
-        <path start = "import-assessment"/>
-        <path start = "import-batch"/>
-        <path start = "import-grade"/>
-        <path start = "import-note"/>
-        <path start = "import-trainee"/>
-        <path start = "import-trainer"/>
+    <fork name="import-fork">
+        <path start ="import-address">
+        <path start="import-assessment"/>
+        <path start="import-batch"/>
+        <path start="import-grade"/>
+        <path start="import-note"/>
+        <path start="import-trainee"/>
+        <path start="import-trainer"/>
     </fork>
 
         <action name="import-address">
@@ -28,14 +22,14 @@ WARNING: Currently under development
                     <delete path ="biforce/assessment"/>
                 </prepare>
                 <arg>job</arg>
-                <arg>-Dmapreduce.job.queuename=sqoop</arg>
+                <arg>-Dmapreduce.job.queuename=1</arg>
                 <arg>--meta-connect</arg>
                 <arg>${metastoreConn}</arg>
                 <arg>--exec</arg>
                 <arg>import-address</arg>
             </sqoop>
-            <ok to = "join-imports" />
-            <error to = "kill" />
+            <ok to="join-imports" />
+            <error to="kill" />
         </action>
 
         <action name="import-assessment">
@@ -46,14 +40,14 @@ WARNING: Currently under development
                     <delete path ="biforce/assessment"/>
                 </prepare>
                 <arg>job</arg>
-                <arg>-Dmapreduce.job.queuename=sqoop</arg>
+                <arg>-Dmapreduce.job.queuename=1</arg>
                 <arg>--meta-connect</arg>
                 <arg>${metastoreConn}</arg>
                 <arg>--exec</arg>
                 <arg>import-assessment</arg>
             </sqoop>
-            <ok to = "join-imports" />
-            <error to = "kill" />
+            <ok to="join-imports" />
+            <error to="kill" />
         </action>
 
         <action name="import-batch">
@@ -64,14 +58,32 @@ WARNING: Currently under development
                     <delete path ="biforce/batch"/>
                 </prepare>
                 <arg>job</arg>
-                <arg>-Dmapreduce.job.queuename=sqoop</arg>
+                <arg>-Dmapreduce.job.queuename=1</arg>
                 <arg>--meta-connect</arg>
                 <arg>${metastoreConn}</arg>
                 <arg>--exec</arg>
                 <arg>import-batch</arg>
             </sqoop>
-            <ok to = "join-imports" />
-            <error to = "kill" />
+            <ok to="join-imports" />
+            <error to="kill" />
+        </action>
+
+        <action name="import-category">
+            <sqoop xmlns="uri:oozie:sqoop-action:0.4">
+                <job-tracker>${resourceManager}</job-tracker>
+                <name-node>${nameNode}</name-node>
+                <prepare>
+                    <delete path ="biforce/category"/>
+                </prepare>
+                <arg>job</arg>
+                <arg>-Dmapreduce.job.queuename=2</arg>
+                <arg>--meta-connect</arg>
+                <arg>${metastoreConn}</arg>
+                <arg>--exec</arg>
+                <arg>import-category</arg>
+            </sqoop>
+            <ok to="join-imports" />
+            <error to="kill" />
         </action>
 
         <action name="import-grade">
@@ -82,14 +94,14 @@ WARNING: Currently under development
                     <delete path ="biforce/grade"/>
                 </prepare>
                 <arg>job</arg>
-                <arg>-Dmapreduce.job.queuename=sqoop</arg>
+                <arg>-Dmapreduce.job.queuename=2</arg>
                 <arg>--meta-connect</arg>
                 <arg>${metastoreConn}</arg>
                 <arg>--exec</arg>
                 <arg>import-grade</arg>
             </sqoop>
-            <ok to = "join-imports" />
-            <error to = "kill" />
+            <ok to="join-imports" />
+            <error to="kill" />
         </action>
 
         <action name="import-note">
@@ -100,14 +112,14 @@ WARNING: Currently under development
                     <delete path ="biforce/note"/>
                 </prepare>
                 <arg>job</arg>
-                <arg>-Dmapreduce.job.queuename=sqoop</arg>
+                <arg>-Dmapreduce.job.queuename=2</arg>
                 <arg>--meta-connect</arg>
                 <arg>${metastoreConn}</arg>
                 <arg>--exec</arg>
                 <arg>import-note</arg>
             </sqoop>
-            <ok to = "join-imports" />
-            <error to = "kill" />
+            <ok to="join-imports" />
+            <error to="kill" />
         </action>
 
         <action name="import-trainee">
@@ -118,14 +130,14 @@ WARNING: Currently under development
                     <delete path ="biforce/trainee"/>
                 </prepare>
                 <arg>job</arg>
-                <arg>-Dmapreduce.job.queuename=sqoop</arg>
+                <arg>-Dmapreduce.job.queuename=3</arg>
                 <arg>--meta-connect</arg>
                 <arg>${metastoreConn}</arg>
                 <arg>--exec</arg>
                 <arg>import-trainee</arg>
             </sqoop>
-            <ok to = "join-imports" />
-            <error to = "kill" />
+            <ok to="join-imports" />
+            <error to="kill" />
         </action>
 
         <action name="import-trainer">
@@ -136,17 +148,17 @@ WARNING: Currently under development
                     <delete path ="biforce/trainer"/>
                 </prepare>
                 <arg>job</arg>
-                <arg>-Dmapreduce.job.queuename=sqoop</arg>
+                <arg>-Dmapreduce.job.queuename=3</arg>
                 <arg>--meta-connect</arg>
                 <arg>${metastoreConn}</arg>
                 <arg>--exec</arg>
                 <arg>import-trainer</arg>
             </sqoop>
-            <ok to = "join-imports" />
-            <error to = "kill" />
+            <ok to="join-imports" />
+            <error to="kill" />
         </action>
     
-    <join name = "join-imports" to = "end"/>
+    <join name="join-imports" to="end"/>
 
     <!-- Kill Workflow -->
 	<kill name="kill">

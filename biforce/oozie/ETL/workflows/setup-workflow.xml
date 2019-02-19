@@ -3,7 +3,7 @@
     <!--Start Workflow-->
     <start to="fork-deletes"/>
 
-    <!--Concurrently delete pre-existing sqoop jobs-->
+    <!--Clear pre-existing Sqoop import jobs-->
     <fork name="fork-deletes">
         <path start="delete-address"/>
         <path start="delete-assessment"/>
@@ -11,8 +11,6 @@
         <path start="delete-category"/>
         <path start="delete-grade"/>
         <path start="delete-note"/>
-        <path start="delete-panel"/>
-        <path start="delete-panel-feedback">
         <path start="delete-trainee"/>
         <path start="delete-trainer"/>
     </fork>
@@ -22,7 +20,7 @@
                 <job-tracker>${resourceManager}</job-tracker>
                 <name-node>${nameNode}</name-node>
                 <arg>job</arg>
-                <arg>-Dmapreduce.job.queuename=sqoop</arg>
+                <arg>-Dmapreduce.job.queuename=1</arg>
                 <arg>--meta-connect</arg>
                 <arg>${metastoreConn}</arg>
                 <arg>--delete</arg>
@@ -37,7 +35,7 @@
                 <job-tracker>${resourceManager}</job-tracker>
                 <name-node>${nameNode}</name-node>
                 <arg>job</arg>
-                <arg>-Dmapreduce.job.queuename=sqoop</arg>
+                <arg>-Dmapreduce.job.queuename=1</arg>
                 <arg>--meta-connect</arg>
                 <arg>${metastoreConn}</arg>
                 <arg>--delete</arg>
@@ -52,7 +50,7 @@
                 <job-tracker>${resourceManager}</job-tracker>
                 <name-node>${nameNode}</name-node>
                 <arg>job</arg>
-                <arg>-Dmapreduce.job.queuename=sqoop</arg>
+                <arg>-Dmapreduce.job.queuename=1</arg>
                 <arg>--meta-connect</arg>
                 <arg>${metastoreConn}</arg>
                 <arg>--delete</arg>
@@ -67,7 +65,7 @@
                 <job-tracker>${resourceManager}</job-tracker>
                 <name-node>${nameNode}</name-node>
                 <arg>job</arg>
-                <arg>-Dmapreduce.job.queuename=sqoop</arg>
+                <arg>-Dmapreduce.job.queuename=2</arg>
                 <arg>--meta-connect</arg>
                 <arg>${metastoreConn}</arg>
                 <arg>--delete</arg>
@@ -82,7 +80,7 @@
                 <job-tracker>${resourceManager}</job-tracker>
                 <name-node>${nameNode}</name-node>
                 <arg>job</arg>
-                <arg>-Dmapreduce.job.queuename=sqoop</arg>
+                <arg>-Dmapreduce.job.queuename=2</arg>
                 <arg>--meta-connect</arg>
                 <arg>${metastoreConn}</arg>
                 <arg>--delete</arg>
@@ -97,41 +95,11 @@
                 <job-tracker>${resourceManager}</job-tracker>
                 <name-node>${nameNode}</name-node>
                 <arg>job</arg>
-                <arg>-Dmapreduce.job.queuename=sqoop</arg>
+                <arg>-Dmapreduce.job.queuename=2</arg>
                 <arg>--meta-connect</arg>
                 <arg>${metastoreConn}</arg>
                 <arg>--delete</arg>
                 <arg>import-note</arg>
-            </sqoop>
-            <ok to="join-deletes" />
-            <error to="kill" />
-        </action>
-
-        <action name="delete-panel">
-            <sqoop xmlns="uri:oozie:sqoop-action:0.4">
-                <job-tracker>${resourceManager}</job-tracker>
-                <name-node>${nameNode}</name-node>
-                <arg>job</arg>
-                <arg>-Dmapreduce.job.queuename=sqoop</arg>
-                <arg>--meta-connect</arg>
-                <arg>${metastoreConn}</arg>
-                <arg>--delete</arg>
-                <arg>import-panel</arg>
-            </sqoop>
-            <ok to="join-deletes" />
-            <error to="kill" />
-        </action>
-
-        <action name="delete-panel-feedback">
-            <sqoop xmlns="uri:oozie:sqoop-action:0.4">
-                <job-tracker>${resourceManager}</job-tracker>
-                <name-node>${nameNode}</name-node>
-                <arg>job</arg>
-                <arg>-Dmapreduce.job.queuename=sqoop</arg>
-                <arg>--meta-connect</arg>
-                <arg>${metastoreConn}</arg>
-                <arg>--delete</arg>
-                <arg>import-feedback</arg>
             </sqoop>
             <ok to="join-deletes" />
             <error to="kill" />
@@ -142,7 +110,7 @@
                 <job-tracker>${resourceManager}</job-tracker>
                 <name-node>${nameNode}</name-node>
                 <arg>job</arg>
-                <arg>-Dmapreduce.job.queuename=sqoop</arg>
+                <arg>-Dmapreduce.job.queuename=3</arg>
                 <arg>--meta-connect</arg>
                 <arg>${metastoreConn}</arg>
                 <arg>--delete</arg>
@@ -157,7 +125,7 @@
                 <job-tracker>${resourceManager}</job-tracker>
                 <name-node>${nameNode}</name-node>
                 <arg>job</arg>
-                <arg>-Dmapreduce.job.queuename=sqoop</arg>
+                <arg>-Dmapreduce.job.queuename=3</arg>
                 <arg>--meta-connect</arg>
                 <arg>${metastoreConn}</arg>
                 <arg>--delete</arg>
@@ -169,6 +137,7 @@
 
     <join name="join-deletes" to="fork-create-imports"/>
 
+    <!--Crete new Sqoop import jobs-->
     <fork name="fork-create-imports">
         <path start="create-import-address"/>
         <path start="create-import-assessment"/>
@@ -176,8 +145,6 @@
         <path start="create-import-category"/>
         <path start="create-import-grade"/>
         <path start="create-import-note"/>
-        <path start="create-import-panel"/>
-        <path start="create-import-panel-feedback">
         <path start="create-import-trainee"/>
         <path start="create-import-trainer"/>
     </fork>
@@ -188,7 +155,7 @@
                 <name-node>${nameNode}</name-node>
                 <arg>job</arg>
                 <arg>-Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks</arg>
-                <arg>-Dmapreduce.job.queuename=sqoop</arg>
+                <arg>-Dmapreduce.job.queuename=1</arg>
                 <arg>--create</arg>
                 <arg>import-address</arg>
                 <arg>--meta-connect</arg>
@@ -212,6 +179,7 @@
                 <arg>ADDRESS_ID</arg>
                 <arg>--target-dir</arg>
                 <arg>biforce/address</arg>
+                <arg>--direct</arg>
                 <arg>-m</arg>
                 <arg>1</arg>
             </sqoop>
@@ -225,7 +193,7 @@
                 <name-node>${nameNode}</name-node>
                 <arg>job</arg>
                 <arg>-Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks</arg>
-                <arg>-Dmapreduce.job.queuename=sqoop</arg>
+                <arg>-Dmapreduce.job.queuename=1</arg>
                 <arg>--create</arg>
                 <arg>import-assessment</arg>
                 <arg>--meta-connect</arg>
@@ -249,6 +217,7 @@
                 <arg>ASSESSMENT_ID</arg>
                 <arg>--target-dir</arg>
                 <arg>biforce/assessment</arg>
+                <arg>--direct</arg>
                 <arg>-m</arg>
                 <arg>1</arg>
             </sqoop>
@@ -262,6 +231,7 @@
                 <name-node>${nameNode}</name-node>
                 <arg>job</arg>
                 <arg>-Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks</arg>
+                <arg>-Dmapreduce.job.queuename=1</arg>
                 <arg>--create</arg>
                 <arg>import-batch</arg>
                 <arg>--meta-connect</arg>
@@ -285,6 +255,7 @@
                 <arg>BATCH_ID</arg>
                 <arg>--target-dir</arg>
                 <arg>biforce/batch</arg>
+                <arg>--direct</arg>
                 <arg>-m</arg>
                 <arg>1</arg>
             </sqoop>
@@ -298,7 +269,7 @@
                 <name-node>${nameNode}</name-node>
                 <arg>job</arg>
                 <arg>-Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks</arg>
-                <arg>-Dmapreduce.job.queuename=sqoop</arg>
+                <arg>-Dmapreduce.job.queuename=2</arg>
                 <arg>--create</arg>
                 <arg>import-category</arg>
                 <arg>--meta-connect</arg>
@@ -322,6 +293,7 @@
                 <arg>CATEGORY_ID</arg>
                 <arg>--target-dir</arg>
                 <arg>biforce/category</arg>
+                <arg>--direct</arg>
                 <arg>-m</arg>
                 <arg>1</arg>
             </sqoop>
@@ -335,7 +307,7 @@
                 <name-node>${nameNode}</name-node>
                 <arg>job</arg>
                 <arg>-Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks</arg>
-                <arg>-Dmapreduce.job.queuename=sqoop</arg>
+                <arg>-Dmapreduce.job.queuename=2</arg>
                 <arg>--create</arg>
                 <arg>import-grade</arg>
                 <arg>--meta-connect</arg>
@@ -359,6 +331,7 @@
                 <arg>GRADE_ID</arg>
                 <arg>--target-dir</arg>
                 <arg>biforce/grade</arg>
+                <arg>--direct</arg>
                 <arg>-m</arg>
                 <arg>1</arg>
             </sqoop>
@@ -372,7 +345,7 @@
                 <name-node>${nameNode}</name-node>
                 <arg>job</arg>
                 <arg>-Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks</arg>
-                <arg>-Dmapreduce.job.queuename=sqoop</arg>
+                <arg>-Dmapreduce.job.queuename=2</arg>
                 <arg>--create</arg>
                 <arg>import-note</arg>
                 <arg>--meta-connect</arg>
@@ -396,80 +369,7 @@
                 <arg>NOTE_ID</arg>
                 <arg>--target-dir</arg>
                 <arg>biforce/note</arg>
-                <arg>-m</arg>
-                <arg>1</arg>
-            </sqoop>
-            <ok to="join-create-imports" />
-            <error to="kill" />
-        </action>
-
-        <action name="create-import-panel">
-            <sqoop xmlns="uri:oozie:sqoop-action:0.4">
-                <job-tracker>${resourceManager}</job-tracker>
-                <name-node>${nameNode}</name-node>
-                <arg>job</arg>
-                <arg>-Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks</arg>
-                <arg>-Dmapreduce.job.queuename=sqoop</arg>
-                <arg>--create</arg>
-                <arg>import-panel</arg>
-                <arg>--meta-connect</arg>
-                <arg>${metastoreConn}</arg>
-                <arg>--</arg>
-                <arg>import</arg>
-                <arg>--connect</arg>
-                <arg>${caliberConn}</arg>
-                <arg>--username</arg>
-                <arg>${caliberUser}</arg>
-                <arg>--password-alias</arg>
-                <arg>${caliberPass}</arg>
-                <arg>--table</arg>
-                <arg>CALIBER_PANEL</arg>
-                <arg>--columns</arg>
-                <arg>PANEL_ID,ASSOCIATE_INTRO,COMMUNICATION_SKILLS,DURATION,INTERVIEW_FORMAT,INTERNET_CONNECTIVITY,INTERVIEW_DATE,OVERALL_FEEDBACK,PANEL_ROUND,PROJECT_ONE_DESCRIPTION,PROJECT_THREE_DESCRIPTION,PROJECT_TWO_DESCRIPTION,RECORDING_CONSENT,RECORDING_LINK,PANEL_STATUS,PANELIST_ID,TRAINEE_ID</arg>
-                <arg>--mysql-delimiters</arg>
-                <arg>--incremental</arg>
-                <arg>append</arg>
-                <arg>--check-column</arg>
-                <arg>PANEL_ID</arg>
-                <arg>--target-dir</arg>
-                <arg>biforce/panel</arg>
-                <arg>-m</arg>
-                <arg>1</arg>
-            </sqoop>
-            <ok to="join-create-imports" />
-            <error to="kill" />
-        </action>
-
-        <action name="create-import-panel-feedback">
-            <sqoop xmlns="uri:oozie:sqoop-action:0.4">
-                <job-tracker>${resourceManager}</job-tracker>
-                <name-node>${nameNode}</name-node>
-                <arg>job</arg>
-                <arg>-Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks</arg>
-                <arg>-Dmapreduce.job.queuename=sqoop</arg>
-                <arg>--create</arg>
-                <arg>import-panel-feedback</arg>
-                <arg>--meta-connect</arg>
-                <arg>${metastoreConn}</arg>
-                <arg>--</arg>
-                <arg>import</arg>
-                <arg>--connect</arg>
-                <arg>${caliberConn}</arg>
-                <arg>--username</arg>
-                <arg>${caliberUser}</arg>
-                <arg>--password-alias</arg>
-                <arg>${caliberPass}</arg>
-                <arg>--table</arg>
-                <arg>CALIBER_PANEL_FEEDBACK</arg>
-                <arg>--columns</arg>
-                <arg>PANEL_FEEDBACK_ID,PANELIST_COMMENTS,PANEL_RESULT,PANEL_STATUS,PANEL_ID,CATEGORY_ID</arg>
-                <arg>--mysql-delimiters</arg>
-                <arg>--incremental</arg>
-                <arg>append</arg>
-                <arg>--check-column</arg>
-                <arg>PANEL_FEEDBACK_ID</arg>
-                <arg>--target-dir</arg>
-                <arg>biforce/panel-feedback</arg>
+                <arg>--direct</arg>
                 <arg>-m</arg>
                 <arg>1</arg>
             </sqoop>
@@ -483,7 +383,7 @@
                 <name-node>${nameNode}</name-node>
                 <arg>job</arg>
                 <arg>-Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks</arg>
-                <arg>-Dmapreduce.job.queuename=sqoop</arg>
+                <arg>-Dmapreduce.job.queuename=3</arg>
                 <arg>--create</arg>
                 <arg>import-trainee</arg>
                 <arg>--meta-connect</arg>
@@ -507,6 +407,7 @@
                 <arg>TRAINEE_ID</arg>
                 <arg>--target-dir</arg>
                 <arg>biforce/trainee</arg>
+                <arg>--direct</arg>
                 <arg>-m</arg>
                 <arg>1</arg>
             </sqoop>
@@ -520,7 +421,7 @@
                 <name-node>${nameNode}</name-node>
                 <arg>job</arg>
                 <arg>-Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks</arg>
-                <arg>-Dmapreduce.job.queuename=sqoop</arg>
+                <arg>-Dmapreduce.job.queuename=3</arg>
                 <arg>--create</arg>
                 <arg>import-trainer</arg>
                 <arg>--meta-connect</arg>
@@ -544,6 +445,7 @@
                 <arg>TRAINER_ID</arg>
                 <arg>--target-dir</arg>
                 <arg>biforce/trainer</arg>
+                <arg>--direct</arg>
                 <arg>-m</arg>
                 <arg>1</arg>
             </sqoop>
@@ -554,8 +456,8 @@
     <join name="join-create-imports" to="end"/>
 
     <kill name="kill">
-        <message> Job failed </message>
-    </kill>
+		<message>message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+	</kill>
 
     <end name="end"/>
 
