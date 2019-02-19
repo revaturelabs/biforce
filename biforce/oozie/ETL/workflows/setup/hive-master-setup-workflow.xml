@@ -1,0 +1,12 @@
+<workflow-app xmlns="uri:oozie:workflow:0.4" name="hive-import-trainer-setup">
+
+    <!--Start Workflow-->
+    <start to=""/>
+
+    <kill name="kill">
+        <message> Job failed </message>
+    </kill>
+
+    <end name="end"/>
+
+</workflow-app>
