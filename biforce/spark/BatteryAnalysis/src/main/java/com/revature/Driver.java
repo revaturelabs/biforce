@@ -3,23 +3,19 @@ package com.revature;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.spark.SparkConf;
-import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
-import org.apache.spark.sql.RowFactory;
 import org.apache.spark.sql.SparkSession;
 
 import com.revature.util.EvaluationMetrics;
+import com.revature.util.ModelApplier;
 import com.revature.util.ModelFunction;
 import com.revature.util.PartitionFinder;
-
-import scala.Tuple2;
 
 /*
  * _c0 = PK
@@ -81,48 +77,11 @@ public class Driver {
 			System.out.println(bin1[i][0] + " " + bin1[i][1]+ " " + bin1[i][2]+ " " + bin1[i][3]);
 		}
 
-		double optimalPercent = 0;
-		long optimalAccurateCount = 0;
-		List<Double> percentList = new ArrayList<>();
-
-		for (Double d = 0.0;d <= 1; d+= controlPrecision/100) {
-			percentList.add(d);
-		}
-
-		JavaRDD<Row> controlRDD = applyControlModel(controlData, bin1);
-		controlRDD.cache();
-
-		for (int i = 0;i<percentList.size();++i) {
-			// controlRDD: Associate ID | % failure | fail (0 or 1 where 0 is fail)
-			double d = percentList.get(i);
-
-			// Filter out those who passed, and those who failed but we guessed wrong
-			long accurateFailedCount = controlRDD.filter(row -> row.getInt(2) == 0 && row.getDouble(1) >= d).count();
-			// Filter out those who failed, and those who passed but we guessed wrong
-			long accuratePassedCount = controlRDD.filter(row -> row.getInt(2) != 0 && row.getDouble(1) < d).count();
-			long accurateCount = accurateFailedCount + accuratePassedCount;
-
-			if (accurateCount > optimalAccurateCount) {
-				optimalAccurateCount = accurateCount;
-				optimalPercent = percentList.get(i);
-			}
-		}
+		JavaRDD<Row> controlRDD = ModelApplier.applyControlModel(controlData, bin1);
 		
-
-		System.out.println("Fail percent: " + Math.round(optimalPercent*10000)/10000.0 + "\nCorrect estimates: " + optimalAccurateCount +
-					"\nTotal Count: " + controlRDD.count() + "\nAccuracy: " + optimalAccurateCount/controlRDD.count() + "\n");
+		final double dropPercent = ModelApplier.findOptimalPercent(controlRDD, bin1, controlPrecision, accuracyWriter);
 		
-		try {
-			accuracyWriter.append("Fail percent: " + Math.round(optimalPercent*10000)/10000.0 + "\nCorrect estimates: " + optimalAccurateCount +
-					"\nTotal Count: " + controlRDD.count() + "\n");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		
-		final double dropPercent = optimalPercent;
-		
-		writeControlOutput(controlRDD, dropPercent);
+		ModelApplier.writeControlOutput(controlRDD, dropPercent, accuracyWriter);
 		
 		// TODO
 		// calculate/print evaluation metrics
@@ -130,7 +89,7 @@ public class Driver {
 		System.out.println("Mean Absolute Error: " + EvaluationMetrics.testMAE(controlRDD));
 		System.out.println("Root Mean Squared Error: " + EvaluationMetrics.testRMSE(controlRDD));
 		
-		applyModel(csv, bin1, dropPercent);
+		ModelApplier.applyModel(csv, bin1, dropPercent, writer);
 		
 		// Close all the resources.
 		try {
@@ -142,96 +101,5 @@ public class Driver {
 		}
 		session.close();
 		context.close();
-	}
-
-	// This method is nearly instant. No optimization needed.
-	private static void applyModel(Dataset<Row> csv, double[][] bin1, double dropPercent) {
-		JavaRDD<Row> csvRDD = 
-				csv
-				.javaRDD()
-				.filter(row -> row.getInt(1) != 4) // get rid of test 4, it's too inaccurate
-				.map(row->{
-					// row should have 13 cols now. Col 0-10 as before, col 11 as "result", col 12 as "weight"
-					double failPercent = 0;
-					double rValue = 0;
-					for (int i=1;i < 4;++i) {
-						if (row.getInt(1) == i) { // Assessment type 1-3
-							failPercent = Math.exp(row.getDouble(3) * bin1[i-1][1] + bin1[i-1][2])/
-									(1 + Math.exp(row.getDouble(3) * bin1[i-1][1] + bin1[i-1][2])) *
-									bin1[i-1][3];
-							rValue = bin1[i-1][3];
-							break;
-						}
-					}
-					// row: (int, int, int, double, int, int, int, int, int, int, int)
-					Row outputRow = RowFactory.create(row.getInt(9), failPercent, rValue);
-					return outputRow;
-				});
-
-		JavaPairRDD<Integer,Row> applicationRDD = csvRDD.mapToPair(row -> new Tuple2<Integer,Row>(row.getInt(0),row));
-		JavaPairRDD<Integer, Row> sums = applicationRDD.reduceByKey((Row row1,Row row2)->{
-			return RowFactory.create(row1.getInt(0), row1.getDouble(1) + row2.getDouble(1), row1.getDouble(2) + row2.getDouble(2));});
-
-		sums.foreach(pairTuple -> {
-			String prediction = pairTuple._2.getDouble(1)/pairTuple._2.getDouble(2) >= dropPercent ? "DROP" : "PASS";
-			String s = pairTuple._1 + "," + pairTuple._2.getDouble(1)/pairTuple._2.getDouble(2) + "," + prediction + "\n";
-			writer.append(s);
-		});
-	}
-
-	private static JavaRDD<Row> applyControlModel(Dataset<Row> csv, double[][] bin1) {
-		JavaRDD<Row> csvRDD = 
-				csv
-				.javaRDD()
-				.filter(row -> row.getInt(1) != 4) // get rid of test 4, it's too inaccurate
-				.map(row->{
-					// row should have 13 cols now. Col 0-10 as before, col 11 as "result", col 12 as "weight"
-					double failPercent = 0;
-					double rValue = 0;
-
-					for (int i=1;i < 4;++i) {
-						if (row.getInt(1) == i) { // Assessment type 1-3
-							failPercent = Math.exp(row.getDouble(3) * bin1[i-1][1] + bin1[i-1][2])/
-									(1 + Math.exp(row.getDouble(3) * bin1[i-1][1] + bin1[i-1][2])) *
-									bin1[i-1][3];
-							rValue = bin1[i-1][3];
-							break;
-						}
-					}
-
-					int status = row.getInt(10) == 0 ? 0 : 1;
-
-					// row: (int, int, int, double, int, int, int, int, int, int, int)
-					Row outputRow = RowFactory.create(row.getInt(9), failPercent, rValue, status);
-					return outputRow;
-				});
-
-		JavaPairRDD<Integer,Row> applicationRDD = csvRDD.mapToPair(row -> new Tuple2<Integer,Row>(row.getInt(0),row));
-		JavaPairRDD<Integer, Row> sums = applicationRDD.reduceByKey((Row row1,Row row2)->{
-			return RowFactory.create(row1.getInt(0), row1.getDouble(1) + row2.getDouble(1), row1.getDouble(2) + row2.getDouble(2), row1.getInt(3));});
-
-		return sums.map(pairTuple -> {
-			// Associate ID | % failure | fail (1 or 0)
-			return RowFactory.create(pairTuple._1, pairTuple._2.getDouble(1)/pairTuple._2.getDouble(2), pairTuple._2.getInt(3));
-		});
-	}
-	
-	private static void writeControlOutput(JavaRDD<Row> controlRDD, double dropPercent) {
-		controlRDD.foreach(row -> {
-			try {
-				String outString;
-				// if individual chance of failure is higher than threshhold -> DROP
-				if (row.getDouble(1) >= dropPercent) {
-					outString = row.getInt(0) + "," + row.getDouble(1) + "," + row.getInt(2) + "," + "DROP\n";
-				} else {
-					outString = row.getInt(0) + "," + row.getDouble(1) + "," + row.getInt(2) + "," + "PASS\n";
-				}
-				
-				accuracyWriter.append(outString);
-			} catch (IOException e) {
-				System.out.println("IOException");
-				e.printStackTrace();
-			}
-		});
 	}
 }
