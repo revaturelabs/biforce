@@ -40,7 +40,7 @@ public class PartitionFinder {
 //		}
 		
 		// each test type 1-3
-		for (int i=1;i<=4;i++) {
+		for (int i=1;i<=3;i++) {
 			List<Double> percentiles = new ArrayList<>();
 			
 			Dataset<Row> weekX = valid2.filter("_c1 = " + i).sort("_c3");

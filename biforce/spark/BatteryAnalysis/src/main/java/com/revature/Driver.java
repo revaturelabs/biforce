@@ -55,7 +55,7 @@ public class Driver {
 			writer = new BufferedWriter(new FileWriter(args[1], false));
 			accuracyWriter = new BufferedWriter(new FileWriter(args[2], false));
 			accuracyWriter.append("Control data statistics\n");
-			writer.append("battery_id,% Chance to Fail\n");
+			writer.append("battery_id,% Chance to Fail,Prediction\n");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -76,11 +76,10 @@ public class Driver {
 		
 		modelData.unpersist();
 
-		for(int i = 0; i < 4; i++) {
+		for(int i = 0; i < 3; i++) {
 			System.out.println(bin1[i][0] + " " + bin1[i][1]+ " " + bin1[i][2]+ " " + bin1[i][3]);
 		}
-
-		applyModel(csv, bin1);
+		
 
 		double optimalPercent = 0;
 		long optimalAccurateCount = 0;
@@ -122,24 +121,11 @@ public class Driver {
 		
 		
 		final double dropPercent = optimalPercent;
-		controlRDD.foreach(row -> {
-			try {
-				String outString;
-				// if individual chance of failure is higher than threshhold -> DROP
-				if (row.getDouble(1) >= dropPercent) {
-					outString = row.getInt(0) + "," + row.getDouble(1) + "," + row.getInt(2) + "," + "DROP\n";
-				} else {
-					outString = row.getInt(0) + "," + row.getDouble(1) + "," + row.getInt(2) + "," + "PASS\n";
-				}
-				
-				accuracyWriter.append(outString);
-			} catch (IOException e) {
-				System.out.println("IOException");
-				e.printStackTrace();
-			}
-		});
-		// use controlData to test accuracy
-
+		
+		writeControlOutput(controlRDD, dropPercent);
+		
+		applyModel(csv, bin1, dropPercent);
+		
 		// Close all the resources.
 		try {
 			csv.unpersist();
@@ -153,15 +139,16 @@ public class Driver {
 	}
 
 	// This method is nearly instant. No optimization needed.
-	private static void applyModel(Dataset<Row> csv, double[][] bin1) {
+	private static void applyModel(Dataset<Row> csv, double[][] bin1, double dropPercent) {
 		JavaRDD<Row> csvRDD = 
 				csv
 				.javaRDD()
+				.filter(row -> row.getInt(1) != 4) // get rid of test 4, it's too inaccurate
 				.map(row->{
 					// row should have 13 cols now. Col 0-10 as before, col 11 as "result", col 12 as "weight"
 					double failPercent = 0;
 					double rValue = 0;
-					for (int i=1;i<=4;++i) {
+					for (int i=1;i < 4;++i) {
 						if (row.getInt(1) == i) { // Assessment type 1-3
 							failPercent = Math.exp(row.getDouble(3) * bin1[i-1][1] + bin1[i-1][2])/
 									(1 + Math.exp(row.getDouble(3) * bin1[i-1][1] + bin1[i-1][2])) *
@@ -180,7 +167,8 @@ public class Driver {
 			return RowFactory.create(row1.getInt(0), row1.getDouble(1) + row2.getDouble(1), row1.getDouble(2) + row2.getDouble(2));});
 
 		sums.foreach(pairTuple -> {
-			String s = pairTuple._1 + "," + pairTuple._2.getDouble(1)/pairTuple._2.getDouble(2) + "\n";
+			String prediction = pairTuple._2.getDouble(1)/pairTuple._2.getDouble(2) >= dropPercent ? "DROP" : "PASS";
+			String s = pairTuple._1 + "," + pairTuple._2.getDouble(1)/pairTuple._2.getDouble(2) + "," + prediction + "\n";
 			writer.append(s);
 		});
 	}
@@ -189,12 +177,13 @@ public class Driver {
 		JavaRDD<Row> csvRDD = 
 				csv
 				.javaRDD()
+				.filter(row -> row.getInt(1) != 4) // get rid of test 4, it's too inaccurate
 				.map(row->{
 					// row should have 13 cols now. Col 0-10 as before, col 11 as "result", col 12 as "weight"
 					double failPercent = 0;
 					double rValue = 0;
 
-					for (int i=1;i<=4;++i) {
+					for (int i=1;i < 4;++i) {
 						if (row.getInt(1) == i) { // Assessment type 1-3
 							failPercent = Math.exp(row.getDouble(3) * bin1[i-1][1] + bin1[i-1][2])/
 									(1 + Math.exp(row.getDouble(3) * bin1[i-1][1] + bin1[i-1][2])) *
@@ -218,6 +207,25 @@ public class Driver {
 		return sums.map(pairTuple -> {
 			// Associate ID | % failure | fail (1 or 0)
 			return RowFactory.create(pairTuple._1, pairTuple._2.getDouble(1)/pairTuple._2.getDouble(2), pairTuple._2.getInt(3));
+		});
+	}
+	
+	private static void writeControlOutput(JavaRDD<Row> controlRDD, double dropPercent) {
+		controlRDD.foreach(row -> {
+			try {
+				String outString;
+				// if individual chance of failure is higher than threshhold -> DROP
+				if (row.getDouble(1) >= dropPercent) {
+					outString = row.getInt(0) + "," + row.getDouble(1) + "," + row.getInt(2) + "," + "DROP\n";
+				} else {
+					outString = row.getInt(0) + "," + row.getDouble(1) + "," + row.getInt(2) + "," + "PASS\n";
+				}
+				
+				accuracyWriter.append(outString);
+			} catch (IOException e) {
+				System.out.println("IOException");
+				e.printStackTrace();
+			}
 		});
 	}
 }
