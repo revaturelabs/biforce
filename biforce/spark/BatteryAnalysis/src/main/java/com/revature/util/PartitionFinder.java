@@ -48,10 +48,12 @@ public class PartitionFinder {
 			
 			JavaPairRDD<Row, Long> withIndex = weekX.javaRDD().zipWithIndex();
 			JavaPairRDD<Long, Row> indexKey = withIndex.mapToPair(k -> new Tuple2<Long, Row>(k._2, k._1()));
-			
+
+			indexKey.cache();
 			for (long j=1;j<10;j++) {
 				percentiles.add(indexKey.lookup(j * totalNum/10).get(0).getDouble(1));
 			}
+			indexKey.unpersist();
 			output.add(percentiles);
 			System.out.println(percentiles);
 		}

@@ -64,7 +64,7 @@ public class Driver {
 		// Filter the indicator data to include only the valid data for our samples.
 		filtered_csv = csv.filter("_c10 = 0 OR _c10 = 1 OR (_c10 = 2 AND (_c4 = 9 OR _c4 = 10))");
 
-		Dataset<Row>[] splits = filtered_csv.select("_c9").distinct().randomSplit(splitRatios,73); // use seed (second arg) for testing
+		Dataset<Row>[] splits = filtered_csv.select("_c9").distinct().randomSplit(splitRatios,42); // use seed (second arg) for testing
 		modelData = filtered_csv.join(splits[0], filtered_csv.col("_c9").equalTo(splits[0].col("_c9")), "leftsemi");
 		controlData = filtered_csv.join(splits[1], filtered_csv.col("_c9").equalTo(splits[1].col("_c9")), "leftsemi");
 
