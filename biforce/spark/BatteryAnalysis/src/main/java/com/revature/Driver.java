@@ -35,15 +35,14 @@ public class Driver {
 	private static BufferedWriter writer;
 	private static BufferedWriter accuracyWriter;
 	private static JavaSparkContext context;
-	public static Dataset<Row> csv,filtered_csv,controlData,modelData;
 	private static SparkSession session;
-	private static SparkConf conf;
 
 	public static void main(String args[]) {
-		conf = new SparkConf().setAppName("ChanceToFail");
-		context = new JavaSparkContext(conf);
+		context = new JavaSparkContext(new SparkConf().setAppName("ChanceToFail"));
 		context.setLogLevel("ERROR");
 		session = new SparkSession(context.sc());
+		Dataset<Row> csv,filtered_csv,controlData,modelData;
+		
 		csv = session.read().format("csv").option("header","false").option("inferSchema", "true").load(args[0]);
 
 		double controlPrecision = 1.0;
@@ -115,7 +114,7 @@ public class Driver {
 
 	private static void printModel(double[][] modelParams) {
 		for(int i = 0; i < 3; i++) {
-			String s = String.format("Exam 1: partialFailChance = e^(%2.3f*score+%2.3f) / (1+e^(%2.3f*score+%2.3f), r^2 = %1.3f", 
+			String s = String.format("Exam " + (i+1) +": partialFailChance = e^(%2.3f*score+%2.3f) / (1+e^(%2.3f*score+%2.3f), r^2 = %1.3f\n", 
 					modelParams[i][1],modelParams[i][2],modelParams[i][1],modelParams[i][2],modelParams[i][3]);
 			System.out.println(s);
 			try {
