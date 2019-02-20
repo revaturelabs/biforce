@@ -45,7 +45,7 @@ public class Driver {
 		context.setLogLevel("ERROR");
 		session = new SparkSession(context.sc());
 		csv = session.read().format("csv").option("header","false").option("inferSchema", "true").load(args[0]);
-		
+
 		double controlPrecision = 1.0;
 		double[] splitRatios = {0.7,0.3};
 
@@ -72,22 +72,22 @@ public class Driver {
 		writeToControl("Fail percent: " + Math.round(optimalPoint.getOptimalPercent()*10000)/10000.0 + "\nCorrect estimates: " + 
 				optimalPoint.getOptimalAccurateCount() + "\nTotal Count: " + controlRDD.count() + "\nAccuracy: " + 
 				(double)optimalPoint.getOptimalAccurateCount()/(double)controlRDD.count() + "\n");
-		
+
 		writeControlOutput(controlRDD, optimalPoint.getOptimalPercent());
-		
+
 		// TODO
 		// calculate/print evaluation metrics
 		// Assumed controlRDD is testing test data with model already applied to third column
 		System.out.println("Mean Absolute Error: " + EvaluationMetrics.testMAE(controlRDD));
 		System.out.println("Root Mean Squared Error: " + EvaluationMetrics.testRMSE(controlRDD));
-		
+
 		JavaPairRDD<Integer, Row> appliedResultPair = ModelApplier.applyModel(csv, modelParams, optimalPoint.getOptimalPercent());
-		
+
 		appliedResultPair.foreach(pairTuple -> {
 			String prediction = pairTuple._2.getDouble(1)/pairTuple._2.getDouble(2) >= optimalPoint.getOptimalPercent() ? "DROP" : "PASS";
 			writer.append(pairTuple._1 + "," + pairTuple._2.getDouble(1)/pairTuple._2.getDouble(2) + "," + prediction + "\n");
 		});
-		
+
 		// Close all the resources.
 		try {
 			controlRDD.unpersist();
@@ -101,7 +101,7 @@ public class Driver {
 		context.close();
 	}
 
-	
+
 	private static void initWriters(String mainPath, String controlPath) {
 		try {
 			writer = new BufferedWriter(new FileWriter(mainPath, false));
@@ -112,13 +112,20 @@ public class Driver {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private static void printModel(double[][] modelParams) {
 		for(int i = 0; i < 3; i++) {
-			System.out.println(modelParams[i][0] + " " + modelParams[i][1]+ " " + modelParams[i][2]+ " " + modelParams[i][3]);
+			String s = String.format("Exam 1: partialFailChance = e^(%2.3f*score+%2.3f) / (1+e^(%2.3f*score+%2.3f), r^2 = %1.3f", 
+					modelParams[i][1],modelParams[i][2],modelParams[i][1],modelParams[i][2],modelParams[i][3]);
+			System.out.println(s);
+			try {
+				accuracyWriter.append(s);
+			} catch(IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
-	
+
 	private static void writeControlOutput(JavaRDD<Row> controlRDD, double dropPercent) {
 		controlRDD.foreach(row -> {
 			try {
@@ -129,7 +136,7 @@ public class Driver {
 				} else {
 					outString = row.getInt(0) + "," + row.getDouble(1) + "," + row.getInt(2) + "," + "PASS\n";
 				}
-				
+
 				accuracyWriter.append(outString);
 			} catch (IOException e) {
 				System.out.println("IOException");
@@ -137,7 +144,7 @@ public class Driver {
 			}
 		});
 	}
-	
+
 	private static void writeToControl(String outString) {
 		try {
 			System.out.println(outString);
