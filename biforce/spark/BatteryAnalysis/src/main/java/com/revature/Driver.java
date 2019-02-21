@@ -55,7 +55,7 @@ public class Driver {
 
 		// Filter the indicator data to include only the valid data for our samples.
 		System.out.println("Filtering out irrelevant data...");
-		filtered_csv = csv.filter("_c10 = 0 OR _c10 = 1 OR (_c10 = 2 AND (_c4 = 9 OR _c4 = 10))");
+		filtered_csv = csv.filter("_c10 = 0 OR _c10 = 1");
 		Dataset<Row> currentWeek = csv.groupBy("_c9").max("_c4").where("max(_c4) >= " + minWeek).withColumnRenamed("_c9", "id");
 		filtered_csv = filtered_csv.join(currentWeek, col("_c9").equalTo(col("id")), "leftsemi");
 		
@@ -80,7 +80,7 @@ public class Driver {
 
 		writeToControl("Fail percent: " + Math.round(optimalPoint.getOptimalPercent()*10000)/10000.0 + "\nCorrect estimates: " + 
 				optimalPoint.getOptimalAccurateCount() + "\nTotal Count: " + controlRDD.count() + "\nAccuracy: " + 
-				(double)optimalPoint.getOptimalAccurateCount()/(double)controlRDD.count() + "\n");
+				(double)optimalPoint.getOptimalAccurateCount()/(double)controlRDD.count() + "\n\n");
 
 		writeControlOutput(controlRDD, optimalPoint.getOptimalPercent());
 
