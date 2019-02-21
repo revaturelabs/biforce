@@ -123,7 +123,7 @@ public class Driver {
 		System.out.println("Mean Absolute Error: " + EvaluationMetrics.testMAE(controlRDD));
 		System.out.println("Root Mean Squared Error: " + EvaluationMetrics.testRMSE(controlRDD));
 
-		JavaPairRDD<Integer, Row> appliedResultPair = ModelApplier.applyModel(csv, modelParams, optimalPoint.getOptimalPercent());
+		JavaPairRDD<Integer, Row> appliedResultPair = ModelApplier.applyModel(csv, modelParams);
 
 		appliedResultPair.foreach(pairTuple -> {
 			String prediction = pairTuple._2.getDouble(1)/pairTuple._2.getDouble(2) >= optimalPoint.getOptimalPercent() ? "DROP" : "PASS";
