@@ -21,11 +21,7 @@ public class ModelFunction{
 		// Builds project score model
 		model[2] = logReg(statsDS(binDS(modelDS(csv, "_c1", 3), partitions.get(2),splitCount),splitCount), 3);
 		System.out.println("MODEL 3 DONE");
-		//		model[3] = logReg(statsDS(binDS(modelDS(csv, "_c1", 4), partitions.get(3))), 4);
-		//		model[4] = logReg(statsDS(binDS(modelDS(csv, "_c4", 1))), 5);
-		//		model[5] = logReg(statsDS(binDS(modelDS(csv, "_c4", 2))), 6);
-		//		model[6] = logReg(statsDS(binDS(modelDS(csv, "_c4", 3))), 7);
-
+		
 		return model;
 	}
 
