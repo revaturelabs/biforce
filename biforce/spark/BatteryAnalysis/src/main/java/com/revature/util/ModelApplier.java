@@ -80,12 +80,12 @@ public class ModelApplier {
 		});
 	}
 	
-	public static OptimalPoint findOptimalPercent(JavaRDD<Row> controlRDD, double controlPrecision) {
+	public static OptimalPoint findOptimalPercent(JavaRDD<Row> controlRDD, double accuracyDelta) {
 		List<Double> percentList = new ArrayList<>();
 		long optimalAccurateCount = 0;
 		double optimalPercent = 0;
 		
-		for (Double d = 0.0;d <= 1; d+= controlPrecision/100) {
+		for (Double d = 0.0;d <= 1; d+= accuracyDelta) {
 			percentList.add(d);
 		}
 		
