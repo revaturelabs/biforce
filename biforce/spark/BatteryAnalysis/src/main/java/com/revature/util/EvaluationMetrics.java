@@ -1,7 +1,6 @@
 package com.revature.util;
 
 import org.apache.spark.api.java.JavaRDD;
-import org.apache.spark.broadcast.Broadcast;
 import org.apache.spark.sql.Row;
 
 // pass in JavaRDD<Row> as method arguments
@@ -21,19 +20,17 @@ public class EvaluationMetrics {
 
 	// Calculate MAE But after filtering out results within a user-defined
 	// lower/upper bound.
-	// bounds.value()[0] = lower bound
-	// bounds.value()[1] = upper bound
-	public static double testMAE(JavaRDD<Row> results, Broadcast<double[]> bounds) {
+	// bounds[0] = lower bound
+	// bounds[1] = upper bound
+	public static double testMAE(JavaRDD<Row> results, double[] bounds) {
 		JavaRDD<Row> boundedResults = results
-				.filter(row -> (row.getDouble(1) < bounds.value()[0] || row.getDouble(1) > bounds.value()[1]));
+				.filter(row -> (row.getDouble(1) < bounds[0] || row.getDouble(1) > bounds[1]));
 		return boundedResults.mapToDouble(row -> Math.abs(new Double(row.getInt(2)) - 1.0d + row.getDouble(1))).mean();
 	}
 
 	// Other MAE ideas: Automatically find optimal upper bound for "optimal" MAE
 	// (This would answer business question of
-	// "At what % fail percent should an associate be dropped"
-	// test MAE with lower/upper bounds at different intervals to find "optimal"
-	// bounds
+	// "At what % fail percent should an associate be dropped")
 //	public static double[] optimalBounds()
 //	{
 //		return new double[2];
@@ -47,11 +44,11 @@ public class EvaluationMetrics {
 
 	// Calculate MAE But after filtering out results within a user-defined
 	// lower/upper bound.
-	// bounds.value()[0] = lower bound
-	// bounds.value()[1] = upper bound
-	public static double testRMSE(JavaRDD<Row> results, Broadcast<double[]> bounds) {
+	// bounds[0] = lower bound
+	// bounds[1] = upper bound
+	public static double testRMSE(JavaRDD<Row> results, double[] bounds) {
 		JavaRDD<Row> boundedResults = results
-				.filter(row -> (row.getDouble(1) < bounds.value()[0] || row.getDouble(1) > bounds.value()[1]));
+				.filter(row -> (row.getDouble(1) < bounds[0] || row.getDouble(1) > bounds[1]));
 		return Math.sqrt(boundedResults
 				.mapToDouble(row -> Math.pow((new Double(row.getInt(2)) - 1.0d + row.getDouble(1)), 2.0d)).mean());
 	}
