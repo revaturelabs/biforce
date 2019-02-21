@@ -153,7 +153,7 @@ public class Driver {
 
 		appliedResultPair.foreach(pairTuple -> {
 			String prediction = pairTuple._2.getDouble(1)/pairTuple._2.getDouble(2) >= optimalPoint.getOptimalPercent() ? "DROP" : "PASS";
-			writer.append(pairTuple._1 + "," + pairTuple._2.getDouble(1)/pairTuple._2.getDouble(2) + "," + prediction + "\n");
+			writer.append(pairTuple._1 + "," + pairTuple._2.getDouble(1)/pairTuple._2.getDouble(2) + "," + pairTuple._2.getInt(3) + "," + prediction + "\n");
 		});
 
 		// Close all the resources.
@@ -181,7 +181,7 @@ public class Driver {
 			writer = new BufferedWriter(new FileWriter(mainPath, false));
 			accuracyWriter = new BufferedWriter(new FileWriter(controlPath, false));
 			accuracyWriter.append("Control data statistics\n");
-			writer.append("battery_id,% Chance to Fail,Prediction\n");
+			writer.append("battery_id,% Chance to Fail,Prediction,Most Recent Week\n");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
