@@ -28,7 +28,7 @@ import static org.apache.spark.sql.functions.col;
 * <p>The model clumps trainees together in groups for each of the first few weeks by
 * their test scores into buckets based on equi-distant percentiles. The model then
 * calculates the odds of someone in that bucket passing or failing and then calculates
-* the log odds taken from this tutorial. <a href="http://vassarstats.net/logreg1.html"><>.</p>
+* the log odds taken from this tutorial. <a href="http://vassarstats.net/logreg1.html">Logistic Regression</a>.</p>
 * <p>TODO: describe the rest of log-reg logic.</p>
 * <p>This class is a member of the
 * <a href="https://github.com/Dec-17-Big-Data/biforce">
@@ -36,19 +36,40 @@ import static org.apache.spark.sql.functions.col;
 * <p>For more information regarding this project see the
 * <a href="https://drive.google.com/open?id=1xD-x-0oX2vXWdEpoMhq0Jpu0j2gCgpjOufVh5NerJHQ">
 * Biforce Living Document</a>.</p>
+ * <h2>Used columns</h2>
+ * <ul>
+ * <li>_c0 = PK</li>
+ * <li>_c1 = test type</li>
+ * <li>_c3 = score</li>
+ * <li>_c4 = test period</li>
+ * <li>_c9 = associate id</li>
+ * <li>_c10 = associate status</li>
+ * </ul>
+ * <h2>All Columns</h2>
+ * <ul>
+ * <li>_c0 = 1 : row number</li>
+ * <li>_c1 = 2 : A.ASSESSMENT_TYPE
+ *  - 'VERBAL' = 1; 'EXAM' = 2;
+ *  - 'PROJECT' = 3; 'OTHER' = 4</li>
+ * <li>_c2 = 25 : A.RAW_SCORE</li>
+ * <li>_c3 = 74.00 : Q.SCORE</li>
+ * <li>_c4 = 7 : A.WEEK_NUMBER 1-9 inclusive</li>
+ * <li>_c5 = 20 : A.ASSESSMENT_CATEGORY</li>
+ * <li>_c6 = 14 : G.TRAINER_ID</li>
+ * <li>_c7 = 112511 : G.BATCH_ID</li>
+ * <li>_c8 = 2 : G.SKILL_TYPE 
+ *  - 'SDET' = 1; 'J2EE' = 2; 'OTHER' = 3;
+ *  - 'BPM' = 4; 'NET' = 5; 'MICROSERVICES' = 6</li>
+ * <li>_c9 = 281214 : Q.TRAINEE_ID</li>
+ * <li>_c10 = 2 : B.TRAINING_STATUS 
+ *  - 'DROPPED'= 0; 'EMPLOYED' = 1; 'TRAINING' = 2; 
+ *  - 'SIGNED' = 3; 'CONFIRMED' = 4; 'MARKETING' = 5</li>
+ *  </ul>
 * @author  Mason Wegert
 * @author  Diego Gomez
 * @author  Tim Law
 * @author  Pil Ju Chun
-**/
-/*
- * _c0 = PK
- * _c1 = test type
- * _c3 = score
- * _c4 = test period
- * _c9 = associate id
- * _c10 = associate status
- */
+ **/
 
 // Read the input file in as a spark Dataset<Row> with no header, therefore the
 // resulting table column names are in the format _c#.
@@ -62,7 +83,7 @@ public class Driver {
 
 	/**
 	 * This method creates the spark context and session and reads the input value. 
-	 * Then it calls a plethora of utility functions. Primarily t performs ETL, splitting, 
+	 * Then it calls a plethora of utility functions. Primarily it performs ETL, splitting, 
 	 * training the model, testing the model, and printing the results.
 	 * @param args - 0 input file location, 1 is main output, 2 is model parameters output
 	 */
@@ -80,7 +101,7 @@ public class Driver {
 
 		// settings for filtering, , splitting 		
 		int minWeek = 1; // weeks less than this will be excluded
-		double accuracyDelta = .01; // the double values to check for accuracy
+		double accuracyDelta = .01; // the double values to check for accuracybetween 0 and 1
 		double[] splitRatios = {0.7,0.3}; // 0.7 training, 0.3 testing
 		int modelSplitCount = 10; // # of buckets. 10 seems to be good.
 
@@ -163,7 +184,8 @@ public class Driver {
 	
 	/**
 	 * It prints the formula for calculating the probability of failure based on the modelParams.
-	 * Prints to the console and accuracyWriter for each of the 3 exam types (one for each week).
+	 * Prints to the console and accuracyWriter for each of the 3 exam types (one for verbal, exam, project scores).
+	 * Test type 4 (other) has a low correlation (0.2) and negatively effects the results.
 	 * @param modelParams
 	 */
 	private static void printModel(double[][] modelParams) {
@@ -180,7 +202,8 @@ public class Driver {
 	}
 
 	/**
-	 * 
+	 * Writes the controlRDD output to the accuracy writer. If a rows score is less than
+	 * dropPercent it writes 'DROP' or else 'PASS' at the end of the line.
 	 * @param controlRDD
 	 * @param dropPercent
 	 */
@@ -203,6 +226,10 @@ public class Driver {
 		});
 	}
 
+	/**
+	 * a simple writer class to the accuracyWriter and console, outString gets written/appended.
+	 * @param outString
+	 */
 	private static void writeToControl(String outString) {
 		try {
 			System.out.println(outString);
