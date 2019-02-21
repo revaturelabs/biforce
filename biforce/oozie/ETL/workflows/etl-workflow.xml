@@ -5,7 +5,7 @@
 
     <!--Start Caliber Imports-->
     <fork name="import-fork">
-        <path start ="import-address">
+        <path start ="import-address"/>
         <path start="import-assessment"/>
         <path start="import-batch"/>
         <path start="import-grade"/>
