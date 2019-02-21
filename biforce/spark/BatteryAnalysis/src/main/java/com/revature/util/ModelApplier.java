@@ -13,7 +13,7 @@ import scala.Tuple2;
 
 public class ModelApplier {
 	
-	public static JavaPairRDD<Integer, Row> applyModel(Dataset<Row> csv, double[][] bin1, double dropPercent) {
+	public static JavaPairRDD<Integer, Row> applyModel(Dataset<Row> csv, double[][] coefs, double dropPercent) {
 		JavaRDD<Row> csvRDD = 
 				csv
 				.javaRDD()
@@ -24,10 +24,10 @@ public class ModelApplier {
 					double rValue = 0;
 					for (int i=1;i < 4;++i) {
 						if (row.getInt(1) == i) { // Assessment type 1-3
-							failPercent = Math.exp(row.getDouble(3) * bin1[i-1][1] + bin1[i-1][2])/
-									(1 + Math.exp(row.getDouble(3) * bin1[i-1][1] + bin1[i-1][2])) *
-									bin1[i-1][3];
-							rValue = bin1[i-1][3];
+							failPercent = Math.exp(row.getDouble(3) * coefs[i-1][1] + coefs[i-1][2])/
+									(1 + Math.exp(row.getDouble(3) * coefs[i-1][1] + coefs[i-1][2])) *
+									coefs[i-1][3];
+							rValue = coefs[i-1][3];
 							break;
 						}
 					}
@@ -43,7 +43,7 @@ public class ModelApplier {
 		return sums;
 	}
 
-	public static JavaRDD<Row> applyControlModel(Dataset<Row> csv, double[][] bin1) {
+	public static JavaRDD<Row> applyControlModel(Dataset<Row> csv, double[][] coefs) {
 		JavaRDD<Row> csvRDD = 
 				csv
 				.javaRDD()
@@ -55,10 +55,10 @@ public class ModelApplier {
 
 					for (int i=1;i < 4;++i) {
 						if (row.getInt(1) == i) { // Assessment type 1-3
-							failPercent = Math.exp(row.getDouble(3) * bin1[i-1][1] + bin1[i-1][2])/
-									(1 + Math.exp(row.getDouble(3) * bin1[i-1][1] + bin1[i-1][2])) *
-									bin1[i-1][3];
-							rValue = bin1[i-1][3];
+							failPercent = Math.exp(row.getDouble(3) * coefs[i-1][1] + coefs[i-1][2])/
+									(1 + Math.exp(row.getDouble(3) * coefs[i-1][1] + coefs[i-1][2])) *
+									coefs[i-1][3];
+							rValue = coefs[i-1][3];
 							break;
 						}
 					}

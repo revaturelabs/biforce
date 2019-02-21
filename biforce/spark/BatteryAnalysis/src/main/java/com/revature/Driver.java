@@ -47,25 +47,30 @@ public class Driver {
 
 		double controlPrecision = 1.0;
 		double[] splitRatios = {0.7,0.3};
+		int modelSplitCount = 10; // # of buckets
 
-		initWriters(args[1],args[2]);
+		initWriters(args[1], args[2]);
 
 		// Filter the indicator data to include only the valid data for our samples.
 		filtered_csv = csv.filter("_c10 = 0 OR _c10 = 1 OR (_c10 = 2 AND (_c4 = 9 OR _c4 = 10))");
 
+		// Random split of associates
 		Dataset<Row>[] splits = filtered_csv.select("_c9").distinct().randomSplit(splitRatios,42); // use seed (second arg of randomSplit) for testing
 		modelData = filtered_csv.join(splits[0], filtered_csv.col("_c9").equalTo(splits[0].col("_c9")), "leftsemi");
 		controlData = filtered_csv.join(splits[1], filtered_csv.col("_c9").equalTo(splits[1].col("_c9")), "leftsemi");
-
+		
+		// Build model from modelData
 		modelData.persist(); // holds modeldata in memory so it doesn't have to repeat the above filters/joins (transformations)
-		double[][] modelParams = ModelFunction.execute(modelData, PartitionFinder.read(modelData));
+		double[][] modelParams = ModelFunction.execute(modelData, PartitionFinder.read(modelData, modelSplitCount), modelSplitCount);
 		modelData.unpersist();
 
+		// Writes the logarithmic model to the file specified in args[2]
 		printModel(modelParams);
 
 		JavaRDD<Row> controlRDD = ModelApplier.applyControlModel(controlData, modelParams);
+		
 		controlRDD.cache();
-
+		// Finds the drop % cutoff point where the number of incorrect guesses is minimized
 		OptimalPoint optimalPoint = ModelApplier.findOptimalPercent(controlRDD, controlPrecision);
 
 		writeToControl("Fail percent: " + Math.round(optimalPoint.getOptimalPercent()*10000)/10000.0 + "\nCorrect estimates: " + 

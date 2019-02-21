@@ -8,15 +8,14 @@ import org.apache.spark.sql.functions;
 
 public class ModelFunction{
 
-	public static double[][] execute(Dataset<Row> csv, List<List<Double>> partitions){
+	public static double[][] execute(Dataset<Row> csv, List<List<Double>> partitions, int splitCount){
 		double[][] model = new double[3][4];
 
-
-		model[0] = logReg(statsDS(binDS(modelDS(csv, "_c1", 1), partitions.get(0))), 1);
+		model[0] = logReg(statsDS(binDS(modelDS(csv, "_c1", 1), partitions.get(0),splitCount),splitCount), 1);
 		System.out.println("MODEL 1 DONE");
-		model[1] = logReg(statsDS(binDS(modelDS(csv, "_c1", 2), partitions.get(1))), 2);
+		model[1] = logReg(statsDS(binDS(modelDS(csv, "_c1", 2), partitions.get(1),splitCount),splitCount), 2);
 		System.out.println("MODEL 2 DONE");
-		model[2] = logReg(statsDS(binDS(modelDS(csv, "_c1", 3), partitions.get(2))), 3);
+		model[2] = logReg(statsDS(binDS(modelDS(csv, "_c1", 3), partitions.get(2),splitCount),splitCount), 3);
 		System.out.println("MODEL 3 DONE");
 		//		model[3] = logReg(statsDS(binDS(modelDS(csv, "_c1", 4), partitions.get(3))), 4);
 		//		model[4] = logReg(statsDS(binDS(modelDS(csv, "_c4", 1))), 5);
@@ -36,11 +35,11 @@ public class ModelFunction{
 
 	}
 
-	private static Dataset<Row> binDS(Dataset<Row> input, List<Double> partitions) {
+	private static Dataset<Row> binDS(Dataset<Row> input, List<Double> partitions, int numBins) {
 		partitions.add(100.0); // final value
 		Dataset<Row> bins = input.filter("avg_score < " + partitions.get(0)).withColumn("bin", functions.lit(1));
 		int binNum = 2;
-		for(int i = 1; i <= 9; i++){
+		for(int i = 1; i < numBins; i++){
 			Dataset<Row> bin;
 
 
@@ -53,15 +52,15 @@ public class ModelFunction{
 		return bins;
 	}
 
-	private static double[][] statsDS(Dataset<Row> input) {
+	private static double[][] statsDS(Dataset<Row> input, int numBins) {
 		double prob, logOdds;
 
-		int[][] counts = new int[10][];
-		double[][] probs = new double[10][3];
+		int[][] counts = new int[numBins][];
+		double[][] probs = new double[numBins][3];
 
 		List<Row> inputList = input.collectAsList();
 
-		for(int i = 0; i < 10; i++) {
+		for(int i = 0; i < numBins; i++) {
 			counts[i] = new int[]{i, 0, 0};
 		}
 		int rowNum = 0;
@@ -72,7 +71,7 @@ public class ModelFunction{
 			if(status == 0) counts[binNum-1][2]++;
 			rowNum++;
 		}
-		for(int i = 0; i < 10; i++) {
+		for(int i = 0; i < numBins; i++) {
 			int binTotal = counts[i][1];
 			int binDropped = counts[i][2];
 			if((binTotal - binDropped) < 1 || binDropped == 0 || binTotal == 0){
