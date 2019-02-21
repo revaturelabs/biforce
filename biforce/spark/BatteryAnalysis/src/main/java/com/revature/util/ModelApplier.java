@@ -114,11 +114,9 @@ public class ModelApplier {
 			// controlRDD: Associate ID | % failure | fail (0 or 1 where 0 is fail)
 			double d = percentList.get(i);
 
-			// Find those who were dropped and had a fail chance above our threshold
-			// (successful prediction)
+			// Find those who were dropped and had a fail chance above our threshold (successful prediction)
 			long accurateFailedCount = controlRDD.filter(row -> row.getInt(2) == 0 && row.getDouble(1) >= d).count();
-			// Find those who passed and had a fail chance below our threshold (successful
-			// prediction)
+			// Find those who passed and had a fail chance below our threshold (successful prediction)
 			long accuratePassedCount = controlRDD.filter(row -> row.getInt(2) != 0 && row.getDouble(1) < d).count();
 			long accurateCount = accurateFailedCount + accuratePassedCount;
 
