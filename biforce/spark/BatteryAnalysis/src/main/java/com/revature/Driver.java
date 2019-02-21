@@ -18,7 +18,29 @@ import com.revature.util.ModelFunction;
 import com.revature.util.OptimalPoint;
 import com.revature.util.PartitionFinder;
 import static org.apache.spark.sql.functions.col;
-
+/**
+* <h1> Biforce Spark Team JavaDoc </h1>
+* <p>This class consists exclusively of a main method that interacts with utilities
+* which interact with a logistic regression model. It has several helper methods
+* which write output. All methods are static.</p>
+* <p>The model returns percentage values which indicate likelihood to fail and then
+* runs through all possible cutoff values to determine the optimal cutoff percentage. </p>
+* <p>The model clumps trainees together in groups for each of the first few weeks by
+* their test scores into buckets based on equi-distant percentiles. The model then
+* calculates the odds of someone in that bucket passing or failing and then calculates
+* the log odds taken from this tutorial. <a href="http://vassarstats.net/logreg1.html"><>.</p>
+* <p>TODO: describe the rest of log-reg logic.</p>
+* <p>This class is a member of the
+* <a href="https://github.com/Dec-17-Big-Data/biforce">
+* Revature Biforce</a> Github project.</p>
+* <p>For more information regarding this project see the
+* <a href="https://drive.google.com/open?id=1xD-x-0oX2vXWdEpoMhq0Jpu0j2gCgpjOufVh5NerJHQ">
+* Biforce Living Document</a>.</p>
+* @author  Mason Wegert
+* @author  Diego Gomez
+* @author  Tim Law
+* @author  Pil Ju Chun
+**/
 /*
  * _c0 = PK
  * _c1 = test type
@@ -38,19 +60,30 @@ public class Driver {
 	private static JavaSparkContext context;
 	private static SparkSession session;
 
+	/**
+	 * This method creates the spark context and session and reads the input value. 
+	 * Then it calls a plethora of utility functions. Primarily t performs ETL, splitting, 
+	 * training the model, testing the model, and printing the results.
+	 * @param args - 0 input file location, 1 is main output, 2 is model parameters output
+	 */
 	public static void main(String args[]) {
+		// Configure spark, get session variable, declare Datasets		
 		context = new JavaSparkContext(new SparkConf().setAppName("ChanceToFail"));
 		context.setLogLevel("ERROR");
 		session = new SparkSession(context.sc());
 		Dataset<Row> csv,filtered_csv,controlData,modelData;
 		
+		// read input csv, header is optional to name each column, 
+		// inferSchema optimizes storage/operations by storing variables
+		// as a datatype other than string
 		csv = session.read().format("csv").option("header","false").option("inferSchema", "true").load(args[0]);
 
 		// Minweek/maxweek are inclusive. Default values should be [1,3]
 		int minWeek = 1;
 		int maxWeek = 1;
-		double controlPrecision = 1.0; // For cutoff point precision
+		double accuracyDelta = 0.01; // For cutoff point precision
 		double[] splitRatios = {0.7,0.3}; // Split of control & model data
+
 		int modelSplitCount = 10; // # of buckets. 10 seems to be good.
 
 		initWriters(args[1], args[2]);
@@ -81,7 +114,7 @@ public class Driver {
 		
 		controlRDD.cache();
 		// Finds the drop % cutoff point where the number of incorrect guesses is minimized
-		OptimalPoint optimalPoint = ModelApplier.findOptimalPercent(controlRDD, controlPrecision);
+		OptimalPoint optimalPoint = ModelApplier.findOptimalPercent(controlRDD, accuracyDelta);
 
 		writeToControl("Fail percent: " + Math.round(optimalPoint.getOptimalPercent()*10000)/10000.0 + "\nCorrect estimates: " + 
 				optimalPoint.getOptimalAccurateCount() + "\nTotal Count: " + controlRDD.count() + "\nAccuracy: " + 
@@ -115,7 +148,13 @@ public class Driver {
 		context.close();
 	}
 
-
+	/**
+	 * Initializes the BufferedWriter/FileWriter class combination for two writers.
+	 * One main writer with the id/prediction using mainPath, one for control data
+	 * stats using controlPath.
+	 * @param mainPath - file system location for main Writer
+	 * @param controlPath - file system location for accuracyWriter
+	 */
 	private static void initWriters(String mainPath, String controlPath) {
 		try {
 			writer = new BufferedWriter(new FileWriter(mainPath, false));
@@ -126,7 +165,12 @@ public class Driver {
 			e.printStackTrace();
 		}
 	}
-
+	
+	/**
+	 * It prints the formula for calculating the probability of failure based on the modelParams.
+	 * Prints to the console and accuracyWriter for each of the 3 exam types (one for each week).
+	 * @param modelParams
+	 */
 	private static void printModel(double[][] modelParams) {
 		for(int i = 0; i < 3; i++) {
 			String s = String.format("Exam type " + (i+1) +": partialFailChance = e^(%2.3f*score+%2.3f) / (1+e^(%2.3f*score+%2.3f), r^2 = %1.3f\n", 
@@ -140,6 +184,11 @@ public class Driver {
 		}
 	}
 
+	/**
+	 * 
+	 * @param controlRDD
+	 * @param dropPercent
+	 */
 	private static void writeControlOutput(JavaRDD<Row> controlRDD, double dropPercent) {
 		controlRDD.foreach(row -> {
 			try {

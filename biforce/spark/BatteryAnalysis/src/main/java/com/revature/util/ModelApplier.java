@@ -67,15 +67,14 @@ public class ModelApplier {
 			return RowFactory.create(pairTuple._1, pairTuple._2.getDouble(1)/pairTuple._2.getDouble(2), pairTuple._2.getInt(3));
 		});
 	}
-
 	// Find the optimal cutoff point (by drop chance %) at which associates should be dropped
-	public static OptimalPoint findOptimalPercent(JavaRDD<Row> controlRDD, double controlPrecision) {
+	public static OptimalPoint findOptimalPercent(JavaRDD<Row> controlRDD, double accuracyDelta) {
 		List<Double> percentList = new ArrayList<>();
 		long optimalAccurateCount = 0;
 		double optimalPercent = 0;
 
 		// Simply iterate through percentages and find the cutoff point with the highest # of correct predictions
-		for (Double d = 0.0;d <= 1; d+= controlPrecision/100) {
+		for (Double d = 0.0;d <= 1; d+= accuracyDelta) {
 			percentList.add(d);
 		}
 
