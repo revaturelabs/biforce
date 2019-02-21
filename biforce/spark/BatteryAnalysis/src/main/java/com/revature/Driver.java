@@ -99,19 +99,24 @@ public class Driver {
 		// as a datatype other than string
 		csv = session.read().format("csv").option("header","false").option("inferSchema", "true").load(args[0]);
 
-		// settings for filtering, , splitting 		
+		// Minweek/maxweek are inclusive. Default values should be [1,3]
 		int minWeek = 1; // weeks less than this will be excluded
-		double accuracyDelta = .01; // the double values to check for accuracybetween 0 and 1
-		double[] splitRatios = {0.7,0.3}; // 0.7 training, 0.3 testing
+		int maxWeek = 1; // weeks greater than this will be excluded
+		double accuracyDelta = 0.01; // For cutoff point precision, values to check for accuracybetween 0 and 1
+		double[] splitRatios = {0.7,0.3}; // Split of control & model data, 0.7 training, 0.3 testing
+		
 		int modelSplitCount = 10; // # of buckets. 10 seems to be good.
 
 		initWriters(args[1], args[2]);
 
 		// Filter the indicator data to include only the valid data for our samples.
 		System.out.println("Filtering out irrelevant data...");
-		filtered_csv = csv.filter("_c10 = 0 OR _c10 = 1");
+		// Note that associate status (c10) is consistent across all test weeks as it's from a relational DB
+		filtered_csv = csv.filter("_c10 = 0 OR _c10 = 1"); 
 		Dataset<Row> currentWeek = csv.groupBy("_c9").max("_c4").where("max(_c4) >= " + minWeek).withColumnRenamed("_c9", "id");
 		filtered_csv = filtered_csv.join(currentWeek, col("_c9").equalTo(col("id")), "leftsemi");
+		
+		filtered_csv.filter("_c4 <= " + maxWeek);
 		
 		// Random split of associates
 		Dataset<Row>[] splits = filtered_csv.select("_c9").distinct().randomSplit(splitRatios,41); // use seed (second arg of randomSplit) for testing
