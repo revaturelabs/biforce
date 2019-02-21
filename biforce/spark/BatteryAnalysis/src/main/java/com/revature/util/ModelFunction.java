@@ -11,6 +11,7 @@ public class ModelFunction{
 	public static double[][] execute(Dataset<Row> csv, List<List<Double>> partitions, int splitCount){
 		double[][] model = new double[3][4];
 
+		System.out.println("Starting to build model...");
 		model[0] = logReg(statsDS(binDS(modelDS(csv, "_c1", 1), partitions.get(0),splitCount),splitCount), 1);
 		System.out.println("MODEL 1 DONE");
 		model[1] = logReg(statsDS(binDS(modelDS(csv, "_c1", 2), partitions.get(1),splitCount),splitCount), 2);

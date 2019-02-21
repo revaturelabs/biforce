@@ -17,6 +17,7 @@ import com.revature.util.ModelApplier;
 import com.revature.util.ModelFunction;
 import com.revature.util.OptimalPoint;
 import com.revature.util.PartitionFinder;
+import static org.apache.spark.sql.functions.col;
 
 /*
  * _c0 = PK
@@ -45,17 +46,21 @@ public class Driver {
 		
 		csv = session.read().format("csv").option("header","false").option("inferSchema", "true").load(args[0]);
 
+		int minWeek = 1;
 		double controlPrecision = 1.0;
 		double[] splitRatios = {0.7,0.3};
-		int modelSplitCount = 10; // # of buckets
+		int modelSplitCount = 10; // # of buckets. 10 seems to be good.
 
 		initWriters(args[1], args[2]);
 
 		// Filter the indicator data to include only the valid data for our samples.
+		System.out.println("Filtering out irrelevant data...");
 		filtered_csv = csv.filter("_c10 = 0 OR _c10 = 1 OR (_c10 = 2 AND (_c4 = 9 OR _c4 = 10))");
-
+		Dataset<Row> currentWeek = csv.groupBy("_c9").max("_c4").where("max(_c4) >= " + minWeek).withColumnRenamed("_c9", "id");
+		filtered_csv = filtered_csv.join(currentWeek, col("_c9").equalTo(col("id")), "leftsemi");
+		
 		// Random split of associates
-		Dataset<Row>[] splits = filtered_csv.select("_c9").distinct().randomSplit(splitRatios,42); // use seed (second arg of randomSplit) for testing
+		Dataset<Row>[] splits = filtered_csv.select("_c9").distinct().randomSplit(splitRatios,41); // use seed (second arg of randomSplit) for testing
 		modelData = filtered_csv.join(splits[0], filtered_csv.col("_c9").equalTo(splits[0].col("_c9")), "leftsemi");
 		controlData = filtered_csv.join(splits[1], filtered_csv.col("_c9").equalTo(splits[1].col("_c9")), "leftsemi");
 		
@@ -119,7 +124,7 @@ public class Driver {
 
 	private static void printModel(double[][] modelParams) {
 		for(int i = 0; i < 3; i++) {
-			String s = String.format("Exam " + (i+1) +": partialFailChance = e^(%2.3f*score+%2.3f) / (1+e^(%2.3f*score+%2.3f), r^2 = %1.3f\n", 
+			String s = String.format("Exam type " + (i+1) +": partialFailChance = e^(%2.3f*score+%2.3f) / (1+e^(%2.3f*score+%2.3f), r^2 = %1.3f\n", 
 					modelParams[i][1],modelParams[i][2],modelParams[i][1],modelParams[i][2],modelParams[i][3]);
 			System.out.println(s);
 			try {
