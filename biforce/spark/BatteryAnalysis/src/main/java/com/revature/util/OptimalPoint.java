@@ -4,19 +4,33 @@ import java.io.Serializable;
 
 /**
  * Simple bean to store some information about the cutoff percentage
+ * 
+ * @See ModelApplier
  * @author Mason Wegert
  */
 
-public class OptimalPoint implements Serializable{
+public class OptimalPoint implements Serializable {
 
 	private static final long serialVersionUID = -5559918855573669288L;
-	
+
+	/**
+	 * Represents the percent cutoff where (TP/TN / Total Population) is optimized
+	 * (Accuracy)
+	 */
 	private double optimalPercent;
+	/**
+	 * Total number of correct classifications if optimalPercent is used to split
+	 * probability into binary classifier
+	 */
 	private long optimalAccurateCount;
+	/**
+	 * Total number of population
+	 */
 	private long totalCount;
-	
+
 	/**
 	 * Constructor
+	 * 
 	 * @param optimalPercent
 	 * @param optimalAccurateCount
 	 * @param totalCount
@@ -27,51 +41,64 @@ public class OptimalPoint implements Serializable{
 		this.optimalAccurateCount = optimalAccurateCount;
 		this.totalCount = totalCount;
 	}
-	
+
 	/**
 	 * Getter method for optimalPercent.
+	 * 
 	 * @return
 	 */
 	public double getOptimalPercent() {
 		return optimalPercent;
 	}
+
 	/**
 	 * Setter method for optimalPercent.
+	 * 
 	 * @param optimalPercent
 	 */
 	public void setOptimalPercent(double optimalPercent) {
 		this.optimalPercent = optimalPercent;
 	}
+
 	/**
 	 * Getter method for optimalAccurateCount.
+	 * 
 	 * @return
 	 */
 	public long getOptimalAccurateCount() {
 		return optimalAccurateCount;
 	}
+
 	/**
 	 * Setter method for optimalAccurateCount.
+	 * 
 	 * @param optimalAccurateCount
 	 */
 	public void setOptimalAccurateCount(long optimalAccurateCount) {
 		this.optimalAccurateCount = optimalAccurateCount;
 	}
+
 	/**
 	 * Getter method for totalCount.
+	 * 
 	 * @return
 	 */
 	public long getTotalCount() {
 		return totalCount;
 	}
+
 	/**
 	 * Setter method for totalCount.
+	 * 
 	 * @param totalCount
 	 */
 	public void setTotalCount(long totalCount) {
 		this.totalCount = totalCount;
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -85,7 +112,10 @@ public class OptimalPoint implements Serializable{
 		result = prime * result + (int) (totalCount ^ (totalCount >>> 32));
 		return result;
 	}
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -105,5 +135,5 @@ public class OptimalPoint implements Serializable{
 			return false;
 		return true;
 	}
-	
+
 }

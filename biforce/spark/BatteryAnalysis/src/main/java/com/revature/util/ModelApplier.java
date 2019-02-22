@@ -13,7 +13,7 @@ import scala.Tuple2;
 
 /**
  * Contains methods to apply the models to Datasets, evaluate accuracy, and to
- * find point
+ * calculate optimal % fail chance to split drop/pass.
  * 
  * 
  * @author Mason Wegert
@@ -23,10 +23,65 @@ import scala.Tuple2;
 public class ModelApplier {
 
 	/**
+	 * Applies the given model to the entire datase
+	 * 
+	 * @param csv   - the dataset file to apply model to
+	 * @param coefs
+	 * @return
+	 */
+	public static JavaPairRDD<Integer, Row> applyModel(Dataset<Row> csv, double[][] coefs) {
+		JavaRDD<Row> csvRDD = findSums(csv, coefs);
+
+		// map to id | row as a pair. Sum up all the weighted partial drop percents as
+		// well as the sum of the r^2's for normalization.
+		JavaPairRDD<Integer, Row> applicationRDD = csvRDD
+				.mapToPair(row -> new Tuple2<Integer, Row>(row.getInt(0), row));
+		JavaPairRDD<Integer, Row> sums = applicationRDD.reduceByKey((Row row1, Row row2) -> {
+			return RowFactory.create(row1.getInt(0), row1.getDouble(1) + row2.getDouble(1),
+					row1.getDouble(2) + row2.getDouble(2), row2.getInt(4));
+		});
+		return sums;
+	}
+
+	/**
+	 * @param csv
+	 * @param coefs
+	 * @return
+	 */
+	public static JavaRDD<Row> applyControlModel(Dataset<Row> csv, double[][] coefs, int maxWeek) {
+		// Only include associates who are past a certain week in training
+		// The following code block actually reduces the accuracy. Test with a larger
+		// dataset.
+		/*
+		 * Dataset<Row> currentWeek = csv.groupBy("_c9").max("_c4").where("max(_c4) >= "
+		 * + maxWeek).withColumnRenamed("_c9", "id"); csv = csv.join(currentWeek,
+		 * col("_c9").equalTo(col("id")), "leftsemi");
+		 */
+
+		// limit to a certain number of available weeks
+		JavaRDD<Row> csvRDD = findSums(csv.filter("_c4 <=" + maxWeek), coefs);
+
+		// map to id | row as a pair. Sum up all the weighted partial drop percents as
+		// well as the sum of the r^2's for normalization.
+		JavaPairRDD<Integer, Row> applicationRDD = csvRDD
+				.mapToPair(row -> new Tuple2<Integer, Row>(row.getInt(0), row));
+		JavaPairRDD<Integer, Row> sums = applicationRDD.reduceByKey((Row row1, Row row2) -> {
+			return RowFactory.create(row1.getInt(0), row1.getDouble(1) + row2.getDouble(1),
+					row1.getDouble(2) + row2.getDouble(2), row1.getInt(3));
+		});
+
+		return sums.map(pairTuple -> {
+			// Associate ID | % failure | fail (1 or 0)
+			return RowFactory.create(pairTuple._1, pairTuple._2.getDouble(1) / pairTuple._2.getDouble(2),
+					pairTuple._2.getInt(3));
+		});
+	}
+
+	/**
 	 * Finds the partial drop chances and sums them. Also sums up r^2-values so we
 	 * can get a weighted average.
 	 * 
-	 * @param csv
+	 * @param csv   - The Dataset<Row> object that should be summed
 	 * @param coefs
 	 * @return
 	 */
@@ -61,59 +116,10 @@ public class ModelApplier {
 	}
 
 	/**
-	 * @param csv
-	 * @param coefs
-	 * @return
-	 */
-	public static JavaPairRDD<Integer, Row> applyModel(Dataset<Row> csv, double[][] coefs) {
-		JavaRDD<Row> csvRDD = findSums(csv, coefs);
-
-		// map to id | row as a pair. Sum up all the weighted partial drop percents as
-		// well as the sum of the r^2's for normalization.
-		JavaPairRDD<Integer, Row> applicationRDD = csvRDD
-				.mapToPair(row -> new Tuple2<Integer, Row>(row.getInt(0), row));
-		JavaPairRDD<Integer, Row> sums = applicationRDD.reduceByKey((Row row1, Row row2) -> {
-			return RowFactory.create(row1.getInt(0), row1.getDouble(1) + row2.getDouble(1),
-					row1.getDouble(2) + row2.getDouble(2), row2.getInt(4));
-		});
-		return sums;
-	}
-
-	/**
-	 * @param csv
-	 * @param coefs
-	 * @return
-	 */
-	public static JavaRDD<Row> applyControlModel(Dataset<Row> csv, double[][] coefs, int maxWeek) {
-		// Only include associates who are past a certain week in training
-		// The following code block actually reduces the accuracy. Test with a larger dataset.
-		/*Dataset<Row> currentWeek = csv.groupBy("_c9").max("_c4").where("max(_c4) >= " + maxWeek).withColumnRenamed("_c9", "id");
-		csv = csv.join(currentWeek, col("_c9").equalTo(col("id")), "leftsemi");*/
-		
-		// limit to a certain number of available weeks
-		JavaRDD<Row> csvRDD = findSums(csv.filter("_c4 <=" + maxWeek), coefs);
-		
-		// map to id | row as a pair. Sum up all the weighted partial drop percents as
-		// well as the sum of the r^2's for normalization.
-		JavaPairRDD<Integer, Row> applicationRDD = csvRDD
-				.mapToPair(row -> new Tuple2<Integer, Row>(row.getInt(0), row));
-		JavaPairRDD<Integer, Row> sums = applicationRDD.reduceByKey((Row row1, Row row2) -> {
-			return RowFactory.create(row1.getInt(0), row1.getDouble(1) + row2.getDouble(1),
-					row1.getDouble(2) + row2.getDouble(2), row1.getInt(3));
-		});
-
-		return sums.map(pairTuple -> {
-			// Associate ID | % failure | fail (1 or 0)
-			return RowFactory.create(pairTuple._1, pairTuple._2.getDouble(1) / pairTuple._2.getDouble(2),
-					pairTuple._2.getInt(3));
-		});
-	}
-
-	/**
 	 * Find the optimal cutoff point (by drop chance %) on where our probability
 	 * predictor should be divided into pass/fail by iterating through percentages
-	 * 0%-100% and calculating the fraction correct (Highest fraction correct
-	 * percentage is "optimal")
+	 * 0%-100% and calculating the accuracy (Highest accuracy percentage is
+	 * "optimal")
 	 * 
 	 * @param controlRDD    - The RDD to evaluate on. c1 = battery id, c2 =
 	 *                      drop/pass (0/1), c3 = fail % in decimal
