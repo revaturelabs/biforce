@@ -81,9 +81,9 @@ public class Driver {
 	private static SparkSession session;
 
 	/**
-	 * This method creates the spark context and session and reads the input value. 
-	 * Then it calls a plethora of utility functions. Primarily it performs ETL, splitting, 
-	 * training the model, testing the model, and printing the results.
+	 * This method creates the spark context and session and reads the input value.
+	 * Then it calls a plethora of utility functions. Data flow includes splitting control
+	 * & model data, training the model, testing the model, and printing the results.
 	 * @param args - 0 input file location, 1 is main output, 2 is model parameters output
 	 */
 	public static void main(String args[]) {
@@ -93,9 +93,7 @@ public class Driver {
 		session = new SparkSession(context.sc());
 		Dataset<Row> csv,filtered_csv,controlData,modelData;
 
-		// read input csv, header is optional to name each column, 
-		// inferSchema optimizes storage/operations by storing variables
-		// as a datatype other than string
+		// Read input csv and infer data types schema implicitly.
 		csv = session.read().format("csv").option("header","false").option("inferSchema", "true").load(args[0]);
 
 		double accuracyDelta = 0.01; // For cutoff point precision
@@ -178,7 +176,7 @@ public class Driver {
 	private static void initWriters(String mainPath, String controlPath) {
 		try {
 			writer = new BufferedWriter(new FileWriter(mainPath, false));
-			writer.append("battery_id,% Chance to Fail,Prediction,Most Recent Week\n");
+			writer.append("battery_id,% Chance to Fail,Most Recent Week,Prediction\n");
 			controlWriter = new BufferedWriter(new FileWriter(controlPath, false));
 			controlWriter.append("--------Control data statistics--------\n");
 		} catch (IOException e) {
@@ -187,7 +185,7 @@ public class Driver {
 	}
 
 	/**
-	 * It prints the formula for calculating the probability of failure based on the modelParams.
+	 * It prints the equation for calculating the probability of failure based on the modelParams.
 	 * Prints to the console and accuracyWriter for each of the 3 exam types (one for verbal, exam, project scores).
 	 * Test type 4 (other) has a low correlation (0.2) and negatively effects the results.
 	 * @param modelParams
@@ -206,8 +204,8 @@ public class Driver {
 	}
 
 	/**
-	 * Writes the controlRDD output to the accuracy writer. If a rows score is less than
-	 * dropPercent it writes 'DROP' or else 'PASS' at the end of the line.
+	 * Writes the controlRDD output to the accuracy writer. If a row's drop % is greater than
+	 * dropPercent it writes 'DROP', otherwise it writes 'PASS' at the end of the line.
 	 * @param controlRDD
 	 * @param dropPercent
 	 */
@@ -229,10 +227,15 @@ public class Driver {
 			}
 		});
 	}
-
+	/**
+	 * Finds the drop % cutoff point where the number of incorrect guesses is minimized
+	 * @param controlRDD
+	 * @param accuracyDelta
+	 * @param weekNum
+	 * @return
+	 */
 	private static OptimalPoint applyControl(JavaRDD<Row> controlRDD, double accuracyDelta, int weekNum) {
 		controlRDD.cache();
-		// Finds the drop % cutoff point where the number of incorrect guesses is minimized
 		OptimalPoint optimalPoint = ModelApplier.findOptimalPercent(controlRDD, accuracyDelta);
 		
 		writeToControl("Fail percent: " + Math.round(optimalPoint.getOptimalPercent()*10000)/10000.0 + "\nCorrect estimates: " + 
