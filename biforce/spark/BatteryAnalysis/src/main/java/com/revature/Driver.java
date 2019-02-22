@@ -28,7 +28,7 @@ import com.revature.util.PartitionFinder;
  * <p>The model clumps trainees together in groups for each of the first few weeks by
  * their test scores into buckets based on equi-distant percentiles. The model then
  * calculates the odds of someone in that bucket passing or failing and then calculates
- * the log odds taken from this tutorial. <a href="http://vassarstats.net/logreg1.html"><>.</p>
+ * the log odds taken from this tutorial. <a href="http://vassarstats.net/logreg1.html">Logistic Regression</a>.</p>
  * <p>TODO: describe the rest of log-reg logic.</p>
  * <p>This class is a member of the
  * <a href="https://github.com/Dec-17-Big-Data/biforce">
@@ -36,19 +36,40 @@ import com.revature.util.PartitionFinder;
  * <p>For more information regarding this project see the
  * <a href="https://drive.google.com/open?id=1xD-x-0oX2vXWdEpoMhq0Jpu0j2gCgpjOufVh5NerJHQ">
  * Biforce Living Document</a>.</p>
+ * <h2>Used columns</h2>
+ * <ul>
+ * <li>_c0 = PK</li>
+ * <li>_c1 = test type</li>
+ * <li>_c3 = score</li>
+ * <li>_c4 = test period</li>
+ * <li>_c9 = associate id</li>
+ * <li>_c10 = associate status</li>
+ * </ul>
+ * <h2>All Columns</h2>
+ * <ul>
+ * <li>_c0 = 1 : row number</li>
+ * <li>_c1 = 2 : A.ASSESSMENT_TYPE
+ *  - 'VERBAL' = 1; 'EXAM' = 2;
+ *  - 'PROJECT' = 3; 'OTHER' = 4</li>
+ * <li>_c2 = 25 : A.RAW_SCORE</li>
+ * <li>_c3 = 74.00 : Q.SCORE</li>
+ * <li>_c4 = 7 : A.WEEK_NUMBER 1-9 inclusive</li>
+ * <li>_c5 = 20 : A.ASSESSMENT_CATEGORY</li>
+ * <li>_c6 = 14 : G.TRAINER_ID</li>
+ * <li>_c7 = 112511 : G.BATCH_ID</li>
+ * <li>_c8 = 2 : G.SKILL_TYPE 
+ *  - 'SDET' = 1; 'J2EE' = 2; 'OTHER' = 3;
+ *  - 'BPM' = 4; 'NET' = 5; 'MICROSERVICES' = 6</li>
+ * <li>_c9 = 281214 : Q.TRAINEE_ID</li>
+ * <li>_c10 = 2 : B.TRAINING_STATUS 
+ *  - 'DROPPED'= 0; 'EMPLOYED' = 1; 'TRAINING' = 2; 
+ *  - 'SIGNED' = 3; 'CONFIRMED' = 4; 'MARKETING' = 5</li>
+ *  </ul>
  * @author  Mason Wegert
  * @author  Diego Gomez
  * @author  Tim Law
  * @author  Pil Ju Chun
  **/
-/*
- * _c0 = PK
- * _c1 = test type
- * _c3 = score
- * _c4 = test period
- * _c9 = associate id
- * _c10 = associate status
- */
 
 // Read the input file in as a spark Dataset<Row> with no header, therefore the
 // resulting table column names are in the format _c#.
@@ -61,7 +82,7 @@ public class Driver {
 
 	/**
 	 * This method creates the spark context and session and reads the input value. 
-	 * Then it calls a plethora of utility functions. Primarily t performs ETL, splitting, 
+	 * Then it calls a plethora of utility functions. Primarily it performs ETL, splitting, 
 	 * training the model, testing the model, and printing the results.
 	 * @param args - 0 input file location, 1 is main output, 2 is model parameters output
 	 */
@@ -117,7 +138,7 @@ public class Driver {
 		}
 		OptimalPoint optimalPoint = applyControl(controlRDD, accuracyDelta);
 		writeControlOutput(controlRDD, optimalPoint.getOptimalPercent());
-		
+
 		// TODO
 		// calculate/print evaluation metrics
 		// Assumed controlRDD is testing test data with model already applied to third column
@@ -128,7 +149,7 @@ public class Driver {
 
 		appliedResultPair.foreach(pairTuple -> {
 			String prediction = pairTuple._2.getDouble(1)/pairTuple._2.getDouble(2) >= optimalPoint.getOptimalPercent() ? "DROP" : "PASS";
-			writer.append(pairTuple._1 + "," + pairTuple._2.getDouble(1)/pairTuple._2.getDouble(2) + "," + prediction + "\n");
+			writer.append(pairTuple._1 + "," + pairTuple._2.getDouble(1)/pairTuple._2.getDouble(2) + "," + pairTuple._2.getInt(3) + "," + prediction + "\n");
 		});
 
 		// Close all the resources.
@@ -151,13 +172,12 @@ public class Driver {
 	 * @param mainPath - file system location for main Writer
 	 * @param controlPath - file system location for wk3Writer
 	 */
-	private static void initWriters(String writerPath, String controlPath) {
+	private static void initWriters(String mainPath, String controlPath) {
 		try {
-			writer = new BufferedWriter(new FileWriter(writerPath, false));
-			writer.append("battery_id,% Chance to Fail,Prediction\n");
+			writer = new BufferedWriter(new FileWriter(mainPath, false));
+			writer.append("battery_id,% Chance to Fail,Prediction,Most Recent Week\n");
 			controlWriter = new BufferedWriter(new FileWriter(controlPath, false));
 			controlWriter.append("Control data statistics\n");
-			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -165,7 +185,8 @@ public class Driver {
 
 	/**
 	 * It prints the formula for calculating the probability of failure based on the modelParams.
-	 * Prints to the console and wk3Writer for each of the 3 exam types (one for each week).
+	 * Prints to the console and accuracyWriter for each of the 3 exam types (one for verbal, exam, project scores).
+	 * Test type 4 (other) has a low correlation (0.2) and negatively effects the results.
 	 * @param modelParams
 	 */
 	private static void printModel(double[][] modelParams) {
@@ -182,7 +203,8 @@ public class Driver {
 	}
 
 	/**
-	 * 
+	 * Writes the controlRDD output to the accuracy writer. If a rows score is less than
+	 * dropPercent it writes 'DROP' or else 'PASS' at the end of the line.
 	 * @param controlRDD
 	 * @param dropPercent
 	 */
@@ -209,16 +231,20 @@ public class Driver {
 		controlRDD.cache();
 		// Finds the drop % cutoff point where the number of incorrect guesses is minimized
 		OptimalPoint optimalPoint = ModelApplier.findOptimalPercent(controlRDD, accuracyDelta);
-		
+
 		writeToControl("Fail percent: " + Math.round(optimalPoint.getOptimalPercent()*10000)/10000.0 + "\nCorrect estimates: " + 
 				optimalPoint.getOptimalAccurateCount() + "\nTotal Count: " + controlRDD.count() + "\nAccuracy: " + 
-				(double)optimalPoint.getOptimalAccurateCount()/(double)controlRDD.count() + "\n\n", controlWriter);
+				(double)optimalPoint.getOptimalAccurateCount()/(double)controlRDD.count() + "\n\n");
 
 		controlRDD.unpersist();
 		return optimalPoint;
 	}
-	
-	private static void writeToControl(String outString, BufferedWriter controlWriter) {
+
+	/**
+	 * a simple writer class to the accuracyWriter and console, outString gets written/appended.
+	 * @param outString
+	 */
+	private static void writeToControl(String outString) {
 		try {
 			System.out.println(outString);
 			controlWriter.append(outString);

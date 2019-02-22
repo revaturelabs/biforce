@@ -6,34 +6,61 @@ import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.functions;
 
+/**
+ * Create models for different test types
+ * @author Mason Wegert
+ * @author Diego Gomez
+ *
+ */
 public class ModelFunction{
-
+	/**
+	 * The main driver method. Calls the other methods and returns tuning parameters for each model.
+	 * The fourth test type is excluded because it has a low correlation and negatively effects the results.
+	 * @param csv - input csv
+	 * @param partitions - output of partitionFinder, list of lists with a percentile for the splitCount
+	 * @param splitCount - must match number of splits/buckets
+	 * @return model - list, 0 is model number, 1 is slope for the regression line, 2 is y-intercept, 3 is regression r2 correlation value
+	 */
 	public static double[][] execute(Dataset<Row> csv, List<List<Double>> partitions, int splitCount){
 		double[][] model = new double[3][4];
 
 		System.out.println("Starting to build model...");
 		// Builds verbal score model
-		model[0] = logReg(statsDS(binDS(modelDS(csv, "_c1", 1), partitions.get(0),splitCount),splitCount), 1);
+		model[0] = logReg(statsDS(binDS(modelDS(csv, 1), partitions.get(0),splitCount),splitCount), 1);
 		System.out.println("MODEL 1 DONE");
 		// Builds exam score model
-		model[1] = logReg(statsDS(binDS(modelDS(csv, "_c1", 2), partitions.get(1),splitCount),splitCount), 2);
+		model[1] = logReg(statsDS(binDS(modelDS(csv, 2), partitions.get(1),splitCount),splitCount), 2);
 		System.out.println("MODEL 2 DONE");
 		// Builds project score model
-		model[2] = logReg(statsDS(binDS(modelDS(csv, "_c1", 3), partitions.get(2),splitCount),splitCount), 3);
+		model[2] = logReg(statsDS(binDS(modelDS(csv, 3), partitions.get(2),splitCount),splitCount), 3);
 		System.out.println("MODEL 3 DONE");
 		
 		return model;
 	}
-
-	private static Dataset<Row> modelDS(Dataset<Row> data, String modelType, int intType) {
+	
+	/**
+	 * Filters test type, groups by associate id, calculates the average score for that test type,
+	 * and calculates the max (we aggregate to find a single value, they should all be the same though) status.
+	 * @param data - input csv
+	 * @param testType - which test type
+	 * @return result - csv with only associate id, average score, and status columns
+	 */
+	private static Dataset<Row> modelDS(Dataset<Row> data, int testType) {
 		// Filters the data based on test type and finds the mean score and status for an individual associate
-		Dataset<Row> modelTypeDS =  data.filter(modelType+" = "+intType).groupBy("_c9").mean("_c3").withColumnRenamed("avg(_c3)", "avg_score");
-		Dataset<Row> status = data.filter(modelType+" = "+intType).groupBy("_c9").max("_c10").withColumnRenamed("max(_c10)", "status").withColumnRenamed("_c9", "assc1");
+		Dataset<Row> modelTypeDS =  data.filter("_c1 = "+testType).groupBy("_c9").mean("_c3").withColumnRenamed("avg(_c3)", "avg_score");
+		Dataset<Row> status = data.filter("_c1 = "+testType).groupBy("_c9").max("_c10").withColumnRenamed("max(_c10)", "status").withColumnRenamed("_c9", "assc1");
 
 		Dataset<Row> result = modelTypeDS.join(status, modelTypeDS.col("_c9").equalTo(status.col("assc1"))).select("_c9","avg_score","status");
 		return result;
 	}
 
+	/**
+	 * 
+	 * @param input - input sql table like data with only associate id, avg score, and status
+	 * @param partitions - the partition values for the different buckets
+	 * @param numBins - number buckets
+	 * @return bins - data filtered to be in all the different buckets, with "bin" num column added
+	 */
 	private static Dataset<Row> binDS(Dataset<Row> input, List<Double> partitions, int numBins) {
 		partitions.add(100.0); // final value
 		Dataset<Row> bins = input.filter("avg_score <= " + partitions.get(0)).withColumn("bin", functions.lit(1));
@@ -61,6 +88,14 @@ public class ModelFunction{
 		return bins;
 	}
 
+	/**
+	 * converts the output of binDS (a sql table with ass id, avg score, status, and binnum) into
+	 * a list of values for each input row stating a score and logodds.
+	 * @param input - sql table like data with associate id, avg score, status, and binNum columns
+	 * @param numBins - number of bins/buckets
+	 * @return stats - list of lists with a list of values for each of the input rows (one row per
+	 * associate and test type) with a score and logodds for each
+	 */
 	private static double[][] statsDS(Dataset<Row> input, int numBins) {
 		double prob, logOdds;
 		
@@ -85,7 +120,7 @@ public class ModelFunction{
 		for(Row row : inputList) {
 			int binNum = row.getInt(3); // gets the bin number
 			int status = row.getInt(2); // gets the status for an assc
-			counts[binNum-1][1]++; // incremements the total count for the bin 
+			counts[binNum-1][1]++; // increments the total count for the bin 
 			if(status == 0) counts[binNum-1][2]++; // checks if an assc is dropped and increments accordingly
 			rowNum++; // gets the total number of asscs
 		}
@@ -127,6 +162,13 @@ public class ModelFunction{
 		return stats;
 	}
 
+	/**
+	 * Takes a list of values for each associate id/test type and returns a description of the logistic 
+	 * regression line parameters.
+	 * @param stats - multiarray, 0th level one value per associate id/test type pair, 1st level score and logodds
+	 * @param modelNum - number of the test type
+	 * @return modelData - array, 0 modelNum, 1 slope of regression line, 2 y-intercept, 3 correlation for r2
+	 */
 	private static double[] logReg(double[][] stats, int modelNum) {
 
 		// double variables where S indicates sum, x is mean score, y is ln(odds), and 2 indicates squared
