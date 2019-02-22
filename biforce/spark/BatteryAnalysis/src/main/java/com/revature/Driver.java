@@ -150,8 +150,9 @@ public class Driver {
 		System.out.println("Root Mean Squared Error: " + EvaluationMetrics.testRMSE(controlRDD));
 
 		JavaPairRDD<Integer, Row> appliedResultPair = ModelApplier.applyModel(csv, modelParams);
-
+		appliedResultPair.cache();
 		writeOutput(appliedResultPair, optimalPoint.getOptimalPercent());
+		appliedResultPair.unpersist();
 
 		// Close all the resources.
 		try {
@@ -170,7 +171,8 @@ public class Driver {
 	 * Initializes the BufferedWriter/FileWriter class combination for two writers.
 	 * One main writer with the id/prediction using mainPath, one for control data
 	 * stats using controlPath.
-	 * @param mainPath - file system location for main Writer
+	 * 
+	 * @param mainPath    - file system location for main Writer
 	 * @param controlPath - file system location for wk3Writer
 	 */
 	private static void initWriters(String mainPath, String controlPath) {
@@ -227,7 +229,7 @@ public class Driver {
 			}
 		});
 	}
-	
+
 	/**
 	 * Writes results of model applied to full csv to the output writer. If a row's
 	 * drop % is greater than dropPercent it writes 'DROP', otherwise it writes
@@ -241,7 +243,8 @@ public class Driver {
 			String prediction = pairTuple._2.getDouble(1)/pairTuple._2.getDouble(2) >= dropPercent ? "DROP" : "PASS";
 			if (Double.isNaN(pairTuple._2.getDouble(1)/pairTuple._2.getDouble(2))) prediction = "UNK";
 			// ID | aggregate drop chance | sum of r^2's | week # 
-			writer.append(pairTuple._1 + "," + pairTuple._2.getDouble(1)/pairTuple._2.getDouble(2) + "," + pairTuple._2.getInt(4) + "," + prediction + "\n");
+			writer.append(pairTuple._1 + "," + pairTuple._2.getDouble(1) / pairTuple._2.getDouble(2) + ","
+					+ pairTuple._2.getInt(4) + "," + prediction + "\n");
 		});
 	}
 
