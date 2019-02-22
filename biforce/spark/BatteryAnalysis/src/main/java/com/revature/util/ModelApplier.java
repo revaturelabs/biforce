@@ -65,7 +65,7 @@ public class ModelApplier {
 				.mapToPair(row -> new Tuple2<Integer, Row>(row.getInt(0), row));
 		JavaPairRDD<Integer, Row> sums = applicationRDD.reduceByKey((Row row1, Row row2) -> {
 			return RowFactory.create(row1.getInt(0), row1.getDouble(1) + row2.getDouble(1),
-					row1.getDouble(2) + row2.getDouble(2), row2.getInt(4));
+					row1.getDouble(2) + row2.getDouble(2), row1.getInt(3), row1.getInt(4) > row2.getInt(4) ? row1.getInt(4) : row2.getInt(4));
 		});
 		return sums;
 	}
@@ -80,10 +80,10 @@ public class ModelApplier {
 		// The following code block actually reduces the accuracy. Test with a larger dataset.
 		/*Dataset<Row> currentWeek = csv.groupBy("_c9").max("_c4").where("max(_c4) >= " + maxWeek).withColumnRenamed("_c9", "id");
 		csv = csv.join(currentWeek, col("_c9").equalTo(col("id")), "leftsemi");*/
-		
+
 		// limit to a certain number of available weeks
 		JavaRDD<Row> csvRDD = findSums(csv.filter("_c4 <=" + maxWeek), coefs);
-		
+
 		// map to id | row as a pair. Sum up all the weighted partial drop percents as
 		// well as the sum of the r^2's for normalization.
 		JavaPairRDD<Integer, Row> applicationRDD = csvRDD

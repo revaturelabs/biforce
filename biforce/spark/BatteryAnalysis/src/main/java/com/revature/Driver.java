@@ -82,8 +82,8 @@ public class Driver {
 
 	/**
 	 * This method creates the spark context and session and reads the input value.
-	 * Then it calls a plethora of utility functions. Data flow includes splitting control
-	 * & model data, training the model, testing the model, and printing the results.
+	 * Data flow includes splitting control and model data, training the model, 
+	 * testing the model, and printing the results.
 	 * @param args - 0 input file location, 1 is main output, 2 is model parameters output
 	 */
 	public static void main(String args[]) {
@@ -150,7 +150,8 @@ public class Driver {
 
 		appliedResultPair.foreach(pairTuple -> {
 			String prediction = pairTuple._2.getDouble(1)/pairTuple._2.getDouble(2) >= optimalPoint.getOptimalPercent() ? "DROP" : "PASS";
-			writer.append(pairTuple._1 + "," + pairTuple._2.getDouble(1)/pairTuple._2.getDouble(2) + "," + pairTuple._2.getInt(3) + "," + prediction + "\n");
+			// ID | aggregate drop chance | sum of r^2's | week # 
+			writer.append(pairTuple._1 + "," + pairTuple._2.getDouble(1)/pairTuple._2.getDouble(2) + "," + pairTuple._2.getInt(4) + "," + prediction + "\n");
 		});
 
 		// Close all the resources.
@@ -185,7 +186,7 @@ public class Driver {
 	}
 
 	/**
-	 * It prints the equation for calculating the probability of failure based on the modelParams.
+	 * Prints the equation for calculating the probability of failure based on the modelParams.
 	 * Prints to the console and accuracyWriter for each of the 3 exam types (one for verbal, exam, project scores).
 	 * Test type 4 (other) has a low correlation (0.2) and negatively effects the results.
 	 * @param modelParams
