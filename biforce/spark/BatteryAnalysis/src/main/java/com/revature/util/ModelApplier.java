@@ -11,6 +11,15 @@ import org.apache.spark.sql.RowFactory;
 
 import scala.Tuple2;
 
+/**
+ * Contains methods to apply the models to Datasets, evaluate accuracy, and to
+ * find point
+ * 
+ * 
+ * @author Mason Wegert
+ * @author Diego Gomez
+ * 
+ */
 public class ModelApplier {
 
 	/**
@@ -27,8 +36,8 @@ public class ModelApplier {
 					double failPercent = 0;
 					double rsq = 0;
 
-					for (int i=1;i < 4;++i) {
-						if (Double.isNaN(coefs[i-1][1]) || Double.isInfinite(coefs[i-1][1])) {
+					for (int i = 1; i < 4; ++i) {
+						if (Double.isNaN(coefs[i - 1][1]) || Double.isInfinite(coefs[i - 1][1])) {
 							return RowFactory.create(row.getInt(9), 0.0, 0.0, 0);
 						}
 
@@ -101,12 +110,18 @@ public class ModelApplier {
 	}
 
 	/**
-	 * Find the optimal cutoff point (by drop chance %) at which associates should
-	 * be dropped
+	 * Find the optimal cutoff point (by drop chance %) on where our probability
+	 * predictor should be divided into pass/fail by iterating through percentages
+	 * 0%-100% and calculating the fraction correct (Highest fraction correct
+	 * percentage is "optimal")
 	 * 
-	 * @param controlRDD
-	 * @param accuracyDelta
-	 * @return
+	 * @param controlRDD    - The RDD to evaluate on. c1 = battery id, c2 =
+	 *                      drop/pass (0/1), c3 = fail % in decimal
+	 * @param accuracyDelta - Percentage point to iterate through by in decimals.
+	 *                      Ex: 0 = 0% 1 = 100%.
+	 * @return OptimalPoint object holding the optimal cutoff point in %, the number
+	 *         of correct guesses (true positive/true negatives / population), and
+	 *         the total population
 	 */
 	public static OptimalPoint findOptimalPercent(JavaRDD<Row> controlRDD, double accuracyDelta) {
 		List<Double> percentList = new ArrayList<>();
@@ -123,9 +138,11 @@ public class ModelApplier {
 			// controlRDD: Associate ID | % failure | fail (0 or 1 where 0 is fail)
 			double d = percentList.get(i);
 
-			// Find those who were dropped and had a fail chance above our threshold (successful prediction)
+			// Find those who were dropped and had a fail chance above our threshold
+			// (successful prediction)
 			long accurateFailedCount = controlRDD.filter(row -> row.getInt(2) == 0 && row.getDouble(1) >= d).count();
-			// Find those who passed and had a fail chance below our threshold (successful prediction)
+			// Find those who passed and had a fail chance below our threshold (successful
+			// prediction)
 			long accuratePassedCount = controlRDD.filter(row -> row.getInt(2) != 0 && row.getDouble(1) < d).count();
 			long accurateCount = accurateFailedCount + accuratePassedCount;
 
