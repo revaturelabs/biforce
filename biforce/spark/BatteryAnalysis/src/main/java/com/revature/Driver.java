@@ -132,9 +132,9 @@ public class Driver {
 		OptimalPoint optimalPoint = applyControl(controlRDD, accuracyDelta, 3);
 		
 		try {
-			controlWriter.append("\nWeek 1 control data\nID, Drop chance, Actual status, Prediction");
+			controlWriter.append("\nWeek 1 control data\nID, Drop chance, Actual status, Prediction\n");
 			writeControlOutput(controlRDD_wk1, optimalPointwk1.getOptimalPercent());
-			controlWriter.append("\nWeek 1-2 control data\nID, Drop chance, Actual status, Prediction");
+			controlWriter.append("\nWeek 1-2 control data\nID, Drop chance, Actual status, Prediction\n");
 			writeControlOutput(controlRDD_wk2, optimalPointwk2.getOptimalPercent());
 			controlWriter.append("\nWeek 1-3 control data\nID, Drop chance, Actual status, Prediction\n");
 			writeControlOutput(controlRDD, optimalPoint.getOptimalPercent());
