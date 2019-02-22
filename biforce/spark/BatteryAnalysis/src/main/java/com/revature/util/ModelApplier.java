@@ -23,15 +23,15 @@ import scala.Tuple2;
 public class ModelApplier {
 
 	/**
-	 * Finds the partial drop chances and sums them. Also sums up r^2-values so we
-	 * can get a weighted average.
+	 * Finds the partial drop chances and sums them. Also sums up 
+	 * r^2-values so we can get a weighted average.
 	 * 
 	 * @param csv
 	 * @param coefs
 	 * @return
 	 */
 	private static JavaRDD<Row> findSums(Dataset<Row> csv, double[][] coefs) {
-		JavaRDD<Row> csvRDD = csv.javaRDD().filter(row -> row.getInt(1) != 4) // get rid of test 4, it's too inaccurate
+		JavaRDD<Row> csvRDD = csv.javaRDD()//.filter(row -> row.getInt(1) != 4) // get rid of test 4, it's too inaccurate
 				.map(row -> {
 					double failPercent = 0;
 					double rsq = 0;
@@ -68,8 +68,8 @@ public class ModelApplier {
 	public static JavaPairRDD<Integer, Row> applyModel(Dataset<Row> csv, double[][] coefs) {
 		JavaRDD<Row> csvRDD = findSums(csv, coefs);
 
-		// map to id | row as a pair. Sum up all the weighted partial drop percents as
-		// well as the sum of the r^2's for normalization.
+		// map to id | row as a pair. Sum up all the weighted partial drop percents
+		// as well as the sum of the r^2's for normalization.
 		JavaPairRDD<Integer, Row> applicationRDD = csvRDD
 				.mapToPair(row -> new Tuple2<Integer, Row>(row.getInt(0), row));
 		JavaPairRDD<Integer, Row> sums = applicationRDD.reduceByKey((Row row1, Row row2) -> {
@@ -91,7 +91,7 @@ public class ModelApplier {
 		csv = csv.join(currentWeek, col("_c9").equalTo(col("id")), "leftsemi");*/
 
 		// limit to a certain number of available weeks
-		JavaRDD<Row> csvRDD = findSums(csv.filter("_c4 <=" + maxWeek), coefs);
+		JavaRDD<Row> csvRDD = findSums(csv.filter("_c4 <=" + maxWeek).filter("_c1 != 4"), coefs);
 
 		// map to id | row as a pair. Sum up all the weighted partial drop percents as
 		// well as the sum of the r^2's for normalization.
