@@ -45,7 +45,7 @@ public class ModelApplier {
 					int status = row.getInt(10) == 0 ? 0 : 1;
 
 					// row: (int, int, int, double, int, int, int, int, int, int (id), int)
-					Row outputRow = RowFactory.create(row.getInt(9), failPercent, rsq, status);
+					Row outputRow = RowFactory.create(row.getInt(9), failPercent, rsq, status, row.getInt(4));
 					return outputRow;
 				});
 		return csvRDD;
@@ -65,9 +65,8 @@ public class ModelApplier {
 				.mapToPair(row -> new Tuple2<Integer, Row>(row.getInt(0), row));
 		JavaPairRDD<Integer, Row> sums = applicationRDD.reduceByKey((Row row1, Row row2) -> {
 			return RowFactory.create(row1.getInt(0), row1.getDouble(1) + row2.getDouble(1),
-					row1.getDouble(2) + row2.getDouble(2));
+					row1.getDouble(2) + row2.getDouble(2), row2.getInt(4));
 		});
-
 		return sums;
 	}
 

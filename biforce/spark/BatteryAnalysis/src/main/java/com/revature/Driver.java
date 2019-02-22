@@ -129,10 +129,13 @@ public class Driver {
 
 		try {
 			controlWriter.append("Stats for week 1 data ONLY\n");
+			System.out.println("Stats for week 1 data ONLY\n");
 			applyControl(controlRDD_wk1, accuracyDelta);
 			controlWriter.append("Stats for week 1 & 2 data ONLY\n");
+			System.out.println("Stats for week 1 & 2 data ONLY\n");
 			applyControl(controlRDD_wk2, accuracyDelta);
 			controlWriter.append("Stats using data for weeks 1-3\n");
+			System.out.println("Stats using data for weeks 1-3\n");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
