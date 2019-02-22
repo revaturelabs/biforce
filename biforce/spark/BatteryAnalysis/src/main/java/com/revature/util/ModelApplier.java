@@ -25,6 +25,10 @@ public class ModelApplier {
 					double rsq = 0;
 
 					for (int i=1;i < 4;++i) {
+						if (Double.isNaN(coefs[i-1][1]) || Double.isInfinite(coefs[i-1][1])) {
+							return RowFactory.create(row.getInt(9), 0.0, 0.0, 0);
+						}
+						
 						if (row.getInt(1) == i) { // Assessment type 1-3
 							rsq = coefs[i-1][3];
 							failPercent = Math.exp(row.getDouble(3) * coefs[i-1][1] + coefs[i-1][2])/
@@ -54,8 +58,8 @@ public class ModelApplier {
 		return sums;
 	}
 
-	public static JavaRDD<Row> applyControlModel(Dataset<Row> csv, double[][] coefs) {
-		JavaRDD<Row> csvRDD = findSums(csv, coefs);
+	public static JavaRDD<Row> applyControlModel(Dataset<Row> csv, double[][] coefs, int maxWeek) {
+		JavaRDD<Row> csvRDD = findSums(csv.filter("_c4 <=" + maxWeek), coefs);
 
 		// map to id | row as a pair.  Sum up all the weighted partial drop percents as well as the sum of the r^2's for normalization.
 		JavaPairRDD<Integer,Row> applicationRDD = csvRDD.mapToPair(row -> new Tuple2<Integer,Row>(row.getInt(0),row));

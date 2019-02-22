@@ -31,20 +31,29 @@ public class ModelFunction{
 		Dataset<Row> status = data.filter(modelType+" = "+intType).groupBy("_c9").max("_c10").withColumnRenamed("max(_c10)", "status").withColumnRenamed("_c9", "assc1");
 
 		Dataset<Row> result = modelTypeDS.join(status, modelTypeDS.col("_c9").equalTo(status.col("assc1"))).select("_c9","avg_score","status");
-
 		return result;
 	}
 
 	private static Dataset<Row> binDS(Dataset<Row> input, List<Double> partitions, int numBins) {
 		partitions.add(100.0); // final value
-		Dataset<Row> bins = input.filter("avg_score < " + partitions.get(0)).withColumn("bin", functions.lit(1));
+		Dataset<Row> bins = input.filter("avg_score <= " + partitions.get(0)).withColumn("bin", functions.lit(1));
 		int binNum = 2;
 		for(int i = 1; i < numBins; i++){
 			Dataset<Row> bin;
 
 			// places the mean scores for an associate into bins based on class percentile
-			bin = input.filter("avg_score >= " + partitions.get(i-1) + " and avg_score < "+ partitions.get(i)).
-					withColumn("bin", functions.lit(binNum));
+			if (Math.abs(partitions.get(i-1) - partitions.get(i)) < 0.0001) {
+				double n = 0;
+				for (double d:partitions) {
+					if (Math.abs(d - partitions.get(i)) < 0.0001) ++n;
+				}
+				bin = input.filter("abs(avg_score - " + partitions.get(i-1) + ") < 0.0001").
+						randomSplit(new double[]{1.0/n,(n-1.0)/n})[0].
+						withColumn("bin", functions.lit(binNum));
+			} else {
+				bin = input.filter("avg_score >= " + partitions.get(i-1) + " and avg_score < "+ partitions.get(i)).
+						withColumn("bin", functions.lit(binNum));
+			}
 
 			bins = bins.union(bin); // union all
 			binNum++;
@@ -80,7 +89,7 @@ public class ModelFunction{
 			if(status == 0) counts[binNum-1][2]++; // checks if an assc is dropped and increments accordingly
 			rowNum++; // gets the total number of asscs
 		}
-		
+				
 		// instantiates the probs array
 		for(int i = 0; i < numBins; i++) {
 			int binTotal = counts[i][1]; // gets the total number of assc in a bin
@@ -136,6 +145,7 @@ public class ModelFunction{
 		for(int i = 0; i < stats.length; i++) {
 			double x = stats[i][0]; // gets the mean score
 			double y = stats[i][1]; // gets the ln(odds)
+
 			if(y != -1) { // filters out the error values
 				
 				// increments the sums and counts
@@ -147,13 +157,14 @@ public class ModelFunction{
 				n++;
 			}
 		}
-
+		
 		m = (n*Sxy - Sx*Sy)/(n*Sx2 - Sx*Sx); // calculates the slope for the regression line
 		b = (Sy*Sx2 - Sx*Sxy)/(n*Sx2 - Sx*Sx); // calculates the y-intercept """
 		r2 = (n*Sxy - Sx*Sy)*(n*Sxy - Sx*Sy)/((n*Sx2 - Sx*Sx)*(n*Sy2 - Sy*Sy)); //calculates the correlation coefficient """
 
 		// stores the data into the array
 		modelData = new double[]{modelNum, m, b, r2};
+	
 		return modelData;
 	}
 }
