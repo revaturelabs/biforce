@@ -99,11 +99,11 @@ public class ModelFunction{
 	private static double[][] statsDS(Dataset<Row> input, int numBins) {
 		double prob, logOdds;
 		
-		// creates a 2-D int array that stores the total count of asscs 
+		// Creates a 2-D int array that stores the total count of asscs 
 		// and the dropped count of asscs for each bin
 		int[][] counts = new int[numBins][];
 		
-		// creates a 2-D double array that stores:
+		// Creates a 2-D double array that stores:
 		// [bin number, probability of being dropped, ln of the odds of being dropped]
 		double[][] probs = new double[numBins][3];
 
@@ -115,7 +115,7 @@ public class ModelFunction{
 			counts[i] = new int[]{i, 0, 0};
 		}
 		
-		// instantiates the counts array
+		// Instantiates the counts array
 		int rowNum = 0;
 		for(Row row : inputList) {
 			int binNum = row.getInt(3); // gets the bin number
@@ -124,23 +124,24 @@ public class ModelFunction{
 			if(status == 0) counts[binNum-1][2]++; // checks if an assc is dropped and increments accordingly
 			rowNum++; // gets the total number of asscs
 		}
-				
-		// instantiates the probs array
+
+		// Instantiates the probs array
+
 		for(int i = 0; i < numBins; i++) {
-			int binTotal = counts[i][1]; // gets the total number of assc in a bin
-			int binDropped = counts[i][2]; // gets the total number of dropped asscs in a bin
+			int binTotal = counts[i][1]; // Gets the total number of assc in a bin
+			int binDropped = counts[i][2]; // Gets the total number of dropped asscs in a bin
 			
-			// checks to make sure there aren't any divisions by zero or ln(0)
+			// Checks to make sure there aren't any divisions by zero or ln(0)
 			if((binTotal - binDropped) < 1 || binDropped == 0 || binTotal == 0){
 				prob = (double) -1; 
 				logOdds = (double) -1;
 			} else{
 				
-				// probabilty is calculated by finding the number of asscs dropped 
+				// Probabilty is calculated by finding the number of asscs dropped 
 				// divided by the total number of asscs
 				prob = (((double) binDropped)/binTotal*100);  
 				
-				// calculates the natural log of the odds of being dropped
+				// Calculates the natural log of the odds of being dropped
 				// the odds of being dropped are asscs dropped divided by asscs not dropped
 				logOdds = Math.log((double) binDropped / (binTotal - binDropped));
 			}
@@ -148,7 +149,7 @@ public class ModelFunction{
 			probs[i] = new double[] {i+1, prob, logOdds};
 		}
 		
-		// creates a 2-D double array that stores an assc's:
+		// Creates a 2-D double array that stores an assc's:
 		// [mean score, ln(odds of that assc being dropped)]
 		double[][] stats = new double[rowNum][];
 		int i = 0;
@@ -171,15 +172,15 @@ public class ModelFunction{
 	 */
 	private static double[] logReg(double[][] stats, int modelNum) {
 
-		// double variables where S indicates sum, x is mean score, y is ln(odds), and 2 indicates squared
+		// Double variables where S indicates sum, x is mean score, y is ln(odds), and 2 indicates squared
 		// m indicates the slope for the logistic regression, b is the y-intercept, and r2 is the correlation coefficient
 		double Sx, Sy, Sxy, Sx2, Sy2, m, b, r2;
 		
-		// double array that stores: 
+		// Double array that stores: 
 		// [model number, slope, y-intercept, correlation coefficient]
 		double[] modelData = new double[4];
 		
-		// instantiates values to zero
+		// Instantiates values to zero
 		Sx = Sy = Sxy = Sx2 = Sy2 = 0;
 		int n = 0; // takes the totl number of asscs in model
 
@@ -188,9 +189,10 @@ public class ModelFunction{
 			double x = stats[i][0]; // gets the mean score
 			double y = stats[i][1]; // gets the ln(odds)
 
+
 			if(y != -1) { // filters out the error values
 				
-				// increments the sums and counts
+				// Increments the sums and counts
 				Sx += x;
 				Sy += y;
 				Sx2 += x*x;
@@ -204,7 +206,7 @@ public class ModelFunction{
 		b = (Sy*Sx2 - Sx*Sxy)/(n*Sx2 - Sx*Sx); // calculates the y-intercept """
 		r2 = (n*Sxy - Sx*Sy)*(n*Sxy - Sx*Sy)/((n*Sx2 - Sx*Sx)*(n*Sy2 - Sy*Sy)); //calculates the correlation coefficient """
 
-		// stores the data into the array
+		// Stores the data into the array
 		modelData = new double[]{modelNum, m, b, r2};
 	
 		return modelData;

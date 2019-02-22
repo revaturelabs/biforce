@@ -1,16 +1,17 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-  <groupId>SparkProject3</groupId>
-  <artifactId>SparkProject3</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>jar</packaging>
+	<groupId>SparkProject3</groupId>
+	<artifactId>SparkProject3</artifactId>
+	<version>1.8</version>
+	<packaging>jar</packaging>
 
-  <name>Spark Analysis</name>
-  <url>http://maven.apache.org</url>
+	<name>Spark Analysis</name>
+	<url>http://maven.apache.org</url>
 
-  <!-- Change name of jar to keep it simple -->
+	<!-- Change name of jar to keep it simple -->
 	<build>
 		<finalName>SparkAnalysis</finalName>
 	</build>
@@ -19,31 +20,34 @@
 	<properties>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
+
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
 	</properties>
 
 	<dependencies>
 		<!-- Spark Core -->
 		<dependency>
 			<groupId>org.apache.spark</groupId>
-			<artifactId>spark-core_2.10</artifactId>
-			<version>1.6.0</version>
+			<artifactId>spark-core_2.12</artifactId>
+			<version>2.4.0</version>
 		</dependency>
 
-		
+
 		<!-- https://mvnrepository.com/artifact/org.apache.spark/spark-sql -->
 		<dependency>
-		    <groupId>org.apache.spark</groupId>
-		    <artifactId>spark-sql_2.10</artifactId>
-		    <version>1.6.0</version>
+			<groupId>org.apache.spark</groupId>
+			<artifactId>spark-sql_2.12</artifactId>
+			<version>2.4.0</version>
 		</dependency>
-		
+
 		<!-- https://mvnrepository.com/artifact/org.apache.spark/spark-yarn -->
 		<dependency>
-		    <groupId>org.apache.spark</groupId>
-		    <artifactId>spark-yarn_2.10</artifactId>
-		    <version>1.6.0</version>
+			<groupId>org.apache.spark</groupId>
+			<artifactId>spark-yarn_2.12</artifactId>
+			<version>2.4.0</version>
 		</dependency>
-		
-		
+
+
 	</dependencies>
 </project>
