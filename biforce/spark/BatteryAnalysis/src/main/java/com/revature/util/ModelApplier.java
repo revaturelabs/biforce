@@ -76,7 +76,14 @@ public class ModelApplier {
 	 * @return
 	 */
 	public static JavaRDD<Row> applyControlModel(Dataset<Row> csv, double[][] coefs, int maxWeek) {
+		// Only include associates who are past a certain week in training
+		// The following code block actually reduces the accuracy. Test with a larger dataset.
+		/*Dataset<Row> currentWeek = csv.groupBy("_c9").max("_c4").where("max(_c4) >= " + maxWeek).withColumnRenamed("_c9", "id");
+		csv = csv.join(currentWeek, col("_c9").equalTo(col("id")), "leftsemi");*/
+		
+		// limit to a certain number of available weeks
 		JavaRDD<Row> csvRDD = findSums(csv.filter("_c4 <=" + maxWeek), coefs);
+		
 		// map to id | row as a pair. Sum up all the weighted partial drop percents as
 		// well as the sum of the r^2's for normalization.
 		JavaPairRDD<Integer, Row> applicationRDD = csvRDD
