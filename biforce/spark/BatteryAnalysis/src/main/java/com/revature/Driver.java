@@ -127,21 +127,21 @@ public class Driver {
 		JavaRDD<Row> controlRDD_wk2 = ModelApplier.applyControlModel(controlData, modelParams, 2);
 		JavaRDD<Row> controlRDD = ModelApplier.applyControlModel(controlData, modelParams, 3);
 
+		OptimalPoint optimalPointwk1 = applyControl(controlRDD_wk1, accuracyDelta, 1);
+		OptimalPoint optimalPointwk2 = applyControl(controlRDD_wk2, accuracyDelta, 2);
+		OptimalPoint optimalPoint = applyControl(controlRDD, accuracyDelta, 3);
+		
 		try {
-			controlWriter.append("Stats for week 1 data ONLY\n");
-			System.out.println("Stats for week 1 data ONLY\n");
-			applyControl(controlRDD_wk1, accuracyDelta);
-			controlWriter.append("Stats for week 1 & 2 data ONLY\n");
-			System.out.println("Stats for week 1 & 2 data ONLY\n");
-			applyControl(controlRDD_wk2, accuracyDelta);
-			controlWriter.append("Stats using data for weeks 1-3\n");
-			System.out.println("Stats using data for weeks 1-3\n");
+			controlWriter.append("\nWeek 1 control data\nID, Drop chance, Actual status, Prediction");
+			writeControlOutput(controlRDD_wk1, optimalPointwk1.getOptimalPercent());
+			controlWriter.append("\nWeek 1-2 control data\nID, Drop chance, Actual status, Prediction");
+			writeControlOutput(controlRDD_wk2, optimalPointwk2.getOptimalPercent());
+			controlWriter.append("\nWeek 1-3 control data\nID, Drop chance, Actual status, Prediction\n");
+			writeControlOutput(controlRDD, optimalPoint.getOptimalPercent());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		OptimalPoint optimalPoint = applyControl(controlRDD, accuracyDelta);
-		writeControlOutput(controlRDD, optimalPoint.getOptimalPercent());
-
+		
 		// TODO
 		// calculate/print evaluation metrics
 		// Assumed controlRDD is testing test data with model already applied to third column
@@ -180,7 +180,7 @@ public class Driver {
 			writer = new BufferedWriter(new FileWriter(mainPath, false));
 			writer.append("battery_id,% Chance to Fail,Prediction,Most Recent Week\n");
 			controlWriter = new BufferedWriter(new FileWriter(controlPath, false));
-			controlWriter.append("Control data statistics\n");
+			controlWriter.append("--------Control data statistics--------\n");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -230,14 +230,14 @@ public class Driver {
 		});
 	}
 
-	private static OptimalPoint applyControl(JavaRDD<Row> controlRDD, double accuracyDelta) {
+	private static OptimalPoint applyControl(JavaRDD<Row> controlRDD, double accuracyDelta, int weekNum) {
 		controlRDD.cache();
 		// Finds the drop % cutoff point where the number of incorrect guesses is minimized
 		OptimalPoint optimalPoint = ModelApplier.findOptimalPercent(controlRDD, accuracyDelta);
-
+		
 		writeToControl("Fail percent: " + Math.round(optimalPoint.getOptimalPercent()*10000)/10000.0 + "\nCorrect estimates: " + 
 				optimalPoint.getOptimalAccurateCount() + "\nTotal Count: " + controlRDD.count() + "\nAccuracy: " + 
-				(double)optimalPoint.getOptimalAccurateCount()/(double)controlRDD.count() + "\n\n");
+				(double) optimalPoint.getOptimalAccurateCount()/(double)controlRDD.count() + "\n\n", weekNum);
 
 		controlRDD.unpersist();
 		return optimalPoint;
@@ -247,8 +247,11 @@ public class Driver {
 	 * a simple writer class to the accuracyWriter and console, outString gets written/appended.
 	 * @param outString
 	 */
-	private static void writeToControl(String outString) {
+	private static void writeToControl(String outString, int weekNum) {
 		try {
+			controlWriter.append("\nAccuracy based on exams limited to week " + weekNum + "\n");
+			System.out.println("\nAccuracy based on exams limited to week " + weekNum + "\n");
+			
 			System.out.println(outString);
 			controlWriter.append(outString);
 		} catch (IOException e) {
