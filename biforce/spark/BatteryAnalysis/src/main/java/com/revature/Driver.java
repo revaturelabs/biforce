@@ -1,7 +1,5 @@
 package com.revature;
 
-import static org.apache.spark.sql.functions.col;
-
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
