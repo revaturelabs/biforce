@@ -87,17 +87,17 @@ public class Driver {
 	 * @param args - 0 input file location, 1 is main output, 2 is model parameters output
 	 */
 	public static void main(String args[]) {
-		// Configure spark, get session variable, declare Datasets		
+		// Configure spark, get session variable, declare Datasets
 		context = new JavaSparkContext(new SparkConf().setAppName("ChanceToFail"));
 		context.setLogLevel("ERROR");
 		session = new SparkSession(context.sc());
-		Dataset<Row> csv,filtered_csv,controlData,modelData;
+		Dataset<Row> csv, filtered_csv, controlData, modelData;
 
 		// Read input csv and infer data types schema implicitly.
-		csv = session.read().format("csv").option("header","false").option("inferSchema", "true").load(args[0]);
+		csv = session.read().format("csv").option("header", "false").option("inferSchema", "true").load(args[0]);
 
 		double accuracyDelta = 0.01; // For cutoff point precision
-		double[] splitRatios = {0.7,0.3}; // Split of control & model data
+		double[] splitRatios = { 0.7, 0.3 }; // Split of control & model data
 
 		int modelSplitCount = 10; // # of buckets. 10 seems to be good.
 
@@ -109,7 +109,10 @@ public class Driver {
 		filtered_csv = csv.filter("_c10 = 0 OR _c10 = 1");
 
 		// Random split of associates
-		Dataset<Row>[] splits = filtered_csv.select("_c9").distinct().randomSplit(splitRatios,41); // use seed (second arg of randomSplit) for testing
+		Dataset<Row>[] splits = filtered_csv.select("_c9").distinct().randomSplit(splitRatios, 41); // use seed (second
+																									// arg of
+																									// randomSplit) for
+																									// testing
 		modelData = filtered_csv.join(splits[0], filtered_csv.col("_c9").equalTo(splits[0].col("_c9")), "leftsemi");
 		controlData = filtered_csv.join(splits[1], filtered_csv.col("_c9").equalTo(splits[1].col("_c9")), "leftsemi");
 
@@ -128,7 +131,7 @@ public class Driver {
 		OptimalPoint optimalPointwk1 = applyControl(controlRDD_wk1, accuracyDelta, 1);
 		OptimalPoint optimalPointwk2 = applyControl(controlRDD_wk2, accuracyDelta, 2);
 		OptimalPoint optimalPoint = applyControl(controlRDD, accuracyDelta, 3);
-		
+
 		try {
 			controlWriter.append("\nWeek 1 control data\nID, Drop chance, Actual status, Prediction\n");
 			writeControlOutput(controlRDD_wk1, optimalPointwk1.getOptimalPercent());
@@ -139,7 +142,7 @@ public class Driver {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		// TODO
 		// calculate/print evaluation metrics
 		// Assumed controlRDD is testing test data with model already applied to third column
@@ -148,12 +151,7 @@ public class Driver {
 
 		JavaPairRDD<Integer, Row> appliedResultPair = ModelApplier.applyModel(csv, modelParams);
 
-		appliedResultPair.foreach(pairTuple -> {
-			String prediction = pairTuple._2.getDouble(1)/pairTuple._2.getDouble(2) >= optimalPoint.getOptimalPercent() ? "DROP" : "PASS";
-			if (Double.isNaN(pairTuple._2.getDouble(1))) prediction = "UNK";
-			// ID | aggregate drop chance | sum of r^2's | week # 
-			writer.append(pairTuple._1 + "," + pairTuple._2.getDouble(1)/pairTuple._2.getDouble(2) + "," + pairTuple._2.getInt(4) + "," + prediction + "\n");
-		});
+		writeOutput(appliedResultPair, optimalPoint.getOptimalPercent());
 
 		// Close all the resources.
 		try {
@@ -199,7 +197,7 @@ public class Driver {
 			System.out.println(s);
 			try {
 				controlWriter.append(s);
-			} catch(IOException e) {
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
@@ -229,8 +227,28 @@ public class Driver {
 			}
 		});
 	}
+	
 	/**
-	 * Finds the drop % cutoff point where the number of incorrect guesses is minimized
+	 * Writes results of model applied to full csv to the output writer. If a row's
+	 * drop % is greater than dropPercent it writes 'DROP', otherwise it writes
+	 * 'PASS' at the end of the line.
+	 * 
+	 * @param appliedResultPair
+	 * @param dropPercent
+	 */
+	private static void writeOutput(JavaPairRDD<Integer, Row> appliedResultPair, double dropPercent) {
+		appliedResultPair.foreach(pairTuple -> {
+			String prediction = pairTuple._2.getDouble(1)/pairTuple._2.getDouble(2) >= dropPercent ? "DROP" : "PASS";
+			if (Double.isNaN(pairTuple._2.getDouble(1))) prediction = "UNK";
+			// ID | aggregate drop chance | sum of r^2's | week # 
+			writer.append(pairTuple._1 + "," + pairTuple._2.getDouble(1)/pairTuple._2.getDouble(2) + "," + pairTuple._2.getInt(4) + "," + prediction + "\n");
+		});
+	}
+
+	/**
+	 * Finds the drop % cutoff point where the number of incorrect guesses is
+	 * minimized
+	 * 
 	 * @param controlRDD
 	 * @param accuracyDelta
 	 * @param weekNum
@@ -256,7 +274,7 @@ public class Driver {
 		try {
 			controlWriter.append("\nAccuracy based on exams limited to week " + weekNum + "\n");
 			System.out.println("\nAccuracy based on exams limited to week " + weekNum + "\n");
-			
+
 			System.out.println(outString);
 			controlWriter.append(outString);
 		} catch (IOException e) {

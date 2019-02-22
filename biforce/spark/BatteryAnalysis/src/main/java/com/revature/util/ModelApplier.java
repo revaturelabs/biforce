@@ -13,7 +13,7 @@ import scala.Tuple2;
 
 /**
  * Contains methods to apply the models to Datasets, evaluate accuracy, and to
- * find point
+ * calculate optimal % fail chance to split drop/pass.
  * 
  * 
  * @author Mason Wegert
@@ -109,11 +109,12 @@ public class ModelApplier {
 		});
 	}
 
+
 	/**
 	 * Find the optimal cutoff point (by drop chance %) on where our probability
 	 * predictor should be divided into pass/fail by iterating through percentages
-	 * 0%-100% and calculating the fraction correct (Highest fraction correct
-	 * percentage is "optimal")
+	 * 0%-100% and calculating the accuracy (Highest accuracy percentage is
+	 * "optimal")
 	 * 
 	 * @param controlRDD    - The RDD to evaluate on. c1 = battery id, c2 =
 	 *                      drop/pass (0/1), c3 = fail % in decimal
