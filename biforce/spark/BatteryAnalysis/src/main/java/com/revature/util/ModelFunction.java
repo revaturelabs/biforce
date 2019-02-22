@@ -34,10 +34,10 @@ public class ModelFunction{
 		// Builds project score model
 		model[2] = logReg(statsDS(binDS(modelDS(csv, 3), partitions.get(2),splitCount),splitCount), 3);
 		System.out.println("MODEL 3 DONE");
-		
+
 		return model;
 	}
-	
+
 	/**
 	 * Filters test type, groups by associate id, calculates the average score for that test type,
 	 * and calculates the max (we aggregate to find a single value, they should all be the same though) status.
@@ -69,18 +69,8 @@ public class ModelFunction{
 			Dataset<Row> bin;
 
 			// places the mean scores for an associate into bins based on class percentile
-			if (Math.abs(partitions.get(i-1) - partitions.get(i)) < 0.0001) {
-				double n = 0;
-				for (double d:partitions) {
-					if (Math.abs(d - partitions.get(i)) < 0.0001) ++n;
-				}
-				bin = input.filter("abs(avg_score - " + partitions.get(i-1) + ") < 0.0001").
-						randomSplit(new double[]{1.0/n,(n-1.0)/n})[0].
-						withColumn("bin", functions.lit(binNum));
-			} else {
-				bin = input.filter("avg_score >= " + partitions.get(i-1) + " and avg_score < "+ partitions.get(i)).
-						withColumn("bin", functions.lit(binNum));
-			}
+			bin = input.filter("avg_score >= " + partitions.get(i-1) + " and avg_score < "+ partitions.get(i)).
+					withColumn("bin", functions.lit(binNum));
 
 			bins = bins.union(bin); // union all
 			binNum++;
@@ -98,11 +88,11 @@ public class ModelFunction{
 	 */
 	private static double[][] statsDS(Dataset<Row> input, int numBins) {
 		double prob, logOdds;
-		
+
 		// Creates a 2-D int array that stores the total count of asscs 
 		// and the dropped count of asscs for each bin
 		int[][] counts = new int[numBins][];
-		
+
 		// Creates a 2-D double array that stores:
 		// [bin number, probability of being dropped, ln of the odds of being dropped]
 		double[][] probs = new double[numBins][3];
@@ -110,11 +100,11 @@ public class ModelFunction{
 		// creates a list of the rows of the dataset to iterate through
 		List<Row> inputList = input.collectAsList();
 
-		
+
 		for(int i = 0; i < numBins; i++) {
 			counts[i] = new int[]{i, 0, 0};
 		}
-		
+
 		// Instantiates the counts array
 		int rowNum = 0;
 		for(Row row : inputList) {
@@ -130,17 +120,17 @@ public class ModelFunction{
 		for(int i = 0; i < numBins; i++) {
 			int binTotal = counts[i][1]; // Gets the total number of assc in a bin
 			int binDropped = counts[i][2]; // Gets the total number of dropped asscs in a bin
-			
+
 			// Checks to make sure there aren't any divisions by zero or ln(0)
 			if((binTotal - binDropped) < 1 || binDropped == 0 || binTotal == 0){
 				prob = (double) -1; 
 				logOdds = (double) -1;
 			} else{
-				
+
 				// Probabilty is calculated by finding the number of asscs dropped 
 				// divided by the total number of asscs
 				prob = (((double) binDropped)/binTotal*100);  
-				
+
 				// Calculates the natural log of the odds of being dropped
 				// the odds of being dropped are asscs dropped divided by asscs not dropped
 				logOdds = Math.log((double) binDropped / (binTotal - binDropped));
@@ -148,7 +138,7 @@ public class ModelFunction{
 
 			probs[i] = new double[] {i+1, prob, logOdds};
 		}
-		
+
 		// Creates a 2-D double array that stores an assc's:
 		// [mean score, ln(odds of that assc being dropped)]
 		double[][] stats = new double[rowNum][];
@@ -175,23 +165,23 @@ public class ModelFunction{
 		// Double variables where S indicates sum, x is mean score, y is ln(odds), and 2 indicates squared
 		// m indicates the slope for the logistic regression, b is the y-intercept, and r2 is the correlation coefficient
 		double Sx, Sy, Sxy, Sx2, Sy2, m, b, r2;
-		
+
 		// Double array that stores: 
 		// [model number, slope, y-intercept, correlation coefficient]
 		double[] modelData = new double[4];
-		
+
 		// Instantiates values to zero
 		Sx = Sy = Sxy = Sx2 = Sy2 = 0;
 		int n = 0; // takes the totl number of asscs in model
 
-		
+
 		for(int i = 0; i < stats.length; i++) {
 			double x = stats[i][0]; // gets the mean score
 			double y = stats[i][1]; // gets the ln(odds)
 
 
 			if(y != -1) { // filters out the error values
-				
+
 				// Increments the sums and counts
 				Sx += x;
 				Sy += y;
@@ -201,14 +191,14 @@ public class ModelFunction{
 				n++;
 			}
 		}
-		
+
 		m = (n*Sxy - Sx*Sy)/(n*Sx2 - Sx*Sx); // calculates the slope for the regression line
 		b = (Sy*Sx2 - Sx*Sxy)/(n*Sx2 - Sx*Sx); // calculates the y-intercept """
 		r2 = (n*Sxy - Sx*Sy)*(n*Sxy - Sx*Sy)/((n*Sx2 - Sx*Sx)*(n*Sy2 - Sy*Sy)); //calculates the correlation coefficient """
 
 		// Stores the data into the array
 		modelData = new double[]{modelNum, m, b, r2};
-	
+
 		return modelData;
 	}
 }
