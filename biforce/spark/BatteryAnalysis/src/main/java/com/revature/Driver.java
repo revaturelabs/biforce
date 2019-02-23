@@ -108,16 +108,13 @@ public class Driver {
 		// Note that associate status (c10) is consistent across all test weeks as it's from a relational DB
 		filtered_csv = csv.filter("_c10 = 0 OR _c10 = 1");
 
-		// Random split of associates
-		Dataset<Row>[] splits = filtered_csv.select("_c9").distinct().randomSplit(splitRatios, 41); // use seed (second
-																									// arg of
-																									// randomSplit) for
-																									// testing
-		modelData = filtered_csv.join(splits[0], filtered_csv.col("_c9").equalTo(splits[0].col("_c9")), "leftsemi");
-		controlData = filtered_csv.join(splits[1], filtered_csv.col("_c9").equalTo(splits[1].col("_c9")), "leftsemi");
+		// Random split of associates (seeded for consistency in testing)
+		Dataset<Row>[] splits = filtered_csv.select("_c9").distinct().randomSplit(splitRatios, 41);
+		
+		modelData = filtered_csv.join(splits[0], filtered_csv.col("_c9").equalTo(splits[0].col("_c9")), "leftsemi").cache();
+		controlData = filtered_csv.join(splits[1], filtered_csv.col("_c9").equalTo(splits[1].col("_c9")), "leftsemi").cache();
 
 		// Build model from modelData
-		modelData.persist(); // holds modeldata in memory so it doesn't have to repeat the above filters/joins (transformations)
 		double[][] modelParams = ModelFunction.execute(modelData, PartitionFinder.read(modelData, modelSplitCount), modelSplitCount);
 		modelData.unpersist();
 
@@ -126,19 +123,23 @@ public class Driver {
 
 		JavaRDD<Row> controlRDD_wk1 = ModelApplier.applyControlModel(controlData, modelParams, 1);
 		JavaRDD<Row> controlRDD_wk2 = ModelApplier.applyControlModel(controlData, modelParams, 2);
-		JavaRDD<Row> controlRDD = ModelApplier.applyControlModel(controlData, modelParams, 3);
+		JavaRDD<Row> controlRDD_wk3 = ModelApplier.applyControlModel(controlData, modelParams, 3);
+		JavaRDD<Row> controlRDD_wk4 = ModelApplier.applyControlModel(controlData, modelParams, 4);
 
-		OptimalPoint optimalPointwk1 = applyControl(controlRDD_wk1, accuracyDelta, 1);
-		OptimalPoint optimalPointwk2 = applyControl(controlRDD_wk2, accuracyDelta, 2);
-		OptimalPoint optimalPoint = applyControl(controlRDD, accuracyDelta, 3);
+		OptimalPoint optimalPoint_wk1 = applyControl(controlRDD_wk1, accuracyDelta, 1);
+		OptimalPoint optimalPoint_wk2 = applyControl(controlRDD_wk2, accuracyDelta, 2);
+		OptimalPoint optimalPoint_wk3 = applyControl(controlRDD_wk3, accuracyDelta, 3);
+		OptimalPoint optimalPoint_wk4 = applyControl(controlRDD_wk4, accuracyDelta, 4);
 
 		try {
 			controlWriter.append("\nWeek 1 control data\nID, Drop chance, Actual status, Prediction\n");
-			writeControlOutput(controlRDD_wk1, optimalPointwk1.getOptimalPercent());
+			writeControlOutput(controlRDD_wk1, optimalPoint_wk1.getOptimalPercent());
 			controlWriter.append("\nWeek 1-2 control data\nID, Drop chance, Actual status, Prediction\n");
-			writeControlOutput(controlRDD_wk2, optimalPointwk2.getOptimalPercent());
+			writeControlOutput(controlRDD_wk2, optimalPoint_wk2.getOptimalPercent());
 			controlWriter.append("\nWeek 1-3 control data\nID, Drop chance, Actual status, Prediction\n");
-			writeControlOutput(controlRDD, optimalPoint.getOptimalPercent());
+			writeControlOutput(controlRDD_wk3, optimalPoint_wk3.getOptimalPercent());
+			controlWriter.append("\nWeek 1-4 control data\nID, Drop chance, Actual status, Prediction\n");
+			writeControlOutput(controlRDD_wk4, optimalPoint_wk4.getOptimalPercent());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -146,17 +147,14 @@ public class Driver {
 		// TODO
 		// calculate/print evaluation metrics
 		// Assumed controlRDD is testing test data with model already applied to third column
-		System.out.println("Mean Absolute Error: " + EvaluationMetrics.testMAE(controlRDD));
-		System.out.println("Root Mean Squared Error: " + EvaluationMetrics.testRMSE(controlRDD));
+		System.out.println("Mean Absolute Error: " + EvaluationMetrics.testMAE(controlRDD_wk3));
+		System.out.println("Root Mean Squared Error: " + EvaluationMetrics.testRMSE(controlRDD_wk3));
 
 		JavaPairRDD<Integer, Row> appliedResultPair = ModelApplier.applyModel(csv, modelParams);
-		appliedResultPair.cache();
-		writeOutput(appliedResultPair, optimalPoint.getOptimalPercent());
-		appliedResultPair.unpersist();
+		writeOutput(appliedResultPair, optimalPoint_wk3.getOptimalPercent());
 
 		// Close all the resources.
 		try {
-			controlRDD.unpersist();
 			csv.unpersist();
 			writer.close();
 			controlWriter.close();
@@ -258,14 +256,12 @@ public class Driver {
 	 * @return
 	 */
 	private static OptimalPoint applyControl(JavaRDD<Row> controlRDD, double accuracyDelta, int weekNum) {
-		controlRDD.cache();
 		OptimalPoint optimalPoint = ModelApplier.findOptimalPercent(controlRDD, accuracyDelta);
 		
 		writeToControl("Fail percent: " + Math.round(optimalPoint.getOptimalPercent()*10000)/10000.0 + "\nCorrect estimates: " + 
 				optimalPoint.getOptimalAccurateCount() + "\nTotal Count: " + controlRDD.count() + "\nAccuracy: " + 
 				(double) optimalPoint.getOptimalAccurateCount()/(double)controlRDD.count() + "\n\n", weekNum);
 
-		controlRDD.unpersist();
 		return optimalPoint;
 	}
 

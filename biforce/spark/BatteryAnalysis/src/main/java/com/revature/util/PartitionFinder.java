@@ -24,12 +24,11 @@ public class PartitionFinder {
 	 * @return list of lists with percentiles for each test type
 	 */
 	public static List<List<Double>> read(Dataset<Row> csv, int splitCount) {
-		Dataset<Row> validData = csv.drop("_c0","_c2","_c5","_c6","_c7","_c8").sort("_c3");
+		Dataset<Row> validData = csv.drop("_c0","_c2","_c5","_c6","_c7","_c8").sort("_c3").persist();
 		
 		List<List<Double>> output = new ArrayList<>();
 		System.out.println("Calculating Percentiles...");
 		
-		validData.persist();
 		// each test type 1-3
 		for (int i=1;i<=3;i++) {
 			List<Double> percentiles = new ArrayList<>();
