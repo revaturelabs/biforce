@@ -20,18 +20,21 @@ import scala.Tuple2;
  * @author Diego Gomez
  * 
  */
+
+//TODO javadoc
 public class ModelApplier {
 
 	/**
-	 * Finds the partial drop chances and sums them. Also sums up 
-	 * r^2-values so we can get a weighted average.
+	 * Finds the partial drop chances and sums them. Also sums up r^2-values so we
+	 * can get a weighted average.
 	 * 
 	 * @param csv
 	 * @param coefs
 	 * @return
 	 */
 	private static JavaRDD<Row> findSums(Dataset<Row> csv, double[][] coefs) {
-		JavaRDD<Row> csvRDD = csv.javaRDD()//.filter(row -> row.getInt(1) != 4) // get rid of test 4, it's too inaccurate
+		JavaRDD<Row> csvRDD = csv.javaRDD()// .filter(row -> row.getInt(1) != 4) // get rid of test 4, it's too
+											// inaccurate
 				.map(row -> {
 					double failPercent = 0;
 					double rsq = 0;
@@ -61,6 +64,8 @@ public class ModelApplier {
 	}
 
 	/**
+	 * Applies the given model to the dataset to predict fail %
+	 * 
 	 * @param csv
 	 * @param coefs
 	 * @return
@@ -74,21 +79,28 @@ public class ModelApplier {
 				.mapToPair(row -> new Tuple2<Integer, Row>(row.getInt(0), row));
 		JavaPairRDD<Integer, Row> sums = applicationRDD.reduceByKey((Row row1, Row row2) -> {
 			return RowFactory.create(row1.getInt(0), row1.getDouble(1) + row2.getDouble(1),
-					row1.getDouble(2) + row2.getDouble(2), row1.getInt(3), row1.getInt(4) > row2.getInt(4) ? row1.getInt(4) : row2.getInt(4));
+					row1.getDouble(2) + row2.getDouble(2), row1.getInt(3),
+					row1.getInt(4) > row2.getInt(4) ? row1.getInt(4) : row2.getInt(4));
 		});
 		return sums;
 	}
 
 	/**
+	 * Applies the given model to dataset limiting week data to predict fail %
+	 * 
 	 * @param csv
 	 * @param coefs
 	 * @return
 	 */
 	public static JavaRDD<Row> applyControlModel(Dataset<Row> csv, double[][] coefs, int maxWeek) {
 		// Only include associates who are past a certain week in training
-		// The following code block actually reduces the accuracy. Test with a larger dataset.
-		/*Dataset<Row> currentWeek = csv.groupBy("_c9").max("_c4").where("max(_c4) >= " + maxWeek).withColumnRenamed("_c9", "id");
-		csv = csv.join(currentWeek, col("_c9").equalTo(col("id")), "leftsemi");*/
+		// The following code block actually reduces the accuracy. Test with a larger
+		// dataset.
+		/*
+		 * Dataset<Row> currentWeek = csv.groupBy("_c9").max("_c4").where("max(_c4) >= "
+		 * + maxWeek).withColumnRenamed("_c9", "id"); csv = csv.join(currentWeek,
+		 * col("_c9").equalTo(col("id")), "leftsemi");
+		 */
 
 		// limit to a certain number of available weeks
 		JavaRDD<Row> csvRDD = findSums(csv.filter("_c4 <=" + maxWeek).filter("_c1 != 4"), coefs);
@@ -109,16 +121,15 @@ public class ModelApplier {
 		});
 	}
 
-
 	/**
 	 * Find the optimal cutoff point (by drop chance %) on where our probability
 	 * predictor should be divided into pass/fail by iterating through percentages
 	 * 0%-100% and calculating the accuracy (Highest accuracy percentage is
 	 * "optimal")
 	 * 
-	 * @param controlRDD    - The RDD to evaluate on. c1 = battery id, c2 =
+	 * @param controlRDD The RDD to evaluate on. c1 = battery id, c2 =
 	 *                      drop/pass (0/1), c3 = fail % in decimal
-	 * @param accuracyDelta - Percentage point to iterate through by in decimals.
+	 * @param accuracyDelta Percentage point to iterate through by in decimals.
 	 *                      Ex: 0 = 0% 1 = 100%.
 	 * @return OptimalPoint object holding the optimal cutoff point in %, the number
 	 *         of correct guesses (true positive/true negatives / population), and
@@ -153,5 +164,70 @@ public class ModelApplier {
 			}
 		}
 		return new OptimalPoint(optimalPercent, optimalAccurateCount, controlRDD.count());
+	}
+
+	/**
+	 * Returns MAE (Mean Absolute Error) of chance to fail
+	 * EX1: if chance to fail is 0.70 but battery passed with 1, absolute error is
+	 * 0.70.
+ 	 * EX2: if chance to fail is 0.70 but battery failed with 0, absolute error is
+	 * 0.30.
+	 * 
+	 * @param results - output from applyControlModel:
+	 *                1st column is battery id
+	 *                2nd column should be % chance to fail (0.0 = 0% to 1.0 = 100%)
+	 *                3rd column should be either 0 for fail or 1 for pass
+	 * @param [bounds=null] bounds to filter by. Excludes data that falls within bounds.
+	 * @return MAE of RDD chance to fail
+	 */
+	public static double testMAE(JavaRDD<Row> results, double[] bounds) {
+		if (bounds == null) {
+			return results.mapToDouble(row -> Math.abs(new Double(row.getInt(2)) - 1.0d + row.getDouble(1))).mean();
+		} else {
+			JavaRDD<Row> boundedResults = results
+					.filter(row -> (row.getDouble(1) < bounds[0] || row.getDouble(1) > bounds[1]));
+			return boundedResults.mapToDouble(row -> Math.abs(new Double(row.getInt(2)) - 1.0d + row.getDouble(1)))
+					.mean();
+		}
+	}
+
+	/**
+	 * Works like {@link {ModelApplier#testMAE(JavaRDD<Row>, double[])} with no boundaries (no data excluded)
+	 * 
+	 * @see ModelApplier#testMAE(JavaRDD<Row>, double[])
+	 */
+	public static double testMAE(JavaRDD<Row> results) {
+		return testMAE(results, null);
+	}
+
+	/**
+	 * Returns RMSE (Root Mean Squared Error) of chance to fail
+	 * 
+	 * @param results output from applyControlModel:
+	 *                1st column is battery id
+	 *                2nd column should be % chance to fail (0.0 = 0% to 1.0 = 100%)
+	 *                3rd column should be either 0 for fail or 1 for pass
+	 * @param [bounds=null] bounds to filter by. Excludes data that falls within bounds.
+	 * @return RMSE of RDD chance to fail
+	 */
+	public static double testRMSE(JavaRDD<Row> results, double[] bounds) {
+		if (bounds == null) {
+			return Math.sqrt(results
+					.mapToDouble(row -> Math.pow((new Double(row.getInt(2)) - 1.0d + row.getDouble(1)), 2.0d)).mean());
+		} else {
+			JavaRDD<Row> boundedResults = results
+					.filter(row -> (row.getDouble(1) < bounds[0] || row.getDouble(1) > bounds[1]));
+			return Math.sqrt(boundedResults
+					.mapToDouble(row -> Math.pow((new Double(row.getInt(2)) - 1.0d + row.getDouble(1)), 2.0d)).mean());
+		}
+	}
+
+	/**
+	 * Works like {@link testRMSE(JavaRDD<Row>, double[])} with no boundaries (no data excluded)
+	 * 
+	 * @see testRMSE(JavaRDD<Row>, double[])
+	 */
+	public static double testRMSE(JavaRDD<Row> results) {
+		return testRMSE(results, null);
 	}
 }

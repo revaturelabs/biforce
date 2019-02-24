@@ -12,7 +12,6 @@ import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 
-import com.revature.util.EvaluationMetrics;
 import com.revature.util.ModelApplier;
 import com.revature.util.ModelFunction;
 import com.revature.util.OptimalPoint;
@@ -146,8 +145,8 @@ public class Driver {
 		// TODO
 		// calculate/print evaluation metrics
 		// Assumed controlRDD is testing test data with model already applied to third column
-		System.out.println("Mean Absolute Error: " + EvaluationMetrics.testMAE(controlRDD));
-		System.out.println("Root Mean Squared Error: " + EvaluationMetrics.testRMSE(controlRDD));
+		System.out.println("Mean Absolute Error: " + ModelApplier.testMAE(controlRDD));
+		System.out.println("Root Mean Squared Error: " + ModelApplier.testRMSE(controlRDD));
 
 		JavaPairRDD<Integer, Row> appliedResultPair = ModelApplier.applyModel(csv, modelParams);
 		appliedResultPair.cache();

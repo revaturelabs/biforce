@@ -14,8 +14,7 @@ public class OptimalPoint implements Serializable {
 	private static final long serialVersionUID = -5559918855573669288L;
 
 	/**
-	 * Represents the percent cutoff where (TP/TN / Total Population) is optimized
-	 * (Accuracy)
+	 * Represents the optimized percent cutoff
 	 */
 	private double optimalPercent;
 	/**
