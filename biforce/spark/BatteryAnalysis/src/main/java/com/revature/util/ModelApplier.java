@@ -148,6 +148,7 @@ public class ModelApplier {
 		long inaccurateFailedCount = 0;
 		long accuratePassedCount = 0;
 		long inaccuratePassedCount = 0;
+		OptimalPoint optPoint = new OptimalPoint(0.0d, null, 0, 0, 0, 0);
 
 		// Simply iterate through percentages and find the cutoff point with the highest
 		// # of correct predictions
@@ -190,9 +191,10 @@ public class ModelApplier {
 			if (metric >= optimalMetric) {
 				optimalMetric = metric;
 				optimalPercent = percentList.get(i);
+				optPoint = new OptimalPoint(optimalPercent, optimizeMetric, accurateFailedCount, inaccurateFailedCount, inaccuratePassedCount, accuratePassedCount);
 			}
 		}
-		return new OptimalPoint(optimalPercent, optimizeMetric, accurateFailedCount, inaccurateFailedCount, inaccuratePassedCount, accuratePassedCount);
+		return optPoint;
 	}
 
 	/**
