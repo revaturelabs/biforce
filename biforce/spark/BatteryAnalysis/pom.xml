@@ -8,12 +8,12 @@
 	<version>1.8</version>
 	<packaging>jar</packaging>
 
-	<name>Spark Analysis</name>
+	<name>Biforce_Analysis</name>
 	<url>http://maven.apache.org</url>
 
 	<!-- Change name of jar to keep it simple -->
 	<build>
-		<finalName>SparkAnalysis</finalName>
+		<finalName>Biforce_Analysis</finalName>
 	</build>
 
 	<!-- Make project Java 8 -->

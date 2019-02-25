@@ -107,7 +107,7 @@ public class Driver {
 		System.out.println("Filtering out irrelevant data...");
 		// Note that associate status (c10) is consistent across all test weeks as it's from a relational DB
 		filtered_csv = csv.filter("_c10 = 0 OR _c10 = 1");
-
+		
 		// Random split of associates (seeded for consistency in testing)
 		Dataset<Row>[] splits = filtered_csv.select("_c9").distinct().randomSplit(splitRatios, 41);
 		
