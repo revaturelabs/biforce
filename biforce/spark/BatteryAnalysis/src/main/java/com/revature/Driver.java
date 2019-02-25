@@ -12,7 +12,6 @@ import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 
-import com.revature.util.EvaluationMetrics;
 import com.revature.util.ModelApplier;
 import com.revature.util.ModelFunction;
 import com.revature.util.OptimalPoint;
@@ -147,8 +146,8 @@ public class Driver {
 		// TODO
 		// calculate/print evaluation metrics
 		// Assumed controlRDD is testing test data with model already applied to third column
-		System.out.println("Mean Absolute Error: " + EvaluationMetrics.testMAE(controlRDD_wk3));
-		System.out.println("Root Mean Squared Error: " + EvaluationMetrics.testRMSE(controlRDD_wk3));
+		System.out.println("Mean Absolute Error: " + ModelApplier.testMAE(controlRDD_wk3));
+		System.out.println("Root Mean Squared Error: " + ModelApplier.testRMSE(controlRDD_wk3));
 
 		JavaPairRDD<Integer, Row> appliedResultPair = ModelApplier.applyModel(csv, modelParams);
 		writeOutput(appliedResultPair, optimalPoint_wk3.getOptimalPercent());
@@ -240,7 +239,7 @@ public class Driver {
 		appliedResultPair.foreach(pairTuple -> {
 			String prediction = pairTuple._2.getDouble(1)/pairTuple._2.getDouble(2) >= dropPercent ? "DROP" : "PASS";
 			if (Double.isNaN(pairTuple._2.getDouble(1)/pairTuple._2.getDouble(2))) prediction = "UNK";
-			// ID | aggregate drop chance | sum of r^2's | week # 
+			// ID | chance to fail | most recent week | prediction 
 			writer.append(pairTuple._1 + "," + pairTuple._2.getDouble(1) / pairTuple._2.getDouble(2) + ","
 					+ pairTuple._2.getInt(4) + "," + prediction + "\n");
 		});

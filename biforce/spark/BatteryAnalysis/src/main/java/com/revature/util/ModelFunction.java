@@ -16,10 +16,10 @@ public class ModelFunction{
 	/**
 	 * The main driver method. Calls the other methods and returns tuning parameters for each model.
 	 * The fourth test type is excluded because it has a low correlation and negatively effects the results.
-	 * @param csv - input csv
-	 * @param partitions - output of partitionFinder, list of lists with a percentile for the splitCount
-	 * @param splitCount - must match number of splits/buckets
-	 * @return model - list, 0 is model number, 1 is slope for the regression line, 2 is y-intercept, 3 is regression r2 correlation value
+	 * @param csv input csv
+	 * @param partitions output of partitionFinder, list of lists with a percentile for the splitCount
+	 * @param splitCount must match number of splits/buckets
+	 * @return model list - 0 is model number, 1 is slope for the regression line, 2 is y-intercept, 3 is regression r2 correlation value
 	 */
 	public static double[][] execute(Dataset<Row> csv, List<List<Double>> partitions, int splitCount){
 		double[][] model = new double[3][4];
@@ -41,9 +41,9 @@ public class ModelFunction{
 	/**
 	 * Filters test type, groups by associate id, calculates the average score for that test type,
 	 * and calculates the max (we aggregate to find a single value, they should all be the same though) status.
-	 * @param data - input csv
-	 * @param testType - which test type
-	 * @return result - csv with only associate id, average score, and status columns
+	 * @param data input csv
+	 * @param testType which test type
+	 * @return result csv - with only associate id, average score, and status columns
 	 */
 	private static Dataset<Row> modelDS(Dataset<Row> data, int testType) {
 		// Filters the data based on test type and finds the mean score and status for an individual associate
@@ -56,9 +56,9 @@ public class ModelFunction{
 
 	/**
 	 * 
-	 * @param input - input sql table like data with only associate id, avg score, and status
-	 * @param partitions - the partition values for the different buckets
-	 * @param numBins - number buckets
+	 * @param input input sql table like data with only associate id, avg score, and status
+	 * @param partitions the partition values for the different buckets
+	 * @param numBins number buckets
 	 * @return bins - data filtered to be in all the different buckets, with "bin" num column added
 	 */
 	private static Dataset<Row> binDS(Dataset<Row> input, List<Double> partitions, int numBins) {
@@ -81,8 +81,8 @@ public class ModelFunction{
 	/**
 	 * converts the output of binDS (a sql table with ass id, avg score, status, and binnum) into
 	 * a list of values for each input row stating a score and logodds.
-	 * @param input - sql table like data with associate id, avg score, status, and binNum columns
-	 * @param numBins - number of bins/buckets
+	 * @param input sql table like data with associate id, avg score, status, and binNum columns
+	 * @param numBins number of bins/buckets
 	 * @return stats - list of lists with a list of values for each of the input rows (one row per
 	 * associate and test type) with a score and logodds for each
 	 */
@@ -156,9 +156,9 @@ public class ModelFunction{
 	/**
 	 * Takes a list of values for each associate id/test type and returns a description of the logistic 
 	 * regression line parameters.
-	 * @param stats - multiarray, 0th level one value per associate id/test type pair, 1st level score and logodds
-	 * @param modelNum - number of the test type
-	 * @return modelData - array, 0 modelNum, 1 slope of regression line, 2 y-intercept, 3 correlation for r2
+	 * @param stats multiarray, 0th level one value per associate id/test type pair, 1st level score and logodds
+	 * @param modelNum number of the test type
+	 * @return modelData array - 0 modelNum, 1 slope of regression line, 2 y-intercept, 3 correlation for r2
 	 */
 	private static double[] logReg(double[][] stats, int modelNum) {
 
