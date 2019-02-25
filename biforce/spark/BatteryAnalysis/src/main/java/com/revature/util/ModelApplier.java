@@ -21,6 +21,7 @@ import scala.Tuple2;
  * @author Pil Ju Chun
  */
 
+
 public class ModelApplier {
 
 	/**
@@ -125,25 +126,29 @@ public class ModelApplier {
 					pairTuple._2.getInt(3));
 		});
 	}
-
+	// TODO implement optimization enum option in driver + here
+	
 	/**
 	 * Find the optimal cutoff point (by drop chance %) on where our probability
 	 * predictor should be divided into pass/fail by iterating through percentages
-	 * 0%-100% and calculating various factors weighted (Highest accuracy percentage is
-	 * "optimal")
+	 * 0%-100% and optimizing based on chosen metric
 	 * 
 	 * @param controlRDD The RDD to evaluate on. c1 = battery id, c2 =
 	 *                      drop/pass (0/1), c3 = fail % in decimal
 	 * @param accuracyDelta Percentage point to iterate through by in decimals.
 	 *                      Ex: 0 = 0% 1 = 100%.
-	 * @return OptimalPoint object holding the optimal cutoff point in %, the number
-	 *         of correct guesses (true positive/true negatives / population), and
-	 *         the total population
+	 * @param optimizeMetric The accuracy metric to use to optimize by
+	 * @return OptimalPoint object holding optimization point details
 	 */
-	public static OptimalPoint findOptimalPercent(JavaRDD<Row> controlRDD, double accuracyDelta) {
+	public static OptimalPoint findOptimalPercent(JavaRDD<Row> controlRDD, double accuracyDelta, OptimalPoint.OptimizeType optimizeMetric) {
 		List<Double> percentList = new ArrayList<>();
-		long optimalAccurateCount = 0;
-		double optimalPercent = 0;
+		double optimalMetric = 0.0d;
+		double optimalPercent = 0.0d;
+		long accurateFailedCount = 0;
+		long inaccurateFailedCount = 0;
+		long accuratePassedCount = 0;
+		long inaccuratePassedCount = 0;
+		OptimalPoint optPoint = new OptimalPoint(0.0d, null, 0, 0, 0, 0);
 
 		// Simply iterate through percentages and find the cutoff point with the highest
 		// # of correct predictions
@@ -157,18 +162,39 @@ public class ModelApplier {
 
 			// Find those who were dropped and had a fail chance above our threshold
 			// (successful prediction)
-			long accurateFailedCount = controlRDD.filter(row -> row.getInt(2) == 0 && row.getDouble(1) >= d).count();
+			accurateFailedCount = controlRDD.filter(row -> row.getInt(2) == 0 && row.getDouble(1) >= d).count();
+			inaccurateFailedCount = controlRDD.filter(row -> row.getInt(2) != 0 && row.getDouble(1) >= d).count();
 			// Find those who passed and had a fail chance below our threshold (successful
 			// prediction)
-			long accuratePassedCount = controlRDD.filter(row -> row.getInt(2) != 0 && row.getDouble(1) < d).count();
-			long accurateCount = accurateFailedCount + accuratePassedCount;
+			accuratePassedCount = controlRDD.filter(row -> row.getInt(2) != 0 && row.getDouble(1) < d).count();
+			inaccuratePassedCount = controlRDD.filter(row -> row.getInt(2) == 0 && row.getDouble(1) < d).count();
+			double metric = 0.0d;
+			switch(optimizeMetric)
+			{
+			case ACCURACY:
+				metric = ((double)accurateFailedCount + (double)accuratePassedCount) / (double)controlRDD.count();
+				break;
+			case RECALL:
+				metric = (double)accurateFailedCount / ((double)accurateFailedCount + (double)inaccuratePassedCount);
+				break;
+			case PRECISION:
+				metric = (double)accurateFailedCount / ((double)accurateFailedCount + (double)inaccurateFailedCount);
+				break;
+			case F1_SCORE:
+				metric = 2.0d / ((1.0d / (double)accurateFailedCount / ((double)accurateFailedCount + (double)inaccuratePassedCount)) +
+						(1.0d / (double)accurateFailedCount / ((double)accurateFailedCount + (double)inaccurateFailedCount)));
+				break;
+			default:
+				break;
+			}
 
-			if (accurateCount > optimalAccurateCount) {
-				optimalAccurateCount = accurateCount;
+			if (metric >= optimalMetric) {
+				optimalMetric = metric;
 				optimalPercent = percentList.get(i);
+				optPoint = new OptimalPoint(optimalPercent, optimizeMetric, accurateFailedCount, inaccurateFailedCount, inaccuratePassedCount, accuratePassedCount);
 			}
 		}
-		return new OptimalPoint(optimalPercent, optimalAccurateCount, controlRDD.count());
+		return optPoint;
 	}
 
 	/**
