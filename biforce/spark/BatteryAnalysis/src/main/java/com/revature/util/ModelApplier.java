@@ -18,9 +18,9 @@ import scala.Tuple2;
  * @see ModelFunction
  * @author Mason Wegert
  * @author Diego Gomez
+ * @author Pil Ju Chun
  */
 
-//TODO javadoc
 public class ModelApplier {
 
 	/**
@@ -129,7 +129,7 @@ public class ModelApplier {
 	/**
 	 * Find the optimal cutoff point (by drop chance %) on where our probability
 	 * predictor should be divided into pass/fail by iterating through percentages
-	 * 0%-100% and calculating the accuracy (Highest accuracy percentage is
+	 * 0%-100% and calculating various factors weighted (Highest accuracy percentage is
 	 * "optimal")
 	 * 
 	 * @param controlRDD The RDD to evaluate on. c1 = battery id, c2 =

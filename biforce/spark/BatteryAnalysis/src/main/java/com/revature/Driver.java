@@ -239,7 +239,7 @@ public class Driver {
 		appliedResultPair.foreach(pairTuple -> {
 			String prediction = pairTuple._2.getDouble(1)/pairTuple._2.getDouble(2) >= dropPercent ? "DROP" : "PASS";
 			if (Double.isNaN(pairTuple._2.getDouble(1)/pairTuple._2.getDouble(2))) prediction = "UNK";
-			// ID | aggregate drop chance | sum of r^2's | week # 
+			// ID | chance to fail | most recent week | prediction 
 			writer.append(pairTuple._1 + "," + pairTuple._2.getDouble(1) / pairTuple._2.getDouble(2) + ","
 					+ pairTuple._2.getInt(4) + "," + prediction + "\n");
 		});

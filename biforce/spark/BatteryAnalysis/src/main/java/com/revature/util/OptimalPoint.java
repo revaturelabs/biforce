@@ -7,6 +7,7 @@ import java.io.Serializable;
  * 
  * @See ModelApplier
  * @author Mason Wegert
+ * @author Pil Ju Chun
  */
 
 public class OptimalPoint implements Serializable {
