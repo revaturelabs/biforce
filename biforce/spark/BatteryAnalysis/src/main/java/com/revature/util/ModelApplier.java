@@ -142,8 +142,8 @@ public class ModelApplier {
 	 */
 	public static OptimalPoint findOptimalPercent(JavaRDD<Row> controlRDD, double accuracyDelta, OptimalPoint.OptimizeType optimizeMetric) {
 		List<Double> percentList = new ArrayList<>();
-		double optimalMetric = 0;
-		double optimalPercent = 0;
+		double optimalMetric = 0.0d;
+		double optimalPercent = 0.0d;
 		long accurateFailedCount = 0;
 		long inaccurateFailedCount = 0;
 		long accuratePassedCount = 0;
@@ -171,7 +171,7 @@ public class ModelApplier {
 			switch(optimizeMetric)
 			{
 			case ACCURACY:
-				metric = ((double)accurateFailedCount + (double)accuratePassedCount) / controlRDD.count();
+				metric = ((double)accurateFailedCount + (double)accuratePassedCount) / (double)controlRDD.count();
 				break;
 			case RECALL:
 				metric = (double)accurateFailedCount / ((double)accurateFailedCount + (double)inaccuratePassedCount);
@@ -187,7 +187,7 @@ public class ModelApplier {
 				break;
 			}
 
-			if (metric > optimalMetric) {
+			if (metric >= optimalMetric) {
 				optimalMetric = metric;
 				optimalPercent = percentList.get(i);
 			}
