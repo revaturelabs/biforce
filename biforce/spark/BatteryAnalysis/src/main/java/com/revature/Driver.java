@@ -257,7 +257,7 @@ public class Driver {
 	private static OptimalPoint applyControl(JavaRDD<Row> controlRDD, double accuracyDelta, int weekNum) {
 		// The last arg here can be changed to: PRECISION, RECALL, ACCURACY, F1_SCORE
 		// TODO make optimalpoint method accept arg for optmization metric
-		OptimalPoint optimalPoint = ModelApplier.findOptimalPercent(controlRDD, accuracyDelta, OptimalPoint.OptimizeType.F1_SCORE);
+		OptimalPoint optimalPoint = ModelApplier.findOptimalPercent(controlRDD, accuracyDelta, OptimalPoint.OptimizeType.ACCURACY);
 		
 		writeToControl("Fail percent: " + Math.round(optimalPoint.getOptimalPercent()*10000)/10000.0 + "\nCorrect estimates: " + 
 		optimalPoint.getCorrectCount() + "\nTotal Count: " + optimalPoint.getTotalCount() + "\nAccuracy: " + 

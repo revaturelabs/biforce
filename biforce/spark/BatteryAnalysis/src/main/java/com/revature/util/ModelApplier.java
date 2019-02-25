@@ -181,8 +181,8 @@ public class ModelApplier {
 				metric = (double)accurateFailedCount / ((double)accurateFailedCount + (double)inaccurateFailedCount);
 				break;
 			case F1_SCORE:
-				metric = 2.0d / ((1.0d / (double)accurateFailedCount / ((double)accurateFailedCount + (double)inaccuratePassedCount)) +
-						(1.0d / (double)accurateFailedCount / ((double)accurateFailedCount + (double)inaccurateFailedCount)));
+				metric = 1.0d / (((1.0d / (double)accurateFailedCount / ((double)accurateFailedCount + (double)inaccuratePassedCount)) +
+						(1.0d / (double)accurateFailedCount / ((double)accurateFailedCount + (double)inaccurateFailedCount))) / 2.0d);
 				break;
 			default:
 				break;
