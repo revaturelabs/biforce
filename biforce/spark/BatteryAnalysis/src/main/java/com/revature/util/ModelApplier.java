@@ -15,22 +15,22 @@ import scala.Tuple2;
  * Contains methods to apply the models to Datasets, evaluate accuracy, and to
  * calculate optimal % fail chance to split drop/pass.
  * 
- * 
+ * @see ModelFunction
  * @author Mason Wegert
  * @author Diego Gomez
- * 
  */
 
 //TODO javadoc
 public class ModelApplier {
 
 	/**
-	 * Finds the partial drop chances and sums them. Also sums up r^2-values so we
-	 * can get a weighted average.
+	 * Takes the input csv and applies the model to calculate partial fail percents for that test
+	 * returns a JavaRDD<Row> in new format with failpercent and r^2 added, unused columns truncated.
 	 * 
-	 * @param csv
-	 * @param coefs
-	 * @return
+	 * @param csv input csv (should be model set)
+	 * @param coefs coefficients array, output of ModelFunction.execute
+	 * @return csvRDD - a JavaRDD<Row> object with input tests processed with input coef to calculate fail chance
+	 *                  row output columns are: id, calculated fail %, r^2, status, test period
 	 */
 	private static JavaRDD<Row> findSums(Dataset<Row> csv, double[][] coefs) {
 		JavaRDD<Row> csvRDD = csv.javaRDD()// .filter(row -> row.getInt(1) != 4) // get rid of test 4, it's too
@@ -64,11 +64,13 @@ public class ModelApplier {
 	}
 
 	/**
-	 * Applies the given model to the dataset to predict fail %
+	 * Applies the given model to the dataset to predict fail % and returns JavaPairRDD with
+	 * battery id as the Integer key and the partial fail chances summed. 
 	 * 
-	 * @param csv
-	 * @param coefs
-	 * @return
+	 * @param csv input csv, should be whole data set
+	 * @param coefs coefficients array, output of ModelFunction.execute
+	 * @return output - JavaPairRDD<Integer, Row> where key is battery ID
+	 *                  row output columns are: summed fail chance, summed r^2, status, highest week of testing.
 	 */
 	public static JavaPairRDD<Integer, Row> applyModel(Dataset<Row> csv, double[][] coefs) {
 		JavaRDD<Row> csvRDD = findSums(csv, coefs);
@@ -86,11 +88,14 @@ public class ModelApplier {
 	}
 
 	/**
-	 * Applies the given model to dataset limiting week data to predict fail %
+	 * Applies the given model to the dataset to predict fail % and returns JavaRDD with output.
+	 * Limits model to first "maxWeek" test
 	 * 
-	 * @param csv
-	 * @param coefs
-	 * @return
+	 * @param csv input csv, should be model set
+	 * @param coefs coefficients array, output of ModelFunction.execute
+	 * @param maxWeek maximum week to test
+	 * @return output - JavaRDD<Row>
+	 *                  row output columns are: ID, normalized fail chance, status of battery (0 or 1)
 	 */
 	public static JavaRDD<Row> applyControlModel(Dataset<Row> csv, double[][] coefs, int maxWeek) {
 		// Only include associates who are past a certain week in training
@@ -173,7 +178,7 @@ public class ModelApplier {
  	 * EX2: if chance to fail is 0.70 but battery failed with 0, absolute error is
 	 * 0.30.
 	 * 
-	 * @param results - output from applyControlModel:
+	 * @param results output from applyControlModel:
 	 *                1st column is battery id
 	 *                2nd column should be % chance to fail (0.0 = 0% to 1.0 = 100%)
 	 *                3rd column should be either 0 for fail or 1 for pass

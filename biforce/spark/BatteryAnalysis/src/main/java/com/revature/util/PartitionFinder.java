@@ -22,7 +22,7 @@ public class PartitionFinder {
 	 * splits up the csv by the percentiles which are equi-distant for the
 	 * spitCount.
 	 * 
-	 * @param csv        - input csv
+	 * @param csv input csv
 	 * @param splitCount - number of splits/buckets
 	 * @return list of lists with percentiles for each test type
 	 */
