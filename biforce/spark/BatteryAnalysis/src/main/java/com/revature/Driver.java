@@ -96,7 +96,7 @@ public class Driver {
 		csv = session.read().format("csv").option("header", "false").option("inferSchema", "true").load(args[0]);
 
 		double accuracyDelta = 0.01; // For cutoff point precision
-		double[] splitRatios = { 0.7, 0.3 }; // Split of control & model data
+		double[] splitRatios = { 0.6, 0.4 }; // Split of control & model data
 
 		int modelSplitCount = 10; // # of buckets. 10 seems to be good.
 
@@ -108,7 +108,7 @@ public class Driver {
 		filtered_csv = csv.filter("_c10 = 0 OR _c10 = 1");
 
 		// Random split of associates (seeded for consistency in testing)
-		Dataset<Row>[] splits = filtered_csv.select("_c9").distinct().randomSplit(splitRatios, 41);
+		Dataset<Row>[] splits = filtered_csv.select("_c9").distinct().randomSplit(splitRatios, 5231);
 		
 		modelData = filtered_csv.join(splits[0], filtered_csv.col("_c9").equalTo(splits[0].col("_c9")), "leftsemi").cache();
 		controlData = filtered_csv.join(splits[1], filtered_csv.col("_c9").equalTo(splits[1].col("_c9")), "leftsemi").cache();
@@ -255,7 +255,9 @@ public class Driver {
 	 * @return
 	 */
 	private static OptimalPoint applyControl(JavaRDD<Row> controlRDD, double accuracyDelta, int weekNum) {
-		OptimalPoint optimalPoint = ModelApplier.findOptimalPercent(controlRDD, accuracyDelta, OptimalPoint.OptimizeType.RECALL);
+		// The last arg here can be changed to: PRECISION, RECALL, ACCURACY, F1_SCORE
+		// TODO make optimalpoint method accept arg for optmization metric
+		OptimalPoint optimalPoint = ModelApplier.findOptimalPercent(controlRDD, accuracyDelta, OptimalPoint.OptimizeType.F1_SCORE);
 		
 		writeToControl("Fail percent: " + Math.round(optimalPoint.getOptimalPercent()*10000)/10000.0 + "\nCorrect estimates: " + 
 		optimalPoint.getCorrectCount() + "\nTotal Count: " + optimalPoint.getTotalCount() + "\nAccuracy: " + 
