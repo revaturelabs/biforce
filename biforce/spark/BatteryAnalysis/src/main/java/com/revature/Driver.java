@@ -132,9 +132,9 @@ public class Driver {
 
 			controlOutput = controlOutput.union(eq);
 		}
-		
+
 		OptimalPoint optimalPointwk3 = new OptimalPoint(0.0,null,0,0,0,0);
-		
+
 		// Writes accuracy statistics for weeks 1-4 into the controlOutput RDD
 		for (int j=1;j<5;j++) {
 			JavaRDD<Row> controlRDD = ModelApplier.applyControlModel(controlData, modelParams, j);
@@ -143,16 +143,32 @@ public class Driver {
 			appends.add("\nAccuracy based on exams limited to week " + j + "\n");
 			System.out.println("\nAccuracy based on exams limited to week " + j + "\n");
 
-			appends.add("Fail percent: " + Math.round(optimalPoint.getOptimalPercent()*10000)/10000.0 + "\nCorrect estimates: " + 
-					optimalPoint.getCorrectCount() + "\nTotal Count: " + controlRDD.count() + "\nAccuracy: " + 
-					(double) optimalPoint.getCorrectCount()/(double)controlRDD.count() + "\n\n");
-			System.out.println("Fail percent: " + Math.round(optimalPoint.getOptimalPercent()*10000)/10000.0 + "\nCorrect estimates: " + 
-					optimalPoint.getCorrectCount() + "\nTotal Count: " + controlRDD.count() + "\nAccuracy: " + 
-					(double) optimalPoint.getCorrectCount()/(double)controlRDD.count() + "\n\n");
+			appends.add("Fail percent: " + Math.round(optimalPoint.getOptimalPercent() * 10000) / 10000.0 + "\n\n"
+					+ "\t\t\t Predicted Drop Count\tPredicted Pass Count" + "\nActual Drop Count\t\t\t"
+					+ optimalPoint.getOptimalTPCount() + "\t\t\t" + optimalPoint.getOptimalFPCount()
+					+ "\nActual Pass Count\t\t\t" + optimalPoint.getOptimalFNCount() + "\t\t\t"
+					+ optimalPoint.getOptimalTNCount() + "\n\nCorrect estimates: " + optimalPoint.getCorrectCount()
+					+ "\nTotal Count: " + optimalPoint.getTotalCount() + "\nAccuracy: " + optimalPoint.getAccuracy()
+					+ "\nRecall:" + optimalPoint.getRecall() + "\nPrecision:" + optimalPoint.getPrecision() + "\nF1 Score:"
+					+ optimalPoint.getF1Score() + "\n\n");
+			System.out.println("Fail percent: " + Math.round(optimalPoint.getOptimalPercent() * 10000) / 10000.0 + "\n\n"
+					+ "\t\t\t Predicted Drop Count\tPredicted Pass Count" + "\nActual Drop Count\t\t\t"
+					+ optimalPoint.getOptimalTPCount() + "\t\t\t" + optimalPoint.getOptimalFPCount()
+					+ "\nActual Pass Count\t\t\t" + optimalPoint.getOptimalFNCount() + "\t\t\t"
+					+ optimalPoint.getOptimalTNCount() + "\n\nCorrect estimates: " + optimalPoint.getCorrectCount()
+					+ "\nTotal Count: " + optimalPoint.getTotalCount() + "\nAccuracy: " + optimalPoint.getAccuracy()
+					+ "\nRecall:" + optimalPoint.getRecall() + "\nPrecision:" + optimalPoint.getPrecision() + "\nF1 Score:"
+					+ optimalPoint.getF1Score() + "\n\n");
+//			appends.add("Fail percent: " + Math.round(optimalPoint.getOptimalPercent()*10000)/10000.0 + "\nCorrect estimates: " + 
+//					optimalPoint.getCorrectCount() + "\nTotal Count: " + controlRDD.count() + "\nAccuracy: " + 
+//					(double) optimalPoint.getCorrectCount()/(double)controlRDD.count() + "\n\n");
+//			System.out.println("Fail percent: " + Math.round(optimalPoint.getOptimalPercent()*10000)/10000.0 + "\nCorrect estimates: " + 
+//					optimalPoint.getCorrectCount() + "\nTotal Count: " + controlRDD.count() + "\nAccuracy: " + 
+//					(double) optimalPoint.getCorrectCount()/(double)controlRDD.count() + "\n\n");
 			JavaRDD<String> appendsRDD = context.parallelize(appends);
 
 			controlOutput = controlOutput.union(appendsRDD);
-			
+
 			if (j==3) {
 				System.out.println("Mean Absolute Error: " + ModelApplier.testMAE(controlRDD));
 				System.out.println("Root Mean Squared Error: " + ModelApplier.testRMSE(controlRDD));
@@ -167,7 +183,7 @@ public class Driver {
 		// Save the RDD's to s3
 		finalOutput.coalesce(1).saveAsTextFile(s3Location + args[1]);
 		controlOutput.coalesce(1).saveAsTextFile(s3Location + args[2]);
-		
+
 		// Close all the resources.
 		csv.unpersist();
 		session.close();
