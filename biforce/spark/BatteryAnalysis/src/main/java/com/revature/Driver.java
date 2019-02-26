@@ -141,13 +141,29 @@ public class Driver {
 			List<String> appends = new ArrayList<>();
 			appends.add("\nAccuracy based on exams limited to week " + j + "\n");
 			System.out.println("\nAccuracy based on exams limited to week " + j + "\n");
-
-			appends.add("Fail percent: " + Math.round(optimalPoint.getOptimalPercent()*10000)/10000.0 + "\nCorrect estimates: " + 
-					optimalPoint.getCorrectCount() + "\nTotal Count: " + controlRDD.count() + "\nAccuracy: " + 
-					(double) optimalPoint.getCorrectCount()/(double)controlRDD.count() + "\n\n");
-			System.out.println("Fail percent: " + Math.round(optimalPoint.getOptimalPercent()*10000)/10000.0 + "\nCorrect estimates: " + 
-					optimalPoint.getCorrectCount() + "\nTotal Count: " + controlRDD.count() + "\nAccuracy: " + 
-					(double) optimalPoint.getCorrectCount()/(double)controlRDD.count() + "\n\n");
+			
+			appends.add("Fail percent: " + Math.round(optimalPoint.getOptimalPercent() * 10000) / 10000.0 + "\n\n"
+					+ "\t\t\t Predicted Drop Count\tPredicted Pass Count" + "\nActual Drop Count\t\t\t"
+					+ optimalPoint.getOptimalTPCount() + "\t\t\t" + optimalPoint.getOptimalFPCount()
+					+ "\nActual Pass Count\t\t" + optimalPoint.getOptimalFNCount() + "\t\t\t"
+					+ optimalPoint.getOptimalTNCount() + "\n\nCorrect estimates: " + optimalPoint.getCorrectCount()
+					+ "\nTotal Count: " + optimalPoint.getTotalCount() + "\nAccuracy: " + optimalPoint.getAccuracy()
+					+ "\nRecall:" + optimalPoint.getRecall() + "\nPrecision:" + optimalPoint.getPrecision() + "\nF1 Score:"
+					+ optimalPoint.getF1Score() + "\n\n");
+			System.out.println("Fail percent: " + Math.round(optimalPoint.getOptimalPercent() * 10000) / 10000.0 + "\n\n"
+					+ "\t\t\t Predicted Drop Count\tPredicted Pass Count" + "\nActual Drop Count\t\t\t"
+					+ optimalPoint.getOptimalTPCount() + "\t\t\t" + optimalPoint.getOptimalFPCount()
+					+ "\nActual Pass Count\t\t" + optimalPoint.getOptimalFNCount() + "\t\t\t"
+					+ optimalPoint.getOptimalTNCount() + "\n\nCorrect estimates: " + optimalPoint.getCorrectCount()
+					+ "\nTotal Count: " + optimalPoint.getTotalCount() + "\nAccuracy: " + optimalPoint.getAccuracy()
+					+ "\nRecall:" + optimalPoint.getRecall() + "\nPrecision:" + optimalPoint.getPrecision() + "\nF1 Score:"
+					+ optimalPoint.getF1Score() + "\n\n");
+//			appends.add("Fail percent: " + Math.round(optimalPoint.getOptimalPercent()*10000)/10000.0 + "\nCorrect estimates: " + 
+//					optimalPoint.getCorrectCount() + "\nTotal Count: " + controlRDD.count() + "\nAccuracy: " + 
+//					(double) optimalPoint.getCorrectCount()/(double)controlRDD.count() + "\n\n");
+//			System.out.println("Fail percent: " + Math.round(optimalPoint.getOptimalPercent()*10000)/10000.0 + "\nCorrect estimates: " + 
+//					optimalPoint.getCorrectCount() + "\nTotal Count: " + controlRDD.count() + "\nAccuracy: " + 
+//					(double) optimalPoint.getCorrectCount()/(double)controlRDD.count() + "\n\n");
 			JavaRDD<String> appendsRDD = context.parallelize(appends);
 
 			controlOutput = controlOutput.union(appendsRDD);
