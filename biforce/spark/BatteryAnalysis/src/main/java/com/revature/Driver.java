@@ -159,8 +159,8 @@ public class Driver {
 		JavaPairRDD<Integer, Row> appliedResultPair = ModelApplier.applyModel(csv, modelParams);
 		JavaRDD<String> finalOutput = writeOutput(appliedResultPair, optimalPointwk3.getOptimalPercent());
 
-		finalOutput.coalesce(1).saveAsTextFile(args[1]);
-		controlOutput.coalesce(1).saveAsTextFile(args[2]);
+		finalOutput.coalesce(1).saveAsTextFile("s3://revature-analytics-dev/" + args[1]);
+		controlOutput.coalesce(1).saveAsTextFile("s3://revature-analytics-dev/" + args[2]);
 		
 		// Close all the resources.
 		csv.unpersist();
