@@ -20,12 +20,12 @@ Our Responsibilities consisted of initial cleansing of the data through Sqoop im
 
 ## Procedures
 
-1. Create database and Spark table in Hive using below commands: 
+1. Create database and Spark table in Hive using commands: 
 
 	```SQL
-	CREATE DATABASE IF NOT EXISTS BIFORCE_SPARK;
+	CREATE DATABASE IF NOT EXISTS BIFORCE_STAGING;
 
-	use BIFORCE_SPARK;
+	use BIFORCE_STAGING;
 
 	CREATE TABLE SPARK_DATA (TEST_TYPE String, SCORE DECIMAL(5, 2), TEST_PERIOD INT, BUILDER_ID INT, GROUP_ID INT, GROUP_TYPE String, BATTERY_ID INT, BATTERY_STATUS String);
 	```
@@ -33,30 +33,30 @@ Our Responsibilities consisted of initial cleansing of the data through Sqoop im
 2.  Create encrypted password to connect to Caliber. You will be prompted to enter the password when you run the below command: 
 
 	```
-	hadoop credential create caliber.password.alias -provider jceks://hdfs/user/root/mysql.password.jceks
+	hadoop credential create caliber.password.alias -provider jceks://hdfs/user/root/caliber.password.jceks
 	```
 
-3. Run sqoop jobs on local terminal
+3. Run sqoop jobs on local terminal to import selected Caliber tables into Hive
 
 	```
-	sqoop import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias caliber.password.alias --table CALIBER_TRAINEE --hive-import --hive-table biforce_staging.caliber_trainee --hive-drop-import-delims
+	sqoop import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/caliber.password.jceks --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias caliber.password.alias --table CALIBER_TRAINEE --hive-import --hive-table biforce_staging.caliber_trainee --hive-drop-import-delims
 
-	sqoop import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias caliber.password.alias --table CALIBER_TRAINER --hive-import --hive-table biforce_staging.caliber_trainer --hive-drop-import-delims
+	sqoop import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/caliber.password.jceks --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias caliber.password.alias --table CALIBER_TRAINER --hive-import --hive-table biforce_staging.caliber_trainer --hive-drop-import-delims
 
-	sqoop import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias caliber.password.alias --table CALIBER_BATCH --hive-import --hive-table biforce_staging.caliber_batch --hive-drop-import-delims
+	sqoop import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/caliber.password.jceks --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias caliber.password.alias --table CALIBER_BATCH --hive-import --hive-table biforce_staging.caliber_batch --hive-drop-import-delims
 
-	sqoop import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias caliber.password.alias --table CALIBER_NOTE --hive-import --hive-table biforce_staging.caliber_note --hive-drop-import-delims
+	sqoop import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/caliber.password.jceks --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias caliber.password.alias --table CALIBER_NOTE --hive-import --hive-table biforce_staging.caliber_note --hive-drop-import-delims
 
-	sqoop import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias caliber.password.alias --table CALIBER_GRADE --hive-import --hive-table biforce_staging.caliber_grade --hive-drop-import-delims
+	sqoop import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/caliber.password.jceks --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias caliber.password.alias --table CALIBER_GRADE --hive-import --hive-table biforce_staging.caliber_grade --hive-drop-import-delims
 
-	sqoop import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias caliber.password.alias --table CALIBER_ASSESSMENT --hive-import --hive-table biforce_staging.caliber_assessment --hive-drop-import-delims
+	sqoop import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/caliber.password.jceks --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias caliber.password.alias --table CALIBER_ASSESSMENT --hive-import --hive-table biforce_staging.caliber_assessment --hive-drop-import-delims
 
-	sqoop import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias caliber.password.alias --table CALIBER_CATEGORY --hive-import --hive-table biforce_staging.caliber_category --hive-drop-import-delims
+	sqoop import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/caliber.password.jceks --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias caliber.password.alias --table CALIBER_CATEGORY --hive-import --hive-table biforce_staging.caliber_category --hive-drop-import-delims
 
-	sqoop import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias caliber.password.alias --table CALIBER_ADDRESS --hive-import --hive-table biforce_staging.caliber_address --hive-drop-import-delims
+	sqoop import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/caliber.password.jceks --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias caliber.password.alias --table CALIBER_ADDRESS --hive-import --hive-table biforce_staging.caliber_address --hive-drop-import-delims
 	```
 
-4. Create Sqoop job on the machine that will perform Oozie. Connect, username, and password will vary:
+4. Create a Hive query to join all tables into one workable table for Spark Team.
 	
 	```SQL
 	INSERT OVERWRITE TABLE SPARK_DATA 
