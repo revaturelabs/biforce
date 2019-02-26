@@ -259,9 +259,14 @@ public class Driver {
 		// TODO make optimalpoint method accept arg for optmization metric
 		OptimalPoint optimalPoint = ModelApplier.findOptimalPercent(controlRDD, accuracyDelta, OptimalPoint.OptimizeType.ACCURACY);
 		
-		writeToControl("Fail percent: " + Math.round(optimalPoint.getOptimalPercent()*10000)/10000.0 + "\nCorrect estimates: " + 
-		optimalPoint.getCorrectCount() + "\nTotal Count: " + optimalPoint.getTotalCount() + "\nAccuracy: " + 
-		optimalPoint.getAccuracy() + "\nRecall:" + optimalPoint.getRecall() + "\nPrecision:" + optimalPoint.getPrecision() + "\nF1 Score:" + optimalPoint.getF1Score() + "\n\n", weekNum);
+		writeToControl("Fail percent: " + Math.round(optimalPoint.getOptimalPercent() * 10000) / 10000.0 + "\n\n"
+				+ "\t\t\t Predicted Drop Count\tPredicted Pass Count" + "\nActual Drop Count\t\t\t"
+				+ optimalPoint.getOptimalTPCount() + "\t\t\t" + optimalPoint.getOptimalFPCount()
+				+ "\nActual Pass Count\t\t\t" + optimalPoint.getOptimalFNCount() + "\t\t\t"
+				+ optimalPoint.getOptimalTNCount() + "\n\nCorrect estimates: " + optimalPoint.getCorrectCount()
+				+ "\nTotal Count: " + optimalPoint.getTotalCount() + "\nAccuracy: " + optimalPoint.getAccuracy()
+				+ "\nRecall:" + optimalPoint.getRecall() + "\nPrecision:" + optimalPoint.getPrecision() + "\nF1 Score:"
+				+ optimalPoint.getF1Score() + "\n\n", weekNum);
 //		writeToControl("Fail percent: " + Math.round(optimalPoint.getOptimalPercent()*10000)/10000.0 + "\nCorrect estimates: " + 
 //				optimalPoint.getOptimalAccurateCount() + "\nTotal Count: " + controlRDD.count() + "\nAccuracy: " + 
 //				(double) optimalPoint.getOptimalAccurateCount()/(double)controlRDD.count() + "\n\n", weekNum);
