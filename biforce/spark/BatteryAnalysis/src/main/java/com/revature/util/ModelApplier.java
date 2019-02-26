@@ -188,7 +188,7 @@ public class ModelApplier {
 				break;
 			}
 
-			if (metric >= optimalMetric) {
+			if (metric > optimalMetric) {
 				optimalMetric = metric;
 				optimalPercent = percentList.get(i);
 				optPoint = new OptimalPoint(optimalPercent, optimizeMetric, accurateFailedCount, inaccurateFailedCount, inaccuratePassedCount, accuratePassedCount);
