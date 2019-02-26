@@ -10,7 +10,6 @@ import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
-import org.apache.spark.sql.types.StructType;
 
 import com.revature.util.ModelApplier;
 import com.revature.util.ModelFunction;
@@ -131,21 +130,21 @@ public class Driver {
 			controlOutput = controlOutput.union(eq);
 		}
 		
-		OptimalPoint optimalPointwk3 = new OptimalPoint(0,0,0);
+		OptimalPoint optimalPointwk3 = new OptimalPoint(0.0,null,0,0,0,0);
 		
 		for (int j=1;j<5;j++) {
 			JavaRDD<Row> controlRDD = ModelApplier.applyControlModel(controlData, modelParams, j);
-			OptimalPoint optimalPoint = ModelApplier.findOptimalPercent(controlRDD, accuracyDelta);
+			OptimalPoint optimalPoint = ModelApplier.findOptimalPercent(controlRDD, accuracyDelta, OptimalPoint.OptimizeType.ACCURACY);
 			List<String> appends = new ArrayList<>();
 			appends.add("\nAccuracy based on exams limited to week " + j + "\n");
 			System.out.println("\nAccuracy based on exams limited to week " + j + "\n");
 
 			appends.add("Fail percent: " + Math.round(optimalPoint.getOptimalPercent()*10000)/10000.0 + "\nCorrect estimates: " + 
-					optimalPoint.getOptimalAccurateCount() + "\nTotal Count: " + controlRDD.count() + "\nAccuracy: " + 
-					(double) optimalPoint.getOptimalAccurateCount()/(double)controlRDD.count() + "\n\n");
+					optimalPoint.getCorrectCount() + "\nTotal Count: " + controlRDD.count() + "\nAccuracy: " + 
+					(double) optimalPoint.getCorrectCount()/(double)controlRDD.count() + "\n\n");
 			System.out.println("Fail percent: " + Math.round(optimalPoint.getOptimalPercent()*10000)/10000.0 + "\nCorrect estimates: " + 
-					optimalPoint.getOptimalAccurateCount() + "\nTotal Count: " + controlRDD.count() + "\nAccuracy: " + 
-					(double) optimalPoint.getOptimalAccurateCount()/(double)controlRDD.count() + "\n\n");
+					optimalPoint.getCorrectCount() + "\nTotal Count: " + controlRDD.count() + "\nAccuracy: " + 
+					(double) optimalPoint.getCorrectCount()/(double)controlRDD.count() + "\n\n");
 			JavaRDD<String> appendsRDD = context.parallelize(appends);
 
 			controlOutput = controlOutput.union(appendsRDD);
@@ -188,5 +187,4 @@ public class Driver {
 			+ pairTuple._2.getInt(4) + "," + prediction;
 		});
 	}
-
 }
