@@ -84,6 +84,7 @@ public class Driver {
 	 */
 	public static void main(String args[]) {
 		// Configure spark, get session variable, declare Datasets
+		String s3Location = "s3://revature-analytics-dev/";
 		context = new JavaSparkContext(new SparkConf().setAppName("ChanceToFail"));
 		context.setLogLevel("ERROR");
 		session = new SparkSession(context.sc());
@@ -118,6 +119,7 @@ public class Driver {
 		controlHeader.add("--------Control data statistics--------\n");
 		controlOutput = context.parallelize(controlHeader);
 
+		// Writes the model equations to the controlOutput RDD
 		for(int i = 0; i < 3; i++) {
 			List<String> header = new ArrayList<>();
 			String s = String.format("Exam type " + (i+1) +": partialFailChance = e^(%2.3f*score+%2.3f) / (1+e^(%2.3f*score+%2.3f), r^2 = %1.3f\n", 
@@ -132,6 +134,7 @@ public class Driver {
 		
 		OptimalPoint optimalPointwk3 = new OptimalPoint(0.0,null,0,0,0,0);
 		
+		// Writes accuracy statistics for weeks 1-4 into the controlOutput RDD
 		for (int j=1;j<5;j++) {
 			JavaRDD<Row> controlRDD = ModelApplier.applyControlModel(controlData, modelParams, j);
 			OptimalPoint optimalPoint = ModelApplier.findOptimalPercent(controlRDD, accuracyDelta, OptimalPoint.OptimizeType.ACCURACY);
@@ -156,19 +159,19 @@ public class Driver {
 			}
 		}
 
+		// Writes full output file
 		JavaPairRDD<Integer, Row> appliedResultPair = ModelApplier.applyModel(csv, modelParams);
 		JavaRDD<String> finalOutput = writeOutput(appliedResultPair, optimalPointwk3.getOptimalPercent());
 
-		finalOutput.coalesce(1).saveAsTextFile("s3://revature-analytics-dev/" + args[1]);
-		controlOutput.coalesce(1).saveAsTextFile("s3://revature-analytics-dev/" + args[2]);
+		// Save the RDD's to s3
+		finalOutput.coalesce(1).saveAsTextFile(s3Location + args[1]);
+		controlOutput.coalesce(1).saveAsTextFile(s3Location + args[2]);
 		
 		// Close all the resources.
 		csv.unpersist();
 		session.close();
 		context.close();
 	}
-	//"battery_id,% Chance to Fail,Most Recent Week,Prediction\n");
-	//"--------Control data statistics--------\n"
 
 	/**
 	 * Writes results of model applied to full csv to the output writer. If a row's
