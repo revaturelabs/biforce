@@ -85,6 +85,7 @@ public class Driver {
 	public static void main(String args[]) {
 		// Configure spark, get session variable, declare Datasets
 		String s3Location = "s3://revature-analytics-dev/";
+		
 		context = new JavaSparkContext(new SparkConf().setAppName("ChanceToFail"));
 		context.setLogLevel("ERROR");
 		session = new SparkSession(context.sc());
