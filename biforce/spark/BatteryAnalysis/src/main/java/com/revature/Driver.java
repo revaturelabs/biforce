@@ -1,8 +1,7 @@
 package com.revature;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
@@ -11,6 +10,7 @@ import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
+import org.apache.spark.sql.types.StructType;
 
 import com.revature.util.ModelApplier;
 import com.revature.util.ModelFunction;
@@ -74,8 +74,6 @@ import com.revature.util.PartitionFinder;
 // resulting table column names are in the format _c#.
 
 public class Driver {
-
-	private static BufferedWriter writer, controlWriter;
 	private static JavaSparkContext context;
 	private static SparkSession session;
 
@@ -91,6 +89,7 @@ public class Driver {
 		context.setLogLevel("ERROR");
 		session = new SparkSession(context.sc());
 		Dataset<Row> csv, filtered_csv, controlData, modelData;
+		JavaRDD<String> controlOutput;
 
 		// Read input csv and infer data types schema implicitly.
 		csv = session.read().format("csv").option("header", "false").option("inferSchema", "true").load(args[0]);
@@ -100,16 +99,14 @@ public class Driver {
 
 		int modelSplitCount = 10; // # of buckets. 10 seems to be good.
 
-		initWriters(args[1], args[2]);
-
 		// Filter the indicator data to include only the valid data for our samples.
 		System.out.println("Filtering out irrelevant data...");
 		// Note that associate status (c10) is consistent across all test weeks as it's from a relational DB
 		filtered_csv = csv.filter("_c10 = 0 OR _c10 = 1");
-		
+
 		// Random split of associates (seeded for consistency in testing)
 		Dataset<Row>[] splits = filtered_csv.select("_c9").distinct().randomSplit(splitRatios, 41);
-		
+
 		modelData = filtered_csv.join(splits[0], filtered_csv.col("_c9").equalTo(splits[0].col("_c9")), "leftsemi").cache();
 		controlData = filtered_csv.join(splits[1], filtered_csv.col("_c9").equalTo(splits[1].col("_c9")), "leftsemi").cache();
 
@@ -118,114 +115,61 @@ public class Driver {
 		modelData.unpersist();
 
 		// Writes the logarithmic model to the file specified in args[2]
-		printModel(modelParams);
+		List<String> controlHeader = new ArrayList<>();
+		controlHeader.add("--------Control data statistics--------\n");
+		controlOutput = context.parallelize(controlHeader);
 
-		JavaRDD<Row> controlRDD_wk1 = ModelApplier.applyControlModel(controlData, modelParams, 1);
-		JavaRDD<Row> controlRDD_wk2 = ModelApplier.applyControlModel(controlData, modelParams, 2);
-		JavaRDD<Row> controlRDD_wk3 = ModelApplier.applyControlModel(controlData, modelParams, 3);
-		JavaRDD<Row> controlRDD_wk4 = ModelApplier.applyControlModel(controlData, modelParams, 4);
+		for(int i = 0; i < 3; i++) {
+			List<String> header = new ArrayList<>();
+			String s = String.format("Exam type " + (i+1) +": partialFailChance = e^(%2.3f*score+%2.3f) / (1+e^(%2.3f*score+%2.3f), r^2 = %1.3f\n", 
+					modelParams[i][1],modelParams[i][2],modelParams[i][1],modelParams[i][2],modelParams[i][3]);
 
-		OptimalPoint optimalPoint_wk1 = applyControl(controlRDD_wk1, accuracyDelta, 1);
-		OptimalPoint optimalPoint_wk2 = applyControl(controlRDD_wk2, accuracyDelta, 2);
-		OptimalPoint optimalPoint_wk3 = applyControl(controlRDD_wk3, accuracyDelta, 3);
-		OptimalPoint optimalPoint_wk4 = applyControl(controlRDD_wk4, accuracyDelta, 4);
+			System.out.println(s);
+			header.add(s);
+			JavaRDD<String> eq = context.parallelize(header);
 
-		try {
-			controlWriter.append("\nWeek 1 control data\nID, Drop chance, Actual status, Prediction\n");
-			writeControlOutput(controlRDD_wk1, optimalPoint_wk1.getOptimalPercent());
-			controlWriter.append("\nWeek 1-2 control data\nID, Drop chance, Actual status, Prediction\n");
-			writeControlOutput(controlRDD_wk2, optimalPoint_wk2.getOptimalPercent());
-			controlWriter.append("\nWeek 1-3 control data\nID, Drop chance, Actual status, Prediction\n");
-			writeControlOutput(controlRDD_wk3, optimalPoint_wk3.getOptimalPercent());
-			controlWriter.append("\nWeek 1-4 control data\nID, Drop chance, Actual status, Prediction\n");
-			writeControlOutput(controlRDD_wk4, optimalPoint_wk4.getOptimalPercent());
-		} catch (IOException e) {
-			e.printStackTrace();
+			controlOutput = controlOutput.union(eq);
 		}
+		
+		OptimalPoint optimalPointwk3 = new OptimalPoint(0,0,0);
+		
+		for (int j=1;j<5;j++) {
+			JavaRDD<Row> controlRDD = ModelApplier.applyControlModel(controlData, modelParams, j);
+			OptimalPoint optimalPoint = ModelApplier.findOptimalPercent(controlRDD, accuracyDelta);
+			List<String> appends = new ArrayList<>();
+			appends.add("\nAccuracy based on exams limited to week " + j + "\n");
+			System.out.println("\nAccuracy based on exams limited to week " + j + "\n");
 
-		// TODO
-		// calculate/print evaluation metrics
-		// Assumed controlRDD is testing test data with model already applied to third column
-		System.out.println("Mean Absolute Error: " + ModelApplier.testMAE(controlRDD_wk3));
-		System.out.println("Root Mean Squared Error: " + ModelApplier.testRMSE(controlRDD_wk3));
+			appends.add("Fail percent: " + Math.round(optimalPoint.getOptimalPercent()*10000)/10000.0 + "\nCorrect estimates: " + 
+					optimalPoint.getOptimalAccurateCount() + "\nTotal Count: " + controlRDD.count() + "\nAccuracy: " + 
+					(double) optimalPoint.getOptimalAccurateCount()/(double)controlRDD.count() + "\n\n");
+			System.out.println("Fail percent: " + Math.round(optimalPoint.getOptimalPercent()*10000)/10000.0 + "\nCorrect estimates: " + 
+					optimalPoint.getOptimalAccurateCount() + "\nTotal Count: " + controlRDD.count() + "\nAccuracy: " + 
+					(double) optimalPoint.getOptimalAccurateCount()/(double)controlRDD.count() + "\n\n");
+			JavaRDD<String> appendsRDD = context.parallelize(appends);
+
+			controlOutput = controlOutput.union(appendsRDD);
+			
+			if (j==3) {
+				System.out.println("Mean Absolute Error: " + ModelApplier.testMAE(controlRDD));
+				System.out.println("Root Mean Squared Error: " + ModelApplier.testRMSE(controlRDD));
+				optimalPointwk3 = optimalPoint;
+			}
+		}
 
 		JavaPairRDD<Integer, Row> appliedResultPair = ModelApplier.applyModel(csv, modelParams);
-		writeOutput(appliedResultPair, optimalPoint_wk3.getOptimalPercent());
+		JavaRDD<String> finalOutput = writeOutput(appliedResultPair, optimalPointwk3.getOptimalPercent());
 
+		finalOutput.coalesce(1).saveAsTextFile(args[1]);
+		controlOutput.coalesce(1).saveAsTextFile(args[2]);
+		
 		// Close all the resources.
-		try {
-			csv.unpersist();
-			writer.close();
-			controlWriter.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		csv.unpersist();
 		session.close();
 		context.close();
 	}
-
-	/**
-	 * Initializes the BufferedWriter/FileWriter class combination for two writers.
-	 * One main writer with the id/prediction using mainPath, one for control data
-	 * stats using controlPath.
-	 * 
-	 * @param mainPath    - file system location for main Writer
-	 * @param controlPath - file system location for wk3Writer
-	 */
-	private static void initWriters(String mainPath, String controlPath) {
-		try {
-			writer = new BufferedWriter(new FileWriter(mainPath, false));
-			writer.append("battery_id,% Chance to Fail,Most Recent Week,Prediction\n");
-			controlWriter = new BufferedWriter(new FileWriter(controlPath, false));
-			controlWriter.append("--------Control data statistics--------\n");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Prints the equation for calculating the probability of failure based on the modelParams.
-	 * Prints to the console and accuracyWriter for each of the 3 exam types (one for verbal, exam, project scores).
-	 * Test type 4 (other) has a low correlation (0.2) and negatively effects the results.
-	 * @param modelParams
-	 */
-	private static void printModel(double[][] modelParams) {
-		for(int i = 0; i < 3; i++) {
-			String s = String.format("Exam type " + (i+1) +": partialFailChance = e^(%2.3f*score+%2.3f) / (1+e^(%2.3f*score+%2.3f), r^2 = %1.3f\n", 
-					modelParams[i][1],modelParams[i][2],modelParams[i][1],modelParams[i][2],modelParams[i][3]);
-			System.out.println(s);
-			try {
-				controlWriter.append(s);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	/**
-	 * Writes the controlRDD output to the accuracy writer. If a row's drop % is greater than
-	 * dropPercent it writes 'DROP', otherwise it writes 'PASS' at the end of the line.
-	 * @param controlRDD
-	 * @param dropPercent
-	 */
-	private static void writeControlOutput(JavaRDD<Row> controlRDD, double dropPercent) {
-		controlRDD.foreach(row -> {
-			try {
-				String outString;
-				// if individual chance of failure is higher than threshhold -> DROP
-				if (row.getDouble(1) >= dropPercent) {
-					outString = row.getInt(0) + "," + row.getDouble(1) + "," + row.getInt(2) + "," + "DROP\n";
-				} else {
-					outString = row.getInt(0) + "," + row.getDouble(1) + "," + row.getInt(2) + "," + "PASS\n";
-				}
-
-				controlWriter.append(outString);
-			} catch (IOException e) {
-				System.out.println("IOException");
-				e.printStackTrace();
-			}
-		});
-	}
+	//"battery_id,% Chance to Fail,Most Recent Week,Prediction\n");
+	//"--------Control data statistics--------\n"
 
 	/**
 	 * Writes results of model applied to full csv to the output writer. If a row's
@@ -235,48 +179,14 @@ public class Driver {
 	 * @param appliedResultPair
 	 * @param dropPercent
 	 */
-	private static void writeOutput(JavaPairRDD<Integer, Row> appliedResultPair, double dropPercent) {
-		appliedResultPair.foreach(pairTuple -> {
+	private static JavaRDD<String> writeOutput(JavaPairRDD<Integer, Row> appliedResultPair, double dropPercent) {
+		return appliedResultPair.map(pairTuple -> {
 			String prediction = pairTuple._2.getDouble(1)/pairTuple._2.getDouble(2) >= dropPercent ? "DROP" : "PASS";
 			if (Double.isNaN(pairTuple._2.getDouble(1)/pairTuple._2.getDouble(2))) prediction = "UNK";
 			// ID | chance to fail | most recent week | prediction 
-			writer.append(pairTuple._1 + "," + pairTuple._2.getDouble(1) / pairTuple._2.getDouble(2) + ","
-					+ pairTuple._2.getInt(4) + "," + prediction + "\n");
+			return pairTuple._1 + "," + pairTuple._2.getDouble(1) / pairTuple._2.getDouble(2) + ","
+			+ pairTuple._2.getInt(4) + "," + prediction;
 		});
 	}
 
-	/**
-	 * Finds the drop % cutoff point where the number of incorrect guesses is
-	 * minimized
-	 * 
-	 * @param controlRDD
-	 * @param accuracyDelta
-	 * @param weekNum
-	 * @return
-	 */
-	private static OptimalPoint applyControl(JavaRDD<Row> controlRDD, double accuracyDelta, int weekNum) {
-		OptimalPoint optimalPoint = ModelApplier.findOptimalPercent(controlRDD, accuracyDelta);
-		
-		writeToControl("Fail percent: " + Math.round(optimalPoint.getOptimalPercent()*10000)/10000.0 + "\nCorrect estimates: " + 
-				optimalPoint.getOptimalAccurateCount() + "\nTotal Count: " + controlRDD.count() + "\nAccuracy: " + 
-				(double) optimalPoint.getOptimalAccurateCount()/(double)controlRDD.count() + "\n\n", weekNum);
-
-		return optimalPoint;
-	}
-
-	/**
-	 * a simple writer class to the accuracyWriter and console, outString gets written/appended.
-	 * @param outString
-	 */
-	private static void writeToControl(String outString, int weekNum) {
-		try {
-			controlWriter.append("\nAccuracy based on exams limited to week " + weekNum + "\n");
-			System.out.println("\nAccuracy based on exams limited to week " + weekNum + "\n");
-
-			System.out.println(outString);
-			controlWriter.append(outString);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
 }
