@@ -2,7 +2,7 @@
 
 ## Responsibilities
 
-Our Responsibilities consisted of initial cleansing of the data through Sqoop importing tables from Caliber Database into Hive filtering only specific columns, performing a complex query on the table to join the results into one usuable result for the Spark team, then Sqoop importing the final table back in HDFS. This entire process also needed to be automated in Oozie.
+Our Responsibilities consisted of initial cleansing of the data. Sqoop importing tables from Caliber Database into Hive filtering only specific columns for the Spark Team. Performing a complex query on the data to join the results into one usuable table for the Spark team. Then using a Hive action to export the final table back in HDFS. This entire process also needed to be automated in Oozie.
 
 ## Goals
 
@@ -36,7 +36,7 @@ Our Responsibilities consisted of initial cleansing of the data through Sqoop im
 	hadoop credential create caliber.password.alias -provider jceks://hdfs/user/root/caliber.password.jceks
 	```
 
-3. Run sqoop jobs on local terminal to import selected Caliber tables into Hive
+3. Run sqoop jobs on local terminal to import selected Caliber tables into Hive. The connection, username, and password may vary.
 
 	```
 	sqoop import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/caliber.password.jceks --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias caliber.password.alias --table CALIBER_TRAINEE --hive-import --hive-table biforce_staging.caliber_trainee --hive-drop-import-delims
