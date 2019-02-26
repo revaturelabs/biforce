@@ -15,11 +15,12 @@
     - When copying a file to s3 or moving a file within s3, add an extra step to the target location path
       to create a folder with that name i.e. s3://bucket-name/new-folder/file
 
+- In addition to using AWS CLI, the S3 bucket can be accessed via S3 Browser
+
 ## RedShift
 - To set up a connection to Redshift:
-  - Install SQL Workbench (SQL Developer has compatibility issues with the required jar)
-  - Download the RedshiftJDBC42-1.2.1.1001 jar online (or the version of the jar that your version of SQL Workbench needs)
-  - When configuring a connection, select RedsShift as the driver, and input the endpoint, username, and password
+  - Any database tool compatible with Redshift is sufficient to connect to the database
+  - When configuring a connection, select Redshift as the driver and input the endpoint, username, and password
     - Test the connection, if successful, everything should be ready
 
 - List of Redshift commands: https://docs.aws.amazon.com/redshift/latest/dg/c_SQL_commands.html
@@ -27,35 +28,22 @@
     - https://docs.aws.amazon.com/redshift/latest/dg/c_Supported_data_types.html
   - Mainly use copy, which is Redshift's equivalent of Hive's load
     - Use access_key_id and secret_access_key fields as the authorization section of the copy statement
-      - There is probably a better, more secure way to do this, we had issues figuring out how.
-    - Make sure, after the access key and secret key sections of the copy statement, use 'format as csv' to avoid
-      running into "Delimiter not found" errors.
 
-## Microsoft Power BI
-- Power BI is a business analytic solution that allows visualize data and share information with the hole organization or
-publish it to web. Powerfull tool used to manage large amounts of records with the ability to connect to almost
-every database or data storage.
-- It provides cloud based services along with a desktop interface that you can use to design your dashboard and
-reports to then share them with your organization. It offers data warehouse capabilities including data preparaation,
-data discovery and interactive dashboards.
+## Metabase
+* Metabase is a free and open-source analytics tool that provides data visualization. 
+* Metabase also provides various ways to share information to other users. 
+* Metabase is only a tool for connecting to a database and visualizing data. It does not support its own data hosting.   
 
-- This business intelligence tool was used as a OLAP tool to present the findings of your processing.
-- It was used to:
-  - Connect to Redshift.
-  - Create reports with findings.
-  - Design interactive dashboards for better visualization of the data.
+* Features:
+    * Metabase is simple to set up (e.g. running Metabase locally only requires downloading and running a jar file provided on their web page).
+    * A query builder that uses drop-down boxes, checkboxes, custom expressions, etc. to create "questions" that Metabase will answer. This feature is specially tailored for non-technical users. 
+    * For more advanced users, Metabase provides an SQL scripting engine to ask questions that are out of the scope of its query builder.
+    * A Slack bot and SMTP server capabilities are provided for automatic alerts (pulses).
+    * Metabase is able to connect to most of the major RDBMS's, including AWS Redshift.
 
-## Connect to Redshift
-  - Go to "Home" section of your tab.
-  - Click "Get Data" option.
-  - Select "More..." option.
-  - Choose "Database" at the left part of the window and click Amazon Redshift.
-  - A window will open for you to enter your server url and the name of the database and click "Ok".
-  - Write your credentials username and password and click "Connect".
-  - Select your tables and click "Load".
-  - DONE!
+* Metabase was used for the following:
+    * Querying the data within Redshift
+    * Creating a dashboard to visualize the Spark Team's analysis
+    * Configuring an email-based alert system
 
- ## Create and Design Reports
-  - Look for resources like powerbi.com, youtube tutorials, and web tutorials.
-  - One really good tutorial:
-    - https://www.youtube.com/watch?v=1bysgMsPwC4&list=PL7GQQXV5Z8ef2SjkDpLnvsz7TAQjlzlpO
+* For additional information about Metabase, refer to the markdown file in the Redshift-OLAP team folder called "metabase-detailed-guide."
