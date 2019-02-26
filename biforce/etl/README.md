@@ -111,7 +111,7 @@ Our Responsibilities consisted of initial cleansing of the data. Importing table
 7. Spoop import all tables from Caliber into S3 bucket. Connection and username may differ. Change value inside * * respectively. Use this command for each table in Caliber that the OLAP team would like to use for analysis.
 
 	```
-	sqoop import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/caliber.password.jceks -Dfs.s3a.access.key=*accesskey* -Dfs.s3a.secret.key=*secretkey* --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias caliber.password.alias --table *desired table* --target-dir s3a://*revature bucket*/*target directory* --incremental append --check-column *checked column* --temporary-rootdir s3a://*revature bucket*/*temporary directory* -m 1
+	sqoop import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/caliber.password.jceks -Dfs.s3a.access.key=*accesskey* -Dfs.s3a.secret.key=*secretkey* --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias caliber.password.alias --table *desired table* --columns *desired columns in table* --fields-terminated-by ~ --incremental append --check-column *checked column* --target-dir s3a://*revature bucket*/*target directory* --temporary-rootdir s3a://*revature bucket*/*temporary directory* -m 1
 	```
 
 8. Export all tables from S3 bucket to RedShift.
