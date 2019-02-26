@@ -159,12 +159,7 @@ public class Driver {
 					+ "\nTotal Count: " + optimalPoint.getTotalCount() + "\nAccuracy: " + optimalPoint.getAccuracy()
 					+ "\nRecall:" + optimalPoint.getRecall() + "\nPrecision:" + optimalPoint.getPrecision() + "\nF1 Score:"
 					+ optimalPoint.getF1Score() + "\n\n");
-//			appends.add("Fail percent: " + Math.round(optimalPoint.getOptimalPercent()*10000)/10000.0 + "\nCorrect estimates: " + 
-//					optimalPoint.getCorrectCount() + "\nTotal Count: " + controlRDD.count() + "\nAccuracy: " + 
-//					(double) optimalPoint.getCorrectCount()/(double)controlRDD.count() + "\n\n");
-//			System.out.println("Fail percent: " + Math.round(optimalPoint.getOptimalPercent()*10000)/10000.0 + "\nCorrect estimates: " + 
-//					optimalPoint.getCorrectCount() + "\nTotal Count: " + controlRDD.count() + "\nAccuracy: " + 
-//					(double) optimalPoint.getCorrectCount()/(double)controlRDD.count() + "\n\n");
+			
 			JavaRDD<String> appendsRDD = context.parallelize(appends);
 
 			controlOutput = controlOutput.union(appendsRDD);
