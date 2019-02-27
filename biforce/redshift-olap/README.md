@@ -3,7 +3,7 @@
 ## S3
 - To set up access to the S3 bucket:
   - Install the AWS CLI
-  - Configure the S3 conenction with $aws s3 configure
+  - Configure the S3 connection with $aws s3 configure
     - Provide the requested information, region as us-east-1 and default output format as Text
   - Should now be able to access the bucket with $aws s3 ls <bucket_name>
     - Some more commands that can be used with s3: https://docs.aws.amazon.com/cli/latest/reference/s3/
