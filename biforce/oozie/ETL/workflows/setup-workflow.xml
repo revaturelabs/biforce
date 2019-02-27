@@ -1,0 +1,464 @@
+<workflow-app xmlns="uri:oozie:workflow:0.4" name="setup-workflow">
+
+    <!--Start Workflow-->
+    <start to="fork-deletes"/>
+
+    <!--Clear pre-existing Sqoop import jobs-->
+    <fork name="fork-deletes">
+        <path start="delete-address"/>
+        <path start="delete-assessment"/>
+        <path start="delete-batch"/>
+        <path start="delete-category"/>
+        <path start="delete-grade"/>
+        <path start="delete-note"/>
+        <path start="delete-trainee"/>
+        <path start="delete-trainer"/>
+    </fork>
+
+        <action name="delete-address">
+            <sqoop xmlns="uri:oozie:sqoop-action:0.4">
+                <job-tracker>${resourceManager}</job-tracker>
+                <name-node>${nameNode}</name-node>
+                <arg>job</arg>
+                <arg>-Dmapreduce.job.queuename=1</arg>
+                <arg>--meta-connect</arg>
+                <arg>${metastoreConn}</arg>
+                <arg>--delete</arg>
+                <arg>import-address</arg>
+            </sqoop>
+            <ok to="join-deletes" />
+            <error to="kill" />
+        </action>
+
+        <action name="delete-assessment">
+            <sqoop xmlns="uri:oozie:sqoop-action:0.4">
+                <job-tracker>${resourceManager}</job-tracker>
+                <name-node>${nameNode}</name-node>
+                <arg>job</arg>
+                <arg>-Dmapreduce.job.queuename=1</arg>
+                <arg>--meta-connect</arg>
+                <arg>${metastoreConn}</arg>
+                <arg>--delete</arg>
+                <arg>import-assessment</arg>
+            </sqoop>
+            <ok to="join-deletes" />
+            <error to="kill" />
+        </action>
+
+        <action name="delete-batch">
+            <sqoop xmlns="uri:oozie:sqoop-action:0.4">
+                <job-tracker>${resourceManager}</job-tracker>
+                <name-node>${nameNode}</name-node>
+                <arg>job</arg>
+                <arg>-Dmapreduce.job.queuename=1</arg>
+                <arg>--meta-connect</arg>
+                <arg>${metastoreConn}</arg>
+                <arg>--delete</arg>
+                <arg>import-batch</arg>
+            </sqoop>
+            <ok to="join-deletes" />
+            <error to="kill" />
+        </action>
+
+        <action name="delete-category">
+            <sqoop xmlns="uri:oozie:sqoop-action:0.4">
+                <job-tracker>${resourceManager}</job-tracker>
+                <name-node>${nameNode}</name-node>
+                <arg>job</arg>
+                <arg>-Dmapreduce.job.queuename=2</arg>
+                <arg>--meta-connect</arg>
+                <arg>${metastoreConn}</arg>
+                <arg>--delete</arg>
+                <arg>import-category</arg>
+            </sqoop>
+            <ok to="join-deletes" />
+            <error to="kill" />
+        </action>
+
+        <action name="delete-grade">
+            <sqoop xmlns="uri:oozie:sqoop-action:0.4">
+                <job-tracker>${resourceManager}</job-tracker>
+                <name-node>${nameNode}</name-node>
+                <arg>job</arg>
+                <arg>-Dmapreduce.job.queuename=2</arg>
+                <arg>--meta-connect</arg>
+                <arg>${metastoreConn}</arg>
+                <arg>--delete</arg>
+                <arg>import-grade</arg>
+            </sqoop>
+            <ok to="join-deletes" />
+            <error to="kill" />
+        </action>
+
+        <action name="delete-note">
+            <sqoop xmlns="uri:oozie:sqoop-action:0.4">
+                <job-tracker>${resourceManager}</job-tracker>
+                <name-node>${nameNode}</name-node>
+                <arg>job</arg>
+                <arg>-Dmapreduce.job.queuename=2</arg>
+                <arg>--meta-connect</arg>
+                <arg>${metastoreConn}</arg>
+                <arg>--delete</arg>
+                <arg>import-note</arg>
+            </sqoop>
+            <ok to="join-deletes" />
+            <error to="kill" />
+        </action>
+
+        <action name="delete-trainee">
+            <sqoop xmlns="uri:oozie:sqoop-action:0.4">
+                <job-tracker>${resourceManager}</job-tracker>
+                <name-node>${nameNode}</name-node>
+                <arg>job</arg>
+                <arg>-Dmapreduce.job.queuename=3</arg>
+                <arg>--meta-connect</arg>
+                <arg>${metastoreConn}</arg>
+                <arg>--delete</arg>
+                <arg>import-trainee</arg>
+            </sqoop>
+            <ok to="join-deletes" />
+            <error to="kill" />
+        </action>
+
+        <action name="delete-trainer">
+            <sqoop xmlns="uri:oozie:sqoop-action:0.4">
+                <job-tracker>${resourceManager}</job-tracker>
+                <name-node>${nameNode}</name-node>
+                <arg>job</arg>
+                <arg>-Dmapreduce.job.queuename=3</arg>
+                <arg>--meta-connect</arg>
+                <arg>${metastoreConn}</arg>
+                <arg>--delete</arg>
+                <arg>import-trainer</arg>
+            </sqoop>
+            <ok to="join-deletes" />
+            <error to="kill" />
+        </action>
+
+    <join name="join-deletes" to="fork-create-imports"/>
+
+    <!--Crete new Sqoop import jobs-->
+    <fork name="fork-create-imports">
+        <path start="create-import-address"/>
+        <path start="create-import-assessment"/>
+        <path start="create-import-batch"/>
+        <path start="create-import-category"/>
+        <path start="create-import-grade"/>
+        <path start="create-import-note"/>
+        <path start="create-import-trainee"/>
+        <path start="create-import-trainer"/>
+    </fork>
+
+        <action name="create-import-address">
+            <sqoop xmlns="uri:oozie:sqoop-action:0.4">
+                <job-tracker>${resourceManager}</job-tracker>
+                <name-node>${nameNode}</name-node>
+                <arg>job</arg>
+                <arg>-Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks</arg>
+                <arg>-Dmapreduce.job.queuename=1</arg>
+                <arg>--create</arg>
+                <arg>import-address</arg>
+                <arg>--meta-connect</arg>
+                <arg>${metastoreConn}</arg>
+                <arg>--</arg>
+                <arg>import</arg>
+                <arg>--connect</arg>
+                <arg>${caliberConn}</arg>
+                <arg>--username</arg>
+                <arg>${caliberUser}</arg>
+                <arg>--password-alias</arg>
+                <arg>${caliberPass}</arg>
+                <arg>--table</arg>
+                <arg>CALIBER_ADDRESS</arg>
+                <arg>--columns</arg>
+                <arg>ADDRESS_ID,ADDRESS_STREET,ADDRESS_CITY,ADDRESS_STATE,ADDRESS_ZIPCODE,ADDRESS_COMPANY,ACTIVE</arg>
+                <arg>--mysql-delimiters</arg>
+                <arg>--incremental</arg>
+                <arg>append</arg>
+                <arg>--check-column</arg>
+                <arg>ADDRESS_ID</arg>
+                <arg>--target-dir</arg>
+                <arg>biforce/address</arg>
+                <arg>--direct</arg>
+                <arg>-m</arg>
+                <arg>1</arg>
+            </sqoop>
+            <ok to="join-create-imports" />
+            <error to="kill" />
+        </action>
+
+        <action name="create-import-assessment">
+            <sqoop xmlns="uri:oozie:sqoop-action:0.4">
+                <job-tracker>${resourceManager}</job-tracker>
+                <name-node>${nameNode}</name-node>
+                <arg>job</arg>
+                <arg>-Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks</arg>
+                <arg>-Dmapreduce.job.queuename=1</arg>
+                <arg>--create</arg>
+                <arg>import-assessment</arg>
+                <arg>--meta-connect</arg>
+                <arg>${metastoreConn}</arg>
+                <arg>--</arg>
+                <arg>import</arg>
+                <arg>--connect</arg>
+                <arg>${caliberConn}</arg>
+                <arg>--username</arg>
+                <arg>${caliberUser}</arg>
+                <arg>--password-alias</arg>
+                <arg>${caliberPass}</arg>
+                <arg>--table</arg>
+                <arg>CALIBER_ASSESSMENT</arg>
+                <arg>--columns</arg>
+                <arg>ASSESSMENT_ID,RAW_SCORE,ASSESSMENT_TITLE,ASSESSMENT_TYPE,WEEK_NUMBER,BATCH_ID,ASSESSMENT_CATEGORY</arg>
+                <arg>--mysql-delimiters</arg>
+                <arg>--incremental</arg>
+                <arg>append</arg>
+                <arg>--check-column</arg>
+                <arg>ASSESSMENT_ID</arg>
+                <arg>--target-dir</arg>
+                <arg>biforce/assessment</arg>
+                <arg>--direct</arg>
+                <arg>-m</arg>
+                <arg>1</arg>
+            </sqoop>
+            <ok to="join-create-imports" />
+            <error to="kill" />
+        </action>
+
+        <action name="create-import-batch">
+            <sqoop xmlns="uri:oozie:sqoop-action:0.4">
+                <job-tracker>${resourceManager}</job-tracker>
+                <name-node>${nameNode}</name-node>
+                <arg>job</arg>
+                <arg>-Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks</arg>
+                <arg>-Dmapreduce.job.queuename=1</arg>
+                <arg>--create</arg>
+                <arg>import-batch</arg>
+                <arg>--meta-connect</arg>
+                <arg>${metastoreConn}</arg>
+                <arg>--</arg>
+                <arg>import</arg>
+                <arg>--connect</arg>
+                <arg>${caliberConn}</arg>
+                <arg>--username</arg>
+                <arg>${caliberUser}</arg>
+                <arg>--password-alias</arg>
+                <arg>${caliberPass}</arg>
+                <arg>--table</arg>
+                <arg>CALIBER_BATCH</arg>
+                <arg>--columns</arg>
+                <arg>BATCH_ID,BORDERLINE_GRADE_THRESHOLD,END_DATE,GOOD_GRADE_THRESHOLD,LOCATION,SKILL_TYPE,START_DATE,TRAINING_NAME,TRAINING_TYPE,NUMBER_OF_WEEKS,CO_TRAINER_ID,TRAINER_ID,RESOURCE_ID,ADDRESS_ID,GRADED_WEEKS</arg>
+                <arg>--mysql-delimiters</arg>
+                <arg>--incremental</arg>
+                <arg>append</arg>
+                <arg>--check-column</arg>
+                <arg>BATCH_ID</arg>
+                <arg>--target-dir</arg>
+                <arg>biforce/batch</arg>
+                <arg>--direct</arg>
+                <arg>-m</arg>
+                <arg>1</arg>
+            </sqoop>
+            <ok to="join-create-imports" />
+            <error to="kill" />
+        </action>
+
+        <action name="create-import-category">
+            <sqoop xmlns="uri:oozie:sqoop-action:0.4">
+                <job-tracker>${resourceManager}</job-tracker>
+                <name-node>${nameNode}</name-node>
+                <arg>job</arg>
+                <arg>-Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks</arg>
+                <arg>-Dmapreduce.job.queuename=2</arg>
+                <arg>--create</arg>
+                <arg>import-category</arg>
+                <arg>--meta-connect</arg>
+                <arg>${metastoreConn}</arg>
+                <arg>--</arg>
+                <arg>import</arg>
+                <arg>--connect</arg>
+                <arg>${caliberConn}</arg>
+                <arg>--username</arg>
+                <arg>${caliberUser}</arg>
+                <arg>--password-alias</arg>
+                <arg>${caliberPass}</arg>
+                <arg>--table</arg>
+                <arg>CALIBER_CATEGORY</arg>
+                <arg>--columns</arg>
+                <arg>CATEGORY_ID,SKILL_CATEGORY,IS_ACTIVE</arg>
+                <arg>--mysql-delimiters</arg>
+                <arg>--incremental</arg>
+                <arg>append</arg>
+                <arg>--check-column</arg>
+                <arg>CATEGORY_ID</arg>
+                <arg>--target-dir</arg>
+                <arg>biforce/category</arg>
+                <arg>--direct</arg>
+                <arg>-m</arg>
+                <arg>1</arg>
+            </sqoop>
+            <ok to="join-create-imports" />
+            <error to="kill" />
+        </action>
+
+        <action name="create-import-grade">
+            <sqoop xmlns="uri:oozie:sqoop-action:0.4">
+                <job-tracker>${resourceManager}</job-tracker>
+                <name-node>${nameNode}</name-node>
+                <arg>job</arg>
+                <arg>-Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks</arg>
+                <arg>-Dmapreduce.job.queuename=2</arg>
+                <arg>--create</arg>
+                <arg>import-grade</arg>
+                <arg>--meta-connect</arg>
+                <arg>${metastoreConn}</arg>
+                <arg>--</arg>
+                <arg>import</arg>
+                <arg>--connect</arg>
+                <arg>${caliberConn}</arg>
+                <arg>--username</arg>
+                <arg>${caliberUser}</arg>
+                <arg>--password-alias</arg>
+                <arg>${caliberPass}</arg>
+                <arg>--table</arg>
+                <arg>CALIBER_GRADE</arg>
+                <arg>--columns</arg>
+                <arg>GRADE_ID,DATE_RECEIVED,SCORE,ASSESSMENT_ID,TRAINEE_ID</arg>
+                <arg>--mysql-delimiters</arg>
+                <arg>--incremental</arg>
+                <arg>append</arg>
+                <arg>--check-column</arg>
+                <arg>GRADE_ID</arg>
+                <arg>--target-dir</arg>
+                <arg>biforce/grade</arg>
+                <arg>--direct</arg>
+                <arg>-m</arg>
+                <arg>1</arg>
+            </sqoop>
+            <ok to="join-create-imports" />
+            <error to="kill" />
+        </action>
+
+        <action name="create-import-note">
+            <sqoop xmlns="uri:oozie:sqoop-action:0.4">
+                <job-tracker>${resourceManager}</job-tracker>
+                <name-node>${nameNode}</name-node>
+                <arg>job</arg>
+                <arg>-Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks</arg>
+                <arg>-Dmapreduce.job.queuename=2</arg>
+                <arg>--create</arg>
+                <arg>import-note</arg>
+                <arg>--meta-connect</arg>
+                <arg>${metastoreConn}</arg>
+                <arg>--</arg>
+                <arg>import</arg>
+                <arg>--connect</arg>
+                <arg>${caliberConn}</arg>
+                <arg>--username</arg>
+                <arg>${caliberUser}</arg>
+                <arg>--password-alias</arg>
+                <arg>${caliberPass}</arg>
+                <arg>--table</arg>
+                <arg>CALIBER_NOTE</arg>
+                <arg>--columns</arg>
+                <arg>NOTE_ID,NOTE_CONTENT,MAX_VISIBILITY,IS_QC_FEEDBACK,QC_STATUS,NOTE_TYPE,WEEK_NUMBER,BATCH_ID,TRAINEE_ID</arg>
+                <arg>--mysql-delimiters</arg>
+                <arg>--incremental</arg>
+                <arg>append</arg>
+                <arg>--check-column</arg>
+                <arg>NOTE_ID</arg>
+                <arg>--target-dir</arg>
+                <arg>biforce/note</arg>
+                <arg>--direct</arg>
+                <arg>-m</arg>
+                <arg>1</arg>
+            </sqoop>
+            <ok to="join-create-imports" />
+            <error to="kill" />
+        </action>
+
+        <action name="create-import-trainee">
+            <sqoop xmlns="uri:oozie:sqoop-action:0.4">
+                <job-tracker>${resourceManager}</job-tracker>
+                <name-node>${nameNode}</name-node>
+                <arg>job</arg>
+                <arg>-Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks</arg>
+                <arg>-Dmapreduce.job.queuename=3</arg>
+                <arg>--create</arg>
+                <arg>import-trainee</arg>
+                <arg>--meta-connect</arg>
+                <arg>${metastoreConn}</arg>
+                <arg>--</arg>
+                <arg>import</arg>
+                <arg>--connect</arg>
+                <arg>${caliberConn}</arg>
+                <arg>--username</arg>
+                <arg>${caliberUser}</arg>
+                <arg>--password-alias</arg>
+                <arg>${caliberPass}</arg>
+                <arg>--table</arg>
+                <arg>CALIBER_TRAINEE</arg>
+                <arg>--columns</arg>
+                <arg>TRAINEE_ID,TRAINEE_EMAIL,TRAINEE_NAME,TRAINING_STATUS,BATCH_ID,PHONE_NUMBER,PROFILE_URL,SKYPE_ID,RESOURCE_ID,FLAG_NOTES,FLAG_STATUS,TECH_SCREEN_SCORE,RECRUITER_NAME,COLLEGE,DEGREE,MAJOR,TECH_SCREENER_NAME,REVPRO_PROJECT_COMPLETION</arg>
+                <arg>--mysql-delimiters</arg>
+                <arg>--incremental</arg>
+                <arg>append</arg>
+                <arg>--check-column</arg>
+                <arg>TRAINEE_ID</arg>
+                <arg>--target-dir</arg>
+                <arg>biforce/trainee</arg>
+                <arg>--direct</arg>
+                <arg>-m</arg>
+                <arg>1</arg>
+            </sqoop>
+            <ok to="join-create-imports" />
+            <error to="kill" />
+        </action>
+
+        <action name="create-import-trainer">
+            <sqoop xmlns="uri:oozie:sqoop-action:0.4">
+                <job-tracker>${resourceManager}</job-tracker>
+                <name-node>${nameNode}</name-node>
+                <arg>job</arg>
+                <arg>-Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks</arg>
+                <arg>-Dmapreduce.job.queuename=3</arg>
+                <arg>--create</arg>
+                <arg>import-trainer</arg>
+                <arg>--meta-connect</arg>
+                <arg>${metastoreConn}</arg>
+                <arg>--</arg>
+                <arg>import</arg>
+                <arg>--connect</arg>
+                <arg>${caliberConn}</arg>
+                <arg>--username</arg>
+                <arg>${caliberUser}</arg>
+                <arg>--password-alias</arg>
+                <arg>${caliberPass}</arg>
+                <arg>--table</arg>
+                <arg>CALIBER_TRAINER</arg>
+                <arg>--columns</arg>
+                <arg>TRAINER_ID,EMAIL,NAME,TIER,TITLE</arg>
+                <arg>--mysql-delimiters</arg>
+                <arg>--incremental</arg>
+                <arg>append</arg>
+                <arg>--check-column</arg>
+                <arg>TRAINER_ID</arg>
+                <arg>--target-dir</arg>
+                <arg>biforce/trainer</arg>
+                <arg>--direct</arg>
+                <arg>-m</arg>
+                <arg>1</arg>
+            </sqoop>
+            <ok to="join-create-imports" />
+            <error to="kill" />
+        </action>
+
+    <join name="join-create-imports" to="end"/>
+
+    <kill name="kill">
+		<message>message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+	</kill>
+
+    <end name="end"/>
+
+</workflow-app>
