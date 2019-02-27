@@ -1,0 +1,77 @@
+1,Java,true
+2,SQL,true
+3,Servlet,true
+4,JSP,true
+5,XML,true
+6,Git,true
+7,JUnit,true
+8,Maven,true
+9,JDBC,true
+10,HTML,true
+11,CSS,true
+12,JavaScript,true
+13,jQuery,true
+14,AJAX,true
+15,UNIX,true
+16,AWS,true
+17,Jenkins,true
+18,Hibernate,true
+19,Spring,true
+20,SOAP,true
+21,REST,true
+22,AngularJS,true
+23,Selenium,true
+24,Cucumber,true
+25,UFT,true
+26,Python,true
+27,Robot Framework,true
+28,ALM,true
+29,SDLC,true
+30,Agile,true
+31,Testing,true
+32,VBScript,true
+33,SOAP UI,true
+34,TestNG,true
+35,Chef,true
+36,Docker,true
+37,Kafka,true
+38,Microservices,true
+39,NoSQL,true
+40,C#,true
+41,ASP.NET,true
+42,ADO.NET,true
+43,Entity Framework,true
+44,MSBuild,true
+45,WPF,true
+46,WCF,true
+3050,J2EE,true
+3051,InfoSec,true
+4050,Pega,true
+5050,Angular,true
+6050,MS Office,true
+6051,MS Visio,true
+6052,Business Analysis,true
+7050,Salesforce,true
+7051,Networking,true
+7052,AWS Compute/Networking,true
+7053,AWS Security/Monitoring,true
+7054,AWS Storage/Database,true
+7055,AWS Operations/Application,true
+7056,AWS Orchestration,true
+8050,APEX,true
+8051,Visualforce,true
+8052,ServiceNow Admin,true
+8053,ServiceNow Developer,true
+9050,SF Security,true
+9051,SF Data Model,true
+9052,SF Process Automation,true
+9053,Sales Cloud,true
+9054,Service Cloud,true
+9055,SF Reports/Dashboards,true
+9056,SF Data Management,true
+9057,Salesforce APEX,false
+9058,SOQL/SOSL,true
+9059,Salesforce SOSL,false
+9060,SF Lightning,true
+10050,Dynamics CRM,true
+11050,.NET MVC,true

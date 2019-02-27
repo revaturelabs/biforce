@@ -1,0 +1,145 @@
+<!--
+WARNING: Running this workflow will interfere with any pre-existing metadata for incremental imports. It should only be run once during setup.
+
+DESCRIPTION: Run by setup master workflow to delete pre-existing Sqoop import jobs from Sqoop metastore to ensure that creation workflow is able to save new Sqoop job.
+-->
+<workflow-app xmlns="uri:oozie:workflow:0.4" name="delete-warehouse-imports">
+
+    <!--Start Workflow-->
+    <start to="address_dim"/>
+
+        <action name="address_dim">
+            <sqoop xmlns="uri:oozie:sqoop-action:0.4">
+                <job-tracker>${resourceManager}</job-tracker>
+                <name-node>${nameNode}</name-node>
+                <arg>job</arg>
+                <arg>--delete</arg>
+                <arg>warehouse-import-address_dim</arg>
+                <arg>--meta-connect</arg>
+                <arg>${metaConn}</arg>
+            </sqoop>
+            <ok to="assessment_dim" />
+            <error to="kill" />
+        </action>
+        
+        <action name="assessment_dim">
+            <sqoop xmlns="uri:oozie:sqoop-action:0.4">
+                <job-tracker>${resourceManager}</job-tracker>
+                <name-node>${nameNode}</name-node>
+                <arg>job</arg>
+                <arg>--delete</arg>
+                <arg>warehouse-import-assessment_dim</arg>
+                <arg>--meta-connect</arg>
+                <arg>${metaConn}</arg>
+            </sqoop>
+            <ok to="batch_dim" />
+            <error to="kill" />
+        </action>
+
+        <action name="batch_dim">
+            <sqoop xmlns="uri:oozie:sqoop-action:0.4">
+                <job-tracker>${resourceManager}</job-tracker>
+                <name-node>${nameNode}</name-node>
+                <arg>job</arg>
+                <arg>--delete</arg>
+                <arg>warehouse-import-batch_dim</arg>
+                <arg>--meta-connect</arg>
+                <arg>${metaConn}</arg>
+            </sqoop>
+            <ok to="category_dim" />
+            <error to="kill" />
+        </action>
+
+        <action name="category_dim">
+            <sqoop xmlns="uri:oozie:sqoop-action:0.4">
+                <job-tracker>${resourceManager}</job-tracker>
+                <name-node>${nameNode}</name-node>
+                <arg>job</arg>
+                <arg>--delete</arg>
+                <arg>warehouse-import-category_dim</arg>
+                <arg>--meta-connect</arg>
+                <arg>${metaConn}</arg>
+            </sqoop>
+            <ok to="grade_fact" />
+            <error to="kill" />
+        </action>
+
+        <action name="grade_fact">
+            <sqoop xmlns="uri:oozie:sqoop-action:0.4">
+                <job-tracker>${resourceManager}</job-tracker>
+                <name-node>${nameNode}</name-node>
+                <arg>job</arg>
+                <arg>--delete</arg>
+                <arg>warehouse-import-grade_fact</arg>
+                <arg>--meta-connect</arg>
+                <arg>${metaConn}</arg>
+            </sqoop>
+            <ok to="note_dim" />
+            <error to="kill" />
+        </action>
+
+        <action name="note_dim">
+            <sqoop xmlns="uri:oozie:sqoop-action:0.4">
+                <job-tracker>${resourceManager}</job-tracker>
+                <name-node>${nameNode}</name-node>
+                <arg>job</arg>
+                <arg>--delete</arg>
+                <arg>warehouse-import-note_dim</arg>
+                <arg>--meta-connect</arg>
+                <arg>${metaConn}</arg>
+            </sqoop>
+            <ok to="note_fact" />
+            <error to="kill" />
+        </action>
+
+        <action name="note_fact">
+            <sqoop xmlns="uri:oozie:sqoop-action:0.4">
+                <job-tracker>${resourceManager}</job-tracker>
+                <name-node>${nameNode}</name-node>
+                <arg>job</arg>
+                <arg>--delete</arg>
+                <arg>warehouse-import-note_fact</arg>
+                <arg>--meta-connect</arg>
+                <arg>${metaConn}</arg>
+            </sqoop>
+            <ok to="trainee_dim" />
+            <error to="kill" />
+        </action>
+
+        <action name="trainee_dim">
+            <sqoop xmlns="uri:oozie:sqoop-action:0.4">
+                <job-tracker>${resourceManager}</job-tracker>
+                <name-node>${nameNode}</name-node>
+                <arg>job</arg>
+                <arg>--delete</arg>
+                <arg>warehouse-import-trainee_dim</arg>
+                <arg>--meta-connect</arg>
+                <arg>${metaConn}</arg>
+            </sqoop>
+            <ok to="trainer_dim" />
+            <error to="kill" />
+        </action>
+
+        <action name="trainer_dim">
+            <sqoop xmlns="uri:oozie:sqoop-action:0.4">
+                <job-tracker>${resourceManager}</job-tracker>
+                <name-node>${nameNode}</name-node>
+                <arg>job</arg>
+                <arg>--delete</arg>
+                <arg>warehouse-import-trainer_dim</arg>
+                <arg>--meta-connect</arg>
+                <arg>${metaConn}</arg>
+            </sqoop>
+            <ok to="end" />
+            <error to="kill" />
+        </action>
+
+    <!-- Kill Workflow -->
+	<kill name="kill">
+		<message>message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+	</kill>
+		
+	<!-- End Workflow -->
+	<end name="end" />
+
+</workflow-app>

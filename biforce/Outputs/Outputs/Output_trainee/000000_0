@@ -1,0 +1,857 @@
+5402,2100,justin.atkinson.1990@gmail.com,Atkinson, Justin,Employed,267-229-1865,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+5400,2100,nbrown.joshua@yahoo.com,Brown, Joshua,Employed,301-917-4594,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+5401,2100,eyekno3w@hotmail.com,Lovell, Jeffrey,Employed,414-801-6881,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+5450,2100,tonyhill_1981@yahoo.com,Hill, Anthony,Dropped,312-752-0406,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+5451,2100,fjyoung19@gmail.com,Young, Fagbemi,Dropped,(757) 478-5280,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+5452,2100,swong8295@gmail.com,Wong, Steven,Dropped,(757) 289-6297,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+5453,2100,mro2352@gmail.com,Olson, Matthew,Dropped,(573) 382-4546,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+5454,2100,sidak_dhillon@hotmail.com,Dhillon, Sidak,Dropped,6783083035,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+5455,2100,dennyayard@yahoo.com,Ayard, Denny,Employed,626-394-8606,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+5456,2150,forsbergjj@gmail.com,Forsberg, Justin,Employed,(763) 614-9683,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+5457,2150,nbrasco@msn.com,Brasco, Nick,Employed,(856) 472-1674,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+5458,2150,alexanderjhajek@gmail.com,Hajek, Alexander,Employed,(507) 990-7261,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+5459,2150,wenyuan.will@gmail.com,Wan, William,Employed,(908) 616-7543,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+5460,2150,mr.eric.erwin@gmail.com,Erwin, Eric,Employed,(701) 500-9782,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+5461,2150,lukehboggs@gmail.com,Boggs, Luke,Employed,(630) 338-6039,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+5462,2150,patz1@umbc.edu,Zebron, Patrick,Employed,443-668-9955,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+5463,2150,wjandrz@earthlink.net,Andrzejewski, Walter,Employed,(813) 892-2173,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+5464,2150,wheeler146@yahoo.com,Wheeler, Justin,Employed,(760) 508-2059,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+5465,2150,alex.michels94@hotmail.com,Michels, Alex,Employed,(661) 435-3844,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+5466,2150,christopherlolney@gmail.com,Olney, Chris,Employed,(270) 535-1997,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+5467,2150,bookofbromon@gmail.com,Smith, Carter,Employed,(402) 650-7288,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+5468,2150,starrv2011@gmail.com,Starr, Valencia,Dropped,347-770-6819,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+5469,2150,hrich558@live.kutztown.edu,Richiez, Hector,Dropped,(347) 247-9731,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+5470,2150,patterdl@clarkson.edu,Patterson, Dalton,Dropped,(518) 481-7979,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+5471,2150,kotayaaron@yahoo.com,Kotay Jr., Aaron,Dropped,(704) 412-0890,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+5472,2150,barkercbel@gmail.com,Barker, Cory,Dropped,(360) 204-6555,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+5473,2150,dominicjb4@hotmail.com,Bartholomeo, Dominic,Dropped,757-327-8076,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+5500,2150,dlaut1@hotmail.com,Laut, Daniel,Dropped,843-360-9205,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+5501,2150,ckipp2@hotmail.com,Kipp, Charles,Dropped,(480) 527-9139,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+5502,2150,xinguang.huang1@gmail.com,Huang, Jason,Dropped,208-830-8976,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+5503,2200,osher.y.cohen@gmail.com,Cohen, Osher,Employed,347-524-1846,https://app.revature.com/profile/Osher/f341fc92cebe36b3753df749eeb57b2a,osher.y.cohen,null,null,NONE,0.0,null,null,null,null,null,\N
+5504,2200,kchangfatt@gmail.com,Chang Fatt, Kyle,Employed,(917) 843-0464,https://app.revature.com/profile/kchangfatt/566988d360a8a0df93036e3e0d33e81f,kyle.changfatt,null,null,NONE,0.0,null,null,null,null,null,\N
+5505,2200,nikolovski23@gmail.com,Nikolovski, Martino,Employed,347-593-9059,https://app.revature.com/profile/Martino/18411f7d60abb8d3ea9b8a12f9e32041,martino.23,null,null,NONE,0.0,null,null,null,null,null,\N
+5506,2200,louisalopez93@gmail.com,Lopez, Louis,Employed,516-301-8490,https://app.revature.com/profile/LouisLopez/71fd9c8b9c4fc2fe20ec464e14e14c5d,louisalopez23,null,null,NONE,0.0,null,null,null,null,null,\N
+5507,2200,syar0052@gmail.com,Yar, Shehar,Employed,(347) 653-0052,https://app.revature.com/profile/Shehar/f35ad0947a9108f7724aaadb3f0d311b,syar0052,null,null,NONE,0.0,null,null,null,null,null,\N
+5508,2200,achen.this@gmail.com,Chen, Andrew,Employed,347-618-9852,https://app.revature.com/profile/AndrewChen/77a3861a405068e383f482fb2bcdc629,achen.this,null,null,NONE,0.0,null,null,null,null,null,\N
+5509,2200,davidsibrian08@gmail.com,Sibrian, David,Employed,347-933-0847,https://app.revature.com/profile/davidsibrian08/fd4cf53dd3924a64a537f888b9713def,davidsibrian08_1,null,null,NONE,0.0,null,null,null,null,null,\N
+5510,2200,karymacancela@gmail.com,Macancela, Karina,Employed,347-570-5804,https://app.revature.com/profile/kmacancela/4862d51e2c3940d37b5baf300e58962b,karymacancela,null,null,NONE,0.0,null,null,null,null,null,\N
+5511,2200,shamlau23@gmail.com,Lau, Samuel,Employed,347-557-7626,https://app.revature.com/profile/shamlau/02c9c1073f9b3ab702f9c5db18fe9e6c,shamlau,null,null,NONE,0.0,null,null,null,null,null,\N
+5512,2200,ychenq001@gmail.com,Chen, Yan,Employed,(347) 265-0886,https://app.revature.com/profile/ychen/bae900b010b8c778db2b8b93fafd3d67,YChenq001,null,null,NONE,0.0,null,null,null,null,null,\N
+5513,2200,williams.andrew15@gmail.com,Williams, Andrew,Employed,914-255-5011,https://app.revature.com/profile/Gigantor15/c33772d90963ba311da91439c153ded4,williams.andrew15,null,null,NONE,0.0,null,null,null,null,null,\N
+5514,2200,katz.rikki@gmail.com,Katz, Rikki,Employed,(516) 531-3671,https://app.revature.com/profile/RebeccaK/3d80c961cf1dab656b02aa6d1aaa95b4,rikkik13,null,null,NONE,0.0,null,null,null,null,null,\N
+5515,2200,bcantos17@gmail.com,Cantos, Bryan,Employed,347-848-4163,https://app.revature.com/profile/bcantos17/1d1241150188ed37a992e84d4ee3ccf3,BCantos17,null,null,NONE,0.0,null,null,null,null,null,\N
+5516,2200,travis.dacosta1@gmail.com,Dacosta, Travis,Employed,347-500-7612,https://app.revature.com/profile/tdacosta11/9c0a7e4de28a8898c2b9186debe0e7cb,travisdac,null,null,NONE,0.0,null,null,null,null,null,\N
+5517,2200,ilysiarh@gmail.com,Siarheyeu, Ilya,Employed,347-334-1704,https://app.revature.com/profile/ilysiarh/1612b1d54369bfa052cb56c24334040f,ilysiarh,null,null,NONE,0.0,null,null,null,null,null,\N
+5518,2200,wingz101@icloud.com,Fredericksen-Rasberry, Salim,Dropped,(516) 825-1848,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+5519,2200,bankole726@gmail.com,Thomas, Bankole,Dropped,3476527223,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+5520,2201,davedataram@gmail.com,Dataram, Dave,Dropped,347-986-0617,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+5521,2201,azraelzzz@hotmail.com,In Choi, Hou,Dropped,(347) 459-2016,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+5522,2201,chandradatgir@yahoo.com,Gir, Chandradat,Dropped,347-447-7487,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+5523,2201,jcsanchez1218@yahoo.com,Carlos Sanchez, Juan,Dropped,(347) 641-8146,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+5524,2201,mcartagenaez8@gmail.com,Cartagena, Michael,Employed,347-782-4731,https://app.revature.com/profile/MichaelC/55b6b9a398dacdb90093a3088822d35c,mcart5566,null,null,NONE,0.0,null,null,null,null,null,\N
+5525,2201,tanland20@gmail.com,Peralta, Yanilda,Employed,347-638-1605,https://app.revature.com/profile/Synac/254a7187dfc32f6f50710a56bd8112f6,eclipsesunsettreesynch,null,null,NONE,0.0,null,null,null,null,null,\N
+5526,2201,son.jack0218@gmail.com,Duong, Jack,Employed,(646) 417-3976,https://app.revature.com/profile/imrjack/fab72b5d62b5965bcd22aabe0a9ee24b,imrjack,null,null,NONE,0.0,null,null,null,null,null,\N
+5527,2201,hvalcin.grady@gmail.com,Valcin, Hendy,Employed,347-272-0040,https://app.revature.com/profile/Hendy/4991db30a308e99aff23eead11daa716,live:196c1fe19236d6c6,null,null,NONE,0.0,null,null,null,null,null,\N
+5528,2201,hossain.yahya@outlook.com,Yahya, Hossain,Employed,347-595-0959,https://app.revature.com/profile/Hossain/56533488cfec931bbc8e43ba02f12190,live:hossain.yahya_1,null,null,NONE,0.0,null,null,null,null,null,\N
+5529,2201,denise.j.montesdeoca@gmail.com,Montesdeoca, Denise,Employed,347-536-7727,https://app.revature.com/profile/dmontesdeoca/4ddfb0697a3c1fff8d16e6a1ce46348c,live:55f3683c5bb7165c,null,null,NONE,0.0,null,null,null,null,null,\N
+5530,2201,fareed.ali37@qmail.cuny.edu,Ali, Fareed,Employed,347-526-5184,https://app.revature.com/profile/fareed/03198a1e81a3f4e32433a9e9c9db353e,live:bassph,null,null,NONE,0.0,null,null,null,null,null,\N
+5531,2201,kamlam@live.com,Lam, Kam,Training,917-951-1138,https://app.revature.com/profile/Kamlam02/0b64db75d34cddd8b96f8091e44d57b7,live:89f575098655f2b,null,null,NONE,0.0,null,null,null,null,null,\N
+5532,2201,sadat.t.ahmed@gmail.com,Ahmed, Sadat,Employed,646-407-7707,https://app.revature.com/profile/SadatAhmed/9b198abd1d0d88022d593375b61ed041,sadat.t.ahmed,null,null,NONE,0.0,null,null,null,null,null,\N
+5533,2201,pieryospp@gmail.com,Yos, Pier,Employed,347-238-4965,https://app.revature.com/profile/Peacepapi/22e027610567ad08a4c6698a8dbfa74b,pieryospp,null,null,NONE,0.0,null,null,null,null,null,\N
+5534,2201,ateebtahir@gmail.com,Khawaja, Ateeb,Employed,347-251-9865,https://app.revature.com/profile/KMAT/eab7a80a000dc662a9c098b80259c013,ateebtahir,null,null,NONE,0.0,null,null,null,null,null,\N
+5535,2201,suditw@gmail.com,Itwaru, Sudish,Employed,718-415-0517,https://app.revature.com/profile/sitwaru/8995f5191fdba7a3508ed6e9825863e1,sudish.itwaru,null,null,NONE,0.0,null,null,null,null,null,\N
+5536,2201,danliu277@gmail.com,Liu, Daniel,Employed,646-275-2027,https://app.revature.com/profile/DanielLiu/8ec745c0558385ae50ac8c25324d7bb3,danliu277,null,null,NONE,0.0,null,null,null,null,null,\N
+5537,2201,guankev@gmail.com,Guan, Kevin,Employed,347-447-1888,https://app.revature.com/profile/KevinG92/2ba062861641fbf4e956c517983952c4,live:kevguan,null,null,NONE,0.0,null,null,null,null,null,\N
+5538,2201,connelsp@gmail.com,Connelly, Sean,Employed,718-772-1455,https://app.revature.com/profile/Seanelly/64c09ac289741de8bf7ec0f81f2ad5ad,seanelly08,null,null,NONE,0.0,null,null,null,null,null,\N
+5539,2201,igorgluskin@yahoo.com,Gluskin, Igor,Employed,347-791-1360,https://app.revature.com/profile/IgorGluskin/ae6866d406461c1c36de8df7c0a1a7a7,igor.gluskin,null,null,NONE,0.0,null,null,null,null,null,\N
+5352,2050,jgt.tech@gmail.com,Tech, Jonathon,Employed,(918) 504-6831,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+5350,2050,kh04548@georgiasouthern.edu,Haas, Kevin,Employed,(229) 255-7639,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+5351,2050,ifouche10@gmail.com,Fouche, Issac,Employed,(301) 606-8749,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+5353,2050,wyatt.duling@gmail.com,Duling, Wyatt,Employed,563-343-3075,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+5354,2050,zhuang4@buffalo.edu,Huang, Jimmy,Employed,(917) 916-6881,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+5355,2050,encastillo92@gmail.com,Castillo, Erika,Employed,(229) 669-3805,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+5356,2050,m.blanchard@post.com,Blanchard, Martin,Dropped,(603) 264-0369,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+5357,2050,manyaam13@gmail.com,Almatar, Manya,Dropped,(773) 954-9254,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+5358,2050,dsantonov1990@gmail.com,Antonov, Denis,Dropped,(678) 763-6648,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+5359,2050,rrpglad@gmail.com,Peters, Russell,Dropped,(240) 678-7156,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+5360,2100,jbspruce@gmail.com,Spruce, Jason,Employed,417-793-2382,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+5361,2100,taddetlef@hotmail.com,Detlef, Tad,Employed,980-254-4343,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+5362,2100,tylerwelborn91@yahoo.com,Welborn, Tyler,Employed,(806) 831-8984,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+5363,2100,yanznln@gmail.com,Lin, Yan,Employed,(646) 641-9538,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+5540,2150,tmcdeane@gmail.com,McDeane, Trey,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+280000,110503,yikalod73@gmail.com,Ekubazgi, Yikalo,Dropped,(206) 407-5917,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+280001,110503,mario_dongo@student.uml.edu,Dongo, Mario,Training,617-605-9992,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+280002,110503,robbassj@gmail.com,Jenkins, Robert,Training,229-630-6630,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+280003,110503,temnework@gmail.com,Temnewo, Merhawi,Training,(612) 584-7591,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+280004,110503,saantoshm@gmail.com,Mylavarapu, Santosh,Training,540-454-9447,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+280005,110503,danezorrilla@gmail.com,Zorrilla, Daniel,Training,404-514-0515,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+280006,110503,abaker992@gmail.com,Baker, Adam,Training,443-509-0425,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+280007,110503,joshwtompkins7@gmail.com,Tompkins, Joshua,Training,502-807-8454,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+280008,110503,chouloute1@gmail.com,Chouloute, Stanley,Training,954-756-4534,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+280009,110503,kline.jessica@gmail.com,Kline, Jessica,Training,952-220-7008,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+280010,110503,lawtondye@gmail.com,Dye, Roderick,Training,404-310-3894,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+280011,110503,humbertocorea1@gmail.com,Corea, Humberto,Training,760-265-5801,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+280012,110503,carlos.vallejo92@yahoo.com,Vallejo, Carlos,Training,818-331-5379,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+280013,110503,alecmichel@gmail.com,Michel, Alec,Training,509-899-3400,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+280014,110503,tom.pruim1@gmail.com,Pruim, Thomas,Training,708-519-0579,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+280015,110503,frank3562@gmail.com,Adams, Franklin,Training,630-340-7876,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+280016,110503,joseph@thatprogrammer.net,Jones, Joseph,Training,615-738-1122,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+280017,110503,rextoothman@gmail.com,Toothman, Rex,Training,740-739-1409,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+280050,111500,calandrazellner@gmail.com,Zellner, Calandra,Marketing,470-728-2949,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+280051,111500,jozsef.morrissey@gmail.com,Morrisey, Jozsef,Marketing,217-254-8654,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+280052,111500,jcodyfowler@gmail.com,Fowler, John,Marketing,970-200-3779,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+280053,111500,ycanastra@gmail.com,Canastra, Yushiroh,Marketing,408-338-8193,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+280054,111500,mykola.nikitin.1995@gmail.com,Nikitin, Mykola,Marketing,734-756-4244,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+280055,111500,knshah045@gmail.com,Shah, Kirtanbhai,Marketing,804-243-5188,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+280056,111500,chighfi1@email.cpcc.edu,Highfield, Cort,Marketing,704-905-6141,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+280057,111500,btkruppa513@gmail.com,Kruppa, Blake,Marketing,909-380-4081,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+280058,111500,kdelosre@uci.edu,Delos Reyes, Kirstie,Marketing,951-852-2996,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+280059,111500,paulmaksimovich@gmail.com,Maksimovich, Paul,Marketing,315-751-8537,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281003,112500,kemoyeroberts@gmail.com,Roberts, Emoye,Dropped,646-704-1248,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281004,112500,thanushanx@gmail.com,Varatharajah, Thanushan,Training,(516) 528-3824,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281005,112500,binquanwang1991@gmail.com,Wang, Binquan,Training,646-785-1832,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281006,112500,patrice.leckie@mail.citytech.cuny.edu,Leckie, Patrice,Training,347-822-9110,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281007,112500,kamallubana79@gmail.com,Kaur, Kamaljeet,Training,347-644-2627,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281008,112500,ksandipkataria@gmail.com,Kaur, Sandip,Training,646-592-5970,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281009,112500,philosopherlife@yahoo.com,Lapeiretta, Alex,Training,(718) 689-0285,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281010,112500,edgar.munoz@baruchmail.cuny.edu,Munoz, Edgar,Training,646-378-8544,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281011,112500,ngff101@gmail.com,Ng, SiuHung,Training,(718) 938-0510,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281012,112500,adebolaadesina97@gmail.com,Adesina, Adebola,Training,(917) 403-4995,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281013,112500,stephan.kritikos@gmail.com,Kritikos, Stephan,Training,(718) 614-9162,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281014,112500,howardki625@gmail.com,Howard Ki, Hoyin,Training,646-763-7704,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281015,112500,timothygillette@ymail.com,Gillette, Timothy,Training,(718) 662-1110,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281017,112500,randosim@gmail.com,Simpson, Orando,Training,(347) 972-8752,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281018,112500,pedrogarboza7_8ot@indeedemail.com,Garboza, Pedro,Training,(917) 391-8764,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281020,112500,saurabh_kaura@yahoo.com,Kaura, Saurabh,Training,(973) 519-0270,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281021,112500,carl.chan@mail.citytech.cuny.edu,Chan, Carl,Training,6466625514,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281023,112502,jaydeep.bhatiamain@gmail.com,Bhatia, Jaydeep,Training,(510) 660-1467,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281024,112502,lamoungj@clarkson.edu,LaMountain, Gary,Training,(518) 708-4725,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281026,112502,nmai@mail.usf.edu,Mai, Nam,Training,(727) 366-9829,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281028,112502,textak64@gmail.com,King, Troy,Training,(972) 207-7328,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281029,112502,tdnguyen0106@gmail.com,Nguyen, Thien,Training,(281) 871-9917,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281030,112502,brmckalip@gmail.com,McKalip, Brian,Training,(727) 710-0354,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281031,112502,robertdill.tuck@gmail.com,Tuck, Robert,Training,(256) 684-2621,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281032,112502,pblocker1@mail.usf.edu,Blocker, Patrice,Training,813-449-3219,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281033,112502,barkakatirb@gmail.com,Barkakati, Roktim,Training,(813) 453-0593,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281034,112502,michaelgarza496@gmail.com,Garza, Michael,Training,(409) 392-8853,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281035,112502,smkummerfeldt@gmail.com,Kummerfeldt, Sarah,Training,719-330-9949,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281036,112502,kosibaoshodiglover@yahoo.com,Oshodi-Glover, Kosiba,Training,(602) 743-2757,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281037,112502,slouispierre@southern.edu,Louis-Pierre, Samuel,Training,(561) 506-9283,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281038,112502,jlayssard@yahoo.com,Layssard, Jonathan,Training,832-748-1986,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281039,112502,duncanhayward7@gmail.com,Hayward, Duncan,Training,321-279-5527,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281040,112502,tom.scheffer@yahoo.com,Scheffer, Thomas,Training,(425) 231-0485,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281041,112502,adeosalam@gmail.com,Salam, Adedayo,Training,(678) 779-3715,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281042,112502,ramses.dev@gmail.com,Sanchez, Ramses,Training,(786) 803-2494,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281043,112502,avantmathur2@gmail.com,Mathur, Avant,Training,484-553-4216,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281044,112502,brwingo@ncsu.edu,Wingo, Benjamin,Training,919-819-3292,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281046,112502,gibbirdsong@gmail.com,Birdsong, Gilbert,Training,208-521-9982,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281047,112503,rbro526@outlook.com,Thomas Brown, Ryan,Training,706-802-9421,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281048,112503,tc9704@gmail.com,Holbert, Tina,Training,(919) 522-7433,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281049,112503,djhofreiter@gmail.com,Hofreiter, David,Training,619-243-6887,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281050,112503,kurtwoodgreene@hotmail.com,Greene, Jr., Kurtwood,Training,217-653-4603,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281051,112503,ryandormitzer7@gmail.com,Dormitzer, Ryan,Dropped,(301) 642-2777,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281052,112503,josuedanielcortes@hotmail.com,Cortes, Josue,Training,(787) 346-8679,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281053,112503,flores.alexisperez@gmail.com,Flores, Alexis,Training,(301) 575-7656,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281055,112503,syantio@yahoo.com,Nwatchou, Stephane,Dropped,(240) 755-2540,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281056,112503,matthewekline93@gmail.com,Kline, Matthew,Training,865-244-6195,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281057,112503,zeggleto@outlook.com,Eggleton, Zach,Training,(317) 242-9376,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281059,112503,elbo_macoroni@hotmail.com,Burdick, Colton,Training,(570) 679-2384,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281060,112504,alexcburch@gmail.com,Burch, Alexander,Training,(301) 974-9386,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281061,112504,jonathan.moreno324@gmail.com,Rivera, Jonathan,Training,(929) 444-5340,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281064,112504,yingvang44@gmail.com,Vang, Ying,Training,(209) 947-8878,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281065,112504,shawnba91@gmail.com,Barnes, Shawn,Training,856-383-5501,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281066,112504,shannonlavl@gmail.com,Lavelle, Shannon,Training,267-626-1490,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281067,112504,jlumicao@csumb.edu,Lumicao, Jason,Training,831-524-5050,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281068,112504,zakombet11@yahoo.com,Kombet, Zachary,Training,(443) 799-2334,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281069,112504,jrobinsonbass@gmail.com,Robinson, James,Training,(440) 655-4047,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281070,112504,tucker_christiana@yahoo.com,Tucker, Christiana,Dropped,(240) 246-4216,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281071,112504,obasuyietiosa@gmail.com,Obasuyi, Etiosa,Training,(917) 569-0887,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281072,112505,john.villamar@lc.cuny.edu,Villamar, John,Training,347-901-2720,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281073,112505,roncwu@gmail.com,Wu, Ron,Training,(971) 212-1612,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281074,112505,leibniz.berihuete@gmail.com,H. Berihuete, Leibniz,Training,(347) 299-7344,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281075,112505,mridula.zaman95@gmail.com,Zaman, Mridula,Training,(718) 612-9987,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281076,112505,alancao101@gmail.com,Cao, Lizhou,Training,3479359767,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281078,112505,christian.acosta0913@gmail.com,Acosta, Christian,Training,(917) 334-0853,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281079,112505,bishwo.gurung3@gmail.com,Gurung, Bishwo,Training,(646) 267-1059,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281080,112505,imailalbert@gmail.com,Vasilyev, Albert,Training,917-399-0252,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281082,112505,adavis20@oswego.edu,Joshua Davis, Akeem,Training,315-746-9405,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281083,112505,carlos.marrero21991@gmail.com,Antonio Marrero-Rivera, Carlos,Training,646-280-7139,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281084,112505,dcliao92@gmail.com,Liao, Dingchao,Training,646-525-2527,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281085,112505,comana00@gmail.com,Omana, Christian,Training,917-330-9896,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281086,112505,runzhuoli.cs@gmail.com,Zhuo Li, Run,Training,646-641-6764,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281087,112506,tyler@geekingdoing.com,Deans, Tyler,Training,917-592-1649,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281088,112506,stephaniehastings22@gmail.com,Hastings, Stephanie,Training,(417) 606-0805,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281089,112506,akshay.chawla@outlook.com,Chawla, Akshay,Training,(317) 922-4440,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281090,112506,je25osor@siena.edu,Osorno, Jhoan,Training,781-816-3594,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281091,112506,craighatch90@gmail.com,Hatch, Craig,Training,(505) 903-1943,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281092,112506,andy.tang@nyu.edu,Tang, Andy,Training,646-289-0760,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281093,112506,steelwj@hotmail.com,Steel, William,Training,(913) 221-6775,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281094,112506,rogernewman90@live.com,Newman, Roger,Training,(850) 225-5477,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281095,112506,newcomscott@gmail.com,Newcom, Scott,Training,801-928-6212,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281096,112506,gerethd@gmail.com,Dittrick, Gereth,Training,(906) 202-9346,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281097,112506,ath7320@outlook.com,Haskett, Aaron,Training,870-530-7320,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281098,112506,mitul4u@ymail.com,Patel, Mitul,Training,727-481-4602,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281099,112506,linolp@gmail.com,Patulot, Lino,Training,678-431-1688,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281100,112506,lederhou@grinnell.edu,Lederhouse, Brandon,Training,347-703-0356,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281101,112506,msimmons8@live.esu.edu,Simmons, Marquis,Training,(215) 882-2027,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281102,112506,samuelnlevy@gmail.com,Levy, Samuel,Training,703-407-1958,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281103,112506,workinggriffith@yahoo.com,Griffith, David,Training,(336) 944-4222,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281104,112507,myapham0410@gmail.com,Pham, Mya,Training,(571) 422-9844,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281105,112507,kdura002@fiu.edu,Durand, Kevin,Training,954-593-6207,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281106,112507,samuel.oates1@gmail.com,Oates, Samuel,Training,(336) 512-3954,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281107,112507,hokensondonald@yahoo.com,Hokenson, Donald,Training,(480) 433-1019,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281108,112507,yashataylor@gmail.com,Taylor, Yasha,Training,650-438-7852,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281109,112507,jtburchette@gmail.com,Burchette, Jameson,Training,(910) 305-9876,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281110,112507,dlarner3194@gmail.com,Larner, Daniel,Training,443-869-0058,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281111,112507,aballard513@yahoo.com,Ballard, Andre,Training,(832) 885-9838,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281112,112507,ice.blind@gmail.com,Taylor, Grant,Training,717-781-0921,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281113,112507,jonvette@comcast.net,Vette, Jonathan,Training,301-602-0329,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281114,112507,julianrojasm19@gmail.com,Rojas, Julian,Training,(407) 953-9468,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281115,112507,jbrewster1@live.esu.edu,Brewster, Joshua,Training,(484) 821-7999,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281116,112507,oreid1@student.umuc.edu,Reid, Omar,Training,215-266-8818,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281117,112507,rpacovsky@live.esu.edu,Pacovsky, Ryan,Training,(570) 991-2714,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281118,112507,lacarver93@gmail.com,Carver, Lucas-Aleczander,Training,336-416-3100,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281119,112508,richard92m@me.com,Marquez, Richard,Training,507-450-2426,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281120,112508,latezbradley@yahoo.com,Arvel Bradley, Latez,Training,301-789-6837,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281121,112508,liqunzheng@live.cn,Zheng, Liqun,Training,646-229-5540,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281122,112508,tmdinh1994@gmail.com,Dinh, Theresa,Training,682-597-4880,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281123,112508,afaugue1@student.gsu.edu,Faugue, Arthur,Training,(678) 913-5173,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281124,112508,mcbeedylan@gmail.com,McBee, Dylan,Training,317-385-2508,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281125,112508,chantel.boor@sbcglobal.net,Boor, Chantel,Training,214-504-6723,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281126,112508,ericjchristie@gmail.com,Christie, Eric,Training,770-310-0313,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281127,112508,giancarlobarreto3@gmail.com,Barreto, Gian-Carlo,Training,(352) 610-0669,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281128,112508,jameschamp@acm.org,Champ, James,Training,301-665-8666,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281129,112508,darrinmcintyre1515@gmail.com,Lee McIntyre, Darrin,Training,219-508-1170,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281130,112508,codyeboucher@gmail.com,Boucher, Cody,Training,406-593-2305,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281131,112508,markworth89@gmail.com,Worth, Mark,Training,409-812-6428,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281132,112509,lucas.p.vance@gmail.com,Vance, Lucas,Training,(201) 486-5763,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281133,112509,derek.sirp@yahoo.com,Sirp, Derek,Training,(708) 921-7959,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281134,112509,carlosdrubiano@gmail.com,Rubiano, Carlos,Training,(407) 413-2806,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281135,112509,nathanial.fine@gmail.com,Fine, Nathanial,Training,(317) 828-6616,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281136,112509,rainick987@gmail.com,Young, Matthew,Training,(262) 366-2217,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281137,112509,valfirpo90@live.com,Firpo, Valentin,Training,(954) 793-2038,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281138,112509,lucas.costa.usa@hotmail.com,Costa, Lucas,Training,954-297-7821,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281139,112509,jcollin@mail.usf.edu,Collin, John,Training,(714) 401-1599,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281140,112509,benjamindkirksey@gmail.com,Kirksey, Benjamin,Training,(850) 265-2233,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281141,112509,teresa.ayala@ou.edu,Ayala, Teresa,Training,(214) 404-0601,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281142,112509,dd_atk@yahoo.com,Atkinson, Demetrus,Training,(814) 403-0588,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281143,112509,lefort@mail.usf.edu,Joseph, Jonathan,Training,(407) 687-6183,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281144,112509,foensd@yahoo.com,Foens, David,Training,(813) 458-7830,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281145,112509,paulwesson27@gmail.com,Wesson, Paul,Training,(678) 522-7419,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281146,112509,shawngk@gmail.com,Kays, Shawn,Training,(317) 801-5277,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281147,112510,judeamagoh@gmail.com,Amagoh, Jude,Training,(804) 349-4119,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281148,112510,mehrazar_naz@yahoo.com,Mehrazar, Nazli,Training,(443) 716-8312,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281149,112510,napt57@gmail.com,A. T-Pearson, Naeem,Training,919-667-6611,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281150,112510,timwillis185@gmail.com,Willis, Tim,Training,678-920-2633,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281151,112510,matthew_ya@yahoo.com,Ya, Matthew,Training,551-358-6822,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281152,112510,tamayo.angeline@gmail.com,Tamayo, Angeline,Training,(551) 998-7323,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281153,112510,conorjoliver@live.com,Oliver, Conor,Training,(503) 501-6944,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281154,112510,mmrajski15@gmail.com,rajski, mateusz,Training,224-305-2505,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281155,112510,cwe118@gmail.com,Eckman, Clay,Training,832-341-4939,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281156,112510,matthew.nelson0523@gmail.com,Nelson, Matthew,Training,260-312-3596,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281157,112510,jward@trinity.edu,Robert Ward, Joshua,Training,(832) 492-4996,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281158,112510,yash.parekh223@gmail.com,Parekh, Yash,Training,303-949-6756,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281159,112510,rjones16854@troy.edu,Jones Jr, Robert,Training,(334) 447-0457,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281160,112510,mriverole@gmail.com,Louie Rivera, Martin,Training,(570) 994-4253,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281161,112510,olaniranolamide@yahoo.com,Olaniran, Olamide,Training,806-401-2259,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281162,112510,rcs24@buffalo.edu,Sicurella, Ryan,Training,(716) 796-3343,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281163,112510,tsagong@gmail.com,Tsagong, Tenzin,Training,(347) 221-9218,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281164,112510,jmcdo29@gmail.com,McDoniel, Jay,Training,(432) 269-9800,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281165,112510,ajl4cf@virginia.edu,Lee, Amber,Training,(703) 851-0631,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281166,112510,cganda00@gmail.com,Gandarilla, Chris,Training,915-667-8328,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281167,112501,apquion@bu.edu,Alexander Quion,Dropped,571-357-0850,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281168,112501,jw65293@umbc.edu,Tae Song,Training,410-446-1224,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281170,112501,devonpankratz@gmail.com,Devon Pankratz,Training,512-981-9298,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281172,112501,wei.huang2012@gmail.com,Wei Huang,Training,720-940-3616,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281173,112501,martindeliragalvan@outlook.com,Martin Delira,Training,575-997-6107,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281213,112501,mseif2015@gmail.com,Matthew Seifert,Training,817-304-6787,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281186,112501,carlosgs@nmsu.edu,Carlos Gastelum,Training,915-740-2315,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281188,112501,awong106312@yahoo.com,Shu-jin Wong,Training,856-725-2939,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281189,112501,cstephens@gwu.edu,Carson Stephens,Training,253-777-5703,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281190,112501,williamrwlewis@gmail.cm,William Robert Warren Lewis,Dropped,971-777-5703,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281191,112501,wphipps@wau.edu,Wendell Phipps,Training,240-715-8066,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281192,112501,ejchen145@gmail.com,Elliot Chen,Training,336-880-4308,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281194,112501,bchen.us@gmail.com,Bryan Chen,Training,626-393-6844,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281214,112511,stalindlrp@gmail.com,Nicholas Hansen,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281196,112501,jntm1222@gmail.com,Jacob Maynard,Training,251-623-0452,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281215,112511,mr.santamaria31@gmail.com,Diego Santamaria,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282000,113500,ali.vehof11@gmail.com,Ali Vehov,Dropped,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281199,112501,andrewclark719@gmail.com,Andrew Clark,Training,646-578-5201,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281216,112511,telorathsennith@gmail.com,Kyle Bennett,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281202,112501,hy1509@hotmail.com,Haihoua Yang,Training,704-245-3006,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281203,112501,dillonvicente@gmail.com,Dillon Vecente,Training,808-295-8242,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281205,112501,foktmalexander@gmail.com,Alexander Fok,Training,503-863-4738,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281217,112511,archiver.tac@gmail.com,Trevin Chester,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281219,112511,denthoven91@gmail.com,Dirk Enthoven,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281210,112501,hungle1@asu.edu,Hung Le,Training,480-278-2602,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281220,112511,eobrocki@mail.usf.edu,Eric O'Brocki,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281212,112501,naimkchau@gmail.com,Naim-Zhum Chau,Training,214-604-5607,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281221,112511,jordanquaveknight@gmail.com,Jordan Knight,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281223,112511,jeff_samson@rocketmail.com,Jeffrey Samson,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281224,112511,vollmad@bgsu.edu,David Vollmar,Dropped,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281225,112511,scottwolf37@gmail.com,Scott Wolf,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281226,112511,duncan_a@comcast.net,Andrew Duncan,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281227,112511,stephanie.erica.metts@gmail.com,Stephanie Metts,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281228,112511,craig.shefchek@gmail.com,Craig Shefchek,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281229,112511,bcarruth2@gmail.com,Brandon Carruth,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281230,112511,justinpriester@yahoo.com,Justin Priester,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281231,112511,kskevlinsmith@gmail.com,Kevin Smith,Dropped,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281232,112511,sid.2293@gmail.com,Siddharth Desai,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+281234,112501,bejaranr1@hawkmail.newpaltz.edu,Raymond Bejarano,Training,845-527-4671,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282001,113500,brook.ambaw1@gmail.com,Brook Ambaw,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282003,113501,william.clayton2501@gmail.com,Will Clayton,Training,(864) 529-8525,https://app.revature.com/profile/WilliamClayton/8d688301c297f6614142e9a0ccbe9762,live:william.clayton2501,null,null,NONE,0.0,null,null,null,null,null,\N
+282004,113500,calebherboth@gmail.com,Caleb Herboth,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282005,113501,tinfoilxd@gmail.com,Tin Van,Training,(832) 807-0432,https://app.revature.com/profile/TinVan/99e95bc47134b683311033d033f194b8,live:7ed329aa495341b0,null,null,NONE,0.0,null,null,null,null,null,\N
+282006,113500,chpalmour@gmail.com,Chris Palmour,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282007,113501,umin18@gmail.com,Eric Cha,Dropped,202-957-5972,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282008,113500,cartroach@gmail.com,Christian Roach,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282009,113501,rdhoma@gmail.com,Ryan Homa,Training,(832) 715-3039,https://app.revature.com/profile/RyanHomaJava/9d2ee895a77666a540324f0ce9a6373e,rdhoma@hotmail.com,null,null,NONE,0.0,null,null,null,null,null,\N
+282010,113500,dthom94@gmail.com,Devin Thomas,Dropped,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282012,113500,eric.hontz86@gmail.com,Eric Hontz,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282013,113501,brett.birth@gmail.com,Brett Birth,Training,817-673-2129,https://app.revature.com/profile/BrettB/4a31616360223c25301c806a6ff29ac2,live:brett.birth,null,null,NONE,0.0,null,null,null,null,null,\N
+282014,113500,gschadha7007@gmail.com,Guneet Chadha,Dropped,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282015,113501,cobian448@yahoo.com,Alex Cobian,Training,(413) 636-6115,https://app.revature.com/profile/kurtcobian/ccc4f2754ac8958f7eea93bfd15b5f5d,live:13ecb409010633ac,null,null,NONE,0.0,null,null,null,null,null,\N
+282017,113500,hichelt@gmail.com,Hunter Wichelt,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282019,113500,ilya307@yahoo.com,Ilya Vinarev,Dropped,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282020,113501,ruhax002@d.umn.edu,Nicholas Ruha,Training,(612) 597-8633,https://app.revature.com/profile/ruhax002/6bab3387e4313672b9b07580566f88b7,live:dff8d54b1d8932a1,null,null,NONE,0.0,null,null,null,null,null,\N
+282021,113500,jessenwankwo@gmail.com,Jesse Nwankwo,Dropped,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282022,113501,swordbomber2@gmail.com,Peck Boozer,Training,(817) 894-7084,https://app.revature.com/profile/PeckBoozer/3f11b111492666b9653a05138bc6ae05,swordbomber2@gmail.com,null,null,NONE,0.0,null,null,null,null,null,\N
+282023,113501,felix0654@gmail.com,Daniel Jordan,Training,(904) 674-7725,https://app.revature.com/profile/Ospreys/2d1fe78ee0f1539dfac79a9cfbc58126,live:2017danieljordan,null,null,NONE,0.0,null,null,null,null,null,\N
+282024,113500,kelvin.lane.95@live.com,Kelvin Lane,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282025,113501,patrick1jack@gmail.com,Patrick Jackson,Training,719-433-4354,https://app.revature.com/profile/patrick1jack/4e2736a9b6d65ca539726ce0e8aa64fb,live:triopat,null,null,NONE,0.0,null,null,null,null,null,\N
+282026,113500,madronegoldman@gmail.com,Madrone Goldman,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282027,113501,christi_zimmer@yahoo.com,Christi Zimmer,Training,(812) 589-5261,https://app.revature.com/profile/ChristiZimmer/68d64a857ebfcb8d2cb29acc994149e7,christi_zimmer,null,null,NONE,0.0,null,null,null,null,null,\N
+282028,113501,mccallmontrel@gmail.com,Montrel McCall,Dropped,407-965-8897,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282029,113500,ducketdw@miamioh.edu,Nora Duckett,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282030,113501,ciaranslattery12@gmail.com,Ciaran Slattery,Training,347-206-4826,https://app.revature.com/profile/Ciaran/09ebf325912cfef5d7a1983f9a4ac267,cslattery12,null,null,NONE,0.0,null,null,null,null,null,\N
+282031,113500,tcpetersen@crimson.ua.edu,Tyler Petersen,Dropped,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282032,113500,vacommero@yahoo.com,Vince Commero,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282033,113500,alejandro.alvarado0650144@gmail.com,Alejandro Alvarado,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282034,113501,ladelokun@gmail.com,Ladelokun, Busayo,Dropped,240-229-5928,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282035,113501,koredeallen@gmail.com,Korede Allen,Training,832-461-9604,https://app.revature.com/profile/Korede/03c39c00e38cc586bc3aa9d9712f24fa,live:koredeallen,null,null,NONE,0.0,null,null,null,null,null,\N
+282036,113500,amitai.ilan@gmail.com,Amitai Ilan,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282037,113501,njzarlino@gmail.com,Zarlino, Nicholas,Dropped,(412) 616-2224,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282038,113500,huriel.hdz@gmail.com,Huriel Hernandez,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282039,113501,emolinelli85@gmail.com,Evan Molinelli,Training,(310) 701-8924,https://app.revature.com/profile/JavaEvanMolinelli/dcfbd547da88da38bd4083358c1a0e7f,emolinelli85@gmail.com,null,null,NONE,0.0,null,null,null,null,null,\N
+282040,113500,jackson.demaree@gmail.com,Jackson Demaree,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282041,113501,elkewidyhaisam@gmail.com,Haisam Elkewidy,Training,940-337-4568,https://app.revature.com/profile/Haisam/775a1fcc04b9d8a6781033af5549e787,haisam.elkewidy,null,null,NONE,0.0,null,null,null,null,null,\N
+282042,113500,javierltello@gmail.com,Javier Tello,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282043,113501,kik5313@yahoo.com,Kim, Eric,Dropped,(732) 236-7101,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282044,113500,joshpost94@gmail.com,Josh Post,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282045,113501,alvinchong92@gmail.com,Alvin Chong,Training,(646) 208-0616,https://app.revature.com/profile/Alvin/e5a756f22f9f1b081c8b6e63a3652275,alvinchong92@gmail.com,null,null,NONE,0.0,null,null,null,null,null,\N
+282046,113501,dzabiyaka1@gmail.com,Davis Zabiyaka,Training,917-771-6898,https://app.revature.com/profile/DavisZabiyaka/f628c732b301455f4a4a73e6b6dcf050,david.zabiyaka1,null,null,NONE,0.0,null,null,null,null,null,\N
+282047,113500,juliaarthurs@gmail.com,Julia Arthurs,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282048,113500,kevin.liu.149@my.csun.edu,Kevin Liu,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282049,113500,roberto_utb@hotmail.com,Roberto Alvarez,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282050,113500,stefanfilsaime@yahoo.com,Stephan Fils-Aime,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282051,113500,mendoza.gsu2017@gmail.com,Thomas Mendoza,Dropped,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282052,113500,eleazar.rosales@gmail.com,Eleazar Rosales,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282053,113503,Vincent.Bolden.12@cnu.com,Vincent Bolden,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282054,113503,jeremywag@gmail.com,Jeremy Wagner,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282055,113503,tatek.ahmed@ymail.com,Tatek Ahmed,Dropped,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282056,113503,michaelxbauer@gmail.com,Michael Bauer,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282057,113503,colinbeckford1994@gmail.com,Colin Beckford,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282058,113503,vybhatt95@gmail.com,Vishal Bhatt,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282059,113503,joshualcheung83@gmail.com,Joshua Cheung,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282060,113503,francisjonny13@yahoo.com,Jonathan Francis,Dropped,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282061,113503,ckalebhake@gmail.com,Christopher Hake,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282062,113503,helf.charles@gmail.com,Charles Helf,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282063,113503,kathrine.Elaine@gmail.com,Kathrine Hewlett,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282064,113503,hillmb1@appstate.edu,Matthew Hill,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282065,113503,quentjones@gmail.com,Quenton Jones,Dropped,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282066,113503,pasangdlama@gmail.com,Pasang Lama,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282067,113503,keenan.langston@gmail.com,Keenan Langston,Dropped,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282068,113503,klkevelson@gmail.com,Keith Kevelson,Dropped,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282069,113503,tmathew4@binghamton.edu,Thomas Matthew,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282070,113503,rjminaldi3@yahoo.com,Ronald Minaldi,Dropped,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282071,113503,olerchris@gmail.com,Christopher Oler,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282072,113503,tjp824@gmail.com,Thomas Palmer,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282073,113503,emilevp23@gmail.com,Emile Paul,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282074,113503,jsayram3@gmail.com,Jose Ramirez-Villa,Dropped,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282075,113503,rawsonmb@gmail.com,Matthew Rawson,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282076,113503,isaacshanholtz@gmail.com,Isaac Shanholtz,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282077,113503,wilbur6689@gmail.com,Phillip Willis,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282078,113503,mleong@skidmore.edu,Matthew Leong,Dropped,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282079,113503,theara_ya@my.uri.edu,Theara Ya,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282080,113503,f@g.com,Matthew Kline,Dropped,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+282081,113501,williamrwlewis@gmail.com,William Lewis,Training,971-777-5703,https://app.revature.com/profile/JavaInfoSec/a9a188e7fac64dff91b5d2572086516d,William_Robert_Warren_Lewis,null,null,NONE,0.0,null,null,null,null,null,\N
+282088,113504,kbixby@conncoll.edu,Katherine Bixby,Training,508-369-4421,null,null,0030H00004isf8bQAA,null,NONE,0.0,null,null,null,null,null,\N
+282089,113504,ekbownes@gmail.com,Emma Bownes,Training,(603) 630-9559,null,null,0030H00004isPD6QAM,null,NONE,0.0,null,null,null,null,null,\N
+282091,113504,mvizcaino2@gmail.com,Maria Vizcaino,Training,(707) 337-4215,null,null,0030H00004isimSQAQ,null,NONE,0.0,null,null,null,null,null,\N
+282093,113504,jathmel@gmail.com,Jathmel Gordon,Training,(301) 974-4853,null,null,0030H00004ism60QAA,null,NONE,0.0,null,null,null,null,null,\N
+282094,113504,wwunderwood93@gmail.com,William Underwood,Training,(770) 864-6221,null,null,0030H00004ismaIQAQ,null,NONE,0.0,null,null,null,null,null,\N
+282095,113504,abjching@gmail.com,Brian Ching,Training,(484) 557-4451,null,null,0030H00004isrRjQAI,null,NONE,0.0,null,null,null,null,null,\N
+282096,113504,yangc12345@gmail.com,Yang Cui,Training,630-854-7534,null,null,0030H00004issiEQAQ,null,NONE,0.0,null,null,null,null,null,\N
+282098,113504,connor.monson@yahoo.com,Connor Monson,Training,360-878-5302,null,null,0030H00004isy8bQAA,null,NONE,0.0,null,null,null,null,null,\N
+282099,113504,mattprass@gmail.com,Matthew Prass,Training,(410) 533-9734,null,null,0030H00004isypNQAQ,null,NONE,0.0,null,null,null,null,null,\N
+283001,113504,yevseenko.vladimir@gmail.com,Vladimir Yevseenko,Training,(347) 784-1612,null,null,0030H00004it8EhQAI,null,NONE,0.0,null,null,null,null,null,\N
+283002,113504,loganrbailey8@gmail.com,Logan Bailey,Training,(307) 277-6350,null,null,0030H00004itQ3sQAE,null,NONE,0.0,null,null,null,null,null,\N
+283005,113504,trevorlory@att.net,Trevor Lory,Training,(832) 243-2786,null,null,0030H00004itxCVQAY,null,NONE,0.0,null,null,null,null,null,\N
+283006,113504,koszutan94@gmail.com,Nathaniel Koszuta,Training,(414) 531-7488,null,null,0030H00004iu9DTQAY,null,NONE,0.0,null,null,null,null,null,\N
+283007,113504,daniel.lee.fairbanks@gmail.com,Daniel Fairbanks,Training,(419) 913-7881,null,null,0030H00004iu9DqQAI,null,NONE,0.0,null,null,null,null,null,\N
+283009,113504,sherekhan1369@gmail.com,Allan Jones,Training,972-841-2399,null,null,0030H00004iuc8PQAQ,null,NONE,0.0,null,null,null,null,null,\N
+283010,113504,joshwurdemann@gmail.com,Joshua Wurdemann,Training,(909) 235-9873,null,null,0030H00004iuo20QAA,null,NONE,0.0,null,null,null,null,null,\N
+283011,113504,lwalla15@students.towson.edu,Lauren Wallace,Training,443-758-3295,null,null,0030H00004iusA8QAI,null,NONE,0.0,null,null,null,null,null,\N
+283012,113504,kjorq001@fiu.edu,Kevin Jorquera,Training,(305) 804-2383,null,null,0030H00004ivjtGQAQ,null,NONE,0.0,null,null,null,null,null,\N
+283016,113504,steven.leighton@maine.edu,Steven Leighton,Training,207-570-4183,null,null,003i000004WvT73AAF,null,NONE,0.0,null,null,null,null,null,\N
+283017,113504,james.chee000@gmail.com,James Chee,Training,(909) 662-7519,null,null,003i000004WveFdAAJ,null,NONE,0.0,null,null,null,null,null,\N
+283019,113504,andwhyzheng@gmail.com,Andy Zheng,Training,(724) 640-1375,null,null,003i000004gyitxAAA,null,NONE,0.0,null,null,null,null,null,\N
+283021,113504,apbonds1@gmail.com,Andrew Bonds,Training,479-871-6491,null,null,003i000004gz3xMAAQ,null,NONE,0.0,null,null,null,null,null,\N
+283026,113504,lockjs72@gmail.com,Joshua Locklear,Training,(910) 674-1733,null,null,003i000004gzlCuAAI,null,NONE,0.0,null,null,null,null,null,\N
+283027,113505,jeremiahmatthews79@gmail.com,Jeremiah Matthews,Training,(808) 748-9082,null,null,0030H00004iroklQAA,null,NONE,0.0,null,null,null,null,null,\N
+283029,113505,as.ferreira@outlook.com,Amauris Ferreira,Training,631-639-7635,null,null,0030H00004is1U3QAI,null,NONE,0.0,null,null,null,null,null,\N
+283030,113505,jaime@jaimejgonzalez.com,Jaime Gonzalez,Training,(630) 639-3953,null,null,0030H00004isDE8QAM,null,NONE,0.0,null,null,null,null,null,\N
+283036,113505,elijah.joseph93@gmail.com,Elijah Joseph,Dropped,909-496-4341,null,null,0030H00004iuhMUQAY,null,NONE,0.0,null,null,null,null,null,\N
+283037,113505,anthony@aoscovitch.com,Anthony Oscovitch,Training,(757) 621-4619,null,null,003i000004Rc0s5AAB,null,NONE,0.0,null,null,null,null,null,\N
+283039,113505,tbourque2012@fau.edu,Tyler Bourque,Training,(561) 376-5744,null,null,003i000004crbzPAAQ,null,NONE,0.0,null,null,null,null,null,\N
+283041,113505,jacobaseball44@yahoo.com,Jacob Burton,Training,(360) 621-6883,null,null,003i000004gzDuaAAE,null,NONE,0.0,null,null,null,null,null,\N
+283046,113505,ajramoslebron@gmail.com,Anthony Ramoslebron,Training,(860) 816-0932,null,null,0030H00004isPCtQAM,null,NONE,0.0,null,null,null,null,null,\N
+283047,113505,achintyag@yahoo.com,Achintya Goel,Training,(781) 640-9831,null,null,0030H00004isjzdQAA,null,NONE,0.0,null,null,null,null,null,\N
+284000,113505,skipbassey@gmail.com,Okwong Bassey,Training,(770) 757-0481,null,null,0030H00004it8q5QAA,null,NONE,0.0,null,null,null,null,null,\N
+284004,113505,kim.jamesw@gmail.com,James Kim,Training,516-313-5322,null,null,0030H00004itdLzQAI,null,NONE,0.0,null,null,null,null,null,\N
+284005,113505,lennylopez17@email.arizona.edu,Lenny Lopez,Training,928-285-4639,null,null,0030H00004iu1jfQAA,null,NONE,0.0,null,null,null,null,null,\N
+284007,113505,cval93f@gmail.com,Christopher Lewis,Training,850-450-1355,null,null,0030H00004iuMkpQAE,null,NONE,0.0,null,null,null,null,null,\N
+284008,113505,nickalas.93@gmail.com,Nickalas Light,Training,830-265-8293,null,null,0030H00004lhyxeQAA,null,NONE,0.0,null,null,null,null,null,\N
+284010,113505,m.rathburn@ymail.com,Matthew Rathburn,Dropped,(830) 214-4621,null,null,003i000003sWlcRAAS,null,NONE,0.0,null,null,null,null,null,\N
+284009,113505,whumphries88@yahoo.com,William Humphries,Training,(908) 783-1458,null,null,003i000003MCManAAH,null,NONE,0.0,null,null,null,null,null,\N
+284016,113505,madisononealburke@gmail.com,Madison Burke,Dropped,281-777-9676,null,null,003i000004Wx3LgAAJ,null,NONE,0.0,null,null,null,null,null,\N
+284017,113505,baronmheinrich@gmail.com,Baron Heinrich,Dropped,(512) 413-6673,null,null,003i000004crbKwAAI,null,NONE,0.0,null,null,null,null,null,\N
+284018,113505,tterasa@calstatela.edu,Taisei Terasaka,Training,310-883-4038,null,null,003i000004cs6hWAAQ,null,NONE,0.0,null,null,null,null,null,\N
+284020,113505,lmoore0621@gmail.com,Leon Moore,Training,(404) 647-3160,null,null,003i000004gybIBAAY,null,NONE,0.0,null,null,null,null,null,\N
+284028,113505,travisleeallan@gmail.com,Travis Allan,Dropped,903-243-7929,null,null,0030H00004irzqhQAA,null,NONE,0.0,null,null,null,null,null,\N
+284032,113505,lonsdale.g@gmail.com,Gregory Lonsdale,Training,(603) 930-2579,null,null,0030H00004isD1RQAU,null,NONE,0.0,null,null,null,null,null,\N
+282016,113501,russty@aggiemail.usu.edu,Russ Barnes,Training,(801) 669-3458,https://app.revature.com/profile/BarnesJava/a5e3915a4ddba71b0df0153e753bc8c4,live:forxxserious,null,null,NONE,0.0,null,null,null,null,null,\N
+282011,113501,patrickmuldoon20@yahoo.com,Patrick Muldoon,Training,978-868-8333,https://app.revature.com/profile/PatrickMuldoon/db9eee8f5b56488c07265231979051fa,live:patrickmuldoon20,null,null,NONE,0.0,null,null,null,null,null,\N
+282002,113501,pburns96@live.com,Patrick Burns,Training,(423) 457-9449,https://app.revature.com/profile/JavaPatrick/55c9b27516a72539a9a6b4a24183f249,pburns96@live.com,null,null,NONE,0.0,null,null,null,null,null,\N
+282018,113501,noonan.benjamin93@gmail.com,Ben Noonan,Training,(512) 736-5052,https://app.revature.com/profile/JavaBen/c57a51e622b323a6fbab802a1dc6159d,live:noonan.benjamin93,null,null,NONE,0.0,null,null,null,null,null,\N
+284033,113506,xufactor3@gmail.com,Sam Xu,Dropped,(267) 206-3071,null,null,0030H00004irp7vQAA,null,NONE,0.0,null,null,null,null,null,\N
+284034,113506,dackley1@gmail.com,Daniel Ackley Jr,Training,631-742-6861,null,null,0030H00004irsfDQAQ,null,NONE,0.0,null,null,null,null,null,\N
+284040,113506,jarrodb94@gmail.com,Jarrod Bieber,Training,302-757-1700,null,null,003i000003jl3bzAAA,null,NONE,0.0,null,null,null,null,null,\N
+284046,113506,achavez@scu.edu,Adrian Chavez,Training,(818) 605-2953,null,null,003i000004gzopfAAA,null,NONE,0.0,null,null,null,null,null,\N
+284049,113506,rguajardo95@gmail.com,RAUL GUAJARDO,Training,956-222-3900,null,null,0030H00004it91yQAA,null,NONE,0.0,null,null,null,null,null,\N
+285000,113506,kevinagr359@gmail.com,Kevin Aguirre,Dropped,713-884-0565,null,null,0030H00004itDXLQA2,null,NONE,0.0,null,null,null,null,null,\N
+285002,113506,abaynhe.abitew@udc.edu,Abaynhe Abitew,Training,(240) 918-9535,null,null,0030H00004itGdMQAU,null,NONE,0.0,null,null,null,null,null,\N
+285006,113506,jacob.hackel@gmail.com,Jacob Hackel,Training,270-804-6531,null,null,0030H00004itwMkQAI,null,NONE,0.0,null,null,null,null,null,\N
+285007,113506,alindayuen@gmail.com,Serena Yuan,Dropped,(775) 225-7251,null,null,0030H00004itxDVQAY,null,NONE,0.0,null,null,null,null,null,\N
+285008,113506,natalie.brooks3@gmail.com,Natalie Walker,Dropped,(703) 508-6125,null,null,0030H00004ivCCMQA2,null,NONE,0.0,null,null,null,null,null,\N
+285009,113506,ashleydyas92@gmail.com,Ashley Dyas,Training,510-506-0701,null,null,0030H00004lhyuTQAQ,null,NONE,0.0,null,null,null,null,null,\N
+285010,113506,persil.matthew+indeed@gmail.com,Matthew Persil,Training,(571) 246-2281,null,null,0030H00004liYHLQA2,null,NONE,0.0,null,null,null,null,null,\N
+285019,113506,jacobhaag17@gmail.com,Jacob Haag,Training,608-513-4795,null,null,003i000004WuyVRAAZ,null,NONE,0.0,null,null,null,null,null,\N
+285022,113506,benkidd361@gmail.com,Benjamin Kidd,Training,205-454-7043,null,null,003i000004crCviAAE,null,NONE,0.0,null,null,null,null,null,\N
+285023,113506,kayci.kerr@gmail.com,Kayci Parcells,Training,214-906-5912,null,null,003i000004gyvguAAA,null,NONE,0.0,null,null,null,null,null,\N
+285024,113506,ryantimms@optonline.net,Ryan Timms,Training,(631) 804-0412,null,null,003i000004gz3p8AAA,null,NONE,0.0,null,null,null,null,null,\N
+285027,113506,adamlnk@neb.rr.com,Adam Lif,Training,(402) 540-7853,null,null,003i000004gzlCBAAY,null,NONE,0.0,null,null,null,null,null,\N
+285030,113506,aldmnatividad@gmail.com,Aldrin Dominique Natividad,Training,254-458-9526,null,null,0030H00004isibvQAA,null,NONE,0.0,null,null,null,null,null,\N
+285032,113507,dongni.qiu1@gmail.com,DongNi Qiu,Training,646-387-3761,null,null,0030H00004lhyv0QAA,null,NONE,0.0,null,null,null,null,null,\N
+285035,113507,sabina.haque@outlook.com,Sabina Haque,Training,347-901-1993,null,null,0030H00004ljOHpQAM,null,NONE,0.0,null,null,null,null,null,\N
+285033,113507,jolivos@fordham.edu,Jenny Olivos,Training,(917) 558-4449,null,null,0030H00004lj2EvQAI,null,NONE,0.0,null,null,null,null,null,\N
+291014,115503,ihsantaha999@gmail.com,Ihsan Taha,Training,415-265-3692,null,null,0030H00004iuc8nQAA,null,NONE,0.0,Edward Hulse,San Francisco State University,Bachelors,Computer Science,August Duet,100
+291019,115503,dbkelly87@gmail.com,Daniel Kelly,Training,864-905-2484,null,null,0030H00004iusI7QAI,null,NONE,0.0,Thomas Hodge,University of South Carolina-Upstate,Bachelors,Computer Science,Hamsalakshimi Narayanan,\N
+291020,115503,aqphoen@csu.fullerton.edu,Man Lou,Training,626-478-5197,null,null,0030H00004iuyymQAA,null,NONE,0.0,Rachna Tyagi,California State University-Fullerton,Bachelors,Mathematics,Bhaskar Sundaramurthy,44
+291021,115503,smithtrent00@gmail.com,Trent Smith,Training,239-699-8955,null,null,0030H00004iuz4uQAA,null,NONE,0.0,Thomas Hodge,University of Central Florida,Bachelors,Electrical Engineering,Bhaskar Sundaramurthy,95
+291022,115503,worthington.96@osu.edu,Morgan Worthington,Training,(614) 551-7206,null,null,0030H00004iv02qQAA,null,NONE,0.0,Ira D'Silva,Ohio State University,Bachelors,Physics (Engineering),Emily Higgins,\N
+291023,115503,toddmerbeth@gmail.com,Todd Merbeth,Training,520-449-0618,null,null,0030H00004ivCsFQAU,null,NONE,0.0,Edward Hulse,University of Arizona,Bachelors,Computer Science,Steven Kelsey,\N
+291026,115503,nick.bell.001@gmail.com,Nicholas Bell,Training,615-512-6078,null,null,0030H00004ivQUbQAM,null,NONE,0.0,Kristian Moreira,Middle Tennessee State University,Bachelors,Electronics and Communication Engineering,Divya R,50
+291027,115503,ronyalvarez1993@gmail.com,Rony Alvarez Arzu,Training,(347) 335-8327,null,null,0030H00004ivZftQAE,null,NONE,0.0,Edward Hulse,Pace University,Masters,Computer Science and Information Systems,Divya R,\N
+291028,115503,4arhodes@gmail.com,William Rhodes,Dropped,623-570-4361,null,null,0030H00004ivkiuQAA,null,NONE,0.0,Thomas Hodge,Northern Arizona University,Bachelors,Computer Science,August Duet,27
+291032,115503,wezley.singleton@gmail.com,Wezley Singleton,Training,941-445-0537,null,null,0030H00004liYa5QAE,Hired as a trainer,TRAINER,0.0,Kristian Moreira,University of Phoenix,Bachelors,Computer Science,Rashika Guna,62
+291033,115503,abdouldolo1@gmail.com,abdoul dolo,Dropped,678-768-9481,null,null,0030H00004ljbR7QAI,null,NONE,0.0,Chris Bermudez,Kennesaw State University,Bachelors,Computer Science,Rashika Guna,\N
+291035,115503,jgbelloga3380@eagle.fgcu.edu,Jose Belloga,Training,(239) 851-5646,null,null,0030H00004ljqnkQAA,null,NONE,0.0,Rachna Tyagi,Florida Gulf Coast University,Bachelors,Software Engineering,Rashika Guna,\N
+291036,115503,nahomtsadu@gmail.com,Nahom Tsadu,Training,(704) 942-5246,null,null,0030H00004lkBpDQAU,null,NONE,0.0,Edward Hulse,University of North Carolina at Charlotte,Bachelors,Computer Science,Bhaskar Sundaramurthy,\N
+291038,115503,shujunye94@gmail.com,Shujun Ye,Training,3473023658,null,null,0030H00004pFgR4QAK,null,NONE,0.0,Chris Bermudez,North Carolina State University,Bachelors,Chemical Engineering,Bhuvaneswari Mohan,\N
+291039,115503,eesighee@gmail.com,Isai Alegria,Training,(956) 454-7100,null,null,003i0000024RTL9AAO,null,NONE,0.0,Thomas Hodge,University of Texas-Pan American,Bachelors,Electronics and Communication Engineering,Bhaskar Sundaramurthy,32
+291040,115503,fetex123@gmail.com,Felix Abreu,Training,347-768-9349,null,null,003i000003oMwdiAAC,null,NONE,0.0,Nick Anderson,University at Albany-SUNY,Bachelors,Computer Science,Kevin Gutierrez,17
+291041,115503,dargetsinger@islander.tamucc.edu,David Argetsinger,Training,(361) 443-5446,null,null,003i000004DQ2mrAAD,null,NONE,0.0,Ira D'Silva,Texas A&M University-Corpus Christi,Bachelors,Systems Programming,August Duet,\N
+291042,115503,marshall.c.000@gmail.com,Marshall Cargle,Training,559-392-7581,null,null,003i000004Rcdw7AAB,null,NONE,0.0,Kristian Moreira,San Jose State University,Bachelors,Electronics and Communication Engineering,Bhaskar Sundaramurthy,\N
+287038,113516,spegram91@gmail.com,Stephen Pegram,Training,240-461-6071,https://app.revature.com/profile/LobsangTashi/97515bb2f3505f7d2aa2e2ea006df14c,null,003i000003rYcX1AAK,null,NONE,0.0,null,null,null,null,null,\N
+287025,113516,sbilling@callutheran.edu,Schaun Billing,Training,661-305-0928,https://app.revature.com/profile/sbilling/2b1186bee875bb42ac9f05e8164a1d1b,null,0030H00004iu8blQAA,null,NONE,0.0,null,null,null,null,null,\N
+287006,113516,cyrilmanayath@gmail.com,Cyril Manayath,Training,908-577-4246,https://app.revature.com/profile/CyrilManayath/74dc3610fe7ac49565e54e49112794ad,null,0030H00004itM1tQAE,null,NONE,0.0,null,null,null,null,null,\N
+291044,115504,coopercummings6@gmail.com,Cooper Cummings,Training,316-573-9580,null,null,0030H00004irzhGQAQ,null,NONE,0.0,Ira D'Silva,Fort Hays State University,Bachelors,Computer Science,Suganya D,\N
+291047,115504,djt52@case.edu,Daniel Truax,Training,330-581-3890,null,null,0030H00004ism9IQAQ,null,NONE,0.0,Edward Hulse,Case Western Reserve University,Bachelors,Computer Engineering,Bhaskar Sundaramurthy,\N
+291049,115504,emmanuelgeorge93@gmail.com,Emmanuel George,Training,607-263-2356,null,null,0030H00004isrUEQAY,null,NONE,0.0,Kristian Moreira,CUNY School of Professional Studies,Bachelors,Computer Science,Nick Jurczak,32
+292003,115504,syin231@gmail.com,Samuel Yin,Training,510-809-5098,null,null,0030H00004iuhPiQAI,null,NONE,0.0,Kristian Moreira,Purdue University,Bachelors,Computer Science,Yuvi D,\N
+292004,115504,timothy_kuter@yahoo.com,Timothy Kuter,Training,(307) 679-6289,null,null,0030H00004iujmMQAQ,null,NONE,0.0,Chris Bermudez,Dakota State University,Bachelors,Computer Science,Naveen Kumar,\N
+292006,115504,sagunsteven@live.com,Steven Craig Sagun,Training,609-287-4259,null,null,0030H00004iv98bQAA,null,NONE,0.0,Thomas Hodge,Rutgers University,Bachelors,Computer Science,Hamsalakshimi Narayanan,\N
+292007,115504,jack.mccabev@gmail.com,Jack McCabe,Training,952-797-3934,null,null,0030H00004ivHfmQAE,null,NONE,0.0,Chris Bermudez,Gustavus Adolphus College,Bachelors,Computer Science,Hamsalakshimi Narayanan,29
+292008,115504,chao.tzu5@gmail.com,Tzu Chao,Training,832-287-2648,null,null,0030H00004ivhBMQAY,null,NONE,0.0,Llewellyn Davis,Ohio State University,Bachelors,Computer IS,Aiswarya R,2
+292009,115504,sphuang31@gmail.com,Samuel Huang,Training,(949) 923-5938,null,null,0030H00004ivjlgQAA,null,NONE,0.0,Rachna Tyagi,University of California-Irvine,Bachelors,Software Engineering,Bhuvaneswari Mohan,\N
+292011,115504,jonchengc3@gmail.com,Jonathan Cheng,Training,732-379-7163,null,null,0030H00004liOA3QAM,null,NONE,0.0,Edward Hulse,CANDIDATE POOL,Bachelors,Electronics and Communication Engineering,Bhaskar Sundaramurthy,79
+292014,115504,michaelmanzanares1994@gmail.com,Michael Manzanares,Training,818-593-9547,null,null,0030H00004lif92QAA,null,NONE,0.0,Kristian Moreira,San Diego State University,Bachelors,Computer Science,Akshay PK,80
+292016,115504,andrewmichaeltaylor94@gmail.com,Andrew Taylor,Training,858-353-5096,null,null,0030H00004likZdQAI,null,NONE,0.0,Chris Bermudez,Point Loma Nazarene University,Bachelors,Computer Science,Akshay PK,\N
+292018,115504,jnreidy@bu.edu,John Reidy,Training,412-715-5591,null,null,0030H00004likR6QAI,null,NONE,0.0,Chris Bermudez,Boston University,Bachelors,Computer Science,Rashika Guna,\N
+292019,115504,david.cosiem@gmail.com,David Cosiem,Training,301-775-0579,null,null,0030H00004likbsQAA,null,NONE,0.0,Kristian Moreira,University of Maryland-College Park,None,null,Bhaskar Sundaramurthy,\N
+292020,115504,jfenstermacher123@gmail.com,Jonathan Fenstermacher,Training,916-996-6921,null,null,0030H00004liokuQAA,null,NONE,0.0,Llewellyn Davis,University of California-Davis,Bachelors,Biochemistry & Molecular Cell Biology,Aiswarya R,7
+292026,115504,matthewryanmahonjohnson@gmail.com,Matthew Johnson,Training,612-703-8686,null,null,0030H00004ljOJcQAM,null,NONE,0.0,Chris Bermudez,Augsburg College,Bachelors,Computer Science,Rashika Guna,\N
+292028,115504,kafranks@live.com,Kenneth Franks,Dropped,231-838-9552,null,null,0030H00004ljfHGQAY,null,NONE,0.0,Thomas Hodge,Davenport University,Bachelors,Computer Science,Rashika Guna,\N
+292038,115504,cmsduring94@gmail.com,Cameron Shamah,Training,251-401-2522,null,null,0030H00004pEARZQA4,null,NONE,0.0,Edward Hulse,University of South Alabama,Bachelors,Computer Science,Divya R,\N
+292042,115504,jameskwidener@gmail.com,James Widener,Training,318-393-6877,null,null,0030H00004pHAsDQAW,null,NONE,0.0,Rachna Tyagi,Louisiana Tech University,Bachelors,Computer Science,Aiswarya R,\N
+292043,115504,dbukauskasjths@gmail.com,Douglas Bukauskas,Dropped,708-341-8479,null,null,0030H00004qRhStQAK,null,NONE,0.0,Chris Bermudez,CANDIDATE POOL,Bachelors,Computer Related,Aiswarya R,\N
+292044,115504,dgcocano@gmail.com,Daniel Ocano,Training,786-261-1843,null,null,0030H00004qRyojQAC,null,NONE,0.0,Kristian Moreira,Georgia Institute of Technology,Bachelors,Computer Related,Rashika Guna,43
+292045,115504,swansonalex@gmail.com,Alex Swanson,Training,805-908-2093,null,null,0030H00004qRyqTQAS,null,NONE,0.0,Edward Hulse,California State University-Northridge,Bachelors,Computer Science,Bhuvaneswari Mohan,\N
+292047,115504,aabafogi1@gmail.com,Adem Abafogi,Dropped,678-431-4315,null,null,0030H00004qSHQWQA4,null,NONE,0.0,Edward Hulse,Georgia Gwinnett College,Bachelors,Computer Science,Bhaskar Sundaramurthy,\N
+292048,115504,cnmperalta@gmail.com,Caroline Peralta,Training,571-249-8370,null,null,0030H00004qSMArQAO,null,NONE,0.0,Kristian Moreira,CANDIDATE POOL,Masters,Computer Science,Hamsalakshimi Narayanan,\N
+292049,115504,ky.staedler@gmail.com,Kelsey Yuen,Training,917-434-3798,null,null,003i00000416F7xAAE,null,NONE,0.0,Edward Hulse,University of Illinois-Urbana-Champaign,Bachelors,Computer Science,Aiswarya R,\N
+292050,115504,wshephard4@gmail.com,William Shephard,Dropped,708-733-0299,null,null,003i000004NUhz8AAD,null,NONE,0.0,Ira D'Silva,Southern New Hampshire University,Masters,Game Design/Development,Rashika Guna,45
+292055,115505,sofanib@gmail.com,Sofani Mesfun,Training,510-542-7312,null,null,0030H00004irxggQAA,null,NONE,0.0,Edward Hulse,CANDIDATE POOL,Bachelors,Computer and Information Sciences, General,Bhuvaneswari Mohan,8
+292057,115505,bran.frankenfield@gmail.com,Brandon Frankenfield,Training,610-297-6262,null,null,0030H00004isc64QAA,null,NONE,0.0,Lisa Wilson,Temple University,Bachelors,Audio Engineering,Rashika Guna,20
+292058,115505,zjhabib@indiana.edu,Zane Habib,Training,630-808-7872,null,null,0030H00004itHQjQAM,null,NONE,0.0,Rachna Tyagi,Indiana University-Bloomington,Bachelors,Informatics,Naveen Kumar,7
+292059,115505,echannah631@gmail.com,Elliot Hannah,Training,706-631-7005,null,null,0030H00004itLHwQAM,null,NONE,0.0,Rachna Tyagi,Georgia State University,Bachelors,Computer Science,Rashika Guna,\N
+292061,115505,connorphu@gmail.com,Khai Phu,Training,952-261-3315,null,null,0030H00004itjHqQAI,null,NONE,0.0,Edward Hulse,University of Wisconsin-Stout,Bachelors,Mathematics,Divya R,18
+292065,115505,phillip.steinhart@gmail.com,Phillip Steinhart,Training,203-885-3874,null,null,0030H00004iv9FXQAY,null,NONE,0.0,Edward Hulse,Union College Schenectady,Bachelors,Computer Engineering,Hamsalakshimi Narayanan,40
+292067,115505,nicholas.escalona@gmail.com,Nicholas Escalona,Training,(609) 540?4444,null,null,0030H00004ivZd9QAE,null,NONE,0.0,Kristian Moreira,Lafayette College,Bachelors,Physics,Yuvi D,\N
+292070,115505,s_m_hayes@hotmail.com,Shawn Hayes,Training,601-307-5783,null,null,0030H00004liJ6fQAE,null,NONE,0.0,Rachna Tyagi,University of Southern Mississippi,Bachelors,Computer Programming,Bhaskar Sundaramurthy,\N
+292071,115505,parajuli.tul@gmail.com,Tul Parajuli,Training,301-660-0642,null,null,0030H00004likbYQAQ,null,NONE,0.0,Edward Hulse,University of Maryland-Baltimore County,Bachelors,Computer Engineering,Bhaskar Sundaramurthy,\N
+292072,115505,yoondukkim2017@gmail.com,Yoon Duk Kim,Training,915-637-9603,null,null,0030H00004lj2XyQAI,null,NONE,0.0,Edward Hulse,University of Texas at Arlington,None,null,Bhuvaneswari Mohan,\N
+292075,115505,rlocke5@cox.net,Russell Locke,Training,602-301-0684,null,null,0030H00004llPReQAM,null,NONE,0.0,Lisa Wilson,Arizona State University-Tempe,Bachelors,Chemical Engineering,Akshay PK,100
+292076,115505,rdgandhi16@gmail.com,Rinkal Gandhi,Signed,(404) 955-3640,null,null,0030H00004lm5UPQAY,null,NONE,0.0,Michael Minton,Marketo Lead,Bachelors,Business,Hamsalakshimi Narayanan,\N
+292077,115505,anthony.leinojr@gmail.com,Anthony Leino,Training,414-943-2210,null,null,0030H00004pET3CQAW,null,NONE,0.0,Kristian Moreira,Milwaukee School of Engineering,Bachelors,Software Engineering,Aiswarya R,\N
+292081,115505,raymondzhu1995@gmail.com,Raymond Zhu,Training,781-521-3150,null,null,0030H00004pGMMzQAO,null,NONE,0.0,Rachna Tyagi,University of Massachusetts-Amherst,Bachelors,Computer Science,Rashika Guna,\N
+292082,115505,quantanma@gmail.com,Quan Ma,Training,703-424-0310,null,null,0030H00004pH51TQAS,null,NONE,0.0,Llewellyn Davis,Virginia Commonwealth University,Bachelors,Computer Engineering,Aiswarya R,8
+292083,115505,oumar.mboup@yahoo.com,Oumar Mboup,Training,410-627-7230,null,null,0030H00004pFu8gQAC,null,NONE,0.0,Edward Hulse,CANDIDATE POOL,Bachelors,Computer Science,Hamsalakshimi Narayanan,\N
+292084,115505,geoffcawley@gmail.com,Geoffrey Cawley,Training,203-939-2075,null,null,0030H00004pIJJfQAO,null,NONE,0.0,Thomas Hodge,Iona College,None,null,Bhuvaneswari Mohan,\N
+292085,115505,martinfitzjerlsam@yahoo.com,Samuel Baker,Training,(216) 210-9027,null,null,0030H00004qScUHQA0,null,NONE,0.0,Thomas Hodge,DeVry University,None,null,Divya R,\N
+292086,115505,mattdancz@outlook.com,Matthew Dancz,Training,231-794-2889,null,null,003i000004KykEVAAZ,null,NONE,0.0,Edward Hulse,Ferris State University,Bachelors,Digital Media Software Engineering,Divya R,\N
+292087,115505,jyggalagjones@gmail.com,Jacob Wrightsman,Training,260-446-5231,null,null,003i000004NVoFTAA1,null,NONE,0.0,Nick Anderson,Full Sail University,Bachelors,Game Programming,August Duet,64
+292091,115505,hendricktyler5@gmail.com,Tyler Hendrick,Training,724-771-7162,null,null,003i000004WvdylAAB,null,NONE,0.0,Rachna Tyagi,Pennsylvania State University-University Park,Bachelors,Computer Science,Aiswarya R,\N
+292094,115505,mcinnis.paul@gmail.com,Paul McInnis,Training,509-768-1602,null,null,003i000004csSgOAAU,null,NONE,0.0,Lisa Wilson,Western Washington University,Bachelors,Computer Science,Akshay PK,95
+292097,115506,joseph.rp.fernandez@gmail.com,Joseph Fernandez,Training,832-875-4627,null,null,0030H00004isxtNQAQ,null,NONE,0.0,Rachna Tyagi,University of Houston,Bachelors,Computer Engineering Technology,Bhaskar Sundaramurthy,\N
+293000,115506,aminelrefaei@gmail.com,Amin El-refaei,Training,508-873-3827,null,null,0030H00004iv9DCQAY,null,NONE,0.0,Rachna Tyagi,Worcester State University,Bachelors,Computer Science,Divya R,4
+293002,115506,adriel.leung@gmail.com,Adriel Leung,Training,248-346-7477,null,null,0030H00004ljWz6QAE,null,NONE,0.0,Edward Hulse,Michigan State University,Bachelors,Computer Science,Akshay PK,\N
+293006,115506,tuandpham75@gmail.com,Tuan Pham,Training,714-725-5860,null,null,0030H00004ljueVQAQ,Trainee was automatically flagged by Caliber. ,RED,0.0,Chris Bermudez,California Polytechnic State University-Pomona,Bachelors,Computer Science,Divya R,\N
+293007,115506,dfmai23@gmail.com,Dustin Mai,Training,916-835-1264,null,null,0030H00004lk0E2QAI,null,NONE,0.0,Rachna Tyagi,CANDIDATE POOL,Bachelors,Computer Science,Divya R,100
+293009,115506,william.gentry02@gmail.com,William Gentry,Training,404-376-6964,null,null,0030H00004lk0FCQAY,null,NONE,0.0,Simon Baker,Kennesaw State University,Bachelors,Mathematics,Aiswarya R,\N
+293010,115506,asharif3003@gmail.com,Adam Sharif,Training,734-972-9491,null,null,0030H00004lk67CQAQ,null,NONE,0.0,Rachna Tyagi,University of Michigan-Dearborn,None,null,Suganya D,\N
+293012,115506,andrewcrenwelge@gmail.com,Andrew Crenwelge,Training,702-528-6802,null,null,0030H00004lkkFoQAI,null,NONE,0.0,Chris Bermudez,Texas A&M University-College Station,Bachelors,Chemical Engineering,Divya R,53
+293013,115506,i8hollywood@hotmail.com,Ofer Rosen,Training,7377177772,null,null,0030H00004llFE6QAM,null,NONE,0.0,Chris Bermudez,CANDIDATE POOL,Bachelors,Electronics and Communication Engineering,Aiswarya R,\N
+293014,115506,rogelioagarcia@gmail.com,Rogelio Garcia,Training,956-984-9983,null,null,0030H00004llPQ4QAM,null,NONE,0.0,Kristian Moreira,University of Texas of the Permian Basin,Bachelors,Computer Engineering,Suganya D,\N
+293018,115506,mauricejagan@gmail.com,Maurice Jagan,Training,860-967-8281,null,null,0030H00004pEARJQA4,null,NONE,0.0,Edward Hulse,Central Connecticut State University,Masters,Computer Science,Bhaskar Sundaramurthy,\N
+293019,115506,nathan.pooled@gmail.com,Nathan Poole,Training,405-585-8132,null,null,0030H00004pEHh6QAG,null,NONE,0.0,Chris Bermudez,East Central University,Bachelors,Computer Science,Rashika Guna,10
+293020,115506,stepoduor@gmail.com,Stephen Oduor,Training,518-253-2449,null,null,0030H00004pF5AgQAK,null,NONE,0.0,Chris Bermudez,CANDIDATE POOL,Bachelors,Computer Science,Divya R,\N
+293025,115506,suclayton937@gmail.com,Clayton Su,Training,909-395-6166,null,null,0030H00004pFysxQAC,null,NONE,0.0,Lisa Wilson,University of California-Riverside,Bachelors,Computer Science,Divya R,1
+293029,115506,shenj529@gmail.com,Jason Shen,Training,516-469-1128,null,null,0030H00004qSARxQAO,null,NONE,0.0,Edward Hulse,Harvard University,Bachelors,Computer Science,Divya R,\N
+293030,115506,marauuder@gmail.com,Antonio Dotson,Training,8325760651,null,null,0030H00004qSiGFQA0,null,NONE,0.0,Edward Hulse,Kaplan University,None,null,Bhaskar Sundaramurthy,\N
+293031,115506,getasewendale@gmail.com,Getasew Ashebir,Dropped,651-428-2187,null,null,003i000002nXJneAAG,null,NONE,0.0,Rachna Tyagi,University of Minnesota-Twin Cities,Bachelors,Computer Engineering,Divya R,\N
+293032,115506,pepe5451@live.com,jose perez,Dropped,956-371-0164,null,null,003i000003RArk7AAD,null,NONE,0.0,Rachna Tyagi,University of Phoenix,Bachelors,Software Engineering,Rashika Guna,10
+293033,115506,isaacmanayath@gmail.com,Isaac Manayath,Dropped,908-577-4245,null,null,003i000003yppXpAAI,null,NONE,0.0,Rachna Tyagi,Rutgers University,Bachelors,Computer Science,Divya R,99
+293036,115506,mr.programmer@outlook.com,Robin Pierre,Training,(570) 994-7692,null,null,003i000004NV6pPAAT,null,NONE,0.0,Llewellyn Davis,East Stroudsburg University of Pennsylvania,Bachelors,Computer Science,Ryan Lessley,\N
+293041,115504,philip.rego.career@gmail.com,Philip Rego,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+293042,115507,ericwebb100@gmail.com,Eric Webb,Training,(859) 640-5791,null,null,0030H00004isHQ4QAM,null,NONE,0.0,Chris Bermudez,Northern Kentucky University,Bachelors,Computer Science,Akshay PK,\N
+293043,115507,cartertaylor11@yahoo.com,Carter Taylor,Training,(281) 660-1452,null,null,0030H00004isO8HQAU,null,NONE,0.0,Chris Bermudez,University of Texas at Dallas,Bachelors,Computer Science,Divya R,\N
+293044,115507,james.holzer1990@gmail.com,James Holzer,Training,815-341-1114,null,null,0030H00004isOQdQAM,null,NONE,0.0,Kristian Moreira,Tarleton State University,Bachelors,Computer Science,Suganya D,31
+293045,115507,austinjohnathand@gmail.com,Johnathan Austin,Training,734-773-9476,null,null,0030H00004isjyNQAQ,null,NONE,0.0,Amy Farook,University of North Florida,Bachelors,Computer Science,Naveen Kumar,32
+293046,115507,patrickjk94@gmail.com,Patrick Kennedy,Training,805-248-6238,null,null,0030H00004itOv7QAE,null,NONE,0.0,Thomas Hodge,Humboldt State University,Bachelors,Computer Science,Bhuvaneswari Mohan,\N
+293049,115507,ss2010@hawaii.edu,Shane Avery Sistoza,Training,808-541-7053,null,null,0030H00004iu9GtQAI,null,NONE,0.0,Edward Hulse,University of Hawaii-Hilo,Bachelors,Computer Science,Rashika Guna,\N
+294003,115507,hav206@yahoo.com,Van Ha,Training,(206) 548-6184,null,null,0030H00004likbgQAA,null,NONE,0.0,Edward Hulse,University of Illinois-Springfield,Bachelors,Electronics and Communication Engineering,Akshay PK,96
+294005,115507,jgmacho48@gmail.com,Jeffrey Camacho,Training,210-987-7199,null,null,0030H00004liwi4QAA,null,NONE,0.0,Thomas Hodge,University of Phoenix,Bachelors,Information Technology,Bhaskar Sundaramurthy,9
+294006,115507,fjpm03@gmail.com,Francisco Palomino,Training,787-206-2165,null,null,0030H00004ljE7tQAE,null,NONE,0.0,Edward Hulse,CANDIDATE POOL,Masters,Computer Science,Bhaskar Sundaramurthy,\N
+294007,115507,davidjgrvs@gmail.com,David Graves,Training,423-505-0539,null,null,0030H00004ljT0FQAU,null,NONE,0.0,Ira D'Silva,Savannah College of Art and Design,Bachelors,Unlisted Major,Rashika Guna,29
+294014,115507,mmalhind@umich.edu,Mohamad Alhindi,Training,586-662-4356,null,null,0030H00004ljufDQAQ,null,NONE,0.0,Edward Hulse,CANDIDATE POOL,Bachelors,Electronics and Communication Engineering,Bhaskar Sundaramurthy,\N
+294018,115507,jordandelong101@gmail.com,Jordan DeLong,Training,901-489-4503,null,null,0030H00004pEHhAQAW,null,NONE,0.0,Thomas Hodge,University of Memphis,Bachelors,Computer Science,Rashika Guna,\N
+294020,115507,allanjpoindexter@outlook.com,Allan Poindexter,Training,478-733-2431,null,null,0030H00004pEMzaQAG,null,NONE,0.0,Chris Bermudez,CANDIDATE POOL,Bachelors,Computer Science,Divya R,100
+294022,115507,ttd995@gmail.com,Tyler Dresselhouse,Training,(401) 533-2459,null,null,0030H00004pEwgAQAS,null,NONE,0.0,Thomas Hodge,Quinnipiac University,Bachelors,Software Engineering,Aiswarya R,\N
+294024,115507,dylantbritton@gmail.com,Dylan Britton,Training,786-999-5345,null,null,0030H00004pFXUcQAO,null,NONE,0.0,Rachna Tyagi,University of Central Florida,Bachelors,Computer Science,Rashika Guna,12
+294026,115507,drobin897@gmail.com,Daniel Robinson,Training,(251) 239-6550,null,null,0030H00004pFu8AQAS,null,NONE,0.0,Llewellyn Davis,Kent State University,None,null,Aiswarya R,\N
+294027,115507,mhswelam@outlook.com,Mohamed Swelam,Training,206-681-6464,null,null,0030H00004pGBBDQA4,null,NONE,0.0,Thomas Hodge,CANDIDATE POOL,Bachelors,Computer Science,Divya R,\N
+294028,115507,ewumi1@gmail.com,Olayinka Ewumi,Training,(612) 481-6635,null,null,0030H00004pGBDOQA4,null,NONE,0.0,Thomas Hodge,Winona State University,Bachelors,Exercise Science,Bhuvaneswari Mohan,\N
+294029,115507,harrischarliep@gmail.com,Charles Harris,Training,321-693-1414,null,null,0030H00004pGHUgQAO,null,NONE,0.0,Thomas Hodge,CANDIDATE POOL,Bachelors,Mathematics,Rashika Guna,66
+294033,115507,cristian.hermida@yahoo.com,Cristian Hermida,Training,561-856-4229,null,null,0030H00004qRhSMQA0,null,NONE,0.0,Edward Hulse,Florida Atlantic University,None,null,Aiswarya R,0
+294035,115507,seansosu@gmail.com,Sean Sung,Training,503-351-7061,null,null,003i000004JpcsdAAB,null,NONE,0.0,Michael Minton,Oregon State University,Bachelors,ELECTRICAL AND COMPUTER ENGINEERING,Genesis Bonds,\N
+294036,115507,tylerbare98@gmail.com,Tyler Bare,Training,(850) 374-0034,null,null,003i000004WugbHAAR,null,NONE,0.0,Edward Hulse,University of West Florida,Bachelors,Computer Information syatem,Bhaskar Sundaramurthy,\N
+294038,115504,matthew.o.mccormick@gmail.com,Matthew McCormick,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+294039,115508,jamesdinht@gmail.com,Dinh, James,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+294040,115508,djchasevisa@gmail.com,Parr, Chase,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+294041,115508,maxlindsey543@gmail.com,Lindsey, Travis,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+294042,115508,jogonzal02@gmail.com,Gonzalez, John,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+294043,115508,chris.h.elric@icloud.com,Elric, Christian,Dropped,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+294044,115508,kev9797c@gmail.com,Curley, Kevin,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+285036,113507,qavant628@gmail.com,Quaniqua Avant,Training,347-713-2563,null,null,0030H00004ljOIyQAM,null,NONE,0.0,null,null,null,null,null,\N
+285037,113507,lysnapaul@yahoo.com,Lysna Paul,Training,347-433-2770,null,null,0030H00004ljWynQAE,null,NONE,0.0,null,null,null,null,null,\N
+285038,113507,abemberry@mec.cuny.edu,AnnMarie Bemberry,Training,347-866-2068,null,null,0030H00004ljjXxQAI,null,NONE,0.0,null,null,null,null,null,\N
+285039,113507,crehm@tulane.edu,Carolyn Rehm,Training,732-865-3629,null,null,0030H00004lk9ELQAY,Tomcat!,TRAINER,0.0,null,null,null,null,null,\N
+285040,113507,mrosado829@gmail.com,MARINA ROSADO,Training,(631) 903-1324,null,null,003i000004NUi69AAD,null,NONE,0.0,null,null,null,null,null,\N
+285041,113507,massiel.pimentel@baruchmail.cuny.edu,Massiel Pimentel,Training,718-607-3792,null,null,003i000004WvnxnAAB,null,NONE,0.0,null,null,null,null,null,\N
+285042,113507,kari.yu@baruchmail.cuny.edu,Kari Yu,Training,917-881-1826,null,null,003i000004cqlfnAAA,null,NONE,0.0,null,null,null,null,null,\N
+285043,113507,marilyn.e.khan@gmail.com,Marilyn Khan,Training,718-551-6157,null,null,003i000004WwxlfAAB,null,NONE,0.0,null,null,null,null,null,\N
+285044,113508,yosiris.andujar@gmail.com,Yosiris Andujar,Training,(787) 325-5732,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+285045,113508,alexei.falu@gmail.com,Alexie Ortiz Falu,Training,787-209-0181,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+285046,113508,gabowatt@gmail.com,Gabriel Martinez Perez,Training,787-420-1336,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+285047,113508,ruthestherlopez@hotmail.com,Ruth Lopez,Training,787-678-3996,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+285048,113508,andres.gonzalez2@upr.edu,Andres Gonzalez,Training,939-257-6165,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+285049,113508,joso.mp@icloud.com,Josue Martinez Perez,Training,787-420-1337,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+286000,113508,nmirandalo93@gmail.com,Nelson Miranda,Training,787-415-7913,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+286001,113508,brian.matta@upr.edu,Brian Matta,Training,787-372-2101,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+286002,113508,zero542@live.com,Miguel A. Melendez,Training,787-310-1732,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+286003,113508,daniel.damudt@upr.edu,Daniel Damudt Galera,Training,(787) 221-0653,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+286004,113508,122-33-0086@uaa.edu,Guillermo Vargas Guzman,Training,(939) 276-4126,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+286005,113508,rafa0215@gmail.com,Rafael Jose Delgado,Training,787-944-4451,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+286006,113508,dexryu@gmail.com,Esteban Diaz,Training,787-340-7532,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+286030,113510,jibbgh@gmail.com,Jibril Burleigh,Training,704-941-5016,null,null,0030H00004is8rXQAQ,null,NONE,0.0,null,null,null,null,null,\N
+286031,113510,brogers0101@gmail.com,Benjamin Rogers,Training,407-312-5659,null,null,0030H00004isDNeQAM,null,NONE,0.0,null,null,null,null,null,\N
+286028,113510,elvis.yang@utexas.edu,Elvis Yang,Training,(281) 739-9418,null,null,0030H00004irsoRQAQ,null,NONE,0.0,null,null,null,null,null,\N
+286029,113510,inkceptionalsquid@gmail.com,Samuel Wood,Training,(304) 550-8856,null,null,0030H00004irvsVQAQ,null,NONE,0.0,null,null,null,null,null,\N
+286033,113510,rtbunning@gmail.com,Regan Bunning,Training,(765) 449-2722,null,null,0030H00004isOSeQAM,null,NONE,0.0,null,null,null,null,null,\N
+286038,113510,jpwrunyan@hotmail.com,Patrick Runyan,Training,(208) 867-8730,null,null,0030H00004itMXaQAM,null,NONE,0.0,null,null,null,null,null,\N
+286039,113510,tri.m.vo80@gmail.com,Tri Vo,Training,916-220-5499,null,null,0030H00004itMYWQA2,null,NONE,0.0,null,null,null,null,null,\N
+286043,113510,jkim629@gmail.com,James Kim,Training,310-502-2419,null,null,0030H00004itjF7QAI,null,NONE,0.0,null,null,null,null,null,\N
+286045,113510,a.jarce@yahoo.com,Allen Arce,Training,786-395-7281,null,null,0030H00004ius3MQAQ,null,NONE,0.0,null,null,null,null,null,\N
+286047,113510,promethicon@gmail.com,William Burns,Training,478-804-1536,null,null,003i000004WunoXAAR,null,NONE,0.0,null,null,null,null,null,\N
+286060,113510,jwang3255@gmail.com,Jiaying Wang,Training,(561) 358-3255,null,null,0030H00004iuNrZQAU,null,NONE,0.0,null,null,null,null,null,\N
+286062,113510,wdeala@gmail.com,William Deala,Training,(510) 388-9419,null,null,0030H00004iujlVQAQ,null,NONE,0.0,null,null,null,null,null,\N
+286064,113510,bdf1006@aol.com,Brandon Fitzpatrick,Training,704-881-4283,null,null,0030H00004itTgBQAU,null,NONE,0.0,null,null,null,null,null,\N
+286069,113510,tenoriom@lafayette.edu,Manuel Tenorio,Training,(224) 944-2195,null,null,003i000004crBpYAAU,null,NONE,0.0,null,null,null,null,null,\N
+286071,113510,raphael_kristian@hotmail.com,Raphael Sarmiento,Training,832-773-3155,null,null,0030H00004isxPNQAY,null,NONE,0.0,null,null,null,null,null,\N
+286075,113510,x4383lin@gmail.com,Clement Lin,Training,(773) 996-1495,null,null,0030H00004itCfaQAE,null,NONE,0.0,null,null,null,null,null,\N
+286076,113511,andrew.lang25@gmail.com,Andrew Lang,Training,(718) 427-1580,null,null,0030H00004iropvQAA,null,NONE,0.0,null,null,null,null,null,\N
+286077,113511,hunterheard516@gmail.com,Hunter Heard,Training,(214) 282-6548,null,null,0030H00004is4zbQAA,null,NONE,0.0,null,null,null,null,null,\N
+286078,113511,joemunji25@gmail.com,Joseph AbiJaoudi,Training,757-515-2149,null,null,0030H00004isIVTQA2,null,NONE,0.0,null,null,null,null,null,\N
+286079,113511,leostewart@protonmail.com,Leo Stewart,Training,(585) 831-9790,null,null,0030H00004itHUEQA2,null,NONE,0.0,null,null,null,null,null,\N
+286080,113511,ducn364@gmail.com,Duc Nguyen,Training,714-548-4092,null,null,0030H00004itYQsQAM,null,NONE,0.0,null,null,null,null,null,\N
+286081,113511,pltidjon@yahoo.com,Paul Tidjon,Training,(281) 871-9212,null,null,0030H00004itno8QAA,null,NONE,0.0,null,null,null,null,null,\N
+286082,113511,wabb299@gmail.com,Wesley DeLoach,Training,936-828-0097,null,null,0030H00004itwCSQAY,null,NONE,0.0,null,null,null,null,null,\N
+286083,113511,dkaczmarczyk42@gmail.com,Daniel Kaczmarczyk,Training,203-814-2861,null,null,0030H00004iu9DFQAY,null,NONE,0.0,null,null,null,null,null,\N
+286084,113511,the.peter.thompson@gmail.com,Peter Thompson,Training,763-732-9579,null,null,0030H00004iu9FpQAI,null,NONE,0.0,null,null,null,null,null,\N
+286086,113511,arras.grant@yahoo.com,Grant Arras,Training,(517) 231-4443,null,null,0030H00004iuMCEQA2,null,NONE,0.0,null,null,null,null,null,\N
+286087,113511,jsneufer@gmail.com,Jeff Neufer,Training,(317) 450-6530,null,null,0030H00004iubBFQAY,null,NONE,0.0,null,null,null,null,null,\N
+286088,113511,alexrgorring@gmail.com,Alex Gorring,Training,936-443-7386,null,null,0030H00004iva1JQAQ,null,NONE,0.0,null,null,null,null,null,\N
+286089,113511,pktituskim@gmail.com,Titus Kim,Training,414-306-4806,null,null,0030H00004li92tQAA,null,NONE,0.0,null,null,null,null,null,\N
+286090,113511,tannerrobinaugh@gmail.com,Tanner Robinaugh,Training,(937) 260-0304,null,null,0030H00004ljEBMQA2,null,NONE,0.0,null,null,null,null,null,\N
+286091,113511,robertkasprzykk@gmail.com,Robert Kasprzyk,Training,(646) 623-5135,null,null,0030H00004ljWGWQA2,null,NONE,0.0,null,null,null,null,null,\N
+286092,113511,andrew@andrewdayonline.com,Andrew Day,Training,(719) 355-9602,null,null,0030H00004ljbRJQAY,null,NONE,0.0,null,null,null,null,null,\N
+286093,113511,kzpulaski@gmail.com,Christopher Kaczenski,Training,501-920-5942,null,null,0030H00004ljf0GQAQ,null,NONE,0.0,null,null,null,null,null,\N
+286094,113511,l.s.reambo@gmail.com,Lea Reambonanza,Training,240-779-4411,null,null,0030H00004ljqgPQAQ,null,NONE,0.0,null,null,null,null,null,\N
+286096,113511,yang.lu.git@gmail.com,Yang Lu,Training,201-380-1024,null,null,0030H00004lkLEyQAM,null,NONE,0.0,null,null,null,null,null,\N
+286097,113511,lmcominotto@gmail.com,Michelle Cominotto,Training,256-771-3428,null,null,0030H00004lkQttQAE,null,NONE,0.0,null,null,null,null,null,\N
+286098,113511,akthakury@gmail.com,Anil Thakuri,Training,4044528323,null,null,0030H00004lkpAMQAY,null,NONE,0.0,null,null,null,null,null,\N
+286099,113511,max.bisesi@gmail.com,Max Bisesi,Training,3176262768,null,null,0030H00004o1UklQAE,null,NONE,0.0,null,null,null,null,null,\N
+286100,113511,williamsdanielle897@gmail.com,Danielle Williams,Training,609-649-3364,null,null,003i000003W2K1HAAV,null,NONE,0.0,null,null,null,null,null,\N
+286101,113511,camararik@gmail.com,Richard Camara,Training,612-483-9986,null,null,003i000004DQgzoAAD,null,NONE,0.0,null,null,null,null,null,\N
+286102,113511,samsonhaile14@gmail.com,Samson Haile,Training,702-609-5715,null,null,003i000004WvIzbAAF,null,NONE,0.0,null,null,null,null,null,\N
+286104,113511,mbasic07@gmail.com,Muhamed Basic,Training,636-293-2612,null,null,003i000004crUf8AAE,null,NONE,0.0,null,null,null,null,null,\N
+286105,113513,akila.arthy@capitalone.com,Akila Arthy,Confirmed,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+286106,113513,bhargavi.manchem@capitalone.com,Bhargavi Manchem,Confirmed,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+286107,113513,brunda.prakash@capitalone.com,Brunda Prakash,Confirmed,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+286108,113513,davidh.crites@capitalone.com,David Crites,Confirmed,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+286109,113513,devi.gadipati@capitalone.com,Devi Gadipati,Confirmed,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+286110,113513,donna.holbrook@capitalone.com,Donna Holbrook,Confirmed,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+286111,113513,imrana.islam@capitalone.com,Imrana Islam,Confirmed,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+286112,113513,jagatha.ramakrishnan@capitalone.com,Jagatha Ramakrishnan,Confirmed,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+286113,113513,matt.dolan@capitalone.com,Matt Dolan,Confirmed,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+286114,113513,purushotham.reddy@capitalone.com,Purushotham Reddy,Confirmed,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+286115,113513,rajesh.chintkuntlawar@capitalone.com,Rajesh Chintkuntlawar,Confirmed,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+286116,113513,sandhya.menda@capitalone.com,Sandhya Menda,Confirmed,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+286117,113513,uday.jain@capitalone.com,Uday Jain,Confirmed,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+286118,113513,surender.nareddy@capitalone.com,Surrender Reddy,Confirmed,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+286120,113515,dpham4294@gmail.com,Diamond Pham,Training,(609) 289-5480,null,null,0030H00004iuWE1QAM,null,NONE,0.0,null,null,null,null,null,\N
+286121,113515,rebeca.otero2012@gmail.com,Rebeca Otero,Training,347-360-7323,null,null,0030H00004liYBcQAM,null,NONE,0.0,null,null,null,null,null,\N
+286124,113515,jlee60@nyit.edu,Janine Lee,Training,(516) 417-2665,null,null,0030H00004lj2YZQAY,null,NONE,0.0,null,null,null,null,null,\N
+286125,113515,mariam.kaba@jjay.cuny.edu,Mariam Kaba,Training,3476360140,null,null,0030H00004ljX7lQAE,null,NONE,0.0,null,null,null,null,null,\N
+286127,113515,anahi.garnelo@gmail.com,Anahi Garnelo,Training,917-742-1581,null,null,0030H00004ljfGFQAY,null,NONE,0.0,null,null,null,null,null,\N
+286131,113515,victoria.chen2@baruchmail.cuny.edu,victoria chen,Training,7188640988,null,null,003i000004WvmirAAB,null,NONE,0.0,null,null,null,null,null,\N
+286134,113515,ambemberry@gmail.com,AnnMarie Bemberry,Training,(347) 866-2068,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+286135,113515,carolynhrehm@gmail.com,Carolyn Rehm,Training,(732) 865-3629,null,null,null,Tomcat!,TRAINER,0.0,null,null,null,null,null,\N
+286136,113515,lysnapaul.paul@gmail.com,Lysna Paul,Training,(347) 433-2770,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+286137,113515,massiepimentel@gmail.com,Massiel Pimentel,Training,(718) 607-3792,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+286138,113515,sabinaahaque@gmail.com,Sabina,Training,(347)901-1993,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+286139,113515,marilyne.khan@gmail.com,Marilyn Khan,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+286141,113516,dunninea@plu.edu,Egan Dunning,Training,541-363-8988,https://app.revature.com/profile/egandunning/c6b9599f25d7c43e090ce5a3f00eb4ff,null,0030H00004isxPIQAY,null,NONE,0.0,null,null,null,null,null,\N
+286145,113516,w9zhong21@gmail.com,Wilson Zhong,Training,646-421-9355,https://app.revature.com/profile/Wilson/acdc1fb546eefb880dd2a5f1caa39ecc,null,0030H00004is0D1QAI,null,NONE,0.0,null,null,null,null,null,\N
+286147,113516,aitani91@gmail.com,Alaa El Deen Itani,Training,(586) 925-8081,https://app.revature.com/editportfolio/Alaa%20Itani%20Portfolio,null,0030H00004it8wnQAA,null,NONE,0.0,null,null,null,null,null,\N
+286148,113516,hovell.michael@gmail.com,Michael Hovell,Training,619-905-1956,https://app.revature.com/profile/MikeHovell/8d283cef054039b5c7d7a96812cd4c3f,null,0030H00004itHU7QAM,null,NONE,0.0,null,null,null,null,null,\N
+287004,113516,nagr@vcu.edu,Ritvik Nag,Dropped,703-225-9869,null,null,0030H00004itHUFQA2,null,NONE,0.0,null,null,null,null,null,\N
+287008,113516,jmknighten9@gmail.com,Jason Knighten,Training,256-565-3570,https://app.revature.com/profile/jmknighten9/77a610c3c08b668d38d5dd07954db456,null,0030H00004itMYhQAM,null,NONE,0.0,null,null,null,null,null,\N
+287016,113516,snev7821@vandals.uidaho.edu,John Snevily,Training,208-596-7411,https://app.revature.com/profile/Jsnev/ff5f9ae260227c570554162135d87c77,null,0030H00004itdMlQAI,null,NONE,0.0,null,null,null,null,null,\N
+287018,113516,larsenio72@gmail.com,Sammy Landingin,Training,808-258-6005,https://app.revature.com/profile/samsonlan/fdd80c8c931a3fe19eb9416747f5724d,null,0030H00004itdNlQAI,null,NONE,0.0,null,null,null,null,null,\N
+287021,113516,rhirsch14@gmail.com,Ryan Hirsch,Training,410-353-1649,null,null,0030H00004itjG7QAI,null,NONE,0.0,null,null,null,null,null,\N
+287023,113516,mchen1994@gmail.com,Michael Chen,Training,630-886-5208,null,null,0030H00004itnmxQAA,null,NONE,0.0,null,null,null,null,null,\N
+287024,113516,zwilliams0419@gmail.com,Zachary Williams,Training,(302) 489-9791,https://app.revature.com/profile/zwilliams0419/32a97dedd48c0e5870c8c1240036f482,null,0030H00004itql4QAA,null,NONE,0.0,null,null,null,null,null,\N
+287026,113516,alfonslog@gmail.com,Alfonso Logrono,Dropped,(786) 216-4285,null,null,0030H00004iu9D1QAI,null,NONE,0.0,null,null,null,null,null,\N
+287028,113516,schmidtra92@gmail.com,Rachel Schmidt,Training,717-265-6821,https://app.revature.com/profile/schmidtra92/e1fabddd3a4e95cfdd5ab9d8629fb188,null,0030H00004iuNt3QAE,null,NONE,0.0,null,null,null,null,null,\N
+287031,113516,redrio@gmail.com,Douglas Rubio,Training,(773) 816-0309,https://app.revature.com/profile/drubio3/f98856d0234405483d5d1559beda5680,null,0030H00004iup82QAA,null,NONE,0.0,null,null,null,null,null,\N
+287032,113516,lexoz@live.com,Alexander Dingman,Training,404-394-2238,https://app.revature.com/profile/AlexanderDingman/bd5f99a431c972097395573eac3748bc,null,0030H00004iurz0QAA,null,NONE,0.0,null,null,null,null,null,\N
+287033,113516,mrt62@cornell.edu,Medalis Trelles,Training,(301) 880-6205,null,null,0030H00004li92WQAQ,null,NONE,0.0,null,null,null,null,null,\N
+287034,113516,yulppuma@gmail.com,Yul Puma,Training,818-267-9590,https://app.revature.com/profile/yulppuma/754d175bacd7bb9fdd8868903bdb4653,null,0030H00004liokwQAA,null,NONE,0.0,null,null,null,null,null,\N
+287035,113516,jspencer2473@gmail.com,Jermykl Spencer,Training,703-989-5387,null,null,0030H00004ll1pfQAA,null,NONE,0.0,null,null,null,null,null,\N
+287039,113516,dsuarez8085@gmail.com,Diego Suarez,Training,623-692-6005,https://app.revature.com/profile/DiegoSuarez/d9dd723632cb4a3430a47ee696bdd81b,null,003i0000049rJf9AAE,null,NONE,0.0,null,null,null,null,null,\N
+287040,113516,zcbaker@ymail.com,Zoe Baker,Dropped,(425) 308-9748,null,null,003i000004HfcI8AAJ,null,NONE,0.0,null,null,null,null,null,\N
+287042,113516,lobsangtashi_2017@depauw.edu,Lobsang Tashi,Training,347-987-8528,null,null,003i000004KtNRKAA3,null,NONE,0.0,null,null,null,null,null,\N
+287044,113516,gabriel.d.chartier@gmail.com,Gabriel Chartier,Training,860-455-8464,https://app.revature.com/profile/gchartier/1f8ae392177107f01e8b77aa98eddfad,null,003i000004WugH2AAJ,null,NONE,0.0,null,null,null,null,null,\N
+288013,114501,d.oconnor@gmx.com,David O'Connor,Training,4157864203,null,null,0030H00004lm0hOQAQ,null,NONE,0.0,Wasim Khalique,Marketo Lead,Bachelors,Computer Related,Akshay PK,\N
+288012,114501,ahsubz@gmail.com,Annas Subzwari,Training,5165262363,null,null,0030H00004ll1CkQAI,null,NONE,0.0,Edward Hulse,Delphi-US,None,null,Bhaskar Sundaramurthy,\N
+288017,114501,iborba123@gmail.com,Issac Borba,Training,(347) 494-2248,null,null,0030H00004li92MQAQ,null,NONE,0.0,Kristian Moreira,Baruch College,Bachelors,Computer Related,Hamsalakshimi Narayanan,\N
+288015,114501,haiq.xie@gmail.com,Haiqiang Xie,Training,(734) 604-8885,null,null,0030H00004llFdMQAU,null,NONE,0.0,Thomas Hodge,Eastern Michigan University,Bachelors,Computer Science,Bhaskar Sundaramurthy,\N
+288020,114501,terrence.wilson@temple.edu,Terrence Wilson,Training,(267) 333-5501,null,null,0030H00004pFbhBQAS,null,NONE,0.0,Thomas Hodge,Temple University,Bachelors,Computer Science & Mathematics,Hamsalakshimi Narayanan,\N
+288018,114501,ajc5164@gmail.com,Aaron Clark,Training,3373260220,null,null,0030H00004pEAPdQAO,null,NONE,0.0,Edward Hulse,University of Louisiana-Lafayette,None,null,Hamsalakshimi Narayanan,\N
+288021,114501,aksh121kaur@gmail.com,Akshprateek Kaur,Training,4694270443,null,null,null,null,NONE,0.0,Chris Bermudez,null,null,null,Bhaskar Sundaramurthy,\N
+288023,114502,junjie2412@gmail.com,Junjie Wang,Training,916-836-3289,null,null,0030H00004itdNHQAY,null,NONE,0.0,Kristian Moreira,George Washington University,Bachelors,Computer Science,Naveen Kumar,27
+288024,114502,max.wang376@gmail.com,Maximilian Wang,Training,917-376-3581,null,null,0030H00004iubHDQAY,null,NONE,0.0,Kristian Moreira,University of Illinois-Urbana-Champaign,Bachelors,Computer Science,Hamsalakshimi Narayanan,\N
+288025,114502,jrmy831@gmail.com,Jeremy Shapiro,Training,516-398-5951,null,null,0030H00004iuzDHQAY,null,NONE,0.0,Ira D'Silva,City College of New York,Bachelors,Mathematics,Akshay PK,100
+288026,114502,desmond.george@zoho.com,Desmond George,Training,952-210-4180,null,null,0030H00004lifQzQAI,null,NONE,0.0,Nan Deora,Polytechnic Institute of New York University,Bachelors,Electronics and Communication Engineering,Hamsalakshimi Narayanan,\N
+288027,114502,kanxue0012@gmail.com,Kan Xue,Training,646-403-7603,null,null,0030H00004ljIoaQAE,null,NONE,0.0,Rachna Tyagi,Queens College of the City University of New York,Bachelors,Computer Science,Divya R,\N
+288031,114502,epis.martinez10@gmail.com,Epis MARTINEZ,Training,347-605-2645,null,null,0030H00004o1UkDQAU,null,NONE,0.0,Kristian Moreira,Brooklyn College,Bachelors,Computer Science,Aiswarya R,\N
+288032,114502,cmat27@hotmail.com,carlos matute,Dropped,929-373-9985,null,null,0030H00004lm0k0QAA,null,NONE,0.0,Thomas Hodge,New York City College of Technology,Bachelors,Computer Science,Rashika Guna,\N
+288033,114502,keshpc1245@gmail.com,Keshny Jean-Francois,Training,347-791-9334,null,null,0030H00004pEAQxQAO,null,NONE,0.0,Edward Hulse,CANDIDATE POOL,Bachelors,Computer Science,Divya R,31
+288035,114502,kalexandre13@gmail.com,Kensen Alexandre,Training,646-322-0924,null,null,0030H00004pEMznQAG,null,NONE,0.0,Kristian Moreira,Brooklyn College,Bachelors,Computer Science,Rashika Guna,\N
+288036,114502,carllee.hk@gmail.com,Carl Lee,Training,646-469-0632,null,null,0030H00004pEARYQA4,null,NONE,0.0,Simon Baker,Hunter College,Masters,mathematics,Bhuvaneswari Mohan,\N
+288041,114502,amir.khan@baruchmail.cuny.edu,Amir Khan,Dropped,914-433-0281,null,null,003i000004WvawmAAB,null,NONE,0.0,Nan Deora,Baruch College,Bachelors,Computer Science,Akshay PK,\N
+288042,114502,1014gin@gmail.com,Jun Li,Training,646-226-5592,null,null,0030H00004llSY8QAM,null,NONE,0.0,Thomas Hodge,City College of New York,Bachelors,Electronics and Communication Engineering,Divya R,\N
+288043,114502,joseph.wong.qc@gmail.com,Joseph Wong,Training,347-642-0541,null,null,0030H00004llYhgQAE,null,NONE,0.0,Thomas Hodge,Queens College of the City University of New York,Bachelors,Computer Science,Rashika Guna,\N
+288044,114502,shahak.ahmad@baruchmail.cuny.edu,Shahak Ahmad,Training,347-257-9699,null,null,0030H00004pFm8lQAC,null,NONE,0.0,Thomas Hodge,Baruch College,Bachelors,Computer Science,Rashika Guna,\N
+288045,114502,arroncreighton@gmail.com,Arron Creighton,Dropped,347-466-8827,null,null,0030H00004pFm8yQAC,null,NONE,0.0,Thomas Hodge,New York City College of Technology,Bachelors,Computer Science,Rashika Guna,\N
+288046,114502,jeffreywu0216@gmail.com,Jeffrey Wu,Training,718-791-1765,null,null,003i000004g5gqXAAQ,null,NONE,0.0,Rachna Tyagi,Brooklyn College,Bachelors,Computer Science,Rashika Guna,\N
+288048,114503,micahwest13@gmail.com,Micah West,Training,281-881-3270,null,null,0030H00004irwsnQAA,null,NONE,0.0,Chris Bermudez,Stephen F. Austin State University,Bachelors,Computer Science,Hamsalakshimi Narayanan,\N
+288049,114503,johnseymour05@gmail.com,John Seymour,Training,301-712-1746,null,null,0030H00004is1TrQAI,null,NONE,0.0,Simon Baker,Towson University,Bachelors,Physics,Hamsalakshimi Narayanan,82
+289000,114503,jlowell000@gmail.com,John Hudson,Training,281-881-2995,null,null,0030H00004is4ulQAA,null,NONE,0.0,Lisa Wilson,University of Houston,Bachelors,Computer Science,Suganya D,35
+289001,114503,bricepetty1116@yahoo.com,Brice Petty,Dropped,972-965-1634,null,null,0030H00004is54gQAA,null,NONE,0.0,Chris Bermudez,Texas Tech University,Bachelors,Computer Science,Naveen Kumar,\N
+289002,114503,dennarai@gmail.com,Dennis Heinle,Dropped,701-793-2356,null,null,0030H00004isORvQAM,null,NONE,0.0,Kristian Moreira,North Dakota State University,Bachelors,Computer Science,Bhaskar Sundaramurthy,2
+289004,114503,randythiencao@yahoo.com,Randy Cao,Training,(682) 241-4168,null,null,0030H00004isikMQAQ,null,NONE,0.0,Kristian Moreira,University of Texas at Arlington,Bachelors,Computer Science,Hamsalakshimi Narayanan,\N
+289006,114503,kelton_keener@baylor.edu,Kelton Keener,Training,936-494-9162,null,null,0030H00004itTbRQAU,null,NONE,0.0,Chris Bermudez,CANDIDATE POOL,Bachelors,Computer Science,Naveen Kumar,\N
+289007,114503,john.w.brown.jr@gmail.com,John Brown,Training,404-317-2257,null,null,0030H00004itTc2QAE,null,NONE,0.0,Kristian Moreira,Clayton State University,Bachelors,Computer Science,Hamsalakshimi Narayanan,89
+289008,114503,cmy1821@gmail.com,Christopher Youngblood,Training,(662) 292-5825,null,null,0030H00004itjGOQAY,null,NONE,0.0,Nan Deora,Mississippi State University,None,null,Naveen Kumar,\N
+289009,114503,rlcst926@mail.rmu.edu,Robert Choboy,Training,716-901-4288,null,null,0030H00004itjIRQAY,null,NONE,0.0,Chris Bermudez,CANDIDATE POOL,Bachelors,Computer Science,Hamsalakshimi Narayanan,\N
+289011,114503,sjh817@gmail.com,Stephen Huelsman,Training,(818) 917-3321,null,null,0030H00004itrqZQAQ,null,NONE,0.0,Thomas Hodge,Marquette University,Bachelors,Computer Science,Hamsalakshimi Narayanan,\N
+289017,114503,pparsard@gmail.com,Pascal Parsard,Dropped,407-619-5937,null,null,0030H00004iuRJuQAM,null,NONE,0.0,Richard John,University of Central Florida,Bachelors,Web Design/Development,Yuvi D,\N
+289019,114503,edelbenavides@gmail.com,Edel Benavides,Training,(786) 333-1577,null,null,0030H00004iuc9aQAA,null,NONE,0.0,Nan Deora,Florida International University,None,null,Joe Kirkbride,\N
+289021,114503,jakob4th@gmail.com,jacob St Hilaire,Training,813-557-2715,null,null,0030H00004iujlLQAQ,null,NONE,0.0,Nan Deora,Washington State University-Pullman,Bachelors,Computer Science,Fred Belotte,\N
+289022,114503,cjhfitz@gmail.com,Conor Fitzgerald,Training,(508) 339-1906,null,null,0030H00004iuz2yQAA,null,NONE,0.0,Rachna Tyagi,Bridgewater State University,Bachelors,Computer Science,Divya R,\N
+289023,114503,arthurchen0@hotmail.com,Arthur Chen,Training,(416) 457-9180,null,null,0030H00004liokbQAA,null,NONE,0.0,Nan Deora,McMaster University,None,null,Hamsalakshimi Narayanan,\N
+289024,114503,santoshbaral58@gmail.com,Santosh Baral,Dropped,(650) 224-5031,null,null,0030H00004liokjQAA,null,NONE,0.0,Edward Hulse,San Jose State University,None,null,Rashika Guna,\N
+289026,114503,chrisworc@gmail.com,Chris Worcester,Training,954-591-2055,null,null,0030H00004ljfJFQAY,null,NONE,0.0,Thomas Hodge,Savannah College of Art and Design,Bachelors,Computer Science,Bhuvaneswari Mohan,\N
+289031,114503,iaustinhearn@yahoo.com,Austin Hearn,Training,830-570-6210,null,null,003i0000047tcq8AAA,null,NONE,0.0,Nan Deora,University of Texas at San Antonio,Bachelors,Computer Science,Naveen Kumar,50
+289034,114503,saad2139@gmail.com,Saad Mall,Training,713-730-8070,null,null,003i000004Mh90tAAB,null,NONE,0.0,Nan Deora,University of Houston,Bachelors,Computer Science,Bhaskar Sundaramurthy,\N
+289035,114503,kylesettles00@gmail.com,Kyle Settles,Training,859-285-0479,null,null,003i000004Rc0nDAAR,null,NONE,0.0,Llewellyn Davis,Centre College,Bachelors,Computer Science,Naveen Kumar,52
+289041,114503,rosariorvidales@gmail.com,Rosario Rojas Vidales,Training,214-815-5659,null,null,0030H00004lika6QAA,null,NONE,0.0,Chris Bermudez,University of Texas at Dallas,Bachelors,Computer Science,Divya R,\N
+289042,114503,msgoshorn@gmail.com,Mitchell Goshorn,Training,573-253-1651,null,null,0030H00004llFY0QAM,Mitchell is now 'one of us',TRAINER,0.0,Thomas Hodge,CANDIDATE POOL,Bachelors,Liberal Arts,Divya R,\N
+289045,114503,brichardson1222@yahoo.com,Brandon Richardson,Training,(334) 313-4594,null,null,0030H00004iu2bJQAQ,null,NONE,0.0,Chris Bermudez,Auburn University at Montgomery,Bachelors,Computer Science,Bhaskar Sundaramurthy,\N
+290003,115500,kpsaini34@gmail.comOLD,Karandeep Saini,Dropped,571-294-3462,null,null,0030H00004iu8AOQAY,null,NONE,0.0,Ira D'Silva,George Mason University,Masters,Civil and Infrastructure Engineerng,Bhuvaneswari Mohan,29
+290006,115500,waynecounty15@gmail.com,Caleb Schumake,Training,734-301-6126,null,null,0030H00004iuc8rQAA,null,NONE,0.0,Edward Hulse,Madonna University,Bachelors,Mathematics,Hamsalakshimi Narayanan,\N
+290009,115500,tonylulciuc@gmail.com,Antony Lulciuc,Training,267-893-8655,null,null,0030H00004ivZdsQAE,null,NONE,0.0,Chris Bermudez,Temple University,Bachelors,Electronics and Communication Engineering,Hamsalakshimi Narayanan,\N
+290010,115500,mahamadou.traore@hotmail.com,Mahamadou Traore,Dropped,513-389-0996,null,null,0030H00004lifBpQAI,null,NONE,0.0,Chris Bermudez,CANDIDATE POOL,Bachelors,Computer Science,August Duet,\N
+290011,115500,lengvang9000@gmail.com,Leng Vang,Training,559-301-8730,null,null,0030H00004llYi8QAE,null,NONE,0.0,Chris Bermudez,CANDIDATE POOL,Bachelors,Computer Science,Bhuvaneswari Mohan,\N
+290013,115500,grantley.morrison@gmail.com,Grantley Morrison,Training,(646) 300-1091,null,null,003i000004Wx35IAAR,null,NONE,0.0,Thomas Hodge,Fredonia State University,Bachelors,Computer Science,Aiswarya R,\N
+290016,115500,michael-tseng@outlook.com,Michael Tseng,Training,714-234-2302,null,null,0030H00004itrqCQAQ,null,NONE,0.0,Chris Bermudez,University of California-Irvine,Bachelors,Electronics and Communication Engineering,Naveen Kumar,\N
+290023,115500,jeffm.ii@outlook.com,Jeffrey Myers,Training,615-755-8342,null,null,0030H00004iuc4ZQAQ,null,NONE,0.0,Chris Bermudez,Middle Tennessee State University,Bachelors,Computer Science,Bhaskar Sundaramurthy,15
+290026,115500,amp1993@gmail.com,Alex Peterson,Training,253-335-4143,null,null,0030H00004iuc8QQAQ,null,NONE,0.0,Edward Hulse,University of Washington-Tacoma,Bachelors,Computer Science,Bhaskar Sundaramurthy,7
+290030,115500,sscottmo@oswego.edu,Steven Scott-Mohammed,Dropped,631-707-4743,null,null,0030H00004iuz5JQAQ,null,NONE,0.0,Chris Bermudez,State University of New York-Oswego,Bachelors,Cognitive Science,Hamsalakshimi Narayanan,45
+290036,115500,evan-west@hotmail.com,Evan West,Training,(775) 357-5888,null,null,0030H00004ivZbNQAU,null,NONE,0.0,Rachna Tyagi,University of Nevada-Reno,Bachelors,Computer Science and Engineering,Naveen Kumar,\N
+290037,115500,hsjungcr@gmail.com,Han Jung,Training,206-371-3073,null,null,0030H00004lhytkQAA,null,NONE,0.0,Lisa Wilson,University of Washington-Seattle,Bachelors,Liberal Arts,Rashika Guna,100
+290038,115500,ibe.princewill@yahoo.com,Princewill Ibe,Training,417-396-2863,null,null,0030H00004ljHVOQA2,null,NONE,0.0,Ira D'Silva,University of Illinois-Urbana-Champaign,Bachelors,Computer Science,Akshay PK,43
+290040,115500,x.w.garibay@gmail.com,Xavier Garibay,Training,610-909-9967,null,null,0030H00004lkkF7QAI,null,NONE,0.0,Thomas Hodge,Clarion University of Pennsylvania,Bachelors,Computer Science,Aiswarya R,\N
+290041,115500,mjsnee@uno.edu,Matthew Snee,Training,504-239-0794,null,null,0030H00004ll1pTQAQ,null,NONE,0.0,Rachna Tyagi,University of New Orleans,Bachelors,Computer Science,Rashika Guna,\N
+290042,115500,mnlwsn@icloud.com,Mani Lawson,Training,704-345-2709,null,null,0030H00004pEAnEQAW,null,NONE,0.0,Thomas Hodge,Emory University,Bachelors,Computer Science,Rashika Guna,1
+290043,115500,nalaudd@yahoo.com,Nasir Alauddin,Training,630-363-1251,null,null,003i000002oAin3AAC,null,NONE,0.0,Rachna Tyagi,CANDIDATE POOL,Bachelors,Mathematics,Naveen Kumar,\N
+290044,115500,seanvaeth@gmail.com,Sean Vaeth,Training,775-354-4494,null,null,003i000004FNImFAAX,null,NONE,0.0,Chris Bermudez,University of Arizona,Bachelors,Computer Science,Patrick Walsh,24
+290045,115500,mwarren04011990@gmail.com,Michael Warren,Training,317-954-0794,null,null,003i000004RegR4AAJ,null,NONE,0.0,Rachna Tyagi,IUPUI,Bachelors,Mathematics,Naveen Kumar,\N
+290046,115500,sjgillet@mtu.edu,Stuart Gillette,Training,269-921-4313,null,null,003i000004WvSzPAAV,null,NONE,0.0,Edward Hulse,Michigan Technological University,Bachelors,Computer Science,Divya R,\N
+290078,115502,sholaihekweme@gmail.com,Shola Ihekweme,Dropped,240-374-2652,null,null,0030H00004isfA3QAI,null,NONE,0.0,Edward Hulse,CANDIDATE POOL,None,null,Divya R,\N
+290080,115502,jat026@ucsd.edu,Jeanine M Tran,Training,626-342-1085,null,null,0030H00004ismZ2QAI,null,NONE,0.0,Amy Farook,University of California-Berkeley,Bachelors,International Studies - Economics,Bhuvaneswari Mohan,57
+290081,115502,mulman9@gmail.com,Michaela Ulman,Training,919-757-9307,null,null,0030H00004itjIJQAY,null,NONE,0.0,Simon Baker,Virginia Polytechnic Institute and State University,Bachelors,Mechanical Engineering,Rashika Guna,100
+290082,115502,dballesteros2013@fau.edu,Diego Ballesteros Orozco,Dropped,786-262-6857,null,null,0030H00004iuRPOQA2,null,NONE,0.0,Thomas Hodge,Florida Atlantic University,Bachelors,Electrical Engineering,Rashika Guna,\N
+290083,115502,s.junaid.ahmed@live.com,Junaid Syed,Training,(508) 837-4346,null,null,0030H00004lj2Y4QAI,null,NONE,0.0,Edward Hulse,Texas A&M University-Central Texas,None,null,Divya R,\N
+290084,115502,avitsut@yahoo.com,Andreas Vitsut,Training,805-201-8303,null,null,0030H00004iuturQAA,null,NONE,0.0,Nick Anderson,CANDIDATE POOL,Masters,Robotics Engineering,Aiswarya R,75
+290085,115502,christian.sue7@gmail.com,Christian Sue,Training,703-864-1698,null,null,0030H00004ljDvTQAU,null,NONE,0.0,Thomas Hodge,George Mason University,Bachelors,Computer Science,Rashika Guna,37
+290086,115502,cubesmithy@gmail.com,Ryan McElhaney,Training,828-423-3063,null,null,0030H00004lklbzQAA,null,NONE,0.0,Kristian Moreira,Thomas Edison State College,Bachelors,Computer Science,Bhaskar Sundaramurthy,29
+290087,115502,nnpena@outlook.com,Nathan Pena,Training,571-269-0129,null,null,0030H00004llFNzQAM,null,NONE,0.0,Thomas Hodge,University of Texas at Austin,Bachelors,Computer Science,Suganya D,0
+290088,115502,isaiaf@uw.edu,Isaiah Forward,Training,253-394-4246,null,null,0030H00004llSXoQAM,null,NONE,0.0,Rachna Tyagi,University of Washington-Tacoma,Bachelors,Computer Engineering,Rashika Guna,1
+290090,115502,sylken@netscape.com,Kenneth Hamilton,Dropped,352-804-4735,null,null,0030H00004pFu88QAC,null,NONE,0.0,Rachna Tyagi,Liberty University,None,null,Rashika Guna,\N
+290091,115502,kurtisvernier@gmail.com,Kurtis Vernier,Training,8134008331,null,null,0030H00004pG4ECQA0,null,NONE,0.0,Rachna Tyagi,Full Sail University,None,null,Rashika Guna,\N
+290077,115502,jp422@njit.edu,Juan F Polanco Morales,Training,732-397-1654,null,null,0030H00004isCoaQAE,null,NONE,0.0,Lisa Wilson,New Jersey Institute of Technology,Bachelors,Computer Engineering,Rashika Guna,100
+290093,115502,tiambe48@gmail.com,Tiambe Hooper,Dropped,(919) 423-5113,null,null,0030H00004pGBDXQA4,null,NONE,0.0,Thomas Hodge,North Carolina Central University,Bachelors,Computer Information Systems,Bhuvaneswari Mohan,\N
+290099,115502,tylergs776@gmail.com,Tyler Sharpe,Dropped,(910) 632-4097,null,null,003i000003a1lYwAAI,null,NONE,0.0,Rachna Tyagi,East Carolina University,Bachelors,Computer Science,Steven Kelsey,\N
+291000,115502,colesjustinc@gmail.com,Justin Coles,Training,(703) 585-1282,null,null,003i000004NVo5zAAD,null,NONE,0.0,Rachna Tyagi,Salisbury University,Bachelors,Computer Science and Information Systems,Rashika Guna,\N
+291001,115502,johnfincken2@gmail.com,John Fincken,Dropped,845-709-1670,null,null,003i000004crbXYAAY,null,NONE,0.0,Edward Hulse,University at Buffalo-SUNY,Bachelors,Electronics and Communication Engineering,Bhaskar Sundaramurthy,\N
+291002,115502,christineni1@yahoo.com,Christine Ni,Training,347-631-0663,null,null,003i000004csVS3AAM,null,NONE,0.0,Lisa Wilson,University of North Carolina at Chapel Hill,Bachelors,Computer Science,Divya R,99
+291005,115503,deanterrell3@gmail.com,Dean Terrell,Training,512-431-7468,null,null,0030H00004it8e0QAA,null,NONE,0.0,Edward Hulse,Texas State University,Bachelors,Computer Science,Suganya D,\N
+291006,115503,msamfarr@outlook.com,Matthew Farr,Training,(503) 360-7599,null,null,0030H00004itTfpQAE,null,NONE,0.0,Chris Bermudez,University of Portland,Bachelors,Computer Science,Steven Kelsey,\N
+291008,115503,tyler.ehringer@gmail.com,Tyler Ehringer,Training,(201) 919-4313,null,null,0030H00004iu14KQAQ,null,NONE,0.0,Kristian Moreira,DeVry University-Chicago,Bachelors,Computer Engineering,Ryan Lessley,\N
+291009,115503,jacksonc1123@gmail.com,Cameron Jackson,Training,(850) 766-7085,null,null,0030H00004iu8NGQAY,null,NONE,0.0,Kristian Moreira,Florida State University,Bachelors,Computer Engineering,Patrick Walsh,\N
+291010,115503,jo.sadany@gmail.com,Yosuf ElSaadany,Training,614-717-5692,null,null,0030H00004iu9GPQAY,null,NONE,0.0,Chris Bermudez,Miami University (OH),Masters,Electrical and Computer Engineering,Richard Orr,\N
+291013,115503,adrnix@gmail.com,Andrew Nixon,Training,(303) 880-7028,null,null,0030H00004iuVecQAE,null,NONE,0.0,Michael Minton,University of Denver,Bachelors,APPLIED COMPUTING & ENGLISH,August Duet,\N
+294045,115508,jkcherrelus@gmail.com,Cherrelus, John,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+294046,115508,stevenalfred93@yahoo.com,Santiago, Steven,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+294047,115508,amerabu47@gmail.com,Abugaida, Amer,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+294048,115508,pabs@seas.upenn.edu,Sanchez, Pablo,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+294049,115508,samc.tang@gmail.com,Tang, Sam,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+295000,115508,lewis.a.dwayne@gmail.com,Lewis, Dwayne,Training,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+295003,115509,19.kpong@gmail.com,Kevin Ong,Dropped,210-241-1577,null,null,0030H00004itHQ2QAM,null,NONE,0.0,Rachna Tyagi,University of Texas at Austin,None,null,Kevin Gutierrez,\N
+295009,115509,scs2uq@virginia.edu,Scott Skokowski,Dropped,703-945-3400,null,null,0030H00004li92xQAA,null,NONE,0.0,Amy Farook,University of Virginia,Bachelors,Computer Science,Rashika Guna,100
+295012,115509,naser_ahmad@ymail.com,Ahmad Naser,Training,408-833-3060,null,null,0030H00004ljbSHQAY,null,NONE,0.0,Amy Farook,San Jose State University,Bachelors,Electronics and Communication Engineering,Rashika Guna,100
+295014,115509,austin.lacomb@gmail.com,Austin La Comb,Training,916-221-1995,null,null,0030H00004lkBmXQAU,null,NONE,0.0,Kristian Moreira,Humboldt State University,Bachelors,Computer Science,Aiswarya R,100
+295016,115509,dryanmartinez@yahoo.com,Daniel Martinez,Training,323-826-8141,null,null,0030H00004lkkGEQAY,null,NONE,0.0,Kristian Moreira,California State University-Los Angeles,Bachelors,Computer Science,Divya R,100
+295017,115509,john.a.gallego@gmail.com,John Adrain Gallego,Dropped,925-819-6932,null,null,0030H00004ll1xWQAQ,null,NONE,0.0,Kristian Moreira,University of California-Davis,None,null,Bhuvaneswari Mohan,\N
+295023,115509,nbirchfield64@gmail.com,Nicholas Birchfield,Training,806-626-5700,null,null,0030H00004lltjoQAA,null,NONE,0.0,Rachna Tyagi,University of Texas at San Antonio,Bachelors,Computer Science,Rashika Guna,100
+295027,115509,pdarko@asu.edu,Prince Darko,Dropped,480-335-3554,null,null,0030H00004pFgRYQA0,null,NONE,0.0,Rachna Tyagi,Arizona State University-Tempe,Bachelors,Computer IS,Rashika Guna,\N
+295035,115509,libardi42@gmail.com,Anthony Libardi,Training,413-230-6374,null,null,0030H00004qRypWQAS,null,NONE,0.0,Chris Bermudez,Champlain College,Bachelors,Game Programming,Akshay PK,100
+295038,115509,russus@gmail.com,Jennifer Goodman,Training,434-228-1356,null,null,0030H00004qScTwQAK,null,NONE,0.0,Edward Hulse,University of North Carolina at Greensboro,Bachelors,Computer Science,Aiswarya R,100
+295042,115509,rburnettjunior@gmail.com,Randall Burnett,Training,631-487-4093,null,null,0030H00004qSyhuQAC,null,NONE,0.0,Edward Hulse,Saint Joseph's University,Bachelors,Computer Science,Divya R,100
+295043,115509,mktuck8914@ung.edu,Mathew Tucker,Dropped,507-382-0499,null,null,0030H00004qT3hRQAS,null,NONE,0.0,Thomas Hodge,University of North Georgia,Bachelors,Mathmatics,Rashika Guna,\N
+295047,115509,doublej0247@gmail.com,Julia Jones,Training,7193397014,null,null,0030H00004qTIqSQAW,null,NONE,0.0,Edward Hulse,University of Denver,Bachelors,Computer Related,Rashika Guna,100
+295045,115509,michael.mcpherson2@mail.mcgill.ca,Michael McPherson,Training,310-415-1323,null,null,0030H00004qT6iAQAS,null,NONE,0.0,Ira D'Silva,McGill University (Canada),Bachelors,Electrical Engineering,Bhuvaneswari Mohan,100
+295048,115509,jasstein403@gmail.com,Jason Steinberg,Training,281-725-8894,null,null,0030H00004qTItdQAG,null,NONE,0.0,Ira D'Silva,Emory University,Bachelors,Computer Science,Akshay PK,100
+295049,115509,dillonpape@gmail.com,Dillon Pape,Training,319-512-3834,null,null,0030H00004qTtInQAK,null,NONE,0.0,Chris Bermudez,Cornell College,Bachelors,Mathematics,Divya R,100
+296001,115509,maxstackoverflow@outlook.com,Maxwell Rosenblum,Training,516-492-5839,null,null,0030H00004qU67gQAC,null,NONE,0.0,Thomas Hodge,Northeastern University,Bachelors,Computer Science,Bhuvaneswari Mohan,100
+296002,115509,ckykingkk@gmail.com,King Cheng,Training,301-332-6359,null,null,0030H00004qUBR7QAO,null,NONE,0.0,Thomas Hodge,George Mason University,Bachelors,Computer Science,Bhuvaneswari Mohan,100
+296003,115509,mperez9@hawk.iit.edu,Mickaele Perez,Training,7736100974,null,null,0030H00004qUMUXQA4,null,NONE,0.0,Edward Hulse,Illinois Institute of Technology,Bachelors,Computer Engineering,Rashika Guna,100
+296005,115509,codyjamesmcmahon@gmail.com,Cody McMahon,Dropped,(206) 778-5162,null,null,0030H00004qUdE4QAK,null,NONE,0.0,Erik Schultz,University of Washington-Tacoma,Bachelors,BS in Computer Science,Hamsalakshimi Narayanan,\N
+296006,115509,jhn_ocn@yahoo.com,Jonathan Ocon,Dropped,703-627-0177,null,null,0030H00004qUpNtQAK,null,NONE,0.0,Thomas Hodge,George Mason University,Bachelors,Computer Science,Akshay PK,100
+296007,115509,hasanain.abdullah94@gmail.com,Hasanain Abdullah,Training,617-858-4113,null,null,0030H00004qVBytQAG,null,NONE,0.0,Lisa Wilson,University of Massachusetts-Boston,Bachelors,Mathematics,Bhuvaneswari Mohan,100
+296010,115509,mlittl9199@gmail.com,Matthew Little,Training,864-363-3217,null,null,003i000004cqXxnAAE,null,NONE,0.0,Ira D'Silva,Clemson University,Bachelors,Computer Science,Bhuvaneswari Mohan,100
+296011,115509,gae9153@gmail.com,Godson Ezeaka,Dropped,(301) 742-0490,null,null,003i000004crbQqAAI,null,NONE,0.0,Edward Hulse,Edinboro University of Pennsylvania,Bachelors,Computer Science,Bhaskar Sundaramurthy,\N
+296014,115509,saliktor@gmail.com,Shawn Gavin,Training,562-480-5076,null,null,003i000004gzD6QAAU,null,NONE,0.0,Nick Anderson,University of California-Irvine,Bachelors,Computer Science,Aiswarya R,100
+297002,116500,jimmyzhen4@gmail.com,James Zhen,Dropped,339-223-8571,null,null,0030H00004liwieQAA,null,NONE,0.0,Chris Bermudez,University of Illinois-Urbana-Champaign,Bachelors,Computer Science,Aiswarya R,\N
+297004,116500,kaospyke@att.net,Remington Wells,Employed,903-806-5665,null,null,0030H00004ivjpYQAQ,null,NONE,0.0,Rachna Tyagi,CANDIDATE POOL,Bachelors,Computer Science,Bhaskar Sundaramurthy,100
+297003,116500,rafael.alejandro14@gmail.com,Rafael Alejandro Sanchez,Training,626-407-9522,null,null,0030H00004ivQiCQAU,null,NONE,0.0,Edward Hulse,Occidental College,Bachelors,Mathematics,Bhaskar Sundaramurthy,100
+297005,116500,gibbs.meres@gmail.com,Gibbs Meres,Dropped,828-638-3395,null,null,0030H00004ljSjvQAE,null,NONE,0.0,Thomas Hodge,Appalachian State University,Bachelors,Mathematics,Bhuvaneswari Mohan,2
+297008,116500,nholung96@gmail.com,Nicholas Ho Lung,Dropped,352-263-0826,null,null,0030H00004ljnYOQAY,null,NONE,0.0,Rachna Tyagi,University of Central Florida,Bachelors,Computer Science,Bhaskar Sundaramurthy,\N
+297011,116500,aslamgangji@gmail.com,Aslam Gangji,Training,770-712-7904,null,null,0030H00004pFu8jQAC,null,NONE,0.0,Llewellyn Davis,Georgia Southwestern State University,Masters,Computer Science,Aiswarya R,100
+297012,116500,rickynmnmartinez@gmail.com,Ricky Martinez,Training,407-715-4503,null,null,0030H00004pHArqQAG,null,NONE,0.0,Chris Bermudez,Full Sail University,Bachelors,Software Engineering,Divya R,100
+297013,116500,winston.ruan@gmail.com,Winston Ruan,Training,214-558-3973,null,null,0030H00004pHArtQAG,null,NONE,0.0,Thomas Hodge,University of Texas at Dallas,Bachelors,Computer Science,Divya R,100
+297017,116500,gesner.ian@gmail.com,IAN A GESNER,Training,503-999-5248,null,null,0030H00004pIJL6QAO,null,NONE,0.0,Kristian Moreira,Oregon Institute of Technology,Bachelors,Computer Science,Bhuvaneswari Mohan,100
+297022,116500,hi@vladigleba.com,Vladi Gleba,Training,971-570-4253,null,null,0030H00004qSAS9QAO,null,NONE,0.0,Rachna Tyagi,Portland State University,None,null,Rashika Guna,100
+297023,116500,dg02967@georgiasouthern.edu,Demarques Glass,Training,678-973-9938,null,null,0030H00004qSM8LQAW,null,NONE,0.0,Rachna Tyagi,Georgia Southern University,Bachelors,Computer Science,Aiswarya R,100
+297025,116500,victor.hernandez.candelaria@live.com,Victor Hernandez Candelaria,Employed,939-249-2928,null,null,0030H00004qSQgCQAW,null,NONE,0.0,Edward Hulse,CANDIDATE POOL,Bachelors,Computer Science,Akshay PK,100
+297028,116500,casey.manning.ferris@gmail.com,Casey Ferris,Training,574-334-1531,null,null,0030H00004qSsRpQAK,null,NONE,0.0,Chris Bermudez,University of Notre Dame,Masters,Computer Science,Bhuvaneswari Mohan,100
+297029,116500,tanner.mcdonald@outlook.com,Tanner McDonald,Training,772-321-1894,null,null,0030H00004qT3jzQAC,null,NONE,0.0,Thomas Hodge,University of North Florida,Bachelors,Computer Science,Divya R,100
+297035,116500,damondantin@gmail.com,Damon Dantin,Dropped,504-906-1749,null,null,0030H00004qTC0JQAW,null,NONE,0.0,Chris Bermudez,University of New Orleans,Bachelors,Computer Science,Divya R,21
+297037,116500,zakarystone@gmail.com,Zakary Stone,Employed,907-317-8216,null,null,0030H00004qTDYHQA4,null,NONE,0.0,Ira D'Silva,University of Alaska Anchorage,Bachelors,Computer Engineering,Bhuvaneswari Mohan,100
+297039,116500,tjcargle21@gmail.com,Thomas Cargle,Training,407-600-5513,null,null,0030H00004qU67HQAS,null,NONE,0.0,Edward Hulse,Full Sail University,Bachelors,Game Programming,Akshay PK,100
+297041,116500,snegron@csumb.edu,Stephen Negron,Employed,831-262-3035,null,null,0030H00004qUBQ5QAO,null,NONE,0.0,Ira D'Silva,California State University-Monterey Bay,Bachelors,Computer Science,Akshay PK,100
+297042,116500,mjackson3@gmail.com,Miles Jackson,Dropped,801-410-2053,null,null,003i000001TsFC1AAN,null,NONE,0.0,Edward Hulse,Weber State University,Bachelors,COMPUTER SCIENCE,Bhuvaneswari Mohan,\N
+297043,116500,basoredev@protonmail.com,Andrew Basore,Dropped,517-392-2774,null,null,003i000003uZlxwAAC,null,NONE,0.0,Rachna Tyagi,Central Michigan University,Bachelors,Mathematics,Divya R,59
+297044,116500,oscarvasquez17@gmail.com,Oscar Vasquez,Training,954-892-3685,null,null,003i0000047ukg4AAA,null,NONE,0.0,Edward Hulse,Florida Atlantic University,Bachelors,Computer Science,Bhuvaneswari Mohan,100
+297045,116500,msdewitt@bsu.edu,Matheu DeWitt,Employed,812-631-8962,null,null,003i000004NUu6bAAD,null,NONE,0.0,Thomas Hodge,Ball State University,Bachelors,Computer Science,Bhuvaneswari Mohan,100
+297048,116500,jmoyett590@gmail.com,Jonathan Moyett,Employed,912-980-4064,null,null,003i000004cqN9pAAE,null,NONE,0.0,Ira D'Silva,Armstrong State University,Bachelors,Computer Science,Divya R,100
+297050,116500,mnguyen5081@gmail.com,Mary Nguyen,Employed,912-508-5061,null,null,003i000004gzd1TAAQ,null,NONE,0.0,Edward Hulse,Armstrong State University,Bachelors,Computer Science,Bhaskar Sundaramurthy,100
+297053,116500,shehats@clarkson.edu,Saleh Shehata,Training,609-937-1391,null,null,0030H00004qSsUMQA0,null,NONE,0.0,Thomas Hodge,Clarkson University,Bachelors,Computer Science,Hamsalakshimi Narayanan,100
+297054,116500,devin_dellamano@yahoo.com,Devin Dellamano,Training,618-406-2230,null,null,003i000004NV7KTAA1,null,NONE,0.0,Rachna Tyagi,Full Sail University,Bachelors,Computer Programming,Rashika Guna,100
+297055,116500,maxschoettger@hotmail.com,Max Schoettger,Training,816-820-1959,null,null,0030H00004qTTk5QAG,null,NONE,0.0,Edward Hulse,University of Missouri-Kansas City,Bachelors,Information Technology,Akshay PK,100
+297061,115509,marcus.anderson94@gmail.com,Marcus Anderson,Dropped,null,null,null,null,null,NONE,0.0,null,null,null,null,null,\N
+297063,116502,parthmehta374@gmail.com,Parth Mehta,Dropped,917-832-4758,null,null,0030H00004lltjYQAQ,null,NONE,0.0,Thomas Hodge,Queens College of the City University of New York,Bachelors,Computer Science,Rashika Guna,\N
+297064,116502,r.rosario2142@gmail.com,Richard Rosario,Employed,347-235-7768,null,null,0030H00004ljX0RQAU,null,NONE,0.0,Lisa Wilson,Queens College of the City University of New York,Masters,Computer science,Aiswarya R,100
+297068,116502,kahyap13@gmail.com,Kah Yap,Dropped,718-708-1881,null,null,0030H00004lk0FdQAI,null,NONE,0.0,Lisa Wilson,Queens College of the City University of New York,Bachelors,Mathematics,Rashika Guna,99
+297071,116502,berrani85@yahoo.fr,Kamel Berrani,Training,347-981-7712,null,null,0030H00004pEwffQAC,null,NONE,0.0,Edward Hulse,New York City College of Technology,Bachelors,Mathematics,Divya R,100
+297073,116502,cdiaz8369@hotmail.com,Christian Diaz,Employed,347-776-8042,null,null,0030H00004pF5AHQA0,null,NONE,0.0,Rachna Tyagi,Hunter College,Bachelors,Computer Science,Rashika Guna,\N
+297074,116502,amrtiger.20@gmail.com,Amr Hosny,Training,347-525-0937,null,null,0030H00004pFbj0QAC,null,NONE,0.0,Thomas Hodge,Brooklyn College,Bachelors,Computer and Information Sciences, General,Aiswarya R,100
+297077,116502,carson.zjq@gmail.com,Jiaqi Zhang,Employed,917-913-2005,null,null,0030H00004qRhT4QAK,null,NONE,0.0,Edward Hulse,Stony Brook University,Bachelors,Computer Science,Divya R,0
+297078,116502,zigic@outlook.com,Petar Zigic,Training,917-582-0814,null,null,0030H00004qTtJeQAK,null,NONE,0.0,Kristian Moreira,Queens University of Charlotte,Bachelors,Computer Science,Bhuvaneswari Mohan,100
+297080,116502,jawaun.brown95@gmail.com,Jawaun Brown,Dropped,203-443-9758,null,null,0030H00004qV54AQAS,null,NONE,0.0,Edward Hulse,Amherst College,Bachelors,Political Science,Rashika Guna,3
+297082,116502,shirleyzhang2078@gmail.com,Shirley Zhang,Dropped,9175130048,null,null,0030H00004qVdv3QAC,null,NONE,0.0,Thomas Hodge,Pace University,Bachelors,Computer Science,Rashika Guna,\N
+297083,116502,nathanblanchard12@gmail.com,Ernst Blanchard,Training,347-675-1325,null,null,003i000002q8ALGAA2,null,NONE,0.0,Rachna Tyagi,Brooklyn College,Bachelors,Computer Science,Rashika Guna,100
+297086,116502,stevencaraballo26@gmail.com,Steven Caraballo,Employed,718-873-3176,null,null,003i000004DnSsGAAV,null,NONE,0.0,Rachna Tyagi,Lehman College,Bachelors,Computer Science,Rashika Guna,100
+297089,116502,omowumi.l.ademola@gmail.com,Omowumi Ademola,Employed,646-463-9041,null,null,003i000004ReVfWAAV,null,NONE,0.0,Rachna Tyagi,Binghamton University,Bachelors,Computer Science,Rashika Guna,100
+297090,116502,harishkumarchandra@gmail.com,Harish Chandramohan,Employed,6469155131,null,null,003i000004cs0KvAAI,null,NONE,0.0,Rachna Tyagi,City College of New York,Bachelors,Mechanical Engineering,Rashika Guna,100
+299005,116504,robertmcgetrick@gmail.com,Bobby McGetrick,Employed,516-425-6887,null,null,0030H00004qSXjIQAW,null,NONE,0.0,Edward Hulse,Muhlenberg College,Bachelors,Computer Science,Aiswarya R,100
+299008,116504,poblockijw@gmail.com,John Poblocki,Employed,952-463-7504,null,null,0030H00004qTBzYQAW,null,NONE,0.0,Edward Hulse,Gustavus Adolphus College,Bachelors,Computer Science,Akshay PK,100
+299009,116504,montrebutler@gmail.com,Javian Butler,Training,773-531-3593,null,null,0030H00004qTItbQAG,null,NONE,0.0,Kristian Moreira,University of Illinois-Chicago,Bachelors,Computer Science,Aiswarya R,100
+299010,116504,maaraken@yahoo.com,Benjamin Zahler,Confirmed,715-553-2143,null,null,0030H00004qTTjRQAW,Trainee was automatically flagged by Caliber. ,NONE,0.0,Kristian Moreira,Southern Illinois University-Carbondale,Bachelors,Computer Science,Aiswarya R,100
+299012,116504,ricardoviera01@gmail.com,Ricardo Viera,Employed,786-616-3477,null,null,0030H00004qTtK3QAK,null,NONE,0.0,Thomas Hodge,Florida International University,Bachelors,Information Technology,Aiswarya R,100
+299018,116504,adalaq007@msn.com,Ahmed Dalaq,Dropped,816-522-6722,null,null,0030H00004qUVSPQA4,null,NONE,0.0,Chris Bermudez,University of Central Missouri,Masters,Information Technology and Information System,Divya R,\N
+299019,116504,ccourtois4295@gmail.com,Charles Courtois,Employed,470-269-6941,null,null,0030H00004qUVTWQA4,null,NONE,0.0,Thomas Hodge,Georgia Southern University,Bachelors,Computer Science,Rashika Guna,100
+299020,116504,jmark@mail.usf.edu,Matt Mark,Employed,407-760-4571,null,null,0030H00004qUVTtQAO,Trainee was automatically flagged by Caliber. ,RED,0.0,Ira D'Silva,University of South Florida-Tampa,Bachelors,Mathematics,Akshay PK,100
+299021,116504,jcmorgan1000@gmail.com,Jason Morgan,Marketing,773-615-8760,null,null,0030H00004qUd8zQAC,null,NONE,0.0,Edward Hulse,University of Maryland-University College,Bachelors,Computer Science,Aiswarya R,100
+299025,116504,iperfitt@umich.edu,Ian Perfitt,Training,248-403-4694,null,null,0030H00004qV56iQAC,null,NONE,0.0,Edward Hulse,University of Michigan-Ann Arbor,Bachelors,Unlisted Major,Akshay PK,100
+299026,116504,bsmalls@email.uscupstate.edu,Brandon Smalls,Training,803-414-4427,null,null,0030H00004qVBMaQAO,null,NONE,0.0,Ira D'Silva,University of South Carolina-Upstate,Bachelors,Computer Science,Rashika Guna,100
+299028,116504,adr.m.del@gmail.com,Adrian Deleon,Training,954-716-5887,null,null,0030H00004qVNwvQAG,null,NONE,0.0,Erik Schultz,University of West Florida,Bachelors,Software Engineering,Aiswarya R,100
+299030,116504,brandoncross@live.com,Brandon Cross,Employed,678-654-3673,null,null,0030H00004spEqTQAU,null,NONE,0.0,Edward Hulse,Kennesaw State University,Bachelors,Computer Science,Aiswarya R,100
+299032,116504,miguelsuriel@aol.com,Miguel Suriel,Employed,973-878-6419,null,null,0030H00004spKUyQAM,null,NONE,0.0,Edward Hulse,Rutgers University,Bachelors,Information Technology,Aiswarya R,100
+299036,116504,srushtipatel@mail.usf.edu,Srushti Patel,Dropped,352-408-6656,null,null,003i000004gzBLeAAM,null,NONE,0.0,Edward Hulse,University of South Florida-Tampa,Bachelors,Computer Engineering,Patrick Walsh,\N
