@@ -1,0 +1,221 @@
+<!--
+WARNING: This workflow will fail if Sqoop jobs with the same name already exist in the Sqoop metastore. It's corresponding deletion workflow must be run beforehand.
+
+DESCRIPTION: Run by setup master workflow to create new Sqoop import jobs to sqoop metastore to allow for incremental imports.
+Sqoop Jobs: Pull data from Caliber and simultaneously create Hive tables and insert data. Tables are queried in execution workflow to obtain result for spark_data table.
+-->
+<workflow-app xmlns="uri:oozie:workflow:0.4" name="create-hive-imports">
+
+    <!--Start Workflow-->
+    <start to="create-import-assessment"/>
+
+        <action name="create-import-assessment">
+            <sqoop xmlns="uri:oozie:sqoop-action:0.4">
+                <job-tracker>${resourceManager}</job-tracker>
+                <name-node>${nameNode}</name-node>
+                <arg>job</arg>
+                <arg>-Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks</arg>
+                <arg>-Dmapreduce.job.queuename=sqoop</arg>
+                <arg>--create</arg>
+                <arg>hive-import-assessment</arg>
+                <arg>--meta-connect</arg>
+                <arg>${metastoreConn}</arg>
+                <arg>--</arg>
+                <arg>import</arg>
+                <arg>--connect</arg>
+                <arg>${caliberConn}</arg>
+                <arg>--username</arg>
+                <arg>${caliberUser}</arg>
+                <arg>--password-alias</arg>
+                <arg>${caliberPass}</arg>
+                <arg>--table</arg>
+                <arg>CALIBER_ASSESSMENT</arg>
+                <arg>--hive-import</arg>
+                <arg>--hive-table</arg>
+                <arg>biforce_staging.caliber_assessment</arg>
+                <arg>--hive-overwrite</arg>
+                <arg>--hive-drop-import-delims</arg>
+                <arg>--incremental</arg>
+                <arg>append</arg>
+                <arg>--check-column</arg>
+                <arg>ASSESSMENT_ID</arg>
+                <arg>--last-value</arg>
+                <arg>0</arg>
+                <arg>--warehouse-dir</arg>
+                <arg>/user/hive/warehouse/biforce_staging.db</arg>
+                <arg>-m</arg>
+                <arg>1</arg>
+            </sqoop>
+            <ok to="create-import-batch" />
+            <error to="kill" />
+        </action>
+
+        <action name="create-import-batch">
+            <sqoop xmlns="uri:oozie:sqoop-action:0.4">
+                <job-tracker>${resourceManager}</job-tracker>
+                <name-node>${nameNode}</name-node>
+                <arg>job</arg>
+                <arg>-Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks</arg>
+                <arg>--create</arg>
+                <arg>hive-import-batch</arg>
+                <arg>--meta-connect</arg>
+                <arg>${metastoreConn}</arg>
+                <arg>--</arg>
+                <arg>import</arg>
+                <arg>--connect</arg>
+                <arg>${caliberConn}</arg>
+                <arg>--username</arg>
+                <arg>${caliberUser}</arg>
+                <arg>--password-alias</arg>
+                <arg>${caliberPass}</arg>
+                <arg>--table</arg>
+                <arg>CALIBER_BATCH</arg>
+                <arg>--hive-import</arg>
+                <arg>--hive-table</arg>
+                <arg>biforce_staging.caliber_batch</arg>
+                <arg>--hive-overwrite</arg>
+                <arg>--hive-drop-import-delims</arg>
+                <arg>--incremental</arg>
+                <arg>append</arg>
+                <arg>--check-column</arg>
+                <arg>BATCH_ID</arg>
+                <arg>--last-value</arg>
+                <arg>0</arg>
+                <arg>--warehouse-dir</arg>
+                <arg>/user/hive/warehouse/biforce_staging.db</arg>
+                <arg>-m</arg>
+                <arg>1</arg>
+            </sqoop>
+            <ok to="create-import-grade" />
+            <error to="kill" />
+        </action>
+
+        <action name="create-import-grade">
+            <sqoop xmlns="uri:oozie:sqoop-action:0.4">
+                <job-tracker>${resourceManager}</job-tracker>
+                <name-node>${nameNode}</name-node>
+                <arg>job</arg>
+                <arg>-Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks</arg>
+                <arg>-Dmapreduce.job.queuename=sqoop</arg>
+                <arg>--create</arg>
+                <arg>hive-import-grade</arg>
+                <arg>--meta-connect</arg>
+                <arg>${metastoreConn}</arg>
+                <arg>--</arg>
+                <arg>import</arg>
+                <arg>--connect</arg>
+                <arg>${caliberConn}</arg>
+                <arg>--username</arg>
+                <arg>${caliberUser}</arg>
+                <arg>--password-alias</arg>
+                <arg>${caliberPass}</arg>
+                <arg>--table</arg>
+                <arg>CALIBER_GRADE</arg>
+                <arg>--hive-import</arg>
+                <arg>--hive-table</arg>
+                <arg>biforce_staging.caliber_grade</arg>
+                <arg>--hive-overwrite</arg>
+                <arg>--hive-drop-import-delims</arg>
+                <arg>--incremental</arg>
+                <arg>append</arg>
+                <arg>--check-column</arg>
+                <arg>GRADE_ID</arg>
+                <arg>--last-value</arg>
+                <arg>0</arg>
+                <arg>--warehouse-dir</arg>
+                <arg>/user/hive/warehouse/biforce_staging.db</arg>
+                <arg>-m</arg>
+                <arg>1</arg>
+            </sqoop>
+            <ok to="create-import-note" />
+            <error to="kill" />
+        </action>
+
+        <action name="create-import-note">
+            <sqoop xmlns="uri:oozie:sqoop-action:0.4">
+                <job-tracker>${resourceManager}</job-tracker>
+                <name-node>${nameNode}</name-node>
+                <arg>job</arg>
+                <arg>-Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks</arg>
+                <arg>-Dmapreduce.job.queuename=sqoop</arg>
+                <arg>--create</arg>
+                <arg>hive-import-note</arg>
+                <arg>--meta-connect</arg>
+                <arg>${metastoreConn}</arg>
+                <arg>--</arg>
+                <arg>import</arg>
+                <arg>--connect</arg>
+                <arg>${caliberConn}</arg>
+                <arg>--username</arg>
+                <arg>${caliberUser}</arg>
+                <arg>--password-alias</arg>
+                <arg>${caliberPass}</arg>
+                <arg>--table</arg>
+                <arg>CALIBER_NOTE</arg>
+                <arg>--hive-import</arg>
+                <arg>--hive-table</arg>
+                <arg>biforce_staging.caliber_note</arg>
+                <arg>--hive-overwrite</arg>
+                <arg>--hive-drop-import-delims</arg>
+                <arg>--incremental</arg>
+                <arg>append</arg>
+                <arg>--check-column</arg>
+                <arg>NOTE_ID</arg>
+                <arg>--last-value</arg>
+                <arg>0</arg>
+                <arg>--warehouse-dir</arg>
+                <arg>/user/hive/warehouse/biforce_staging.db</arg>
+                <arg>-m</arg>
+                <arg>1</arg>
+            </sqoop>
+            <ok to="create-import-trainee" />
+            <error to="kill" />
+        </action>
+
+        <action name="create-import-trainee">
+            <sqoop xmlns="uri:oozie:sqoop-action:0.4">
+                <job-tracker>${resourceManager}</job-tracker>
+                <name-node>${nameNode}</name-node>
+                <arg>job</arg>
+                <arg>-Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks</arg>
+                <arg>-Dmapreduce.job.queuename=sqoop</arg>
+                <arg>--create</arg>
+                <arg>hive-import-trainee</arg>
+                <arg>--meta-connect</arg>
+                <arg>${metastoreConn}</arg>
+                <arg>--</arg>
+                <arg>import</arg>
+                <arg>--connect</arg>
+                <arg>${caliberConn}</arg>
+                <arg>--username</arg>
+                <arg>${caliberUser}</arg>
+                <arg>--password-alias</arg>
+                <arg>${caliberPass}</arg>
+                <arg>--table</arg>
+                <arg>CALIBER_TRAINEE</arg>
+                <arg>--hive-import</arg>
+                <arg>--hive-table</arg>
+                <arg>biforce_staging.caliber_trainee</arg>
+                <arg>--hive-overwrite</arg>
+                <arg>--hive-drop-import-delims</arg>
+                <arg>--incremental</arg>
+                <arg>append</arg>
+                <arg>--check-column</arg>
+                <arg>TRAINEE_ID</arg>
+                <arg>--last-value</arg>
+                <arg>0</arg>
+                <arg>--warehouse-dir</arg>
+                <arg>/user/hive/warehouse/biforce_staging.db</arg>
+                <arg>-m</arg>
+                <arg>1</arg>
+            </sqoop>
+            <ok to="end" />
+            <error to="kill" />
+        </action>
+    <kill name="kill">
+        <message>message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+
+    <end name="end"/>
+
+</workflow-app>
