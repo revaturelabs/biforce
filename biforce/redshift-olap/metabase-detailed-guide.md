@@ -12,7 +12,7 @@
 ## Navigating the Metabase Home Screen
 * On the home screen, the following information is provided to the user:
     * Automatically generated quick summaries of data tables called "x-rays" (this can be disabled in admin mode; see admin mode section for more information)
-    * A link to "Our Analytics," the part of the portal that summarizes all collections,dashboards, questions, and pulses. Each of these items will be discussed altogether in the section on "Our Analytics"
+    * A link to "Our Analytics," the part of the portal that summarizes all collections, dashboards, questions, and pulses. Each of these items will be discussed altogether in the section on "Our Analytics"
     * A link to "Our Data," the part of the portal that provides quick access to descriptions on the databases within the portal and those databases' tables. "Our Data" is where the user can tell Metabase to x-ray additional tables besides those it already displays on the home page. "Our Data" will be discussed in further detail in its own section
 * The top of all web pages within the portal will have the following selections:
     * The Metabase logo for navigation back to the portal's home screen
@@ -100,7 +100,7 @@
 ### Settings Tab
 1. Setup:
     * Shows a to-do list of items that Metabase recommends that the admin configure
-    * Within this list are setting up email, adding databases, integrating Slack, inviting new users, hiding unused tables, organizing queries (called "questions" by Metabase), creating metrics (explained in later sections), and creating segments (explained in later sections)
+    * Within this list are setting up email, adding databases, integrating Slack, inviting new users, hiding unused tables, organizing queries (called "questions" by Metabase), creating metrics (explained in previous sections), and creating segments (explained in previous sections)
 2. General:
     * This section allows the admin to update the site name, the site URL, the email address for help requests, the site's time zone, and the site's language
     * The remaining items in this section are toggles that enable/disable tracking by Metabase, usage of "friendly" table/field names, nested queries, and x-ray features (covered in later sections)
@@ -119,9 +119,9 @@
 8. Formatting:
     * This section is for setting the date format, the time format, the number separator format, and the currency format
 9. Public Sharing:
-    * Use this for toggling the ability for users to create links for dashboards and saved questions (dashboards are covered in later sections)
+    * Use this for toggling the ability for users to create links for dashboards and saved questions (dashboards are covered in previous sections)
 10. Embedding in other Applications:
-    * Enables/disables embedding dashboards and other Metabase portal items into external applications
+    * Enables/Disables embedding dashboards and other Metabase portal items into external applications
 11. Caching:
     * Enables/Disables caching
 ### People Tab
