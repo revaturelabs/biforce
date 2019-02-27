@@ -1,18 +1,32 @@
 ## Spark Team
 * The current code in SparkAnalysis takes 4 arguments:
-* the spark master, the input file, the output file, and an optional
-* batch number. If the batch number isn't provided it will analayze all batteries.
-* The input file should point to battery_test.csv and the output will be in csv
-* format. The csv file contains 3 columns: the battery_id, the %
-* chance they will fail, and the sample size. The higher the sample
-* size, the more accurate the prediction.
+  the spark master, the input file, the output file, and a control data output file.
+  
+  
+  On an EMR, in the same directory as the jar, run the code with
+  `spark-submit --master yarn --class com.revature.Driver Biforce_Analysis.jar p3in/spark_input.csv sparkOutput controlOutput`
+  where spark_input.csv is in the HDFS under ~/p3in
+  Output is written to an s3 bucket automatically (consider changing this and just specifying the s3 in the input)
+  
+  Locally on Cloudera or HortonWorks, create a directory p3out, and `touch` files sparkOutput.txt and controlOutput.txt
+  Set s3Location to an empty string.
+  Run `spark-submit --class com.revature.Driver Biforce_Analysis.jar p3in/spark_input.csv p3out/sparkOutput.txt p3out/controlOutput.txt`
+  
+  
+* The only useful data for model building is associates that are employed or dropped. Those in training are filtered out.
+* This data is then split (70/30) into model and control data, for building the model and testing its accuracy.
+
+* The input file contains 11 columns, of which 5 are used. _c1:test_type, _c3:score, _c4:test period, _c9:associate id, _c10:associate status
+-If this is changed in the future, column names as well as RDD row indices will have to be changed. I do not believe it has a significant effect on performance.
+* The output file (sparkOutput) contains 4 columns with no header: associate_id,% Chance to Fail,Most Recent Week,Prediction
+* The control output file is used for determining week-by-week accuracy, and logging of the equations.
+-These equations are used to find partial chances of being dropped.
+-These partial chances are weighted according to the strength of their test's correlation to the drop chance.
+-They are finally combined into a single drop chance.
+-The prediction is made by splitting the drop chances control data at the point with the least number of incorrect predictions.
 
 Future iteration considerations:
-- Speed up the code using caching. At the moment it takes 6 hours to process 852 unique 
-batteries. Example: `Dataset<String> logData = spark.read().textFile(logFile).cache();` [Caching in Spark](https://spark.apache.org/docs/latest/quick-start.html#caching)
-- More indicators, at the moment only the first 3 test types in the first 3
-periods are taken into consideration
-- Include an accuracy value, currently the sample size gives an idea of reliability, but not a degree of error.
-- Answer the specific question of who should be dropped, and who shouldn't.
-- Get the dataset's foreach function to work instead of converting to a list
-of rows.
+- Further optimize ModelFunction for accuracy and (potentially) speed. 
+-Currently 90% accurate by week 4 with 850 associates, 170 of which are confirmed or dropped.
+-Currently takes about 2.5 min to run.
+- Allow for appending of output files, rather than overriding.
