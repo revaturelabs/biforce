@@ -17,16 +17,16 @@
 * This data is then split (70/30) into model and control data, for building the model and testing its accuracy.
 
 * The input file contains 11 columns, of which 5 are used. _c1:test_type, _c3:score, _c4:test period, _c9:associate id, _c10:associate status
-..*If this is changed in the future, column names as well as RDD row indices will have to be changed. I do not believe it has a significant effect on performance.
+..* If this is changed in the future, column names as well as RDD row indices will have to be changed. I do not believe it has a significant effect on performance.
 * The output file (sparkOutput) contains 4 columns with no header: associate_id,% Chance to Fail,Most Recent Week,Prediction
 * The control output file is used for determining week-by-week accuracy, and logging of the equations.
-..*These equations are used to find partial chances of being dropped.
-..*These partial chances are weighted according to the strength of their test's correlation to the drop chance.
-..*They are finally combined into a single drop chance.
-..*The prediction is made by splitting the drop chances control data at the point with the least number of incorrect predictions.
+..* These equations are used to find partial chances of being dropped.
+..* These partial chances are weighted according to the strength of their test's correlation to the drop chance.
+..* They are finally combined into a single drop chance.
+..* The prediction is made by splitting the drop chances control data at the point with the least number of incorrect predictions.
 
 Future iteration considerations:
 - Further optimize ModelFunction for accuracy and (potentially) speed. 
-..*Currently 90% accurate by week 4 with 850 associates, 170 of which are confirmed or dropped.
-..*Currently takes about 2.5 min to run.
+..* Currently 90% accurate by week 4 with 850 associates, 170 of which are confirmed or dropped.
+..* Currently takes about 2.5 min to run.
 - Allow for appending of output files, rather than overriding.
