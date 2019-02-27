@@ -1,0 +1,1 @@
+Allow your vm to access your shared folder: sudo usermod -aG vboxsf $USER
