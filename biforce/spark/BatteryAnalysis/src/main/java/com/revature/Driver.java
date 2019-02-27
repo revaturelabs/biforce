@@ -85,7 +85,7 @@ public class Driver {
 	public static void main(String args[]) {
 		// Configure spark, get session variable, declare Datasets
 		String s3Location = "s3://revature-analytics-dev/";
-		
+
 		context = new JavaSparkContext(new SparkConf().setAppName("ChanceToFail"));
 		context.setLogLevel("ERROR");
 		session = new SparkSession(context.sc());
@@ -143,23 +143,17 @@ public class Driver {
 			appends.add("\nAccuracy based on exams limited to week " + j + "\n");
 			System.out.println("\nAccuracy based on exams limited to week " + j + "\n");
 
-			appends.add("Fail percent: " + Math.round(optimalPoint.getOptimalPercent() * 10000) / 10000.0 + "\n\n"
+			String outString = "Fail percent: " + Math.round(optimalPoint.getOptimalPercent() * 10000) / 10000.0 + "\n\n"
 					+ "\t\t\t Predicted Drop Count\tPredicted Pass Count" + "\nActual Drop Count\t\t\t"
 					+ optimalPoint.getOptimalTPCount() + "\t\t\t" + optimalPoint.getOptimalFPCount()
 					+ "\nActual Pass Count\t\t\t" + optimalPoint.getOptimalFNCount() + "\t\t\t"
 					+ optimalPoint.getOptimalTNCount() + "\n\nCorrect estimates: " + optimalPoint.getCorrectCount()
 					+ "\nTotal Count: " + optimalPoint.getTotalCount() + "\nAccuracy: " + optimalPoint.getAccuracy()
 					+ "\nRecall:" + optimalPoint.getRecall() + "\nPrecision:" + optimalPoint.getPrecision() + "\nF1 Score:"
-					+ optimalPoint.getF1Score() + "\n\n");
-			System.out.println("Fail percent: " + Math.round(optimalPoint.getOptimalPercent() * 10000) / 10000.0 + "\n\n"
-					+ "\t\t\t Predicted Drop Count\tPredicted Pass Count" + "\nActual Drop Count\t\t\t"
-					+ optimalPoint.getOptimalTPCount() + "\t\t\t" + optimalPoint.getOptimalFPCount()
-					+ "\nActual Pass Count\t\t\t" + optimalPoint.getOptimalFNCount() + "\t\t\t"
-					+ optimalPoint.getOptimalTNCount() + "\n\nCorrect estimates: " + optimalPoint.getCorrectCount()
-					+ "\nTotal Count: " + optimalPoint.getTotalCount() + "\nAccuracy: " + optimalPoint.getAccuracy()
-					+ "\nRecall:" + optimalPoint.getRecall() + "\nPrecision:" + optimalPoint.getPrecision() + "\nF1 Score:"
-					+ optimalPoint.getF1Score() + "\n\n");
-			
+					+ optimalPoint.getF1Score() + "\n\n";
+			appends.add(outString);
+			System.out.println(outString);
+
 			JavaRDD<String> appendsRDD = context.parallelize(appends);
 
 			controlOutput = controlOutput.union(appendsRDD);
@@ -178,6 +172,12 @@ public class Driver {
 		// Save the RDD's to s3
 		finalOutput.coalesce(1).saveAsTextFile(s3Location + args[1]);
 		controlOutput.coalesce(1).saveAsTextFile(s3Location + args[2]);
+
+		/* Append:
+		 * StructType st = new StructType().add("Everything", DataTypes.StringType);
+		 *	session.createDataFrame(finalOutput.map(s->RowFactory.create(s)).coalesce(1), st).write().format("txt").mode(SaveMode.Append).save(args[1]);
+		 *	session.createDataFrame(controlOutput.map(s->RowFactory.create(s)).coalesce(1), st).write().format("txt").mode(SaveMode.Append).save(args[2]);
+		 */
 
 		// Close all the resources.
 		csv.unpersist();
