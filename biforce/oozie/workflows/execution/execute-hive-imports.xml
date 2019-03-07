@@ -1,0 +1,84 @@
+<!--
+DESCRIPTION: Run by biforce master workflow to call hive import jobs from Sqoop metastore.
+-->
+<workflow-app xmlns="uri:oozie:workflow:0.4" name="execute-hive-imports">
+
+    <start to="assessment"/>
+
+    <action name="assessment">
+        <sqoop xmlns="uri:oozie:sqoop-action:0.4">
+            <job-tracker>${resourceManager}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <arg>job</arg>
+            <arg>--meta-connect</arg>
+            <arg>${metaConn}</arg>
+            <arg>--exec</arg>
+            <arg>hive-import-assessment</arg>
+        </sqoop>
+        <ok to="batch" />
+        <error to="kill" />
+    </action>
+
+    <action name="batch">
+        <sqoop xmlns="uri:oozie:sqoop-action:0.4">
+            <job-tracker>${resourceManager}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <arg>job</arg>
+            <arg>--meta-connect</arg>
+            <arg>${metaConn}</arg>
+            <arg>--exec</arg>
+            <arg>hive-import-batch</arg>
+        </sqoop>
+        <ok to="grade" />
+        <error to="kill" />
+    </action>
+
+    <action name="grade">
+        <sqoop xmlns="uri:oozie:sqoop-action:0.4">
+            <job-tracker>${resourceManager}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <arg>job</arg>
+            <arg>--meta-connect</arg>
+            <arg>${metaConn}</arg>
+            <arg>--exec</arg>
+            <arg>hive-import-grade</arg>
+        </sqoop>
+        <ok to="note" />
+        <error to="kill" />
+    </action>
+
+    <action name="note">
+        <sqoop xmlns="uri:oozie:sqoop-action:0.4">
+            <job-tracker>${resourceManager}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <arg>job</arg>
+            <arg>--meta-connect</arg>
+            <arg>${metaConn}</arg>
+            <arg>--exec</arg>
+            <arg>hive-import-note</arg>
+        </sqoop>
+        <ok to="trainee" />
+        <error to="kill" />
+    </action>
+
+    <action name="trainee">
+        <sqoop xmlns="uri:oozie:sqoop-action:0.4">
+            <job-tracker>${resourceManager}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <arg>job</arg>
+            <arg>--meta-connect</arg>
+            <arg>${metaConn}</arg>
+            <arg>--exec</arg>
+            <arg>hive-import-trainee</arg>
+        </sqoop>
+        <ok to="end" />
+        <error to="kill" />
+    </action>
+
+	<kill name="kill">
+		<message>message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+	</kill>
+
+	<end name="end" />
+
+</workflow-app>

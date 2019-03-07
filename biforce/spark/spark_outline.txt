@@ -1,0 +1,27 @@
+
+val lines = sc.textFile("hdfs://localhost:/user/cloudera/p3in/spark_input.csv")
+
+given: _c0: test type, _c2: score, _c3: test week, _c8: id, _c9: status
+1) flatmap to cells, split by commas
+2) filter to just _c0, _c2, _c3, _c8, _c9
+3) cache this
+4) reserve a sample of 10% of the data for testing
+5) grab score (_c2), status(_c9), group by test type(_c0) to build model
+	-A class with a method that takes test type, week # and returns a fail %
+	-store the r^2's as a map? with getter method to retrieve
+5.1) ^do the same but group by test week
+6) group by id to get a list of unique associates
+7) for each associate, retrieve available test + score
+8) pass each test through their respective model
+9) for a student, should have between 1 and 7 of the following:
+	"TestX" | fail % | r^2
+10) sum r^2's to weigh fail chances, get a final resultant fail %
+11) Determine what fail % to drop
+12) output ID | fail % | drop prediction
+
+RDD's are immutable
+https://mas-dse.github.io/DSE230/docs/Spark%20Cheat-Sheets%20(DZone).pdf
+
+want to convert id1 | test1 | score1 \n id1 | test2 | score2 -> id1 | {test1, test2} | {score1, score2}
+
+foreach.where

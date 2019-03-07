@@ -1,0 +1,43 @@
+<workflow-app name="Full-WF" xmlns="uri:oozie:workflow:0.4">
+
+<start to="etl-wf"/>
+
+<action name="etl-wf">
+<sub-workflow>
+<app-path>etl_workflow.xml</app-path>
+</sub-workflow>
+<ok to="spark-wf"/>
+<error to="kill_etl"/>
+</action>
+
+<action name="spark-wf">
+<sub-workflow>
+<app-path>spark_workflow.xml</app-path>
+</sub-workflow>
+<ok to="s3-redshift-wf"/>
+<error to="kill_spark"/>
+</action>
+
+<action name="s3-redshift-wf">
+<sub-workflow>
+<app-path>redshift_workflow.xml</app-path>
+</sub-workflow>
+<ok to="end"/>
+<error to="kill_redshift"/>
+</action>
+
+<kill name="kill_etl">
+<message>ETL workflow failed</message>
+</kill>
+
+<kill name="kill_spark">
+<message>Spark workflow failed</message>
+</kill>
+
+<kill name="kill_redshift">
+<message>RedShift workflow failed</message>
+</kill>
+
+<end name="end"/>
+
+</workflow-app>

@@ -1,0 +1,23 @@
+<workflow-app name="RedShift_Workflow" xmlns="uri:oozie:workflow:0.5">
+<global>
+</global>
+<start to="java-action"/>
+<action name="java-action">
+<java>
+<job-tracker>${resourceManager}</job-tracker>
+<name-node>${nameNode}</name-node>
+<main-class>App</main-class>
+<!-- one or more args -->
+<arg>S3:/revature-analytics-dev/battery_test.csv</arg>
+<arg>S3:/revature-analytics-dev/spark-output</arg>
+<arg>S3:/revature-analytics-dev/battery_status_legend.csv</arg>
+<file>RedShift.jar</file>
+</java>
+<ok to="end"/>
+<error to="kill_job">
+</action>
+<kill name="kill_job">
+<message>error in oozie workflow</message>
+</kill>
+<end name="end"/>
+</workflow-app>

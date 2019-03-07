@@ -2,152 +2,149 @@
 
 ## Responsibilities
 
-Our Responsibilities consisted of initial cleansing of the data through Sqoop importing tables from Caliber Database into HDFS filtering only specific columns, Sqoop exporting the data into MySQL, performing complex queries on the tables to join the results into one usuable result, then Sqoop importing the final table back in HDFS. This entire process also needed to be automated in Oozie.
+Our Responsibilities consisted of initial cleansing of the data. Importing tables from Caliber Database into Hive filtering only specific columns for the Spark Team. Performing a complex query on the data to join the results into one usuable table. Then using a Hive action to export the final table to HDFS. Also importing all the data that will by OLAP team from Caliber straight to the S3 bucket then to RedShift.
 
 ## Goals
 
-1. Because we didn't have access to Caliber, we needed immediate access to test tables which was provided to us through our team leads.
+1. Create database and table in Hive.
 
-2. Create Tables in MySQL defining a workable schema to work with each data type.
+2. Create password alias for Caliber password.
 
-3. Create Sqoop commands for all export and import commands.
+3. Sqoop import specific tables from Caliber into Hive.
 
-4. Create MySQL query to join all tables into one workable table.
+4. Create Hive query to join all tables into one workable table for Spark Team.
 
-5. Test all Sqoop commands on local machine.
+5. Export Spark table into HDFS.
 
-6. Cordinate with Oozie team to switch Sqoop jobs over into Oozie actions.
+6. Refer to ETL-Oozie workflow to export Spark data from HDFS to the S3.
 
-7. Figure out how to encrypt passwords to implement Sqoop commands to import from Caliber.
+7. Spoop import all tables from Caliber into S3 bucket.
 
-8. Add Caliber Sqoop imports into Oozie.
+8. Export all tables from S3 bucket to RedShift.
 
 ## Procedures
 
-1. Create Database and Tables in MySQL database using below commands: 
+1. Create database and Spark table in Hive using commands: 
 
 	```SQL
-	CREATE DATABASE BATTERY_STAGING;
+	CREATE DATABASE IF NOT EXISTS BIFORCE_STAGING;
 
-	use BATTERY_STAGING;
+	USE BIFORCE_STAGING;
 
-	CREATE TABLE BATTERY_TEST (SURROGATE_KEY INT NOT NULL AUTO_INCREMENT, TEST_TYPE INT, RAW_SCORE DECIMAL(3, 0), SCORE DECIMAL(5, 2), TEST_PERIOD INT, TEST_CATEGORY INT, BUILDER_ID INT, GROUP_ID INT, GROUP_TYPE INT, BATTERY_ID INT, BATTERY_STATUS INT, PRIMARY KEY(SURROGATE_KEY));
-
-	CREATE TABLE BATTERY (TRAINEE_ID INT, TRAINING_STATUS VARCHAR(20), BATCH_ID INT, INDEX(TRAINEE_ID, BATCH_ID));
-
-	CREATE TABLE BATTERY_GROUP (BATCH_ID INT, SKILL_TYPE VARCHAR(20), TRAINER_ID INT, INDEX(BATCH_ID));
-
-	CREATE TABLE BATTERY_QUALITATIVE (NOTE_ID INT, QC_STATUS VARCHAR(20), NOTE_TYPE VARCHAR(20), WEEK_NUMBER INT, BATCH_ID INT, TRAINEE_ID INT, INDEX(QC_STATUS, TRAINEE_ID));
-
-	CREATE TABLE BATTERY_QUANTITATIVE (GRADE_ID INT, SCORE DECIMAL(5, 2), ASSESSMENT_ID INT, TRAINEE_ID INT, INDEX(ASSESSMENT_ID, TRAINEE_ID));
-
-	CREATE TABLE BATTERY_ASSESSMENT (ASSESSMENT_ID INT, RAW_SCORE INT, ASSESSMENT_TYPE VARCHAR(20), WEEK_NUMBER INT, BATCH_ID INT, ASSESSMENT_CATEGORY INT, INDEX(ASSESSMENT_ID, BATCH_ID));
+	CREATE TABLE SPARK_DATA (ROW_NUM INT, TEST_TYPE INT, RAW_SCORE DECIMAL(3, 0), SCORE DECIMAL(5, 2), TEST_PERIOD INT, TEST_CATEGORY INT, TRAINER_ID INT, BATCH_ID INT, GROUP_TYPE STRING, BATTERY_ID INT, BATTERY_STATUS INT);
 	```
-	
-2. Create Sqoop job on the machine that will perform Oozie. Connect, username, and password will vary:
+
+2.  Create encrypted password to connect to Caliber. You will be prompted to enter the password when you run the below command: 
+
+	```
+	hadoop credential create caliber.password.alias -provider jceks://hdfs/user/root/caliber.password.jceks
+	```
+
+3. Run sqoop jobs on locally to import selected Caliber tables into Hive. The connection, username, and password may vary. 
+
+	```
+	sqoop import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/caliber.password.jceks --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias caliber.password.alias --table CALIBER_TRAINEE --hive-import --hive-table biforce_staging.caliber_trainee --hive-drop-import-delims
+
+	sqoop import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/caliber.password.jceks --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias caliber.password.alias --table CALIBER_TRAINER --hive-import --hive-table biforce_staging.caliber_trainer --hive-drop-import-delims
+
+	sqoop import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/caliber.password.jceks --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias caliber.password.alias --table CALIBER_BATCH --hive-import --hive-table biforce_staging.caliber_batch --hive-drop-import-delims
+
+	sqoop import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/caliber.password.jceks --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias caliber.password.alias --table CALIBER_NOTE --hive-import --hive-table biforce_staging.caliber_note --hive-drop-import-delims
+
+	sqoop import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/caliber.password.jceks --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias caliber.password.alias --table CALIBER_GRADE --hive-import --hive-table biforce_staging.caliber_grade --hive-drop-import-delims
+
+	sqoop import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/caliber.password.jceks --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias caliber.password.alias --table CALIBER_ASSESSMENT --hive-import --hive-table biforce_staging.caliber_assessment --hive-drop-import-delims
+
+	sqoop import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/caliber.password.jceks --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias caliber.password.alias --table CALIBER_CATEGORY --hive-import --hive-table biforce_staging.caliber_category --hive-drop-import-delims
+
+	sqoop import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/caliber.password.jceks --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias caliber.password.alias --table CALIBER_ADDRESS --hive-import --hive-table biforce_staging.caliber_address --hive-drop-import-delims
+	```
+
+4. Create a Hive query to join all tables into one workable table for Spark Team.
 	
 	```SQL
-	sqoop job \ 
-	--create battery_test_join \
-	-- eval \
-	--connect jdbc:mysql://sandbox-hdp.hortonworks.com/BATTERY_STAGING \
-	--username root \
-	--password ? \
-	-e "INSERT INTO BATTERY_TEST (TEST_TYPE, RAW_SCORE, SCORE, TEST_PERIOD, TEST_CATEGORY, BUILDER_ID, GROUP_ID, GROUP_TYPE, BATTERY_ID, BATTERY_STATUS)
-	SELECT
-		CASE 
-			WHEN UPPER(A.ASSESSMENT_TYPE) = 'VERBAL' THEN 1 
-			WHEN UPPER(A.ASSESSMENT_TYPE) = 'EXAM' THEN 2
-			WHEN UPPER(A.ASSESSMENT_TYPE) = 'PROJECT' THEN 3
-			WHEN UPPER(A.ASSESSMENT_TYPE) = 'OTHER' THEN 4
-			ELSE 0
-		END,
-		A.RAW_SCORE, 
-		Q.SCORE,
-		A.WEEK_NUMBER,
-		A.ASSESSMENT_CATEGORY,
-		G.TRAINER_ID,
-		G.BATCH_ID,
-		CASE 
-			WHEN UPPER(G.SKILL_TYPE) = 'SDET' THEN 1 
-			WHEN UPPER(G.SKILL_TYPE) = 'J2EE' THEN 2
-			WHEN UPPER(G.SKILL_TYPE) = 'OTHER' THEN 3
-			WHEN UPPER(G.SKILL_TYPE) = 'BPM' THEN 4
-			WHEN UPPER(G.SKILL_TYPE) = 'NET' THEN 5
-			WHEN UPPER(G.SKILL_TYPE) = 'BPM' THEN 6
-			WHEN UPPER(G.SKILL_TYPE) = 'MICROSERVICES' THEN 7
-			ELSE 0
-		END,
-		Q.TRAINEE_ID,
+	INSERT OVERWRITE TABLE SPARK_DATA
+	SELECT ROW_NUMBER() OVER (), Q.* FROM
+	(SELECT
 		CASE
-			WHEN UPPER(B.TRAINING_STATUS) = 'DROPPED' THEN 0
-			WHEN UPPER(B.TRAINING_STATUS) = 'EMPLOYED' THEN 1
-			WHEN UPPER(B.TRAINING_STATUS) = 'TRAINING' THEN 2
-			WHEN UPPER(B.TRAINING_STATUS) = 'SIGNED' THEN 3
-			WHEN UPPER(B.TRAINING_STATUS) = 'CONFIRMED' THEN 4
-			WHEN UPPER(B.TRAINING_STATUS) = 'MARKETING' THEN 5
-			ELSE 6
-		END
-	FROM BATTERY_ASSESSMENT A, BATTERY_GROUP G, BATTERY_QUANTITATIVE Q, BATTERY B
-	WHERE A.ASSESSMENT_ID = Q.ASSESSMENT_ID
-	AND A.BATCH_ID = G.BATCH_ID
-	AND Q.TRAINEE_ID = B.TRAINEE_ID
+			WHEN UPPER(CALIBER_ASSESSMENT.ASSESSMENT_TYPE) = 'VERBAL' THEN 1
+			WHEN UPPER(CALIBER_ASSESSMENT.ASSESSMENT_TYPE) = 'EXAM' THEN 2
+			WHEN UPPER(CALIBER_ASSESSMENT.ASSESSMENT_TYPE) = 'PROJECT' THEN 3
+			WHEN UPPER(CALIBER_ASSESSMENT.ASSESSMENT_TYPE) = 'OTHER' THEN 4
+		ELSE 0 END AS TYPE,
+    		CALIBER_ASSESSMENT.RAW_SCORE,
+    		CALIBER_GRADE.SCORE,
+    		CALIBER_ASSESSMENT.WEEK_NUMBER,
+    		CALIBER_ASSESSMENT.ASSESSMENT_CATEGORY,
+    		CALIBER_BATCH.TRAINER_ID,
+    		CALIBER_BATCH.BATCH_ID,
+    		CALIBER_BATCH.SKILL_TYPE,
+    		CALIBER_GRADE.TRAINEE_ID,
+		CASE
+			WHEN UPPER(CALIBER_TRAINEE.TRAINING_STATUS) = 'DROPPED' THEN 0
+			WHEN UPPER(CALIBER_TRAINEE.TRAINING_STATUS) = 'EMPLOYED' THEN 1
+			WHEN UPPER(CALIBER_TRAINEE.TRAINING_STATUS) = 'TRAINING' THEN 2
+			WHEN UPPER(CALIBER_TRAINEE.TRAINING_STATUS) = 'SIGNED' THEN 3
+			WHEN UPPER(CALIBER_TRAINEE.TRAINING_STATUS) = 'CONFIRMED' THEN 4
+			WHEN UPPER(CALIBER_TRAINEE.TRAINING_STATUS) = 'MARKETING' THEN 5
+		ELSE 6 END AS TRAINING_STATUS
+		FROM CALIBER_ASSESSMENT, CALIBER_BATCH, CALIBER_GRADE, CALIBER_TRAINEE
+		WHERE CALIBER_ASSESSMENT.ASSESSMENT_ID = CALIBER_GRADE.ASSESSMENT_ID
+		AND CALIBER_ASSESSMENT.BATCH_ID = CALIBER_BATCH.BATCH_ID
+		AND CALIBER_GRADE.TRAINEE_ID = CALIBER_TRAINEE.TRAINEE_ID
 
 	UNION ALL
 
-	SELECT 
+	SELECT
 		CASE 
-			WHEN UPPER(Q.NOTE_TYPE) = 'TRAINEE' THEN 5 
-			WHEN UPPER(Q.NOTE_TYPE) = 'QC_TRAINEE' THEN 6
-			WHEN UPPER(Q.NOTE_TYPE) = 'BATCH' THEN 7
-			WHEN UPPER(Q.NOTE_TYPE) = 'QC_BATCH' THEN 8
-			ELSE 0
-		END,
-		100, 
-		CASE 
-			WHEN UPPER(Q.QC_STATUS) = 'POOR' THEN 65 
-			WHEN UPPER(Q.QC_STATUS) = 'AVERAGE' THEN 75
-			WHEN UPPER(Q.QC_STATUS) = 'GOOD' THEN 85
-			WHEN UPPER(Q.QC_STATUS) = 'SUPERSTAR' THEN 95
-			ELSE 0
-		END,
-		Q.WEEK_NUMBER,
-		0,
-		G.TRAINER_ID,
-		G.BATCH_ID,
-		CASE 
-			WHEN UPPER(G.SKILL_TYPE) = 'SDET' THEN 1 
-			WHEN UPPER(G.SKILL_TYPE) = 'J2EE' THEN 2
-			WHEN UPPER(G.SKILL_TYPE) = 'OTHER' THEN 3
-			WHEN UPPER(G.SKILL_TYPE) = 'BPM' THEN 4
-			WHEN UPPER(G.SKILL_TYPE) = 'NET' THEN 5
-			WHEN UPPER(G.SKILL_TYPE) = 'BPM' THEN 6
-			WHEN UPPER(G.SKILL_TYPE) = 'MICROSERVICES' THEN 7
-			ELSE 0
-		END,
-		B.TRAINEE_ID,
+			WHEN UPPER(CALIBER_NOTE.NOTE_TYPE) = 'TRAINEE' THEN 5 
+			WHEN UPPER(CALIBER_NOTE.NOTE_TYPE) = 'QC_TRAINEE' THEN 6
+			WHEN UPPER(CALIBER_NOTE.NOTE_TYPE) = 'BATCH' THEN 7
+			WHEN UPPER(CALIBER_NOTE.NOTE_TYPE) = 'QC_BATCH' THEN 8
+		ELSE 0 END AS TYPE,
+	    	100 AS RAW_SCORE,
+	    	CASE
+	        	WHEN UPPER(CALIBER_NOTE.QC_STATUS) = 'POOR' THEN 65 
+	        	WHEN UPPER(CALIBER_NOTE.QC_STATUS) = 'AVERAGE' THEN 75
+	        	WHEN UPPER(CALIBER_NOTE.QC_STATUS) = 'GOOD' THEN 85
+	        	WHEN UPPER(CALIBER_NOTE.QC_STATUS) = 'SUPERSTAR' THEN 95
+	        ELSE 0 END AS SCORE,
+	    	CALIBER_NOTE.WEEK_NUMBER,
+    		0 AS ASSESSMENT_CATEGORY,
+    		CALIBER_BATCH.TRAINER_ID,
+    		CALIBER_BATCH.BATCH_ID,
+    		CALIBER_BATCH.SKILL_TYPE,
+    		CALIBER_TRAINEE.TRAINEE_ID,
 		CASE
-			WHEN UPPER(B.TRAINING_STATUS) = 'DROPPED' THEN 0
-			WHEN UPPER(B.TRAINING_STATUS) = 'EMPLOYED' THEN 1
-			WHEN UPPER(B.TRAINING_STATUS) = 'TRAINING' THEN 2
-			WHEN UPPER(B.TRAINING_STATUS) = 'SIGNED' THEN 3
-			WHEN UPPER(B.TRAINING_STATUS) = 'CONFIRMED' THEN 4
-			WHEN UPPER(B.TRAINING_STATUS) = 'MARKETING' THEN 5
-			ELSE 6
-		END
-	FROM BATTERY B, BATTERY_QUALITATIVE Q, BATTERY_GROUP G
-	WHERE Q.TRAINEE_ID = B.TRAINEE_ID
-	AND G.BATCH_ID = B.BATCH_ID
-	AND Q.QC_STATUS IS NOT NULL;"
+			WHEN UPPER(CALIBER_TRAINEE.TRAINING_STATUS) = 'DROPPED' THEN 0
+			WHEN UPPER(CALIBER_TRAINEE.TRAINING_STATUS) = 'EMPLOYED' THEN 1
+			WHEN UPPER(CALIBER_TRAINEE.TRAINING_STATUS) = 'TRAINING' THEN 2
+			WHEN UPPER(CALIBER_TRAINEE.TRAINING_STATUS) = 'SIGNED' THEN 3
+			WHEN UPPER(CALIBER_TRAINEE.TRAINING_STATUS) = 'CONFIRMED' THEN 4
+			WHEN UPPER(CALIBER_TRAINEE.TRAINING_STATUS) = 'MARKETING' THEN 5
+		ELSE 6 END AS TRAINING_STATUS
+		FROM CALIBER_NOTE, CALIBER_BATCH, CALIBER_TRAINEE
+		WHERE CALIBER_NOTE.TRAINEE_ID = CALIBER_TRAINEE.TRAINEE_ID
+		AND CALIBER_BATCH.BATCH_ID = CALIBER_TRAINEE.BATCH_ID
+		AND CALIBER_NOTE.QC_STATUS IS NOT NULL) Q;
+	```
 
-3. Create encrypted password to connect to Caliber. You will be prompted to enter the password when you run the below command: 
+5. Run command below in Hive to export the Spark table to HDFS for Spark team to use. Note the directory path.
 
-```
-	hadoop credential create mydb.password.alias -provider jceks://hdfs/user/root/mysql.password.jceks
-```
-	
-4. Refer to Oozie workflow for automated Sqoop commands. Remember the above commands must be completed before the Oozie workflow will work!
+	```
+	insert overwrite directory 'user/hadoop/biforce/Spark_Data' row format delimited fields terminated by ',' select * from spark_data; 
+	```
+
+6. Refer to ETL-Oozie workflow to pull Spark table into S3.
+
+7. Spoop import all tables from Caliber into S3 bucket. Connection and username may differ. Change value inside * * respectively. Use this command for each table in Caliber that the OLAP team would like to use for analysis.
+
+	```
+	sqoop import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/caliber.password.jceks -Dfs.s3a.access.key=*accesskey* -Dfs.s3a.secret.key=*secretkey* --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias caliber.password.alias --table *desired table* --columns *desired columns in table* --fields-terminated-by ~ --incremental append --check-column *checked column* --target-dir s3a://*revature bucket*/*target directory* --temporary-rootdir s3a://*revature bucket*/*temporary directory* -m 1
+	```
+
+8. Export all tables from S3 bucket to RedShift.
 
 ## Results
 
-We were able to successfully run all the Sqoop tasks through Oozie using Hortonworks. One of the major drawbacks was processing the initial complex query on MySQL but this issue was resolved by adding INDEXs on the columns that were used in the WHERE clause. 
+

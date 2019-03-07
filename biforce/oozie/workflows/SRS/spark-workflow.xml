@@ -1,0 +1,60 @@
+<workflow-app name="oozie-lab" xmlns="uri:oozie:workflow:0.4">
+<!-- Start job control node -->
+   <start to="fs-prep" />
+<!--
+   <action name="oozie-ssh">
+    <ssh xmlns="uri:oozie:ssh-action:0.1">
+       <host>${emr_hostname}</host>
+       <command>/home/hadoop/sparkCommand.sh 2> /home/hadoop/SparkCommand.log</command>
+ 	   <capture-output/>
+    </ssh>
+    <ok to="end"/>
+    <error to="kill"/>
+   </action>
+   -->
+   
+   <action name="fs-prep">
+   <fs>
+   <chmod path="/home/hadoop/spark/SparkAnalysis.jar" permissions="755" />
+   </fs>
+   <ok to="oozie-spark"/>
+   <error to="kill"/>
+   </action>
+   
+   <action name="oozie-spark">
+   <spark xmlns="uri:oozie:spark-action:0.1">
+   <job-tracker>${resourceManager}</job-tracker>
+   <name-node>${nameNode}</name-node>
+   <prepare>
+   <!-- preparatory command line arguments go here, such as mkdir and delete -->
+   </prepare>
+   <job-xml><!-- spark settings file --></job-xml>
+   <master>yarn<!-- spark master url --></master>
+   <mode>client<!-- spark mode --></mode>
+   <name>Spark CdA<!-- name of the spark application --></name>
+   <class>com.revature.Driver<!-- spark main class --></class>
+   <jar>SparkAnalysis.jar<!-- spark java dependencies --></jar>
+   <arg>inputpath=HData/battery_test.csv<!-- arg value --></arg>
+   <arg>outputpath=spark-output.txt</arg>
+   <arg>outputpath2=control-output.txt</arg>
+   </spark>
+   <ok to="fs-s3"/>
+   <error to="kill"/>
+   </action>
+
+   <action name="fs-s3">
+   <fs>
+   <hdfs dfs -cp spark-output.txt s3://revature-analytics-dev/spark-output />
+   </fs>
+   <ok to="end"/>
+   <error to="kill"/>
+   </action>
+   
+       <!-- Kill job control node -->
+   <kill name="kill">
+       <message>Oozie job terminated with errors.</message>
+   </kill>
+
+   <!-- End job control node -->
+   <end name="end" />
+</workflow-app>
