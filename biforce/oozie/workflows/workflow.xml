@@ -1,0 +1,27 @@
+<workflow-app xlmns="uri:oozie:workflow:0.4" name="biforce-setup">
+	
+	<start to="execute-warehouse-imports"/>
+
+	<action name="execute-warehouse-imports">
+		<sub-workflow>
+			<app-path>${executionPath}/execute-warehouse-imports.xml</app-path>
+			<propagate-configuration/>
+		</sub-workflow>
+		<ok to="execute-hive-imports"/>
+		<error to="kill"/>
+	</action>
+
+	<action name="execute-hive-imports">
+		<sub-workflow>
+			<app-path>${executionPath}/execute-hive-imports.xml</app-path>
+			<propagate-configuration/>
+		</sub-workflow>
+		<ok to="end"/>
+		<error to="kill"/>
+	</action>
+
+	<kill name="kill">
+		<message>message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+	</kill>
+
+	<end name="end">

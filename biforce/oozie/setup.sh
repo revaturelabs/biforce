@@ -26,6 +26,8 @@ echo ---------------------------------------------------------------------------
 #The workflows directory holds all Oozie workflows and is currently divided into setup and execution subdirectories
 echo Creating [biforce/workflows]
 hadoop fs -mkdir biforce/workflows
+echo Adding [workflow.xml] to [biforce/workflows]
+hadoop fs -put workflows/workflow.xml biforce/workflows
 echo -----------------------------------------------------------------------------------
 #The setup directory contains all Oozie workflows used in the initial setup of the application onto HDFS. It is currently divided into OLAP and warehouse subdirectories.
 echo Creating [biforce/workflows/setup]
@@ -56,7 +58,8 @@ echo Adding [execute-hive-imports.xml] to [biforce/workflows/execution]
 hadoop fs -put workflows/execution/execute-hive-imports.xml biforce/workflows/execution
 echo Adding [execute-warehouse-imports.xml] to [biforce/workflows/execution]
 hadoop fs -put workflows/execution/execute-warehouse-imports.xml biforce/workflows/execution
-
+echo -----------------------------------------------------------------------------------
+#Hive-site.xml
 echo Adding [hive-site.xml] to [biforce]
 hadoop fs -put hive-site.xml biforce
 
