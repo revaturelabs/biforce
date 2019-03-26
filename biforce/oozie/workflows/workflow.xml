@@ -1,4 +1,4 @@
-<workflow-app xlmns="uri:oozie:workflow:0.4" name="biforce-setup">
+<workflow-app xmlns="uri:oozie:workflow:0.4" name="workflow">
 	
 	<start to="execute-warehouse-imports"/>
 
@@ -20,8 +20,10 @@
 		<error to="kill"/>
 	</action>
 
+
 	<kill name="kill">
 		<message>message[${wf:errorMessage(wf:lastErrorNode())}]</message>
 	</kill>
 
-	<end name="end">
+	<end name="end"/>
+</workflow-app>
