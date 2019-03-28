@@ -51,7 +51,7 @@
 
   <property>
     <name>hive.metastore.uris</name>
-    <value>thrift://metastore.coljawxoaqoy.us-east-1.rds.amazonaws.com:5432</value>
+    <value></value>
     <description>IP address (or fully-qualified domain name) and port of the metastore host</description>
   </property>
 </configuration>
