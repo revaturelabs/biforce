@@ -38,6 +38,8 @@
 			<command>${invokeEmr}</command>
 			<args>${biforcePath}</args>
 			<args>${emrEndPoint}</args>
+			<args>${S3ACCESS}</args>
+			<args>${S3SECRET}</args>
 		</ssh>
 		<ok to="end"/>
 		<error to="kill"/>
