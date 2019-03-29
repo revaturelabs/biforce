@@ -26,28 +26,36 @@ import com.revature.Util.*;
 
 public class DriverClass {
 	public static void main(String[] args) {
+		final String inputPath = args[0];
+		final String outputPath = args[1];
+		
 		
 		//Be sure to have the data in hive before you try and run this
 		//See readme under ETL for how to do that
 		
-		SparkSession spark = SparkSession
-		  .builder()
-		  .master("local")
-		  .appName("Java Spark Hive Job") //TODO: PLEASE GIVE ME A MORE MEANINGFUL NAME
-		  .config("spark.sql.warehouse.dir", "/user/hive/warehouse")
-		  .config("hive.metastore.uris", "thrift://localhost:9083")
-		  .enableHiveSupport()
-		  .getOrCreate();
+		SparkConf conf = new SparkConf().setAppName("TrainerAnalysis");
 		
-		SQLContext sparkSQL = spark.sqlContext();
+		JavaSparkContext context = new JavaSparkContext(conf);
 		
-		//The following is just a test, please delete me later
+		SparkSession session = new SparkSession(context.sc());
 		
-		sparkSQL.sql("use biforce_staging");
+		//JavaSparkContext context = new JavaSparkContext();
 		
-		Dataset<Row> stuff = sparkSQL.sql("SELECT * FROM caliber_address");
+		//SQLContext sparkSQL = spark.sqlContext();
 		
-		System.out.println(stuff.count());
+		NormalizeScores.normalization(context, session, inputPath, outputPath);
+		
+		
+		
+		//directory is in HDFS
+		//Dataset<Row> addresses = spark.read().format("csv").option("delimiter", "~").csv("Caliber_Out/OneOnOneScores/OneOnOneScores.csv");
+		
+		session.close();
+		
+		context.close();
+		
+		
+		//System.out.println(addresses.count());
 		
 	}
 }
