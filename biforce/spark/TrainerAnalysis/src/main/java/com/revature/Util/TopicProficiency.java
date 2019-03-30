@@ -11,16 +11,18 @@ import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.sql.types.StructField;
 import org.apache.spark.sql.types.StructType;
 
-public class NormalizeScores {
-	public static void normalization(JavaSparkContext context, SparkSession session, String input, String output) {
+public class TopicProficiency {
+	public static void calculate_Proficiency(JavaSparkContext context, SparkSession session, String input, String output) {
 		
 		//Constructs a schema in the metastore for Spark to load data into and read from
         
-        StructField score = DataTypes.createStructField("Score", DataTypes.DoubleType, true);
+        StructField qc_score = DataTypes.createStructField("QC_Score", DataTypes.DoubleType, true);
         
         StructField week = DataTypes.createStructField("Week", DataTypes.DoubleType, true);
         
         StructField subject = DataTypes.createStructField("Subject", DataTypes.StringType, true);
+        
+        StructField assignment = DataTypes.createStructField("Assignment_Type", DataTypes.StringType, true);
         
         StructField BatchId = DataTypes.createStructField("Batch_Id", DataTypes.DoubleType, true);
         
@@ -34,9 +36,10 @@ public class NormalizeScores {
         
         List<StructField> fields = new ArrayList<StructField>();
         
-        fields.add(score);
+        fields.add(qc_score);
         fields.add(week);
         fields.add(subject);
+        fields.add(assignment);
         fields.add(BatchId);
         fields.add(TraineeId);
         fields.add(TraineeName);
@@ -47,14 +50,14 @@ public class NormalizeScores {
 		
 		Dataset<Row> data = session.sqlContext().read().format("csv").option("delimiter", "~").option("header", "false").schema(schema).load(input);
 		
-		data.createOrReplaceTempView("TrainerScores");
+		data.createOrReplaceTempView("TopicProficiency");
         
 		
 		//Executes SQL query to aggregate data in real-time
 		
-		Dataset<Row> normalizedScores = session.sqlContext().sql("SELECT Trainer_Name, Subject, Avg_Score, Std_Score, (Avg_Score - mini) / (maxi - mini) AS Normalized_Score FROM (SELECT Trainer_Name, Subject, avg(Score) AS Avg_Score, stddev(Score) AS Std_Score, max(Score) AS maxi, min(Score) AS mini FROM TrainerScores GROUP BY Trainer_Name, Subject) ORDER BY Trainer_Name");
+		Dataset<Row> proficiency = session.sqlContext().sql("add query here");
 
 		//Write query results to S3
-		normalizedScores.write().format("csv").option("header", "true").save("s3a://revature-analytics-dev/dev1901/Normalization.csv");
+		proficiency.write().format("csv").option("header", "true").save("s3a://revature-analytics-dev/dev1901/TopicProficiency.csv");
 	}
 }

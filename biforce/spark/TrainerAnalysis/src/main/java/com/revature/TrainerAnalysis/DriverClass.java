@@ -1,16 +1,7 @@
 package com.revature.TrainerAnalysis;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.spark.SparkConf;
-import org.apache.spark.api.java.JavaPairRDD;
-import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Row;
-import org.apache.spark.sql.SQLContext;
 import org.apache.spark.sql.SparkSession;
 
 import com.revature.Util.*;
@@ -38,24 +29,24 @@ public class DriverClass {
 		JavaSparkContext context = new JavaSparkContext(conf);
 		
 		SparkSession session = new SparkSession(context.sc());
-		
-		//JavaSparkContext context = new JavaSparkContext();
-		
-		//SQLContext sparkSQL = spark.sqlContext();
+
+		//Call for methods from outside packages for processing
 		
 		NormalizeScores.normalization(context, session, inputPath, outputPath);
 		
+		TopicProficiency.calculate_Proficiency(context, session, inputPath, outputPath);
 		
+		PercentileRange.calculateRange(context, session, inputPath, outputPath);
 		
-		//directory is in HDFS
-		//Dataset<Row> addresses = spark.read().format("csv").option("delimiter", "~").csv("Caliber_Out/OneOnOneScores/OneOnOneScores.csv");
+		GradeSubmission.countGrades(context, session, inputPath, outputPath);
+		
+		RedFlags.raiseFlag(context, session, inputPath, outputPath);
+		
+		//Close open resources
 		
 		session.close();
 		
 		context.close();
-		
-		
-		//System.out.println(addresses.count());
 		
 	}
 }
