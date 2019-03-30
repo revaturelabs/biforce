@@ -54,11 +54,12 @@ public class PercentileRange {
 		Dataset<Row> data = session.sqlContext().read().format("csv").option("delimiter", "~").option("header", "false").schema(schema).load(input);
 		
 		data.createOrReplaceTempView("PercentileRange");
-        
+        //Executes SQL query to aggregate data
 		
-		//Executes SQL query to aggregate data
-		
-		Dataset<Row> percentRange = session.sqlContext().sql("add query here");
+		Dataset<Row> percentRange = session.sqlContext().sql("select Subject, Assignment_Type, count(QC_Score) as qc_score_count, " +
+        "round(avg(Score), 1) as grade_avg, round(stddev_pop(Score), 1) as grade_std_pop, " +
+        "round(stddev_samp(Score), 2) as grade_std_samp from PercentileRange" + 
+        "where QC_Score != 'null' group by Subject, Assignment_Type;");
 
 		//Write query results to S3
 		

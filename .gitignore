@@ -1,0 +1,5 @@
+org.eclipse.*
+.DS_Store
+.classpath
+.project
+*.class
