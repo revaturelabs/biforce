@@ -15,10 +15,9 @@ public class PercentileRange {
 	public static void calculateRange(JavaSparkContext context, SparkSession session, String input, String output) {
 		
 		//Constructs a schema in the metastore for Spark to load data into and read from
+		StructField score = DataTypes.createStructField("Score", DataTypes.DoubleType, true);
 		
-		StructField qc_score = DataTypes.createStructField("QC_Score", DataTypes.DoubleType, true);
-        
-        StructField score = DataTypes.createStructField("Score", DataTypes.DoubleType, true);
+		StructField qc_score = DataTypes.createStructField("QC_Score", DataTypes.StringType, true);
         
         StructField week = DataTypes.createStructField("Week", DataTypes.DoubleType, true);
         
@@ -38,8 +37,8 @@ public class PercentileRange {
         
         List<StructField> fields = new ArrayList<StructField>();
         
-        fields.add(qc_score);
         fields.add(score);
+        fields.add(qc_score);
         fields.add(week);
         fields.add(subject);
         fields.add(assignment);
@@ -53,13 +52,15 @@ public class PercentileRange {
 		
 		Dataset<Row> data = session.sqlContext().read().format("csv").option("delimiter", "~").option("header", "false").schema(schema).load(input);
 		
+		
+		
 		data.createOrReplaceTempView("PercentileRange");
         //Executes SQL query to aggregate data
 		
 		Dataset<Row> percentRange = session.sqlContext().sql("select Subject, Assignment_Type, count(QC_Score) as qc_score_count, " +
         "round(avg(Score), 1) as grade_avg, round(stddev_pop(Score), 1) as grade_std_pop, " +
-        "round(stddev_samp(Score), 2) as grade_std_samp from PercentileRange" + 
-        "where QC_Score != 'null' group by Subject, Assignment_Type;");
+        "round(stddev_samp(Score), 2) as grade_std_samp from PercentileRange " + 
+        "where QC_Score IS NOT null group by Subject, Assignment_Type");
 
 		//Write query results to S3
 		
