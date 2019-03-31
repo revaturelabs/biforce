@@ -16,17 +16,15 @@ public class TopicProficiency {
 		
 		//Constructs a schema in the metastore for Spark to load data into and read from
         
-        StructField qc_score = DataTypes.createStructField("QC_Score", DataTypes.DoubleType, true);
+        StructField qcScore = DataTypes.createStructField("QC_Score", DataTypes.DoubleType, true);
+        
+        StructField weightedScore = DataTypes.createStructField("Weighted_Score", DataTypes.DoubleType, true);
         
         StructField week = DataTypes.createStructField("Week", DataTypes.DoubleType, true);
         
         StructField subject = DataTypes.createStructField("Subject", DataTypes.StringType, true);
         
-        StructField assignment = DataTypes.createStructField("Assignment_Type", DataTypes.StringType, true);
-        
-        StructField BatchId = DataTypes.createStructField("Batch_Id", DataTypes.DoubleType, true);
-        
-        StructField TraineeId = DataTypes.createStructField("Trainee_Id", DataTypes.DoubleType, true);
+        StructField assignmentType = DataTypes.createStructField("Assignment_Type", DataTypes.StringType, true);
         
         StructField TraineeName = DataTypes.createStructField("Trainee_Name", DataTypes.StringType, true);
         
@@ -36,12 +34,11 @@ public class TopicProficiency {
         
         List<StructField> fields = new ArrayList<StructField>();
         
-        fields.add(qc_score);
+        fields.add(qcScore);
+        fields.add(weightedScore);
         fields.add(week);
         fields.add(subject);
-        fields.add(assignment);
-        fields.add(BatchId);
-        fields.add(TraineeId);
+        fields.add(assignmentType);
         fields.add(TraineeName);
         fields.add(TrainerName);
         fields.add(Batch_Name);
@@ -52,10 +49,9 @@ public class TopicProficiency {
 		
 		data.createOrReplaceTempView("TopicProficiency");
         
-		
 		//Executes SQL query to aggregate data in real-time
 		
-		Dataset<Row> proficiency = session.sqlContext().sql("add query here");
+		Dataset<Row> proficiency = session.sqlContext().sql("select Trainer_Name, Subject, round(avg(Weighted_Score), 1) AverageScore from TopicProficiency where Weighted_Score is not null group by Trainer_Name, Subject");
 
 		//Write query results to S3
 		proficiency.write().format("csv").option("header", "true").save("s3a://revature-analytics-dev/dev1901/TopicProficiency.csv");
