@@ -130,7 +130,7 @@ public class BatchPlusGradeSubmission {
 				"    FROM caliber_note\r\n" + 
 				"    WHERE is_qc_feedback = 1\r\n" + 
 				"    GROUP BY batch_id) AS test3\r\n" + 
-				"ON caliber_batch.batch_id = test3.batch_id;");
+				"ON caliber_batch.batch_id = test3.batch_id");
 		
 		Dataset<Row> BatchPlusGradeSubmission = session.sqlContext().sql("SELECT \r\n" + 
 				"BatchPlusGradeSubmissionTemp.batch_id, \r\n" + 
@@ -153,7 +153,7 @@ public class BatchPlusGradeSubmission {
 				"BatchPlusGradeSubmissionTemp.graded_weeks_target,\r\n" + 
 				"(BatchPlusGradeSubmissionTemp.graded_weeks_target - BatchPlusGradeSubmissionTemp.graded_weeks_exam) AS num_grades_missing_exam,\r\n" + 
 				"(BatchPlusGradeSubmissionTemp.graded_weeks_target - BatchPlusGradeSubmissionTemp.graded_weeks_verbal) AS num_grades_missing_verbal\r\n" + 
-				"FROM BatchPlusGradeSubmissionTemp;");
+				"FROM BatchPlusGradeSubmissionTemp");
 
 		//Write query results to S3
 		BatchPlusGradeSubmission.write().format("csv").option("header", "true").mode("Overwrite").save("s3a://revature-analytics-dev/dev1901/BatchPlusGradeSubmission.csv");

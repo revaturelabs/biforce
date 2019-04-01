@@ -101,7 +101,7 @@ public class SpecificWeeksSubmittedTable  {
 				"    JOIN caliber_grade ON caliber_assessment.assessment_id=caliber_grade.assessment_id\r\n" + 
 				"    WHERE caliber_assessment.assessment_type = 'Verbal'\r\n" + 
 				"    GROUP BY caliber_assessment.batch_id, caliber_assessment.week_number) AS temp2\r\n" + 
-				"ON (caliber_batch.batch_id = temp2.batch_id and week_number_verbal = week_number_exam);");
+				"ON (caliber_batch.batch_id = temp2.batch_id and week_number_verbal = week_number_exam)");
 
 		//Write query results to S3
 		SpecificWeeksSubmittedTable.write().format("csv").option("header", "true").mode("Overwrite").save("s3a://revature-analytics-dev/dev1901/SpecificWeeksSubmitted.csv");
