@@ -11,7 +11,7 @@ import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.sql.types.StructField;
 import org.apache.spark.sql.types.StructType;
 
-public class SpecificWeeksSubmitted  {
+public class SpecificWeeksSubmittedTable  {
 	public static void calcSpecificWeeks(JavaSparkContext context, SparkSession session, String input_batch, String input_assessment, String input_grade, String output) {
 		
 		//Constructs a schema in the metastore for Spark to load data into and read from
@@ -104,6 +104,6 @@ public class SpecificWeeksSubmitted  {
 				"ON (caliber_batch.batch_id = temp2.batch_id and week_number_verbal = week_number_exam);");
 
 		//Write query results to S3
-		SpecificWeeksSubmittedTable.write().format("csv").option("header", "true").save("s3a://revature-analytics-dev/dev1901/SpecificWeeksSubmitted.csv");
+		SpecificWeeksSubmittedTable.write().format("csv").option("header", "true").mode("Overwrite").save("s3a://revature-analytics-dev/dev1901/SpecificWeeksSubmitted.csv");
 	}
 }

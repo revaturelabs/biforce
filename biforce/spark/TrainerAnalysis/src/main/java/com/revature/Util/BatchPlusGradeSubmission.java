@@ -74,7 +74,7 @@ public class BatchPlusGradeSubmission {
         StructField is_qc_feedback = DataTypes.createStructField("is_qc_feedback", DataTypes.StringType, true);
 		StructField qc_status = DataTypes.createStructField("qc_status", DataTypes.IntegerType, true);
         StructField note_type = DataTypes.createStructField("note_type", DataTypes.IntegerType, true);
-		StructField week_number = DataTypes.createStructField("week_number", DataTypes.StringType, true);
+		StructField week_number2 = DataTypes.createStructField("week_number", DataTypes.StringType, true);
 		StructField batch_id3 = DataTypes.createStructField("batch_id", DataTypes.StringType, true);
 		StructField trainee_id = DataTypes.createStructField("trainee_id", DataTypes.StringType, true);
         fields = new ArrayList<StructField>();
@@ -84,12 +84,12 @@ public class BatchPlusGradeSubmission {
         fields.add(is_qc_feedback);
         fields.add(qc_status);
         fields.add(note_type);
-        fields.add(week_number);
+        fields.add(week_number2);
 		fields.add(batch_id3);
 		fields.add(trainee_id);
         schema = DataTypes.createStructType(fields);
-		Dataset<Row> data_assessment = session.sqlContext().read().format("csv").option("delimiter", "~").option("header", "false").schema(schema).load(input_note);
-		data_assessment.createOrReplaceTempView("caliber_note");
+		Dataset<Row> data_note = session.sqlContext().read().format("csv").option("delimiter", "~").option("header", "false").schema(schema).load(input_note);
+		data_note.createOrReplaceTempView("caliber_note");
 		
         //Executes SQL query to aggregate data
 		Dataset<Row> BatchPlusGradeSubmissionTemp = session.sqlContext().sql("CREATE VIEW BatchPlusGradeSubmissionTemp  AS\r\n" + 
@@ -156,6 +156,6 @@ public class BatchPlusGradeSubmission {
 				"FROM BatchPlusGradeSubmissionTemp;");
 
 		//Write query results to S3
-		BatchPlusGradeSubmission.write().format("csv").option("header", "true").save("s3a://revature-analytics-dev/dev1901/BatchPlusGradeSubmission.csv");
+		BatchPlusGradeSubmission.write().format("csv").option("header", "true").mode("Overwrite").save("s3a://revature-analytics-dev/dev1901/BatchPlusGradeSubmission.csv");
 	}
 }

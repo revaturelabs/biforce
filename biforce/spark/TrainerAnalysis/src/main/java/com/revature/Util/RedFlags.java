@@ -20,6 +20,6 @@ public class RedFlags {
 		Dataset<Row> redFlags = session.sqlContext().sql("add query here");
 
 		//Write query results to S3
-		redFlags.write().format("csv").option("header", "true").save("s3a://revature-analytics-dev/dev1901/RedFlags.csv");
+		redFlags.write().format("csv").option("header", "true").mode("Overwrite").save("s3a://revature-analytics-dev/dev1901/RedFlags.csv");
 	}
 }
