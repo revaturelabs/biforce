@@ -13,13 +13,14 @@ Sqoop Jobs: Pull data from Caliber and simultaneously create Hive tables and ins
             <sqoop xmlns="uri:oozie:sqoop-action:0.4">
                 <job-tracker>${resourceManager}</job-tracker>
                 <name-node>${nameNode}</name-node>
-                <arg>job</arg>
-                <arg>-Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks</arg>
+                <job-xml>${hivesiteDir}/hive-site.xml</job-xml>
+		<arg>job</arg>
+                <arg>-Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/caliber.password.jceks</arg>
                 <arg>-Dmapreduce.job.queuename=sqoop</arg>
                 <arg>--create</arg>
                 <arg>hive-import-assessment</arg>
                 <arg>--meta-connect</arg>
-                <arg>${metastoreConn}</arg>
+                <arg>${metaConn}</arg>
                 <arg>--</arg>
                 <arg>import</arg>
                 <arg>--connect</arg>
@@ -42,7 +43,7 @@ Sqoop Jobs: Pull data from Caliber and simultaneously create Hive tables and ins
                 <arg>--last-value</arg>
                 <arg>0</arg>
                 <arg>--warehouse-dir</arg>
-                <arg>/user/hive/warehouse/biforce_staging.db</arg>
+                <arg>${nameNode}/user/hive/warehouse/biforce_staging.db</arg>
                 <arg>-m</arg>
                 <arg>1</arg>
             </sqoop>
@@ -54,12 +55,13 @@ Sqoop Jobs: Pull data from Caliber and simultaneously create Hive tables and ins
             <sqoop xmlns="uri:oozie:sqoop-action:0.4">
                 <job-tracker>${resourceManager}</job-tracker>
                 <name-node>${nameNode}</name-node>
+		<job-xml>${hivesiteDir}/hive-site.xml</job-xml>
                 <arg>job</arg>
-                <arg>-Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks</arg>
+                <arg>-Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/caliber.password.jceks</arg>
                 <arg>--create</arg>
                 <arg>hive-import-batch</arg>
                 <arg>--meta-connect</arg>
-                <arg>${metastoreConn}</arg>
+                <arg>${metaConn}</arg>
                 <arg>--</arg>
                 <arg>import</arg>
                 <arg>--connect</arg>
@@ -82,7 +84,7 @@ Sqoop Jobs: Pull data from Caliber and simultaneously create Hive tables and ins
                 <arg>--last-value</arg>
                 <arg>0</arg>
                 <arg>--warehouse-dir</arg>
-                <arg>/user/hive/warehouse/biforce_staging.db</arg>
+                <arg>${nameNode}/user/hive/warehouse/biforce_staging.db</arg>
                 <arg>-m</arg>
                 <arg>1</arg>
             </sqoop>
@@ -94,13 +96,14 @@ Sqoop Jobs: Pull data from Caliber and simultaneously create Hive tables and ins
             <sqoop xmlns="uri:oozie:sqoop-action:0.4">
                 <job-tracker>${resourceManager}</job-tracker>
                 <name-node>${nameNode}</name-node>
+		<job-xml>${hivesiteDir}/hive-site.xml</job-xml>
                 <arg>job</arg>
-                <arg>-Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks</arg>
+                <arg>-Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/caliber.password.jceks</arg>
                 <arg>-Dmapreduce.job.queuename=sqoop</arg>
                 <arg>--create</arg>
                 <arg>hive-import-grade</arg>
                 <arg>--meta-connect</arg>
-                <arg>${metastoreConn}</arg>
+                <arg>${metaConn}</arg>
                 <arg>--</arg>
                 <arg>import</arg>
                 <arg>--connect</arg>
@@ -123,7 +126,7 @@ Sqoop Jobs: Pull data from Caliber and simultaneously create Hive tables and ins
                 <arg>--last-value</arg>
                 <arg>0</arg>
                 <arg>--warehouse-dir</arg>
-                <arg>/user/hive/warehouse/biforce_staging.db</arg>
+                <arg>${nameNode}/user/hive/warehouse/biforce_staging.db</arg>
                 <arg>-m</arg>
                 <arg>1</arg>
             </sqoop>
@@ -135,13 +138,14 @@ Sqoop Jobs: Pull data from Caliber and simultaneously create Hive tables and ins
             <sqoop xmlns="uri:oozie:sqoop-action:0.4">
                 <job-tracker>${resourceManager}</job-tracker>
                 <name-node>${nameNode}</name-node>
+		<job-xml>${hivesiteDir}/hive-site.xml</job-xml>
                 <arg>job</arg>
-                <arg>-Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks</arg>
+                <arg>-Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/caliber.password.jceks</arg>
                 <arg>-Dmapreduce.job.queuename=sqoop</arg>
                 <arg>--create</arg>
                 <arg>hive-import-note</arg>
                 <arg>--meta-connect</arg>
-                <arg>${metastoreConn}</arg>
+                <arg>${metaConn}</arg>
                 <arg>--</arg>
                 <arg>import</arg>
                 <arg>--connect</arg>
@@ -164,7 +168,7 @@ Sqoop Jobs: Pull data from Caliber and simultaneously create Hive tables and ins
                 <arg>--last-value</arg>
                 <arg>0</arg>
                 <arg>--warehouse-dir</arg>
-                <arg>/user/hive/warehouse/biforce_staging.db</arg>
+                <arg>${nameNode}/user/hive/warehouse/biforce_staging.db</arg>
                 <arg>-m</arg>
                 <arg>1</arg>
             </sqoop>
@@ -176,13 +180,14 @@ Sqoop Jobs: Pull data from Caliber and simultaneously create Hive tables and ins
             <sqoop xmlns="uri:oozie:sqoop-action:0.4">
                 <job-tracker>${resourceManager}</job-tracker>
                 <name-node>${nameNode}</name-node>
+		<job-xml>${hivesiteDir}/hive-site.xml</job-xml>
                 <arg>job</arg>
-                <arg>-Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/mysql.password.jceks</arg>
+                <arg>-Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/caliber.password.jceks</arg>
                 <arg>-Dmapreduce.job.queuename=sqoop</arg>
                 <arg>--create</arg>
                 <arg>hive-import-trainee</arg>
                 <arg>--meta-connect</arg>
-                <arg>${metastoreConn}</arg>
+                <arg>${metaConn}</arg>
                 <arg>--</arg>
                 <arg>import</arg>
                 <arg>--connect</arg>
@@ -205,7 +210,7 @@ Sqoop Jobs: Pull data from Caliber and simultaneously create Hive tables and ins
                 <arg>--last-value</arg>
                 <arg>0</arg>
                 <arg>--warehouse-dir</arg>
-                <arg>/user/hive/warehouse/biforce_staging.db</arg>
+                <arg>${nameNode}/user/hive/warehouse/biforce_staging.db</arg>
                 <arg>-m</arg>
                 <arg>1</arg>
             </sqoop>

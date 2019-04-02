@@ -10,10 +10,10 @@ DESCRIPTION: Run by biforce master workflow to call warehouse import jobs from S
                 <job-tracker>${resourceManager}</job-tracker>
                 <name-node>${nameNode}</name-node>
                 <arg>job</arg>
+		<arg>--meta-connect</arg>
+                <arg>${metaConn}</arg>
                 <arg>--exec</arg>
                 <arg>warehouse-import-address_dim</arg>
-                <arg>--meta-connect</arg>
-                <arg>${metaConn}</arg>
             </sqoop>
             <ok to="assessment_dim" />
             <error to="kill" />
@@ -24,10 +24,10 @@ DESCRIPTION: Run by biforce master workflow to call warehouse import jobs from S
                 <job-tracker>${resourceManager}</job-tracker>
                 <name-node>${nameNode}</name-node>
                 <arg>job</arg>
+		<arg>--meta-connect</arg>
+                <arg>${metaConn}</arg>
                 <arg>--exec</arg>
                 <arg>warehouse-import-assessment_dim</arg>
-                <arg>--meta-connect</arg>
-                <arg>${metaConn}</arg>
             </sqoop>
             <ok to="batch_dim" />
             <error to="kill" />
@@ -38,10 +38,10 @@ DESCRIPTION: Run by biforce master workflow to call warehouse import jobs from S
                 <job-tracker>${resourceManager}</job-tracker>
                 <name-node>${nameNode}</name-node>
                 <arg>job</arg>
+		<arg>--meta-connect</arg>
+                <arg>${metaConn}</arg>
                 <arg>--exec</arg>
                 <arg>warehouse-import-batch_dim</arg>
-                <arg>--meta-connect</arg>
-                <arg>${metaConn}</arg>
             </sqoop>
             <ok to="category_dim" />
             <error to="kill" />
@@ -52,10 +52,10 @@ DESCRIPTION: Run by biforce master workflow to call warehouse import jobs from S
                 <job-tracker>${resourceManager}</job-tracker>
                 <name-node>${nameNode}</name-node>
                 <arg>job</arg>
+		<arg>--meta-connect</arg>
+                <arg>${metaConn}</arg>
                 <arg>--exec</arg>
                 <arg>warehouse-import-category_dim</arg>
-                <arg>--meta-connect</arg>
-                <arg>${metaConn}</arg>
             </sqoop>
             <ok to="grade_fact" />
             <error to="kill" />
@@ -66,10 +66,10 @@ DESCRIPTION: Run by biforce master workflow to call warehouse import jobs from S
                 <job-tracker>${resourceManager}</job-tracker>
                 <name-node>${nameNode}</name-node>
                 <arg>job</arg>
+		<arg>--meta-connect</arg>
+                <arg>${metaConn}</arg>
                 <arg>--exec</arg>
                 <arg>warehouse-import-grade_fact</arg>
-                <arg>--meta-connect</arg>
-                <arg>${metaConn}</arg>
             </sqoop>
             <ok to="note_dim" />
             <error to="kill" />
@@ -80,10 +80,10 @@ DESCRIPTION: Run by biforce master workflow to call warehouse import jobs from S
                 <job-tracker>${resourceManager}</job-tracker>
                 <name-node>${nameNode}</name-node>
                 <arg>job</arg>
+		<arg>--meta-connect</arg>
+                <arg>${metaConn}</arg>
                 <arg>--exec</arg>
                 <arg>warehouse-import-note_dim</arg>
-                <arg>--meta-connect</arg>
-                <arg>${metaConn}</arg>
             </sqoop>
             <ok to="note_fact" />
             <error to="kill" />
@@ -94,10 +94,10 @@ DESCRIPTION: Run by biforce master workflow to call warehouse import jobs from S
                 <job-tracker>${resourceManager}</job-tracker>
                 <name-node>${nameNode}</name-node>
                 <arg>job</arg>
+		<arg>--meta-connect</arg>
+                <arg>${metaConn}</arg>
                 <arg>--exec</arg>
                 <arg>warehouse-import-note_fact</arg>
-                <arg>--meta-connect</arg>
-                <arg>${metaConn}</arg>
             </sqoop>
             <ok to="trainee_dim" />
             <error to="kill" />
@@ -108,10 +108,10 @@ DESCRIPTION: Run by biforce master workflow to call warehouse import jobs from S
                 <job-tracker>${resourceManager}</job-tracker>
                 <name-node>${nameNode}</name-node>
                 <arg>job</arg>
+		<arg>--meta-connect</arg>
+                <arg>${metaConn}</arg>
                 <arg>--exec</arg>
                 <arg>warehouse-import-trainee_dim</arg>
-                <arg>--meta-connect</arg>
-                <arg>${metaConn}</arg>
             </sqoop>
             <ok to="trainer_dim" />
             <error to="kill" />
@@ -122,10 +122,10 @@ DESCRIPTION: Run by biforce master workflow to call warehouse import jobs from S
                 <job-tracker>${resourceManager}</job-tracker>
                 <name-node>${nameNode}</name-node>
                 <arg>job</arg>
+		<arg>--meta-connect</arg>
+                <arg>${metaConn}</arg>
                 <arg>--exec</arg>
                 <arg>warehouse-import-trainer_dim</arg>
-                <arg>--meta-connect</arg>
-                <arg>${metaConn}</arg>
             </sqoop>
             <ok to="end" />
             <error to="kill" />

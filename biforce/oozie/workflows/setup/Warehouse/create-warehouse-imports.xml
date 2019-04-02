@@ -13,10 +13,11 @@ Sqoop Job: Import tables from Caliber to HDFS. Jobs are configured to conform wi
             <sqoop xmlns="uri:oozie:sqoop-action:0.4">
                 <job-tracker>${resourceManager}</job-tracker>
                 <name-node>${nameNode}</name-node>
+		<job-xml>${hivesiteDir}/hive-site.xml</job-xml>
                 <arg>job</arg>
                 <arg>-Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/caliber.password.jceks</arg>
-		        <arg>-Dfs.s3a.access.key=${S3Access}</arg>
-		        <arg>-Dfs.s3a.secret.key=${S3Secret}</arg>
+		<arg>-Dfs.s3a.access.key=${S3Access}</arg>
+	 	<arg>-Dfs.s3a.secret.key=${S3Secret}</arg>
                 <arg>--create</arg>
                 <arg>warehouse-import-address_dim</arg>
                 <arg>--meta-connect</arg>
@@ -40,9 +41,9 @@ Sqoop Job: Import tables from Caliber to HDFS. Jobs are configured to conform wi
                 <arg>--check-column</arg>
                 <arg>ADDRESS_ID</arg>
                 <arg>--target-dir</arg>
-                <arg>s3a://revature-analytics-dev/address_dim</arg>
+		<arg>s3a://revature-analytics-dev/address_dim</arg>
                 <arg>--temporary-rootdir</arg>
-                <arg>s3a://revature-analytics-dev/temporary-address_dim</arg>
+                <arg>s3a://revature-analytics-dev/temporary-address_dim</arg>	
                 <arg>-m</arg>
                 <arg>1</arg>
             </sqoop>

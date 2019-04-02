@@ -9,7 +9,7 @@
     
     <action name="delete-warehouse">
         <sub-workflow>
-            <app-path>${setupDir}/delete-warehouse-imports.xml</app-path>
+            <app-path>${warehouseDir}/delete-warehouse-imports.xml</app-path>
             <propagate-configuration/>
         </sub-workflow>
         <ok to="create-warehouse" />
@@ -18,7 +18,7 @@
     
     <action name="create-warehouse">
         <sub-workflow>
-            <app-path>${setupDir}/create-warehouse-imports.xml</app-path>
+            <app-path>${warehouseDir}/create-warehouse-imports.xml</app-path>
             <propagate-configuration/>
         </sub-workflow>
         <ok to="delete-hive" />
@@ -27,7 +27,7 @@
     
     <action name="delete-hive">
         <sub-workflow>
-            <app-path>${setupDir}/delete-hive-imports.xml</app-path>
+            <app-path>${OLAPDir}/delete-hive-imports.xml</app-path>
             <propagate-configuration/>
         </sub-workflow>
         <ok to="create-hive" />
@@ -36,22 +36,11 @@
     
     <action name="create-hive">
         <sub-workflow>
-            <app-path>${setupDir}/create-hive-imports.xml</app-path>
+            <app-path>${OLAPDir}/create-hive-imports.xml</app-path>
             <propagate-configuration/>
         </sub-workflow>
-        <ok to="query-hive" />
+        <ok to="end" />
         <error to="kill" />
-    </action>
-
-    <action name="query-hive">
-	    <hive xmlns="uri:oozie:hive-action:0.5">
-			<job-tracker>${resourceManager}</job-tracker>
-            <name-node>${nameNode}</name-node>
-            <job-xml>${appPath}/hive-site.xml</job-xml>
-			<script>hive-create.hql</script>
-		</hive>
-		<ok to = "end" />
-        <error to = "kill" />
     </action>
 
     <kill name="kill">

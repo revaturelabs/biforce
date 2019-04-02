@@ -1,0 +1,53 @@
+<workflow-app xmlns="uri:oozie:workflow:0.4" name="workflow">
+	
+	<start to="execute-warehouse-imports"/>
+
+	<action name="execute-warehouse-imports">
+		<sub-workflow>
+			<app-path>${executionPath}/execute-warehouse-imports.xml</app-path>
+			<propagate-configuration/>
+		</sub-workflow>
+		<ok to="execute-hive-imports-shell"/>
+		<error to="kill"/>
+	</action>
+
+	<action name="execute-hive-imports-shell">
+		<ssh xmlns="uri:oozie:ssh-action:0.1">
+			<host>cloudera@quickstart</host>
+			<command>${executeHiveImports}</command>
+			<args>${metaConn}</args>
+		</ssh>
+		<ok to="hive-to-csv"/>
+		<error to="kill"/>
+	</action>
+
+	<action name="hive-to-csv">
+		<ssh xmlns="uri:oozie:ssh-action:0.1">
+			<host>cloudera@quickstart</host>
+			<command>${hiveToCSV}</command>
+			<args>${hivescriptOutput}</args>
+			<args>${csvOutput}</args>
+		</ssh>
+		<ok to="invoke-emr"/>
+		<error to="kill"/>
+	</action>
+	
+	<action name="invoke-emr">
+		<ssh xmlns="uri:oozie:ssh-action:0.1">
+			<host>cloudera@quickstart</host>
+			<command>${invokeEmr}</command>
+			<args>${biforcePath}</args>
+			<args>${emrEndPoint}</args>
+			<args>${S3ACCESS}</args>
+			<args>${S3SECRET}</args>
+		</ssh>
+		<ok to="end"/>
+		<error to="kill"/>
+	</action>
+
+	<kill name="kill">
+		<message>message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+	</kill>
+
+	<end name="end"/>
+</workflow-app>
