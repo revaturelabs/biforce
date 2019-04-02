@@ -26,7 +26,11 @@ public class TopicProficiency {
         
         StructField assignmentType = DataTypes.createStructField("Assignment_Type", DataTypes.StringType, true);
         
+        StructField Trainee_ID = DataTypes.createStructField("Trainee_ID", DataTypes.DoubleType, true);
+        
         StructField TraineeName = DataTypes.createStructField("Trainee_Name", DataTypes.StringType, true);
+        
+        StructField Trainer_ID = DataTypes.createStructField("Trainer_ID", DataTypes.DoubleType, true);
         
         StructField TrainerName = DataTypes.createStructField("Trainer_Name", DataTypes.StringType, true);
         
@@ -39,7 +43,9 @@ public class TopicProficiency {
         fields.add(week);
         fields.add(subject);
         fields.add(assignmentType);
+        fields.add(Trainee_ID);
         fields.add(TraineeName);
+        fields.add(Trainer_ID);
         fields.add(TrainerName);
         fields.add(Batch_Name);
         

@@ -13,7 +13,12 @@ import com.revature.Util.*;
 public class ProficiencyDriver {
 	public static void main(String[] args) {
 		final String inputPath = args[0];
-		final String outputPath = "s3a://revature-analytics-dev/TrainerAnalysis/TopicProficiency";
+		
+		//uncomment this if you wish to write to S3
+		//final String outputPath = "s3a://revature-analytics-dev/TrainerAnalysis/TopicProficiency";
+				
+		//comment this line out if you dont want to write to cloudera local
+		final String outputPath = "/home/cloudera/TopicProficiency";
 		
 		
 

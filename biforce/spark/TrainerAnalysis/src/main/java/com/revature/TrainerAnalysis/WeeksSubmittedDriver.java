@@ -15,7 +15,12 @@ public class WeeksSubmittedDriver {
 		final String inputPath = args[0]; //batch input
 		final String inputPath2 = args[1]; //assessment input
 		final String inputPath3 = args[2]; //grade input
-		final String outputPath = "s3a://revature-analytics-dev/TrainerAnalysis/SpecificWeeksSubmitted";
+		
+		//uncomment this if you wish to write to S3
+		//final String outputPath = "s3a://revature-analytics-dev/TrainerAnalysis/SpecificWeeksSubmitted";
+				
+		//comment this line out if you dont want to write to cloudera local
+		final String outputPath = "/home/cloudera/SpecificWeeksSubmitted";
 		
 		
 		

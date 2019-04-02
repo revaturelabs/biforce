@@ -13,7 +13,12 @@ import com.revature.Util.*;
 public class RangeDriver {
 	public static void main(String[] args) {
 		final String inputPath = args[0];
-		final String outputPath = "s3a://revature-analytics-dev/TrainerAnalysis/PercentileRange";
+		
+		//uncomment this if you wish to write to S3
+		//final String outputPath = "s3a://revature-analytics-dev/TrainerAnalysis/PercentileRange";
+				
+		//comment this line out if you dont want to write to cloudera local
+		final String outputPath = "/home/cloudera/PercentileRange";
 		
 		
 

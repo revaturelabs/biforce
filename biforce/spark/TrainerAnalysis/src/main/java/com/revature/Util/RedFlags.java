@@ -12,11 +12,11 @@ import org.apache.spark.sql.types.StructField;
 import org.apache.spark.sql.types.StructType;
 
 public class RedFlags {
-	public static void raiseFlag(JavaSparkContext context, SparkSession session, String input, String input2, String output) {
+	public static void raiseFlag(JavaSparkContext context, SparkSession session, String input, String input2, String input3, String input4, String output) {
      
 		//Performs evaluation from Topic Proficiency
         
-        StructField qcScore = DataTypes.createStructField("QC_Score", DataTypes.DoubleType, true);
+		StructField qcScore = DataTypes.createStructField("QC_Score", DataTypes.DoubleType, true);
         
         StructField weightedScore = DataTypes.createStructField("Weighted_Score", DataTypes.DoubleType, true);
         
@@ -26,7 +26,11 @@ public class RedFlags {
         
         StructField assignmentType = DataTypes.createStructField("Assignment_Type", DataTypes.StringType, true);
         
+        StructField Trainee_ID = DataTypes.createStructField("Trainee_ID", DataTypes.DoubleType, true);
+        
         StructField TraineeName = DataTypes.createStructField("Trainee_Name", DataTypes.StringType, true);
+        
+        StructField Trainer_ID = DataTypes.createStructField("Trainer_ID", DataTypes.DoubleType, true);
         
         StructField TrainerName = DataTypes.createStructField("Trainer_Name", DataTypes.StringType, true);
         
@@ -39,7 +43,9 @@ public class RedFlags {
         fields.add(week);
         fields.add(subject);
         fields.add(assignmentType);
+        fields.add(Trainee_ID);
         fields.add(TraineeName);
+        fields.add(Trainer_ID);
         fields.add(TrainerName);
         fields.add(Batch_Name);
         
@@ -49,7 +55,7 @@ public class RedFlags {
 		
 		data.createOrReplaceTempView("TopicProficiency");
         		
-		Dataset<Row> proficiency = session.sqlContext().sql("select Trainer_Name, Subject, round(avg(Weighted_Score), 1) AverageScore from TopicProficiency where Weighted_Score is not null group by Trainer_Name, Subject");
+		Dataset<Row> proficiency = session.sqlContext().sql("select Trainer_ID, Trainer_Name, Subject, round(avg(Weighted_Score), 1) AverageScore from TopicProficiency where Weighted_Score is not null group by Trainer_Name, Subject");
 
 		//Save as temp table
 		proficiency.createOrReplaceTempView("WeightedScores");
@@ -60,7 +66,7 @@ public class RedFlags {
 		
 		averages.createOrReplaceTempView("Averages");
 		
-		Dataset<Row> proficiencyRedFlags = session.sqlContext().sql("SELECT Trainer_Name, Subject, Averagescore FROM WeightedScores FULL OUTER JOIN Averages WHERE Averagescore < (Average - Std_Dev)");
+		Dataset<Row> proficiencyRedFlags = session.sqlContext().sql("SELECT Trainer_ID, Trainer_Name, Subject, Averagescore FROM WeightedScores FULL OUTER JOIN Averages WHERE Averagescore < (Average - Std_Dev)");
 
 		//Write query results to S3
 		proficiencyRedFlags.coalesce(1).write().format("csv").option("header", "true").mode("Overwrite").save(output);

@@ -15,7 +15,12 @@ public class GradeSubmissionDriver {
 		final String inputPath = args[0]; //batch input
 		final String inputPath2 = args[1]; //assessment input
 		final String inputPath3 = args[2]; //note input
-		final String outputPath = "s3a://revature-analytics-dev/TrainerAnalysis/GradeSubmission";
+		
+		//uncomment this if you wish to write to S3
+		//final String outputPath = "s3a://revature-analytics-dev/TrainerAnalysis/GradeSubmission";
+				
+		//comment this line out if you dont want to write to cloudera local
+		final String outputPath = "/home/cloudera/GradeSubmission";
 		
 		
 
