@@ -18,10 +18,12 @@ public class FlagsDriver {
 		final String inputPath4 = args[3]; //note input
 		
 		//uncomment this if you wish to write to S3
-		//final String outputPath = "s3a://revature-analytics-dev/TrainerAnalysis/RedFlags";
+		//final String outputPath = "s3a://revature-analytics-dev/TrainerAnalysis/RedFlagsProficiency";
+		//final String outputPath2 = "s3a://revature-analytics-dev/TrainerAnalysis/RedFlagsSubmission";
 		
 		//comment this line out if you dont want to write to cloudera local
-		final String outputPath = "/home/cloudera/RedFlags";
+		final String outputPath = "/home/cloudera/RedFlagsProficiency";
+		final String outputPath2 = "/home/cloudera/RedFlagsSubmission";
 		
 		
 
@@ -33,7 +35,7 @@ public class FlagsDriver {
 
 		//Call for method from outside packages for processing
 
-		RedFlags.raiseFlag(context, session, inputPath, inputPath2, inputPath3, inputPath4, outputPath);
+		RedFlags.raiseFlag(context, session, inputPath, inputPath2, inputPath3, inputPath4, outputPath, outputPath2);
 		
 		//Close open resources
 		
