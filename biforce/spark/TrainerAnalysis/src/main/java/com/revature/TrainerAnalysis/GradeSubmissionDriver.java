@@ -12,10 +12,10 @@ import com.revature.Util.*;
 
 public class GradeSubmissionDriver {
 	public static void main(String[] args) {
-		final String inputPath = args[0];
-		final String inputPath2 = args[1];
-		final String inputPath3 = args[2];
-		final String outputPath = args[3];
+		final String inputPath = args[0]; //batch input
+		final String inputPath2 = args[1]; //assessment input
+		final String inputPath3 = args[2]; //note input
+		final String outputPath = "s3a://revature-analytics-dev/TrainerAnalysis/GradeSubmission";
 		
 		
 

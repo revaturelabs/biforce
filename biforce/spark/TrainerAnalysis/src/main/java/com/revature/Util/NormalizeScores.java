@@ -55,6 +55,6 @@ public class NormalizeScores {
 		Dataset<Row> normalizedScores = session.sqlContext().sql("SELECT Trainer_Name, Subject, Avg_Score, Std_Score, (Avg_Score - mini) / (maxi - mini) AS Normalized_Score FROM (SELECT Trainer_Name, Subject, avg(Score) AS Avg_Score, stddev(Score) AS Std_Score, max(Score) AS maxi, min(Score) AS mini FROM TrainerScores GROUP BY Trainer_Name, Subject) ORDER BY Trainer_Name");
 
 		//Write query results to S3
-		normalizedScores.write().format("csv").option("header", "true").mode("Overwrite").save("s3a://revature-analytics-dev/dev1901/Normalization.csv");
+		normalizedScores.coalesce(1).write().format("csv").option("header", "true").mode("Overwrite").save(output);
 	}
 }

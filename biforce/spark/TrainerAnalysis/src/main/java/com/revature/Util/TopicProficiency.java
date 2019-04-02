@@ -54,6 +54,6 @@ public class TopicProficiency {
 		Dataset<Row> proficiency = session.sqlContext().sql("select Trainer_Name, Subject, round(avg(Weighted_Score), 1) AverageScore from TopicProficiency where Weighted_Score is not null group by Trainer_Name, Subject");
 
 		//Write query results to S3
-		proficiency.write().format("csv").option("header", "true").mode("Overwrite").save("s3a://revature-analytics-dev/dev1901/TopicProficiency.csv");
+		proficiency.coalesce(1).write().format("csv").option("header", "true").mode("Overwrite").save(output);
 	}
 }

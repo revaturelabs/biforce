@@ -13,7 +13,7 @@ import com.revature.Util.*;
 public class ProficiencyDriver {
 	public static void main(String[] args) {
 		final String inputPath = args[0];
-		final String outputPath = args[1];
+		final String outputPath = "s3a://revature-analytics-dev/TrainerAnalysis/TopicProficiency";
 		
 		
 

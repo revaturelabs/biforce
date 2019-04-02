@@ -13,7 +13,8 @@ import com.revature.Util.*;
 public class FlagsDriver {
 	public static void main(String[] args) {
 		final String inputPath = args[0];
-		final String outputPath = args[1];
+		final String inputPath2 = args[1];
+		final String outputPath = "s3a://revature-analytics-dev/TrainerAnalysis/RedFlags";
 		
 		
 
@@ -25,7 +26,7 @@ public class FlagsDriver {
 
 		//Call for method from outside packages for processing
 
-		RedFlags.raiseFlag(context, session, inputPath, outputPath);
+		RedFlags.raiseFlag(context, session, inputPath, inputPath2, outputPath);
 		
 		//Close open resources
 		

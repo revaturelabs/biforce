@@ -64,6 +64,6 @@ public class PercentileRange {
 
 		//Write query results to S3
 		
-		percentRange.write().format("csv").option("header", "true").mode("Overwrite").save("s3a://revature-analytics-dev/dev1901/PercentileRange.csv");
+		percentRange.coalesce(1).write().format("csv").option("header", "true").mode("Overwrite").save(output);
 	}
 }

@@ -12,14 +12,57 @@ import org.apache.spark.sql.types.StructField;
 import org.apache.spark.sql.types.StructType;
 
 public class RedFlags {
-	public static void raiseFlag(JavaSparkContext context, SparkSession session, String input, String output) {
-        //If my logic is correct, we could access the prior TempViews from the other methods and use those to query for results.
+	public static void raiseFlag(JavaSparkContext context, SparkSession session, String input, String input2, String output) {
+     
+		//Performs evaluation from Topic Proficiency
+        
+        StructField qcScore = DataTypes.createStructField("QC_Score", DataTypes.DoubleType, true);
+        
+        StructField weightedScore = DataTypes.createStructField("Weighted_Score", DataTypes.DoubleType, true);
+        
+        StructField week = DataTypes.createStructField("Week", DataTypes.DoubleType, true);
+        
+        StructField subject = DataTypes.createStructField("Subject", DataTypes.StringType, true);
+        
+        StructField assignmentType = DataTypes.createStructField("Assignment_Type", DataTypes.StringType, true);
+        
+        StructField TraineeName = DataTypes.createStructField("Trainee_Name", DataTypes.StringType, true);
+        
+        StructField TrainerName = DataTypes.createStructField("Trainer_Name", DataTypes.StringType, true);
+        
+        StructField Batch_Name = DataTypes.createStructField("Batch_Name", DataTypes.StringType, true);
+        
+        List<StructField> fields = new ArrayList<StructField>();
+        
+        fields.add(qcScore);
+        fields.add(weightedScore);
+        fields.add(week);
+        fields.add(subject);
+        fields.add(assignmentType);
+        fields.add(TraineeName);
+        fields.add(TrainerName);
+        fields.add(Batch_Name);
+        
+        StructType schema = DataTypes.createStructType(fields);
+		
+		Dataset<Row> data = session.sqlContext().read().format("csv").option("delimiter", "~").option("header", "false").schema(schema).load(input);
+		
+		data.createOrReplaceTempView("TopicProficiency");
+        		
+		Dataset<Row> proficiency = session.sqlContext().sql("select Trainer_Name, Subject, round(avg(Weighted_Score), 1) AverageScore from TopicProficiency where Weighted_Score is not null group by Trainer_Name, Subject");
+
+		//Save as temp table
+		proficiency.createOrReplaceTempView("WeightedScores");
 		
 		//Executes SQL query to aggregate data in real-time
 		
-		Dataset<Row> redFlags = session.sqlContext().sql("add query here");
+		Dataset<Row> averages = session.sqlContext().sql("SELECT AVG(averagescore) AS Average, STDDEV(averagescore) AS Std_Dev FROM WeightedScores");
+		
+		averages.createOrReplaceTempView("Averages");
+		
+		Dataset<Row> proficiencyRedFlags = session.sqlContext().sql("SELECT Trainer_Name, Subject, Averagescore FROM WeightedScores FULL OUTER JOIN Averages WHERE Averagescore < (Average - Std_Dev)");
 
 		//Write query results to S3
-		redFlags.write().format("csv").option("header", "true").mode("Overwrite").save("s3a://revature-analytics-dev/dev1901/RedFlags.csv");
+		proficiencyRedFlags.coalesce(1).write().format("csv").option("header", "true").mode("Overwrite").save(output);
 	}
 }
