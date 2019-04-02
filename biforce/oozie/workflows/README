@@ -18,6 +18,10 @@ In general---
 	RSAAuthentication yes
 	PubkeyAuthentication yes
 3. Restart ssh service (Usually a VM restart would be okay)
+4. As root, edit /etc/pam.d/su, adding the lines
+	auth       [success=ignore default=1] pam_succeed_if.so user = oozie
+	auth       sufficient   pam_succeed_if.so use_uid user = oozie
+
 
 Oozie to cloudera---
 1. Ensure that home directory has permissions 750
@@ -40,3 +44,13 @@ Workflow.xml----------
 		Import data into hive using invokehiveimports.sh
 		Export hive to CSV using hivetocsv.sh
 		Transfer CSV to EMR for spark jobs using invokeEMR.sh
+
+
+Things to do:
+
+Currently the whole workflow works by extracting hive tables over to a csv file. These csv files will be transferred to the EMR through an ssh script which will scp transfer them. The ssh script will also store the csv files into HDFS on the EMR cluster. There is a flaw though which is how we cannot transfer big data over since SCP is limited in throughput.
+
+The plan is to install Hive and Sqoop on the EMR Cluster to have the whole ooze workflow be done on the master node. This would eliminate the SCP flaw and ensure better security.
+
+
+If you need to edit/add spark jobs, look at invokeEMR.sh. That script file will run commands to the EMR to start the spark job. Make sure that the Spark job JAR is already on the EMR and that the path is correct. However, if you get the whole oozie workflow to work on EMR, you can fix the ooze workflow by changing some commands in these scripts to be run locally (within the EMR).
