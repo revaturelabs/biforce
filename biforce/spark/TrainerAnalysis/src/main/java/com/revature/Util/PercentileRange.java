@@ -64,6 +64,6 @@ public class PercentileRange {
 
 		//Write query results to S3
 		
-		percentRange.coalesce(1).write().format("csv").option("header", "true").mode("Overwrite").save(output);
+		percentRange.coalesce(1).write().format("csv").option("header", "true").option("delimiter", "~").mode("Overwrite").save(output);
 	}
 }

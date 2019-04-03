@@ -91,6 +91,6 @@ public class SpecificWeeksSubmittedTable {
 		
 		//Write query results to S3
 		
-		SpecificWeeksSubmittedTable.coalesce(1).write().format("csv").option("header", "true").mode("Overwrite").save(output);
+		SpecificWeeksSubmittedTable.coalesce(1).write().format("csv").option("header", "true").option("delimiter", "~").mode("Overwrite").save(output);
 	}
 }

@@ -149,7 +149,7 @@ public class RedFlags {
 		
 		Dataset<Row> proficiencyRedFlags = session.sqlContext().sql("SELECT Trainer_ID, Trainer_Name, Subject, Averagescore FROM WeightedScores FULL OUTER JOIN Averages WHERE Averagescore < (Average - Std_Dev)");
 
-		proficiencyRedFlags.coalesce(1).write().format("csv").option("header", "true").mode("Overwrite").save(output);
+		proficiencyRedFlags.coalesce(1).write().format("csv").option("header", "true").option("delimiter", "~").mode("Overwrite").save(output);
 		
         //Executes SQL query to aggregate data
 		
@@ -226,7 +226,7 @@ public class RedFlags {
 		
 		Dataset<Row> missingMoreThanTwo = BatchPlusGradeSubmission.filter(BatchPlusGradeSubmission.col("num_grades_missing_exam").$greater$eq(2).or(BatchPlusGradeSubmission.col("num_grades_missing_verbal").$greater$eq(2)));
 		
-		missingMoreThanTwo.coalesce(1).write().format("csv").option("header", "true").mode("Overwrite").save(output2);
+		missingMoreThanTwo.coalesce(1).write().format("csv").option("header", "true").option("delimiter", "~").mode("Overwrite").save(output2);
 		
 	}
 }

@@ -172,6 +172,6 @@ public class BatchPlusGradeSubmission {
 		
 		
 		//Write query results to S3
-		BatchPlusGradeSubmission.coalesce(1).write().format("csv").option("header", "true").mode("Overwrite").save(output);
+		BatchPlusGradeSubmission.coalesce(1).write().format("csv").option("header", "true").option("delimiter", "~").mode("Overwrite").save(output);
 	}
 }
