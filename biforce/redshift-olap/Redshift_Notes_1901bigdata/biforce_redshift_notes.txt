@@ -1,0 +1,34 @@
+"1901-Big Data" Redshift Notes
+
+We interacted with Redshift in two ways
+
+1. We installed postgresql and connected to / interacted with Redshift via command line.  This is what we used to create the Redshift schema
+2. For simple Redshift database viewing, we used DBeaver
+
+Various Redshift Commands:
+
+Connect to Redshift via postgresql:
+  psql -h <endpoint> -U <username> -d <database name> -p <port number, probably 5439>
+  <then enter the password when prompted>
+
+How to copy from an S3 bucket to redshift
+copy <name of table in Redshift> from 's3://<database name>/<table name>' access_key_id '<access key>' secret_access_key '<secret access key>
+' REGION '<region, such as us-east-2>' DELIMITER '~' \g
+
+How to display all tables within your database:
+  SELECT DISTINCT tablename
+  FROM PG_TABLE_DEF
+  WHERE schemaname = 'public';
+
+How to display schema of the specific table "caliber_batch_new":
+  SELECT *
+  FROM pg_table_def
+  WHERE tablename = 'caliber_batch_new'
+  AND schemaname = 'public';
+
+Schema Notes:
+  1. All tables that begin with "caliber_*" have the same columns as the corresponding table in Caliber RDS
+      -> except for "caliber_batch_new" because we added some columns
+  2. The data types chosen - mainly DECIMAL and VARCHAR(255) - are functional but probably suboptimal.  Important: "DECIMAL" data type is not floating point.  Data that was originally floating point will be truncated if left as DECIMAL.
+  
+  
