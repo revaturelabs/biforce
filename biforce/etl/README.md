@@ -38,9 +38,13 @@ Our Responsibilities consisted of initial cleansing of the data. Importing table
 
 	```
 	hadoop credential create caliber.password.alias -provider jceks://hdfs/user/root/caliber.password.jceks
-	```
+        ```
 
-3. Run sqoop jobs on locally to import selected Caliber tables into Hive. The connection, username, and password may vary. 
+3. Ensure that ojdbc7.jar is in /usr/lib/sqoop/lib/sqoop/
+
+Download link: https://www.oracle.com/technetwork/database/features/jdbc/jdbc-drivers-12c-download-1958347.html
+
+4. Run sqoop jobs on locally to import selected Caliber tables into Hive. The connection, username, and password may vary. 
 
 	```
 	sqoop import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/caliber.password.jceks --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias caliber.password.alias --table CALIBER_TRAINEE --hive-import --hive-table biforce_staging.caliber_trainee --hive-drop-import-delims
@@ -60,7 +64,7 @@ Our Responsibilities consisted of initial cleansing of the data. Importing table
 	sqoop import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/caliber.password.jceks --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias caliber.password.alias --table CALIBER_ADDRESS --hive-import --hive-table biforce_staging.caliber_address --hive-drop-import-delims
 	```
 
-4. Create a Hive query to join all tables into one workable table for Spark Team.
+5. Create a Hive query to join all tables into one workable table for Spark Team.
 	
 	```SQL
 	INSERT OVERWRITE TABLE SPARK_DATA
@@ -129,21 +133,21 @@ Our Responsibilities consisted of initial cleansing of the data. Importing table
 		AND CALIBER_NOTE.QC_STATUS IS NOT NULL) Q;
 	```
 
-5. Run command below in Hive to export the Spark table to HDFS for Spark team to use. Note the directory path.
+6. Run command below in Hive to export the Spark table to HDFS for Spark team to use. Note the directory path.
 
 	```
 	insert overwrite directory 'user/hadoop/biforce/Spark_Data' row format delimited fields terminated by ',' select * from spark_data; 
 	```
 
-6. Refer to ETL-Oozie workflow to pull Spark table into S3.
+7. Refer to ETL-Oozie workflow to pull Spark table into S3.
 
-7. Spoop import all tables from Caliber into S3 bucket. Connection and username may differ. Change value inside * * respectively. Use this command for each table in Caliber that the OLAP team would like to use for analysis.
+8. Spoop import all tables from Caliber into S3 bucket. Connection and username may differ. Change value inside * * respectively. Use this command for each table in Caliber that the OLAP team would like to use for analysis.
 
 	```
 	sqoop import -Dhadoop.security.credential.provider.path=jceks://hdfs/user/root/caliber.password.jceks -Dfs.s3a.access.key=*accesskey* -Dfs.s3a.secret.key=*secretkey* --connect jdbc:oracle:thin:@caliber-snap.cgbbs6xdwjwh.us-west-2.rds.amazonaws.com:1521/orcl --username caliber --password-alias caliber.password.alias --table *desired table* --columns *desired columns in table* --fields-terminated-by ~ --incremental append --check-column *checked column* --target-dir s3a://*revature bucket*/*target directory* --temporary-rootdir s3a://*revature bucket*/*temporary directory* -m 1
 	```
 
-8. Export all tables from S3 bucket to RedShift.
+9. Export all tables from S3 bucket to RedShift.
 
 ## Results
 

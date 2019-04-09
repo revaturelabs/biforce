@@ -1,0 +1,56 @@
+Current oozie workflow.
+
+Need to go into /biforce/biforce/oozie/workflows/setup and run the oozie job on biforce-setup.xml
+
+After that oozie job is completed, run the main workflow in biforce/biforce/oozie/workflows (this current folder) on workflow.xml
+
+This will run the jobs we created on Sqoop utilizing the metastore and incremental imports.
+
+Setup:
+	1. Completely fill the properties files with information
+	2. Create ssh password-less login for the oozie user to cloudera user
+	3. Create ssh password-less login for the cloudera user to emr cluster 
+
+How to create ssh password-less login
+In general---
+1. For cloudera, su and go to /etc/ssh/sshd_config and edit that file
+2. Enable:
+	RSAAuthentication yes
+	PubkeyAuthentication yes
+3. Restart ssh service (Usually a VM restart would be okay)
+4. As root, edit /etc/pam.d/su, adding the lines
+	auth       [success=ignore default=1] pam_succeed_if.so user = oozie
+	auth       sufficient   pam_succeed_if.so use_uid user = oozie
+
+
+Oozie to cloudera---
+1. Ensure that home directory has permissions 750
+2. Type sudo -u oozie -s
+3. Run the command ssh-keygen and just press enter for all defaults.
+4. ssh-copy-id cloudera@quickstart (if it prompts for password, enter it)
+5. To test passwordless ssh, type ssh cloudera@quickstart ls
+6. Type exit and go back to cloudera user
+ 
+Cloudera to EMR Cluster---
+1. Type ssh-keygen to form a .pub key
+2. Go to ~/.ssh
+3. Transfer this id_rsa.pub key over to your EMR cluster's authorized keys. You can do this by going to ~/.ssh on the EMR cluster and appending the id_rsa.pub to the end of it.
+4. Run ssh-add to add the agent.
+5. You should now be able to ssh your EMR without a password.
+
+Workflow.xml----------
+	Runs Sqoop jobs to upload data into S3 Warehouse
+	Runs ssh-actions below:
+		Import data into hive using invokehiveimports.sh
+		Export hive to CSV using hivetocsv.sh
+		Transfer CSV to EMR for spark jobs using invokeEMR.sh
+
+
+Things to do:
+
+Currently the whole workflow works by extracting hive tables over to a csv file. These csv files will be transferred to the EMR through an ssh script which will scp transfer them. The ssh script will also store the csv files into HDFS on the EMR cluster. There is a flaw though which is how we cannot transfer big data over since SCP is limited in throughput.
+
+The plan is to install Hive and Sqoop on the EMR Cluster to have the whole ooze workflow be done on the master node. This would eliminate the SCP flaw and ensure better security.
+
+
+If you need to edit/add spark jobs, look at invokeEMR.sh. That script file will run commands to the EMR to start the spark job. Make sure that the Spark job JAR is already on the EMR and that the path is correct. However, if you get the whole oozie workflow to work on EMR, you can fix the ooze workflow by changing some commands in these scripts to be run locally (within the EMR).
