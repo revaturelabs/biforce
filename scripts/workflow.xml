@@ -27,7 +27,8 @@
     </action>
 
      <!-- Sqoop Import from flat file to MySQL Action Node -->
-     <!-- All sqoop imports have a -P attached: Ask your system admin for further instructions -->
+     <!-- All sqoop imports have a -P attached: This may interrupt workflow to prompt
+	  user to enter password. Ask your system admin for best practice -->
     <action name="Category-table">
         <sqoop xmlns="uri:oozie:sqoop-action:1.0">
             <resource-manager>${resourceManager}</resource-manager>
