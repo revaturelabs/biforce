@@ -1,0 +1,720 @@
+<workflow-app name="cailber" xmlns="uri:oozie:workflow:1.0">
+    <!-- Start job control node -->
+    <start to="hive-create-Database" />
+
+    <action name="hive-create-Database">
+        <hive xmlns="uri:oozie:hive-action:1.0">
+            <resource-manager>${resourceManager}</resource-manager>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+                <property>
+                    <name>hive.metastore.schema.verification</name>
+                    <value>false</value>
+                </property>
+                <property>
+                    <name>datanucleus.schema.autoCreateAll</name>
+                    <value>true</value>
+                </property>
+            </configuration>
+            <script>${scripts_location}/createDB.sql</script>
+        </hive>
+        <ok to="Category-table"/>
+        <error to="kill"/>
+    </action>
+
+     <!-- Sqoop Import from flat file to MySQL Action Node -->
+     <!-- All sqoop imports have a -P attached: This may interrupt workflow to prompt
+	  user to enter password. Ask your system admin for best practice -->
+    <action name="Category-table">
+        <sqoop xmlns="uri:oozie:sqoop-action:1.0">
+            <resource-manager>${resourceManager}</resource-manager>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+            </configuration>
+            <command>sqoop import --connect jdbc:oracle:thin:@caliber-test.cogwca6mnt9m.eu-west-1.rds.amazonaws.com:1521/caliber --username associate -P --table CALIBER.CALIBER_CATEGORY --fields-terminated-by ~ --target-dir /user/hadoop/CALIBER/CALIBER_CATEGORY -m 1 --hive-drop-import-delims --hive-overwrite</command>
+        </sqoop>
+        <ok to="Trainer-table" />
+        <error to="kill" />
+    </action>
+    <action name="Trainer-table">
+        <sqoop xmlns="uri:oozie:sqoop-action:1.0">
+            <resource-manager>${resourceManager}</resource-manager>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+            </configuration>
+            <command>sqoop import --connect jdbc:oracle:thin:@caliber-test.cogwca6mnt9m.eu-west-1.rds.amazonaws.com:1521/caliber --username associate -P --table CALIBER.CALIBER_TRAINER --fields-terminated-by ~ --target-dir /user/hadoop/CALIBER/CALIBER_TRAINER -m 1 --hive-drop-import-delims --hive-overwrite</command>
+        </sqoop>
+        <ok to="Trainee-table" />
+        <error to="kill" />
+    </action>
+    <action name="Trainee-table">
+        <sqoop xmlns="uri:oozie:sqoop-action:1.0">
+            <resource-manager>${resourceManager}</resource-manager>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+            </configuration>
+            <command>sqoop import --connect jdbc:oracle:thin:@caliber-test.cogwca6mnt9m.eu-west-1.rds.amazonaws.com:1521/caliber --username associate -P --table CALIBER.CALIBER_TRAINEE --fields-terminated-by ~ --target-dir /user/hadoop/CALIBER/CALIBER_TRAINEE -m 1 --hive-drop-import-delims --hive-overwrite</command>
+        </sqoop>
+        <ok to="Address-table" />
+        <error to="kill" />
+    </action>
+    <action name="Address-table">
+        <sqoop xmlns="uri:oozie:sqoop-action:1.0">
+            <resource-manager>${resourceManager}</resource-manager>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+            </configuration>
+            <command>sqoop import --connect jdbc:oracle:thin:@caliber-test.cogwca6mnt9m.eu-west-1.rds.amazonaws.com:1521/caliber --username associate -P --table CALIBER.CALIBER_ADDRESS --fields-terminated-by ~ --target-dir /user/hadoop/CALIBER/CALIBER_ADDRESS -m 1 --hive-drop-import-delims --hive-overwrite</command>
+        </sqoop>
+        <ok to="Grade-table" />
+        <error to="kill" />
+    </action>
+    <action name="Grade-table">
+        <sqoop xmlns="uri:oozie:sqoop-action:1.0">
+            <resource-manager>${resourceManager}</resource-manager>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+            </configuration>
+            <command>sqoop import --connect jdbc:oracle:thin:@caliber-test.cogwca6mnt9m.eu-west-1.rds.amazonaws.com:1521/caliber --username associate -P --table CALIBER.CALIBER_GRADE --fields-terminated-by ~ --target-dir /user/hadoop/CALIBER/CALIBER_GRADE -m 1 --hive-drop-import-delims --hive-overwrite</command>
+        </sqoop>
+        <ok to="Batch-table" />
+        <error to="kill" />
+    </action>
+    <action name="Batch-table">
+        <sqoop xmlns="uri:oozie:sqoop-action:1.0">
+            <resource-manager>${resourceManager}</resource-manager>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+            </configuration>
+            <command>sqoop import --connect jdbc:oracle:thin:@caliber-test.cogwca6mnt9m.eu-west-1.rds.amazonaws.com:1521/caliber --username associate -P --table CALIBER.CALIBER_BATCH --fields-terminated-by ~ --target-dir /user/hadoop/CALIBER/CALIBER_BATCH -m 1 --hive-drop-import-delims --hive-overwrite</command>
+        </sqoop>
+        <ok to="Panel-table" />
+        <error to="kill" />
+    </action>
+    <action name="Panel-table">
+        <sqoop xmlns="uri:oozie:sqoop-action:1.0">
+            <resource-manager>${resourceManager}</resource-manager>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+            </configuration>
+            <command>sqoop import --connect jdbc:oracle:thin:@caliber-test.cogwca6mnt9m.eu-west-1.rds.amazonaws.com:1521/caliber --username associate -P --table CALIBER.CALIBER_PANEL --fields-terminated-by ~ --target-dir /user/hadoop/CALIBER/CALIBER_PANEL -m 1 --hive-drop-import-delims --hive-overwrite</command>
+        </sqoop>
+        <ok to="Panel-Feedback-table" />
+        <error to="kill" />
+    </action>
+    <action name="Panel-Feedback-table">
+        <sqoop xmlns="uri:oozie:sqoop-action:1.0">
+            <resource-manager>${resourceManager}</resource-manager>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+            </configuration>
+            <command>sqoop import --connect jdbc:oracle:thin:@caliber-test.cogwca6mnt9m.eu-west-1.rds.amazonaws.com:1521/caliber --username associate -P --table CALIBER.CALIBER_PANEL_FEEDBACK --fields-terminated-by ~ --target-dir /user/hadoop/CALIBER/CALIBER_PANEL_FEEDBACK -m 1 --hive-drop-import-delims --hive-overwrite</command>
+        </sqoop>
+        <ok to="Assessment-table" />
+        <error to="kill" />
+    </action>
+    <action name="Assessment-table">
+        <sqoop xmlns="uri:oozie:sqoop-action:1.0">
+            <resource-manager>${resourceManager}</resource-manager>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+            </configuration>
+            <command>sqoop import --connect jdbc:oracle:thin:@caliber-test.cogwca6mnt9m.eu-west-1.rds.amazonaws.com:1521/caliber --username associate -P --table CALIBER.CALIBER_ASSESSMENT --fields-terminated-by ~ --target-dir /user/hadoop/CALIBER/CALIBER_ASSESSMENT -m 1 --hive-drop-import-delims --hive-overwrite</command>
+        </sqoop>
+        <ok to="Note-table" />
+        <error to="kill" />
+    </action>
+    <action name="Note-table">
+        <sqoop xmlns="uri:oozie:sqoop-action:1.0">
+            <resource-manager>${resourceManager}</resource-manager>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+            </configuration>
+            <command>sqoop import --connect jdbc:oracle:thin:@caliber-test.cogwca6mnt9m.eu-west-1.rds.amazonaws.com:1521/caliber --username associate -P --table CALIBER.CALIBER_NOTE --fields-terminated-by ~ --target-dir /user/hadoop/CALIBER/CALIBER_NOTE -m 1 --hive-drop-import-delims --hive-overwrite</command>
+        </sqoop>
+        <ok to="Create-Load-Category" />
+        <error to="kill" />
+    </action>
+
+    <action name="Create-Load-Category">
+        <hive xmlns="uri:oozie:hive-action:1.0">
+            <resource-manager>${resourceManager}</resource-manager>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+                <property>
+                    <name>hive.metastore.schema.verification</name>
+                    <value>false</value>
+                </property>
+                <property>
+                    <name>datanucleus.schema.autoCreateAll</name>
+                    <value>true</value>
+                </property>
+            </configuration>
+            <script>${scripts_location}/CreateLoadCategory.sql</script>
+        </hive>
+        <ok to="Create-Load-Trainer"/>
+        <error to="kill"/>
+    </action>
+
+        <action name="Create-Load-Trainer">
+        <hive xmlns="uri:oozie:hive-action:1.0">
+            <resource-manager>${resourceManager}</resource-manager>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+                <property>
+                    <name>hive.metastore.schema.verification</name>
+                    <value>false</value>
+                </property>
+                <property>
+                    <name>datanucleus.schema.autoCreateAll</name>
+                    <value>true</value>
+                </property>
+            </configuration>
+            <script>${scripts_location}/CreateLoadTrainer.sql</script>
+        </hive>
+        <ok to="Create-Load-Trainee"/>
+        <error to="kill"/>
+    </action>
+
+        <action name="Create-Load-Trainee">
+        <hive xmlns="uri:oozie:hive-action:1.0">
+            <resource-manager>${resourceManager}</resource-manager>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+                <property>
+                    <name>hive.metastore.schema.verification</name>
+                    <value>false</value>
+                </property>
+                <property>
+                    <name>datanucleus.schema.autoCreateAll</name>
+                    <value>true</value>
+                </property>
+            </configuration>
+            <script>${scripts_location}/CreateLoadTrainee.sql</script>
+        </hive>
+        <ok to="Create-Load-Address"/>
+        <error to="kill"/>
+    </action>
+
+        <action name="Create-Load-Address">
+        <hive xmlns="uri:oozie:hive-action:1.0">
+            <resource-manager>${resourceManager}</resource-manager>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+                <property>
+                    <name>hive.metastore.schema.verification</name>
+                    <value>false</value>
+                </property>
+                <property>
+                    <name>datanucleus.schema.autoCreateAll</name>
+                    <value>true</value>
+                </property>
+            </configuration>
+            <script>${scripts_location}/CreateLoadAddress.sql</script>
+        </hive>
+        <ok to="Create-Load-Grade"/>
+        <error to="kill"/>
+    </action>
+
+        <action name="Create-Load-Grade">
+        <hive xmlns="uri:oozie:hive-action:1.0">
+            <resource-manager>${resourceManager}</resource-manager>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+                <property>
+                    <name>hive.metastore.schema.verification</name>
+                    <value>false</value>
+                </property>
+                <property>
+                    <name>datanucleus.schema.autoCreateAll</name>
+                    <value>true</value>
+                </property>
+            </configuration>
+            <script>${scripts_location}/CreateLoadGrade.sql</script>
+        </hive>
+        <ok to="Create-Load-Batch"/>
+        <error to="kill"/>
+    </action>
+
+        <action name="Create-Load-Batch">
+        <hive xmlns="uri:oozie:hive-action:1.0">
+            <resource-manager>${resourceManager}</resource-manager>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+                <property>
+                    <name>hive.metastore.schema.verification</name>
+                    <value>false</value>
+                </property>
+                <property>
+                    <name>datanucleus.schema.autoCreateAll</name>
+                    <value>true</value>
+                </property>
+            </configuration>
+            <script>${scripts_location}/CreateLoadBatch.sql</script>
+        </hive>
+        <ok to="Create-Load-Panel"/>
+        <error to="kill"/>
+    </action>
+
+        <action name="Create-Load-Panel">
+        <hive xmlns="uri:oozie:hive-action:1.0">
+            <resource-manager>${resourceManager}</resource-manager>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+                <property>
+                    <name>hive.metastore.schema.verification</name>
+                    <value>false</value>
+                </property>
+                <property>
+                    <name>datanucleus.schema.autoCreateAll</name>
+                    <value>true</value>
+                </property>
+            </configuration>
+            <script>${scripts_location}/CreateLoadPanel.sql</script>
+        </hive>
+        <ok to="Create-Load-PanelFeedback"/>
+        <error to="kill"/>
+    </action>
+
+        <action name="Create-Load-PanelFeedback">
+        <hive xmlns="uri:oozie:hive-action:1.0">
+            <resource-manager>${resourceManager}</resource-manager>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+                <property>
+                    <name>hive.metastore.schema.verification</name>
+                    <value>false</value>
+                </property>
+                <property>
+                    <name>datanucleus.schema.autoCreateAll</name>
+                    <value>true</value>
+                </property>
+            </configuration>
+            <script>${scripts_location}/CreateLoadPanelFeedback.sql</script>
+        </hive>
+        <ok to="Create-Load-Assessment"/>
+        <error to="kill"/>
+    </action>
+
+        <action name="Create-Load-Assessment">
+        <hive xmlns="uri:oozie:hive-action:1.0">
+            <resource-manager>${resourceManager}</resource-manager>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+                <property>
+                    <name>hive.metastore.schema.verification</name>
+                    <value>false</value>
+                </property>
+                <property>
+                    <name>datanucleus.schema.autoCreateAll</name>
+                    <value>true</value>
+                </property>
+            </configuration>
+            <script>${scripts_location}/CreateLoadAssessment.sql</script>
+        </hive>
+        <ok to="Create-Load-Note"/>
+        <error to="kill"/>
+    </action>
+
+        <action name="Create-Load-Note">
+        <hive xmlns="uri:oozie:hive-action:1.0">
+            <resource-manager>${resourceManager}</resource-manager>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+                <property>
+                    <name>hive.metastore.schema.verification</name>
+                    <value>false</value>
+                </property>
+                <property>
+                    <name>datanucleus.schema.autoCreateAll</name>
+                    <value>true</value>
+                </property>
+            </configuration>
+            <script>${scripts_location}/CreateLoadNote.sql</script>
+        </hive>
+        <ok to="Create-Orphan-Table"/>
+        <error to="kill"/>
+    </action>
+
+    <action name="Create-Orphan-Table">
+        <hive xmlns="uri:oozie:hive-action:1.0">
+            <resource-manager>${resourceManager}</resource-manager>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+                <property>
+                    <name>hive.metastore.schema.verification</name>
+                    <value>false</value>
+                </property>
+                <property>
+                    <name>datanucleus.schema.autoCreateAll</name>
+                    <value>true</value>
+                </property>
+            </configuration>
+            <script>${scripts_location}/createOrphan.sql</script>
+        </hive>
+        <ok to="Create-Assignment-Table"/>
+        <error to="kill"/>
+    </action>
+
+    <action name="Create-Assignment-Table">
+        <hive xmlns="uri:oozie:hive-action:1.0">
+            <resource-manager>${resourceManager}</resource-manager>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+                <property>
+                    <name>hive.metastore.schema.verification</name>
+                    <value>false</value>
+                </property>
+                <property>
+                    <name>datanucleus.schema.autoCreateAll</name>
+                    <value>true</value>
+                </property>
+            </configuration>
+            <script>${scripts_location}/createAssignment.sql</script>
+        </hive>
+        <ok to="Insert-Assignment-Trainee"/>
+        <error to="kill"/>
+    </action>
+
+    <action name="Insert-Assignment-Trainee">
+        <hive xmlns="uri:oozie:hive-action:1.0">
+            <resource-manager>${resourceManager}</resource-manager>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+                <property>
+                    <name>hive.metastore.schema.verification</name>
+                    <value>false</value>
+                </property>
+                <property>
+                    <name>datanucleus.schema.autoCreateAll</name>
+                    <value>true</value>
+                </property>
+            </configuration>
+            <script>${scripts_location}/insertTraineeAssignment.sql</script>
+        </hive>
+        <ok to="Insert-Assignment-Orphan"/>
+        <error to="kill"/>
+    </action>
+
+    <action name="Insert-Assignment-Orphan">
+        <hive xmlns="uri:oozie:hive-action:1.0">
+            <resource-manager>${resourceManager}</resource-manager>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+                <property>
+                    <name>hive.metastore.schema.verification</name>
+                    <value>false</value>
+                </property>
+                <property>
+                    <name>datanucleus.schema.autoCreateAll</name>
+                    <value>true</value>
+                </property>
+            </configuration>
+            <script>${scripts_location}/insertOrphanAssignment.sql</script>
+        </hive>
+        <ok to="Create-Trainee-Note"/>
+        <error to="kill"/>
+    </action>
+
+    <action name="Create-Trainee-Note">
+        <hive xmlns="uri:oozie:hive-action:1.0">
+            <resource-manager>${resourceManager}</resource-manager>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+                <property>
+                    <name>hive.metastore.schema.verification</name>
+                    <value>false</value>
+                </property>
+                <property>
+                    <name>datanucleus.schema.autoCreateAll</name>
+                    <value>true</value>
+                </property>
+            </configuration>
+            <script>${scripts_location}/createTraineeNote.sql</script>
+        </hive>
+        <ok to="Insert-Trainee-Note"/>
+        <error to="kill"/>
+    </action>
+
+    <action name="Insert-Trainee-Note">
+        <hive xmlns="uri:oozie:hive-action:1.0">
+            <resource-manager>${resourceManager}</resource-manager>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+                <property>
+                    <name>hive.metastore.schema.verification</name>
+                    <value>false</value>
+                </property>
+                <property>
+                    <name>datanucleus.schema.autoCreateAll</name>
+                    <value>true</value>
+                </property>
+            </configuration>
+            <script>${scripts_location}/insertTraineeNote.sql</script>
+        </hive>
+        <ok to="Create-Batch-Note"/>
+        <error to="kill"/>
+    </action>
+
+    <action name="Create-Batch-Note">
+        <hive xmlns="uri:oozie:hive-action:1.0">
+            <resource-manager>${resourceManager}</resource-manager>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+                <property>
+                    <name>hive.metastore.schema.verification</name>
+                    <value>false</value>
+                </property>
+                <property>
+                    <name>datanucleus.schema.autoCreateAll</name>
+                    <value>true</value>
+                </property>
+            </configuration>
+            <script>${scripts_location}/createBatchNote.sql</script>
+        </hive>
+        <ok to="Insert-Batch-Note"/>
+        <error to="kill"/>
+    </action>
+
+    <action name="Insert-Batch-Note">
+        <hive xmlns="uri:oozie:hive-action:1.0">
+            <resource-manager>${resourceManager}</resource-manager>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+                <property>
+                    <name>hive.metastore.schema.verification</name>
+                    <value>false</value>
+                </property>
+                <property>
+                    <name>datanucleus.schema.autoCreateAll</name>
+                    <value>true</value>
+                </property>
+            </configuration>
+            <script>${scripts_location}/insertBatchNote.sql</script>
+        </hive>
+        <ok to="Create-Temp-Trainee"/>
+        <error to="kill"/>
+    </action>
+
+    <action name="Create-Temp-Trainee">
+        <hive xmlns="uri:oozie:hive-action:1.0">
+            <resource-manager>${resourceManager}</resource-manager>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+                <property>
+                    <name>hive.metastore.schema.verification</name>
+                    <value>false</value>
+                </property>
+                <property>
+                    <name>datanucleus.schema.autoCreateAll</name>
+                    <value>true</value>
+                </property>
+            </configuration>
+            <script>${scripts_location}/createTempTrainee.sql</script>
+        </hive>
+        <ok to="Insert-Temp-Trainee"/>
+        <error to="kill"/>
+    </action>
+
+    <action name="Insert-Temp-Trainee">
+        <hive xmlns="uri:oozie:hive-action:1.0">
+            <resource-manager>${resourceManager}</resource-manager>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+                <property>
+                    <name>hive.metastore.schema.verification</name>
+                    <value>false</value>
+                </property>
+                <property>
+                    <name>datanucleus.schema.autoCreateAll</name>
+                    <value>true</value>
+                </property>
+            </configuration>
+            <script>${scripts_location}/insertTempTrainee.sql</script>
+        </hive>
+        <ok to="Create-Temp-Grade"/>
+        <error to="kill"/>
+    </action>
+
+    <action name="Create-Temp-Grade">
+        <hive xmlns="uri:oozie:hive-action:1.0">
+            <resource-manager>${resourceManager}</resource-manager>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+                <property>
+                    <name>hive.metastore.schema.verification</name>
+                    <value>false</value>
+                </property>
+                <property>
+                    <name>datanucleus.schema.autoCreateAll</name>
+                    <value>true</value>
+                </property>
+            </configuration>
+            <script>${scripts_location}/createTempGrade.sql</script>
+        </hive>
+        <ok to="Insert-Temp-Grade"/>
+        <error to="kill"/>
+    </action>
+
+    <action name="Insert-Temp-Grade">
+        <hive xmlns="uri:oozie:hive-action:1.0">
+            <resource-manager>${resourceManager}</resource-manager>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+                <property>
+                    <name>hive.metastore.schema.verification</name>
+                    <value>false</value>
+                </property>
+                <property>
+                    <name>datanucleus.schema.autoCreateAll</name>
+                    <value>true</value>
+                </property>
+            </configuration>
+            <script>${scripts_location}/insertTempGrade.sql</script>
+        </hive>
+        <ok to="end"/>
+        <error to="kill"/>
+    </action>
+
+    <!-- Kill job control node -->
+    <kill name="kill">
+        <message>Oozie job terminated with errors.</message>
+    </kill>
+    <!-- End job control node -->
+    <end name="end" />
+    <!--prepare>
+        <delete path="output/oozie-job"/>
+    </prepare>-->
+</workflow-app>
