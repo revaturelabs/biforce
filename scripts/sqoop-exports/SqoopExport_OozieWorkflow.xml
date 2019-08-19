@@ -1,0 +1,290 @@
+﻿<!-- Need to create Caliber 2 Schema on the OLTP before running SqoopExport_OozieWorkflow.xml script -->
+<!-- Caliber 2 Schema is in Caliber_2_SchemaGenerator_OLTP.sql -->
+<!-- NOTE: SQOOP EXPORT COMMANDS HAS -P FLAG: MAY INTERRUPT WORKFLOW TO PROMPT VERIFICATION, ASK YOUR SYSTEM ADMIN FOR BEST PRACTICE -->
+<workflow-app name="sqoop-export-to-RDS" xmlns="uri:oozie:workflow:0.4">
+   <!-- Start job control node -->
+   <start to="Category-table" />
+  
+    <!-- Sqoop Export from flat file to MySQL Action Node -->
+   <action name="Category-table">
+       <sqoop xmlns="uri:oozie:sqoop-action:0.2">
+           <job-tracker>${job_tracker}</job-tracker>
+           <name-node>${name_node}</name-node>
+           <command>sqoop export --connect jdbc:oracle:thin:@caliber-test.cogwca6mnt9m.eu-west-1.rds.amazonaws.com:1521/caliber --username associate -P --table ASSOCIATE.CALIBER2_CATEGORY --update-key CATEGORY_ID --input-fields-terminated-by ~ --export-dir /user/hive/warehouse/caliber.db/caliber_category</command>
+       </sqoop>
+       <ok to="Trainer-table" />
+       <error to="kill" />
+   </action>
+   <action name="Trainer-table">
+       <sqoop xmlns="uri:oozie:sqoop-action:0.2">
+           <job-tracker>${job_tracker}</job-tracker>
+           <name-node>${name_node}</name-node>
+           <command>sqoop export --connect jdbc:oracle:thin:@caliber-test.cogwca6mnt9m.eu-west-1.rds.amazonaws.com:1521/caliber --username associate -P --table ASSOCIATE.CALIBER2_TRAINER --update-key TRAINER_ID --input-fields-terminated-by ~ --export-dir /user/hive/warehouse/caliber.db/caliber_trainer</command>
+       </sqoop>
+       <ok to="Trainee-table" />
+       <error to="kill" />
+   </action>
+   <action name="Trainee-table">
+       <sqoop xmlns="uri:oozie:sqoop-action:0.2">
+           <job-tracker>${job_tracker}</job-tracker>
+           <name-node>${name_node}</name-node>
+           <command>sqoop export --connect jdbc:oracle:thin:@caliber-test.cogwca6mnt9m.eu-west-1.rds.amazonaws.com:1521/caliber --username associate -P --table ASSOCIATE.CALIBER2_TRAINEE --update-key TRAINEE_ID --input-fields-terminated-by ~ --export-dir /user/hive/warehouse/caliber.db/caliber_trainee</command>
+       </sqoop>
+       <ok to="Address-table" />
+       <error to="kill" />
+   </action>
+   <action name="Address-table">
+       <sqoop xmlns="uri:oozie:sqoop-action:0.2">
+           <job-tracker>${job_tracker}</job-tracker>
+           <name-node>${name_node}</name-node>
+           <command>sqoop export --connect jdbc:oracle:thin:@caliber-test.cogwca6mnt9m.eu-west-1.rds.amazonaws.com:1521/caliber --username associate -P --table ASSOCIATE.CALIBER2_ADDRESS --update-key ADDRESS_ID --input-fields-terminated-by ~ --export-dir /user/hive/warehouse/caliber.db/caliber_address</command>
+       </sqoop>
+       <ok to="Batch-table" />
+       <error to="kill" />
+   </action>
+     <action name="Batch-table">
+       <sqoop xmlns="uri:oozie:sqoop-action:0.2">
+           <job-tracker>${job_tracker}</job-tracker>
+           <name-node>${name_node}</name-node>
+           <command>sqoop export --connect jdbc:oracle:thin:@caliber-test.cogwca6mnt9m.eu-west-1.rds.amazonaws.com:1521/caliber --username associate -P --table ASSOCIATE.CALIBER2_BATCH --update-key BATCH_ID --input-fields-terminated-by ~ --export-dir /user/hive/warehouse/caliber.db/caliber_batch</command>
+       </sqoop>
+       <ok to="Assessment-table" />
+       <error to="kill" />
+   </action>
+   <action name="Assessment-table">
+       <sqoop xmlns="uri:oozie:sqoop-action:0.2">
+           <job-tracker>${job_tracker}</job-tracker>
+           <name-node>${name_node}</name-node>
+           <command>sqoop export --connect jdbc:oracle:thin:@caliber-test.cogwca6mnt9m.eu-west-1.rds.amazonaws.com:1521/caliber --username associate -P --table ASSOCIATE.CALIBER2_ASSESSMENT --update_key ASSESSMENT_ID --input-fields-terminated-by ~ --export-dir /user/hive/warehouse/caliber.db/caliber_assessment</command>
+       </sqoop>
+       <ok to="Trainee-Note-table" />
+       <error to="kill" />
+   </action>
+   <action name="Trainee-Note-table">
+       <sqoop xmlns="uri:oozie:sqoop-action:0.2">
+           <job-tracker>${job_tracker}</job-tracker>
+           <name-node>${name_node}</name-node>
+           <command>sqoop export --connect jdbc:oracle:thin:@caliber-test.cogwca6mnt9m.eu-west-1.rds.amazonaws.com:1521/caliber --username associate -P --table ASSOCIATE.CALIBER2_TRAINEE_NOTE --update-key NOTE_ID --input-fields-terminated-by ~ --export-dir /user/hive/warehouse/caliber.db/caliber_trainee_note</command>
+       </sqoop>
+       <ok to="Batch-Note-table" />
+       <error to="kill" />
+   </action>
+   <action name="Batch-Note-table">
+       <sqoop xmlns="uri:oozie:sqoop-action:0.2">
+           <job-tracker>${job_tracker}</job-tracker>
+           <name-node>${name_node}</name-node>
+           <command>sqoop export --connect jdbc:oracle:thin:@caliber-test.cogwca6mnt9m.eu-west-1.rds.amazonaws.com:1521/caliber --username associate -P --table ASSOCIATE.CALIBER2_BATCH_NOTE --update-key NOTE_ID --input-fields-terminated-by ~ --export-dir /user/hive/warehouse/caliber.db/caliber_batch_note</command>
+       </sqoop>
+       <ok to="Grade-table" />
+       <error to="kill" />
+   </action>
+ <action name="Grade-table">
+       <sqoop xmlns="uri:oozie:sqoop-action:0.2">
+           <job-tracker>${job_tracker}</job-tracker>
+           <name-node>${name_node}</name-node>
+           <command>sqoop export --connect jdbc:oracle:thin:@caliber-test.cogwca6mnt9m.eu-west-1.rds.amazonaws.com:1521/caliber --username associate -P --table ASSOCIATE.CALIBER2_GRADE --update-key GRADE_ID  --input-fields-terminated-by ~ --export-dir /user/hive/warehouse/caliber.db/caliber_grade</command>
+       </sqoop>
+       <ok to="Assignment-table" />
+       <error to="kill" />
+   </action>
+<action name="Assignment-table">
+       <sqoop xmlns="uri:oozie:sqoop-action:0.2">
+           <job-tracker>${job_tracker}</job-tracker>
+           <name-node>${name_node}</name-node>
+           <command>sqoop export --connect jdbc:oracle:thin:@caliber-test.cogwca6mnt9m.eu-west-1.rds.amazonaws.com:1521/caliber --username associate -P --table ASSOCIATE.CALIBER2_ASSIGNMENT --update-key ASSIGNMENT_ID --input-fields-terminated-by ~ --export-dir /user/hive/warehouse/caliber.db/caliber_assignment</command>
+       </sqoop>
+       <ok to="end" />
+       <error to="kill" />
+   </action>
+
+
+   <!-- Kill job control node -->
+   <kill name="kill">
+       <message>Oozie job terminated with errors.</message>
+   </kill>
+   <!-- End job control node -->
+   <end name="end" />
+   <!--prepare>
+       <delete path="output/oozie-job"/>
+   </prepare>-->
+</workflow-app>
+
+
+<action name="Category-table">
+       <sqoop xmlns="uri:oozie:sqoop-action:1.0">
+           <resource-manager>${resourceManager}</resource-manager>
+           <name-node>${nameNode}</name-node>
+           <configuration>
+               <property>
+                   <name>mapred.job.queue.name</name>
+                   <value>${queueName}</value>
+               </property>
+           </configuration>
+<workflow-app name="cailber" xmlns="uri:oozie:workflow:1.0">
+<workflow-app name="sqoop-export-to-RDS" xmlns="uri:oozie:workflow:1.0">
+   <!-- Start job control node -->
+   <start to="Category-table" />
+  
+    <!-- Sqoop Export from flat file to MySQL Action Node -->
+   <action name="Category-table">
+       <sqoop xmlns="uri:oozie:sqoop-action:1.0">
+           <resource-manager>${resourceManager}</resource-manager>
+           <name-node>${nameNode}</name-node>
+            <configuration>
+               <property>
+                   <name>mapred.job.queue.name</name>
+                   <value>${queueName}</value>
+               </property>
+           </configuration>
+           <command>sqoop export --connect jdbc:oracle:thin:@caliber-test.cogwca6mnt9m.eu-west-1.rds.amazonaws.com:1521/caliber --username associate -P --table ASSOCIATE.CALIBER2_CATEGORY --update-key CATEGORY_ID --input-fields-terminated-by ~ --export-dir /user/hive/warehouse/caliber.db/caliber_category</command>
+       </sqoop>
+       <ok to="Trainer-table" />
+       <error to="kill" />
+   </action>
+   <action name="Trainer-table">
+      <sqoop xmlns="uri:oozie:sqoop-action:1.0">
+           <resource-manager>${resourceManager}</resource-manager>
+           <name-node>${nameNode}</name-node>
+            <configuration>
+               <property>
+                   <name>mapred.job.queue.name</name>
+                   <value>${queueName}</value>
+               </property>
+           </configuration>
+           <command>sqoop export --connect jdbc:oracle:thin:@caliber-test.cogwca6mnt9m.eu-west-1.rds.amazonaws.com:1521/caliber --username associate -P --table ASSOCIATE.CALIBER2_TRAINER --update-key TRAINER_ID --input-fields-terminated-by ~ --export-dir /user/hive/warehouse/caliber.db/caliber_trainer</command>
+       </sqoop>
+       <ok to="Trainee-table" />
+       <error to="kill" />
+   </action>
+   <action name="Trainee-table">
+      <sqoop xmlns="uri:oozie:sqoop-action:1.0">
+           <resource-manager>${resourceManager}</resource-manager>
+           <name-node>${nameNode}</name-node>
+            <configuration>
+               <property>
+                   <name>mapred.job.queue.name</name>
+                   <value>${queueName}</value>
+               </property>
+           </configuration>
+           <command>sqoop export --connect jdbc:oracle:thin:@caliber-test.cogwca6mnt9m.eu-west-1.rds.amazonaws.com:1521/caliber --username associate -P --table ASSOCIATE.CALIBER2_TRAINEE --update-key TRAINEE_ID --input-fields-terminated-by ~ --export-dir /user/hive/warehouse/caliber.db/caliber_trainee</command>
+       </sqoop>
+       <ok to="Address-table" />
+       <error to="kill" />
+   </action>
+   <action name="Address-table">
+       <sqoop xmlns="uri:oozie:sqoop-action:1.0">
+           <resource-manager>${resourceManager}</resource-manager>
+           <name-node>${nameNode}</name-node>
+            <configuration>
+               <property>
+                   <name>mapred.job.queue.name</name>
+                   <value>${queueName}</value>
+               </property>
+           </configuration>
+           <command>sqoop export --connect jdbc:oracle:thin:@caliber-test.cogwca6mnt9m.eu-west-1.rds.amazonaws.com:1521/caliber --username associate -P --table ASSOCIATE.CALIBER2_ADDRESS --update-key ADDRESS_ID --input-fields-terminated-by ~ --export-dir /user/hive/warehouse/caliber.db/caliber_address</command>
+       </sqoop>
+       <ok to="Batch-table" />
+       <error to="kill" />
+   </action>
+     <action name="Batch-table">
+       <sqoop xmlns="uri:oozie:sqoop-action:1.0">
+           <resource-manager>${resourceManager}</resource-manager>
+           <name-node>${nameNode}</name-node>
+            <configuration>
+               <property>
+                   <name>mapred.job.queue.name</name>
+                   <value>${queueName}</value>
+               </property>
+           </configuration>
+           <command>sqoop export --connect jdbc:oracle:thin:@caliber-test.cogwca6mnt9m.eu-west-1.rds.amazonaws.com:1521/caliber --username associate -P --table ASSOCIATE.CALIBER2_BATCH --update-key BATCH_ID --input-fields-terminated-by ~ --export-dir /user/hive/warehouse/caliber.db/caliber_batch</command>
+       </sqoop>
+       <ok to="Assessment-table" />
+       <error to="kill" />
+   </action>
+   <action name="Assessment-table">
+       <sqoop xmlns="uri:oozie:sqoop-action:1.0">
+           <resource-manager>${resourceManager}</resource-manager>
+           <name-node>${nameNode}</name-node>
+            <configuration>
+               <property>
+                   <name>mapred.job.queue.name</name>
+                   <value>${queueName}</value>
+               </property>
+           </configuration>
+           <command>sqoop export --connect jdbc:oracle:thin:@caliber-test.cogwca6mnt9m.eu-west-1.rds.amazonaws.com:1521/caliber --username associate -P --table ASSOCIATE.CALIBER2_ASSESSMENT --update_key ASSESSMENT_ID --input-fields-terminated-by ~ --export-dir /user/hive/warehouse/caliber.db/caliber_assessment</command>
+       </sqoop>
+       <ok to="Trainee-Note-table" />
+       <error to="kill" />
+   </action>
+   <action name="Trainee-Note-table">
+      <sqoop xmlns="uri:oozie:sqoop-action:1.0">
+           <resource-manager>${resourceManager}</resource-manager>
+           <name-node>${nameNode}</name-node>
+            <configuration>
+               <property>
+                   <name>mapred.job.queue.name</name>
+                   <value>${queueName}</value>
+               </property>
+           </configuration>
+           <command>sqoop export --connect jdbc:oracle:thin:@caliber-test.cogwca6mnt9m.eu-west-1.rds.amazonaws.com:1521/caliber --username associate -P --table ASSOCIATE.CALIBER2_TRAINEE_NOTE --update-key NOTE_ID --input-fields-terminated-by ~ --export-dir /user/hive/warehouse/caliber.db/caliber_trainee_note</command>
+       </sqoop>
+       <ok to="Batch-Note-table" />
+       <error to="kill" />
+   </action>
+   <action name="Batch-Note-table">
+      <sqoop xmlns="uri:oozie:sqoop-action:1.0">
+           <resource-manager>${resourceManager}</resource-manager>
+           <name-node>${nameNode}</name-node>
+            <configuration>
+               <property>
+                   <name>mapred.job.queue.name</name>
+                   <value>${queueName}</value>
+               </property>
+           </configuration>
+           <command>sqoop export --connect jdbc:oracle:thin:@caliber-test.cogwca6mnt9m.eu-west-1.rds.amazonaws.com:1521/caliber --username associate -P --table ASSOCIATE.CALIBER2_BATCH_NOTE --update-key NOTE_ID --input-fields-terminated-by ~ --export-dir /user/hive/warehouse/caliber.db/caliber_batch_note</command>
+       </sqoop>
+       <ok to="Grade-table" />
+       <error to="kill" />
+   </action>
+ <action name="Grade-table">
+       <sqoop xmlns="uri:oozie:sqoop-action:1.0">
+           <resource-manager>${resourceManager}</resource-manager>
+           <name-node>${nameNode}</name-node>
+            <configuration>
+               <property>
+                   <name>mapred.job.queue.name</name>
+                   <value>${queueName}</value>
+               </property>
+           </configuration>
+           <command>sqoop export --connect jdbc:oracle:thin:@caliber-test.cogwca6mnt9m.eu-west-1.rds.amazonaws.com:1521/caliber --username associate -P --table ASSOCIATE.CALIBER2_GRADE --update-key GRADE_ID  --input-fields-terminated-by ~ --export-dir /user/hive/warehouse/caliber.db/caliber_grade</command>
+       </sqoop>
+       <ok to="Assignment-table" />
+       <error to="kill" />
+   </action>
+<action name="Assignment-table">
+       <sqoop xmlns="uri:oozie:sqoop-action:1.0">
+           <resource-manager>${resourceManager}</resource-manager>
+           <name-node>${nameNode}</name-node>
+            <configuration>
+               <property>
+                   <name>mapred.job.queue.name</name>
+                   <value>${queueName}</value>
+               </property>
+           </configuration>
+           <command>sqoop export --connect jdbc:oracle:thin:@caliber-test.cogwca6mnt9m.eu-west-1.rds.amazonaws.com:1521/caliber --username associate -P --table ASSOCIATE.CALIBER2_ASSIGNMENT --update-key ASSIGNMENT_ID --input-fields-terminated-by ~ --export-dir /user/hive/warehouse/caliber.db/caliber_assignment</command>
+       </sqoop>
+       <ok to="end" />
+       <error to="kill" />
+   </action>
+
+
+   <!-- Kill job control node -->
+   <kill name="kill">
+       <message>Oozie job terminated with errors.</message>
+   </kill>
+   <!-- End job control node -->
+   <end name="end" />
+   <!--prepare>
+       <delete path="output/oozie-job"/>
+   </prepare>-->
+</workflow-app>
